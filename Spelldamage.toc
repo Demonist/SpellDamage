@@ -1,0 +1,7 @@
+## Interface: 60100
+## Title: SpellDamage
+## Author: Demonist
+## Version: 1.0.0-60100
+## Notes: Shows damage from spell tooltip description on action bar slot.
+
+SpellDamage.lua
