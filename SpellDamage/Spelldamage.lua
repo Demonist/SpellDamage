@@ -72,7 +72,7 @@ function updateActionBar()
 				local colorR, colorG, colorB
 				local num = damageSpells[id]
 				if num ~= nil then
-					colorR, colorG, colorB = 1, 0.3, 0
+					colorR, colorG, colorB = 1, 1, 0
 				else
 					num = healSpells[id]
 					if num ~= nil then
@@ -128,8 +128,8 @@ local function createABFrames()
 	for _, ActionButton in pairs(ABobjects) do     
 		ActionButton.text = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
 		ActionButton.text:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		ActionButton.text:SetPoint("BOTTOM" , 0, 2)	
-		ActionButton.text:SetPoint("LEFT", 1, 0)	
+		ActionButton.text:SetPoint("CENTER" , 0, 0)	
+		ActionButton.text:SetPoint("LEFT", 0, 0)	
 		ActionButton.text:SetTextColor(1, 1, 1, 1)
 	end
 end
@@ -157,7 +157,6 @@ local function createSpellsTable()
 	
 	absorbSpells[11426] = 1 	--Ледяная преграда
 	absorbSpells[140468] = 1 	--Пламенное сияние
-	
 end
 
 createABFrames()
