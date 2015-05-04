@@ -2,6 +2,6 @@
 ## Title: SpellDamage
 ## Author: Demonist
 ## Version: 1.0.0-60100
-## Notes: Shows damage from spell tooltip description on action bar slot.
+## Notes: Отображает урон, хил или поглощение умения на панели.
 
 SpellDamage.lua

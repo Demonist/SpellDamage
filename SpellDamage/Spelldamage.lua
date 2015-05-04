@@ -1,5 +1,9 @@
 local ABobjects = {}
-local spellsTable = {}
+
+local damageSpells = {}
+local healSpells = {}
+local absorbSpells = {}
+
 local debugFlag = false
 
 SLASH_SPELLDAMAGE1 = "/spelldamage"
@@ -26,7 +30,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		clearActionBar()
 	elseif event == "ACTIONBAR_SLOT_CHANGED" then
 		local _, id = GetActionInfo(select(1, ...))
-		if spellsTable[id] ~= nil then
+		if damageSpells[id] ~= nil or healSpells[id] ~= nil or absorbSpells[id] ~= nil then
 			clearActionBar()
 		end
 	end
@@ -37,7 +41,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		updateActionBar()
 	elseif event == "ACTIONBAR_SLOT_CHANGED" then
 		local _, id = GetActionInfo(select(1, ...))
-		if spellsTable[id] ~= nil then
+		if damageSpells[id] ~= nil or healSpells[id] ~= nil or absorbSpells[id] ~= nil then
 			updateActionBar()
 		end
 	end
@@ -65,13 +69,44 @@ function updateActionBar()
 		if HasAction(slot) then
 			local actionType, id = GetActionInfo(slot)
 			if actionType == 'spell' then
-				local num = spellsTable[id]
+				local colorR, colorG, colorB
+				local num = damageSpells[id]
 				if num ~= nil then
-					ActionButton.text:SetText(matchIndex(GetSpellDescription(id), "%d+", num))
+					colorR, colorG, colorB = 1, 0.3, 0
+				else
+					num = healSpells[id]
+					if num ~= nil then
+						colorR, colorG, colorB = 0, 1, 0
+					else
+						num = absorbSpells[id]
+						if num ~= nil then
+							colorR, colorG, colorB = 1, 0.5, 1
+						end
+					end
+				end
+
+				if num ~= nil then
+					ActionButton.text:SetText(
+						shortNumber(
+							tonumber(
+								matchIndex(GetSpellDescription(id), "%d+", num)
+								)
+							)
+						)
+					ActionButton.text:SetTextColor(colorR, colorG, colorB, 1)
 				end
 			end
 		end  
 	end      
+end
+
+function shortNumber(number)
+	if number >= 1000000 then
+		return string.format("%.1fm", number/1000000)
+	elseif number >= 1000 then
+		return string.format("%.1fk", number/1000)
+	end
+	return number
 end
 
 function matchIndex(str, pattern, index)
@@ -92,18 +127,37 @@ local function createABFrames()
 
 	for _, ActionButton in pairs(ABobjects) do     
 		ActionButton.text = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
-		ActionButton.text:SetFont("Fonts\\FRIZQT__.TTF",10,"OUTLINE")
-		ActionButton.text:SetPoint("BOTTOM",0,0)	
-		ActionButton.text:SetPoint("CENTER",0,0)	
-		ActionButton.text:SetTextColor(255,255,255,1)
+		ActionButton.text:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		ActionButton.text:SetPoint("BOTTOM" , 0, 2)	
+		ActionButton.text:SetPoint("LEFT", 1, 0)	
+		ActionButton.text:SetTextColor(1, 1, 1, 1)
 	end
 end
 
 local function createSpellsTable()
-	spellsTable[133] = 1 		--Fireball
-	spellsTable[11366] = 1 		--Pyroblast
-	spellsTable[2136] = 1 		--Fire Blast
-	spellsTable[122] = 2 		--Frost Nova
+	--Маг:
+	damageSpells[44614] = 1 	--Стрела ледяного огня
+	damageSpells[122] = 2 		--Кольцо льда
+	damageSpells[2136] = 1 		--Огненный взрыв
+	damageSpells[120] = 1 		--Конус холода
+	damageSpells[11366] = 1 	--Огненная глыба
+	damageSpells[30451] = 1		--Чародейская вспышка
+	damageSpells[116] = 1 		--Ледяная стрела
+	damageSpells[133] = 1 		--Огненный шар
+	damageSpells[2948] = 1 		--Ожог
+	damageSpells[2120] = 1 		--Огненный столб
+	damageSpells[114923] = 1 	--Буря Пустоты
+	damageSpells[157981] = 1 	--Взрывная волна
+	damageSpells[44457] = 1 	--Живая бомба
+	damageSpells[157997] = 1 	--Кольцо обледенения
+	damageSpells[157980] = 1 	--Сверхновая
+	damageSpells[153595] = 2 	--Буря комет
+	damageSpells[153561] = 2 	--Метеор
+	damageSpells[153626] = 2 	--Чародейский шар
+	
+	absorbSpells[11426] = 1 	--Ледяная преграда
+	absorbSpells[140468] = 1 	--Пламенное сияние
+	
 end
 
 createABFrames()
