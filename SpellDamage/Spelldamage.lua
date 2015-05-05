@@ -156,13 +156,20 @@ local function createSpellsTable()
 	damageSpells[44614] = 1 	--Стрела ледяного огня
 	damageSpells[122] = 2 		--Кольцо льда
 	damageSpells[2136] = 1 		--Огненный взрыв
-	damageSpells[120] = 1 		--Конус холода
 	damageSpells[11366] = 1 	--Огненная глыба
 	damageSpells[30451] = 1		--Чародейская вспышка
 	damageSpells[116] = 1 		--Ледяная стрела
 	damageSpells[133] = 1 		--Огненный шар
+	damageSpells[1449] = 1 		--Чародейский взрыв
 	damageSpells[2948] = 1 		--Ожог
+	damageSpells[30455] = 1 	--Ледяное копье
+	damageSpells[108853] = 1 	--Пламенный взрыв
+	damageSpells[5143] = 3 		--Чародейские стрелы
+	damageSpells[120] = 1 		--Конус холода
 	damageSpells[2120] = 1 		--Огненный столб
+	damageSpells[10] = 1 		--Снежная буря
+	damageSpells[31661] = 1 	--Дыхание дракона
+	damageSpells[84714] = 1 	--Ледяной шар
 	damageSpells[114923] = 1 	--Буря Пустоты
 	damageSpells[157981] = 1 	--Взрывная волна
 	damageSpells[44457] = 1 	--Живая бомба
@@ -171,8 +178,6 @@ local function createSpellsTable()
 	damageSpells[153595] = 2 	--Буря комет
 	damageSpells[153561] = 2 	--Метеор
 	damageSpells[153626] = 2 	--Чародейский шар
-	
-	healSpells[2136] = 1 		--Огненный взрыв
 
 	absorbSpells[11426] = 1 	--Ледяная преграда
 	absorbSpells[140468] = 1 	--Пламенное сияние
@@ -190,7 +195,6 @@ local function createSpellsTable()
 	damageSpells[73510] = 1 	--Пронзание разума
 	damageSpells[129250] = 1 	--Слово силы: Утешение
 	damageSpells[32379] = 1 	--Слово Тьмы: Смерть
-	damageSpells[81209] = 2 	--Чакра: воздаяние ?
 	damageSpells[122121] = 2 	--Божественная звезда
 	damageSpells[155361] = 2 	--Энтропия Бездны
 
@@ -203,8 +207,6 @@ local function createSpellsTable()
 	healSpells[596] = 2 		--Молитва исцеления
 	healSpells[32546] = 1 		--Связующее исцеление
 	healSpells[34861] = 3 		--Круг исцеления
-	healSpells[81206] = 2 		--Чакра: святилище
-	healSpells[81208] = 1 		--Чакра: безмятежность ?
 	healSpells[95649] = 1 		--Мгновенное обновление
 	healSpells[33076] = 1 		--Молитва восстановления
 	healSpells[64843] = 2 		--Божественный гимн
