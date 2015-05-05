@@ -56,8 +56,11 @@ end
 function clearActionBar()
 	debug("clearActionBar()")
 	for _, button in pairs(ActionBarButtonEventsFrame.frames) do
-		if (button.text) then
-			button.text:SetText("")
+		if (button.textCenter) then
+			button.textCenter:SetText("")
+		end
+		if button.textBottom then
+			button.textBottom:SetText("")
 		end
 	end
 end
@@ -69,31 +72,39 @@ function updateActionBar()
 		if HasAction(slot) then
 			local actionType, id = GetActionInfo(slot)
 			if actionType == 'spell' then
-				local colorR, colorG, colorB
 				local num = damageSpells[id]
 				if num ~= nil then
-					colorR, colorG, colorB = 1, 1, 0
-				else
-					num = healSpells[id]
-					if num ~= nil then
-						colorR, colorG, colorB = 0, 1, 0
-					else
-						num = absorbSpells[id]
-						if num ~= nil then
-							colorR, colorG, colorB = 1, 0.5, 1
-						end
-					end
-				end
-
-				if num ~= nil then
-					ActionButton.text:SetText(
+					ActionButton.textCenter:SetText(
 						shortNumber(
 							tonumber(
 								matchIndex(GetSpellDescription(id), "%d+", num)
 								)
 							)
 						)
-					ActionButton.text:SetTextColor(colorR, colorG, colorB, 1)
+				end
+
+				num = healSpells[id]
+				if num ~= nil then
+					ActionButton.textBottom:SetText(
+						shortNumber(
+							tonumber(
+								matchIndex(GetSpellDescription(id), "%d+", num)
+								)
+							)
+						)
+					ActionButton.textBottom:SetTextColor(0, 1, 0, 1)
+				else
+					num = absorbSpells[id]
+					if num ~= nil then
+						ActionButton.textBottom:SetText(
+						shortNumber(
+							tonumber(
+								matchIndex(GetSpellDescription(id), "%d+", num)
+								)
+							)
+						)
+						ActionButton.textBottom:SetTextColor(1, 0.5, 1, 1)
+					end
 				end
 			end
 		end  
@@ -102,9 +113,9 @@ end
 
 function shortNumber(number)
 	if number >= 1000000 then
-		return string.format("%.1fm", number/1000000)
+		return string.format("%.1fm", number / 1000000)
 	elseif number >= 1000 then
-		return string.format("%.1fk", number/1000)
+		return string.format("%.1fk", number / 1000)
 	end
 	return number
 end
@@ -126,11 +137,17 @@ local function createABFrames()
 	end
 
 	for _, ActionButton in pairs(ABobjects) do     
-		ActionButton.text = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
-		ActionButton.text:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		ActionButton.text:SetPoint("CENTER" , 0, 0)	
-		ActionButton.text:SetPoint("LEFT", 0, 0)	
-		ActionButton.text:SetTextColor(1, 1, 1, 1)
+		ActionButton.textCenter = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
+		ActionButton.textCenter:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		ActionButton.textCenter:SetPoint("CENTER" , 0, 0)	
+		ActionButton.textCenter:SetPoint("LEFT", 0, 0)	
+		ActionButton.textCenter:SetTextColor(1, 1, 0, 1)
+		
+		ActionButton.textBottom = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
+		ActionButton.textBottom:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		ActionButton.textBottom:SetPoint("BOTTOM" , 0, 0)	
+		ActionButton.textBottom:SetPoint("LEFT", 0, 0)	
+		ActionButton.textBottom:SetTextColor(0, 1, 0, 1)
 	end
 end
 
@@ -155,6 +172,8 @@ local function createSpellsTable()
 	damageSpells[153561] = 2 	--Метеор
 	damageSpells[153626] = 2 	--Чародейский шар
 	
+	healSpells[2136] = 1 		--Огненный взрыв
+
 	absorbSpells[11426] = 1 	--Ледяная преграда
 	absorbSpells[140468] = 1 	--Пламенное сияние
 
