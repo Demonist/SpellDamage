@@ -185,36 +185,41 @@ local function createSpellsTable()
 	--Жрец:
 	damageSpells[585] = 1 		--Кара
 	damageSpells[589] = 1 		--Слово Тьмы: Боль
+	damageSpells[47540] = 1 	--Исповедь
+	damageSpells[15407] = 1 	--Пытка разума
 	damageSpells[88625] = 1 	--Слово Света: Воздаяние
-	damageSpells[15707] = 1 	--Пытка разума
 	damageSpells[14914] = 1 	--Священный огонь
+	damageSpells[132157] = 1 	--Кольцо света
 	damageSpells[8092] = 1 		--Взрыв разума
-	damageSpells[48045] = 1 	--Иссушение разума
+	damageSpells[2944] = 2 		--Всепожирающая чума
 	damageSpells[34914] = 1 	--Прикосновение вампира
-	damageSpells[78201] = 1 	--Сумеречный призрак
+	damageSpells[48045] = 1 	--Иссушение разума
 	damageSpells[73510] = 1 	--Пронзание разума
 	damageSpells[129250] = 1 	--Слово силы: Утешение
 	damageSpells[32379] = 1 	--Слово Тьмы: Смерть
 	damageSpells[122121] = 2 	--Божественная звезда
+	damageSpells[127632] = 1 	--Каскад
+	damageSpells[120644] = 2 	--Сияние
 	damageSpells[155361] = 2 	--Энтропия Бездны
 
 	healSpells[2061] = 1 		--Быстрое исцеление
+	healSpells[47540] = 2 		--Исповедь
+	healSpells[132157] = 3 		--Кольцо света
 	healSpells[88684] = 1 		--Слово Света: Безмятежность
-	healSpells[2944] = 2 		--Всепожирающая чума
 	healSpells[139] = 1 		--Обновление
 	healSpells[2060] = 1 		--Исцеление
 	healSpells[126135] = 3 		--Колодец Света
 	healSpells[596] = 2 		--Молитва исцеления
 	healSpells[32546] = 1 		--Связующее исцеление
 	healSpells[34861] = 3 		--Круг исцеления
-	healSpells[95649] = 1 		--Мгновенное обновление
 	healSpells[33076] = 1 		--Молитва восстановления
 	healSpells[64843] = 2 		--Божественный гимн
+	healSpells[110744] = 2 		--Божественная звезда
 	healSpells[121135] = 1 		--Каскад
-	healSpells[110740] = 2 		--Божественная звезда
-	healSpells[152118] = 1 		--Ясность воли
-	healSpells[155245] = 1 		--Ясная цель
+	healSpells[120517] = 2 		--Сияние
 	healSpells[152116] = 1 		--Спасительная сила
+	healSpells[155245] = 1 		--Ясная цель
+	healSpells[152118] = 1 		--Ясность воли
 	
 	absorbSpells[17] = 1 		--Слово силы: Щит
 
