@@ -226,9 +226,17 @@ local function createSpellsTable()
 	--Охотник:
 	damageSpells[3044] = 1 		--Чародейский выстрел
 	damageSpells[56641] = 1 	--Верный выстрел
+	damageSpells[34026] = 1 	--Команда "Взять!"
+	damageSpells[19434] = 1 	--Прицельный выстрел
+	damageSpells[53301] = 1 	--Разрывной выстрел
+	damageSpells[2643] = 2 		--Залп
+	damageSpells[53351] = 1 	--Убийственный выстрел
+	damageSpells[13813] = 1 	--Взрывная ловушка
+	damageSpells[3674] = 1 		--Черная стрела
+	damageSpells[77767] = 1 	--Выстрел кобры
 	damageSpells[117050] = 3 	--Бросок глеф
 	damageSpells[109259] = 1 	--Мощный выстрел
-	damageSpells[120360] = 1 	--Шквал
+	damageSpells[120360] = 2 	--Шквал
 	damageSpells[152245] = 1 	--Сосредоточенный выстрел
 	damageSpells[163485] = 1 	--Сосредоточенный выстрел
 	
