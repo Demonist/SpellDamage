@@ -239,6 +239,42 @@ local function createSpellsTable()
 	damageSpells[120360] = 2 	--Шквал
 	damageSpells[152245] = 1 	--Сосредоточенный выстрел
 	damageSpells[163485] = 1 	--Сосредоточенный выстрел
+
+	--Воин:
+	damageSpells[156287] = 1 	--Опустошитель
+	damageSpells[176318] = 1 	--Стенолом – левая рука
+	damageSpells[78] = 1 		--Удар героя
+	damageSpells[145585] = 1 	--Удар громовержца левой рукой
+	damageSpells[34428] = 1 	--Победный раж
+	damageSpells[5308] = 1 		--Казнь
+	damageSpells[163201] = 1 	--Казнь
+	damageSpells[772] = 1 		--Кровопускание
+	damageSpells[163558] = 1 	--Внезапная казнь
+	damageSpells[23881] = 1 	--Кровожадность
+	damageSpells[23922] = 1 	--Мощный удар щитом
+	damageSpells[12294] = 1 	--Смертельный удар
+	damageSpells[6343] = 2 		--Удар грома
+	damageSpells[100130] = 1 	--Зверский удар
+	damageSpells[57755] = 1 	--Героический бросок
+	damageSpells[1680] = 2 		--Вихрь
+	damageSpells[20243] = 1 	--Сокрушение
+	damageSpells[103840] = 1 	--Верная победа
+	damageSpells[6572] = 1 		--Реванш
+	damageSpells[85288] = 1 	--Яростный выпад
+	damageSpells[1715] = 1 		--Подрезать сухожилия
+	damageSpells[1464] = 1 		--Мощный удар
+	damageSpells[118000] = 1 	--Рев дракона
+	damageSpells[107570] = 1 	--Удар громовержца
+	damageSpells[46968] = 1 	--Ударная волна
+	damageSpells[12328] = 1 	--Размашистые удары
+	damageSpells[64382] = 1 	--Сокрушительный бросок
+	damageSpells[167105] = 1 	--Удар колосса
+	damageSpells[6544] = 2 		--Героический прыжок
+	damageSpells[46924] = 2 	--Вихрь клинков
+	damageSpells[152277] = 1 	--Опустошитель
+	damageSpells[176289] = 1 	--Стенолом
+
+	absorbSpells[174926] = 1 	--Непроницаемый щит
 	
 end
 
