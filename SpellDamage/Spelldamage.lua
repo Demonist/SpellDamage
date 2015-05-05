@@ -276,6 +276,40 @@ local function createSpellsTable()
 
 	absorbSpells[174926] = 1 	--Непроницаемый щит
 	
+	--Друид:
+	damageSpells[5176] = 1 		--Гнев
+	damageSpells[8921] = 1 		--Лунный огонь
+	damageSpells[164812] = 1 	--Лунный огонь
+	damageSpells[1822] = 1 		--Глубокая рана
+	damageSpells[5221] = 1 		--Полоснуть
+	damageSpells[33917] = 1 	--Увечье
+	damageSpells[2912] = 1 		--Звездный огонь
+	damageSpells[6807] = 1 		--Трепка
+	damageSpells[78674] = 1 	--Звездный поток
+	damageSpells[164815] = 1 	--Солнечный огонь
+	damageSpells[106785] = 1 	--Размах
+	damageSpells[770] = 1 		--Волшебный огонь
+	damageSpells[77758] = 2 	--Взбучка
+	damageSpells[106830] = 2 	--Взбучка
+	damageSpells[33745] = 1 	--Растерзать
+	damageSpells[33831] = 3 	--Сила Природы
+	damageSpells[102703] = 2 	--Сила Природы
+	damageSpells[102706] = 1 	--Сила Природы
+	damageSpells[48505] = 2 	--Звездопад
+	damageSpells[152221] = 1 	--Звездная вспышка
+	damageSpells[80313] = 2 	--Раздавить
+
+	healSpells[774] = 1 		--Омоложение
+	healSpells[18562] = 1 		--Быстрое восстановление
+	healSpells[8936] = 1 		--Восстановление
+	healSpells[5185] = 1 		--Целительное прикосновение
+	healSpells[102351] = 2		--Щит Кенария
+	healSpells[33763] = 1 		--Жизнецвет
+	healSpells[102693] = 1 		--Сила Природы
+	healSpells[740] = 1 		--Спокойствие
+	healSpells[48438] = 3 		--Буйный рост
+	healSpells[145205] = 4 		--Дикий гриб
+	
 end
 
 createABFrames()
