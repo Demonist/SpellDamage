@@ -1,7 +1,7 @@
 ## Interface: 60100
 ## Title: SpellDamage
 ## Author: Demonist
-## Version: 0.3.7
+## Version: 0.3.8
 ## Notes: Displays spell's damage, heal or absorb on action bar.
 
 SpellDamage.lua

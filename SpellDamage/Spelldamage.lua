@@ -378,6 +378,39 @@ local function createSpellsTable()
 	
 	absorbSpells[20925] = 2 	--Священный щит
 	absorbSpells[148039] = 2 	--Священный щит
+
+	--Разбойник:
+	damageSpells[1752] = 1 		--Коварный удар
+	damageSpells[8676] = 1 		--Внезапный удар
+	damageSpells[16511] = 1 	--Кровоизлияние
+	damageSpells[1329] = 1 		--Расправа
+	damageSpells[84617] = 1 	--Пробивающий удар
+	damageSpells[53] = 1 		--Удар в спину
+	damageSpells[111240] = 2 	--Устранение
+	damageSpells[51723] = 2 	--Веер клинков
+	damageSpells[154904] = 1 	--Внутреннее кровотечение
+	damageSpells[114014] = 1 	--Бросок сюрикена
+	damageSpells152150[] = 1 	--Смерть с небес
+
+	--Рыцарь смерти^
+	damageSpells[49184] = 1 	--Воющий ветер
+	damageSpells[50842] = 1 	--Вскипание крови
+	damageSpells[45477] = 1 	--Ледяное прикосновение
+	damageSpells[47541] = 1 	--Лик смерти
+	damageSpells[45462] = 1 	--Удар чумы
+	damageSpells[55090] = 1 	--Удар Плети
+	damageSpells[49020] = 1 	--Уничтожение
+	damageSpells[43265] = 1 	--Смерть и разложение
+	damageSpells[85948] = 1 	--Удар разложения
+	damageSpells[108196] = 1 	--Смертельное поглощение
+	damageSpells[114866] = 1 	--Жнец душ
+	damageSpells[130735] = 1 	--Жнец душ
+	damageSpells[130736] = 1 	--Жнец душ
+	damageSpells[152279] = 1 	--Дыхание Синдрагосы
+	damageSpells[152281] = 1 	--Мертвящая чума
+	damageSpells[152280] = 2 	--Осквернение
+	
+	healSpells[47541] = 2 		--Лик смерти
 end
 
 createABFrames()
