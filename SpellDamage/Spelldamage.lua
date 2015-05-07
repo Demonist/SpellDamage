@@ -308,7 +308,43 @@ local function createSpellsTable()
 	healSpells[740] = 1 		--Спокойствие
 	healSpells[48438] = 3 		--Буйный рост
 	healSpells[145205] = 4 		--Дикий гриб
+
+	--Монах:
+	damageSpells[100780] = 1 	--Дзуки
+	damageSpells[100787] = 1 	--Лапа тигра
+	damageSpells[100784] = 1 	--Нокаутирующий удар
+	damageSpells[113656] = 1 	--Неистовые кулаки
+	damageSpells[121253] = 1 	--Удар бочонком
+	damageSpells[115181] = 1 	--Пламенное дыхание
+	damageSpells[101545] = 2 	--Удар летящего змея
+	damageSpells[115098] = 1 	--Волна ци
+	damageSpells[123986] = 2 	--Выброс ци
+	damageSpells[124081] = 2 	--Сфера дзен
+	damageSpells[101546] = 1 	--Танцующий журавль
+	damageSpells[117952] = 1 	--Сверкающая нефритовая молния
+	damageSpells[107428] = 1 	--Удар восходящего солнца
+	damageSpells[116847] = 1 	--Порыв нефритового ветра
+	damageSpells[123904] = 4 	--Призыв Сюэня, Белого Тигра
+	damageSpells[152174] = 3 	--Взрыв ци
+	damageSpells[157676] = 3 	--Взрыв ци
+	damageSpells[152175] = 2 	--Ураганный удар
 	
+	healSpells[116645] = 1 		--Монастырские знания
+	healSpells[115175] = 1 		--Успокаивающий туман
+	healSpells[116694] = 1 		--Благотворный туман
+	healSpells[124682] = 1 		--Окутывающий туман
+	healSpells[115151] = 1 		--Заживляющий туман
+	healSpells[115072] = 1 		--Устранение вреда
+	healSpells[115098] = 2 		--Волна ци
+	healSpells[123986] = 3 		--Выброс ци
+	healSpells[124081] = 1 		--Сфера дзен
+	healSpells[116670] = 1 		--Духовный подъем
+	healSpells[15310] = 2 		--Восстановление сил
+	healSpells[117907] = 3 		--Искусность: дар змеи
+	healSpells[157675] = 3 		--Взрыв ци
+	
+	absorbSpells[115295] = 1 	--Защита
+	absorbSpells[116849] = 1 	--Исцеляющий кокон
 end
 
 createABFrames()
