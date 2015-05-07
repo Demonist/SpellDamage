@@ -345,6 +345,39 @@ local function createSpellsTable()
 	
 	absorbSpells[115295] = 1 	--Защита
 	absorbSpells[116849] = 1 	--Исцеляющий кокон
+
+	--Паладин:
+	damageSpells[35395] = 1 	--Удар воина Света
+	damageSpells[20271] = 1 	--Правосудие
+	damageSpells[85256] = 1 	--Вердикт храмовника
+	damageSpells[20473] = 1 	--Шок небес
+	damageSpells[31935] = 1 	--Щит мстителя
+	damageSpells[119072] = 1 	--Гнев небес
+	damageSpells[53595] = 1 	--Молот праведника
+	damageSpells[53385] = 1 	--Божественная буря
+	damageSpells[26573] = 1 	--Освящение
+	damageSpells[24275] = 1 	--Молот гнева
+	damageSpells[879] = 1 		--Экзорцизм
+	damageSpells[114165] = 1 	--Божественная призма
+	damageSpells[114158] = 4 	--Молот Света
+	damageSpells[114157] = 1 	--Смертный приговор
+	damageSpells[157048] = 1 	--Окончательный приговор
+	
+	healSpells[130552] = 2 		--Резкое слово
+	healSpells[85673] = 2 		--Торжество
+	healSpells[136494] = 2 		--Торжество
+	healSpells[20473] = 2 		--Шок небес
+	healSpells[19750] = 1 		--Вспышка Света
+	healSpells[82327] = 1 		--Святое сияние
+	healSpells[114163] = 1 		--Вечное пламя
+	healSpells[82326] = 1 		--Свет небес
+	healSpells[85222] = 4 		--Свет зари
+	healSpells[114165] = 3 		--Божественная призма
+	healSpells[114158] = 8 		--Молот Света
+	healSpells[114157] = 3 		--Смертный приговор
+	
+	absorbSpells[20925] = 2 	--Священный щит
+	absorbSpells[148039] = 2 	--Священный щит
 end
 
 createABFrames()
