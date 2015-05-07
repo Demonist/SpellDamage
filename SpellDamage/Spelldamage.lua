@@ -180,7 +180,6 @@ local function createSpellsTable()
 	damageSpells[153626] = 2 	--Чародейский шар
 
 	absorbSpells[11426] = 1 	--Ледяная преграда
-	absorbSpells[140468] = 1 	--Пламенное сияние
 
 	--Жрец:
 	damageSpells[585] = 1 		--Кара
