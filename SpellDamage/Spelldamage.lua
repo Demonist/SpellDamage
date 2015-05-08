@@ -26,7 +26,7 @@ EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" then
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" then
 		clearActionBar()
 	elseif event == "ACTIONBAR_SLOT_CHANGED" then
 		local _, id = GetActionInfo(select(1, ...))
@@ -414,7 +414,7 @@ local function createSpellsTable()
 	damageSpells[152280] = 2 	--Осквернение
 	
 	healSpells[47541] = 2 		--Лик смерти
-	
+
 end
 
 createABFrames()
