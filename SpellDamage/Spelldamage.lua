@@ -77,7 +77,7 @@ function updateActionBar()
 					ActionButton.textCenter:SetText(
 						shortNumber(
 							tonumber(
-								matchIndex(GetSpellDescription(id), "%d+", num)
+								matchIndex(GetSpellDescription(id), "%d+%.?%d*", num)
 								)
 							)
 						)
@@ -88,7 +88,7 @@ function updateActionBar()
 					ActionButton.textBottom:SetText(
 						shortNumber(
 							tonumber(
-								matchIndex(GetSpellDescription(id), "%d+", num)
+								matchIndex(GetSpellDescription(id), "%d+%.?%d*", num)
 								)
 							)
 						)
@@ -99,7 +99,7 @@ function updateActionBar()
 						ActionButton.textBottom:SetText(
 						shortNumber(
 							tonumber(
-								matchIndex(GetSpellDescription(id), "%d+", num)
+								matchIndex(GetSpellDescription(id), "%d+%.?%d*", num)
 								)
 							)
 						)
@@ -112,6 +112,9 @@ function updateActionBar()
 end
 
 function shortNumber(number)
+	if number == nil then
+		return number
+	end
 	if number >= 1000000 then
 		return string.format("%.1fm", number / 1000000)
 	elseif number >= 1000 then
@@ -390,9 +393,9 @@ local function createSpellsTable()
 	damageSpells[51723] = 2 	--Веер клинков
 	damageSpells[154904] = 1 	--Внутреннее кровотечение
 	damageSpells[114014] = 1 	--Бросок сюрикена
-	damageSpells152150[] = 1 	--Смерть с небес
+	damageSpells[152150] = 1 	--Смерть с небес
 
-	--Рыцарь смерти^
+	--Рыцарь смерти:
 	damageSpells[49184] = 1 	--Воющий ветер
 	damageSpells[50842] = 1 	--Вскипание крови
 	damageSpells[45477] = 1 	--Ледяное прикосновение
@@ -411,6 +414,7 @@ local function createSpellsTable()
 	damageSpells[152280] = 2 	--Осквернение
 	
 	healSpells[47541] = 2 		--Лик смерти
+	
 end
 
 createABFrames()
