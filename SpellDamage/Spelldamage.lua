@@ -415,6 +415,27 @@ local function createSpellsTable()
 	
 	healSpells[47541] = 2 		--Лик смерти
 
+	--Чернокнижник:
+	damageSpells[686] = 1 		--Стрела Тьмы
+	damageSpells[172] = 1 		--Порча
+	damageSpells[689] = 1 		--Похищение жизни
+	damageSpells[29722] = 1 	--Испепеление
+	damageSpells[116858] = 1 	--Стрела Хаоса
+	damageSpells[30108] = 1 	--Нестабильное колдовство
+	damageSpells[17962] = 1 	--Поджигание
+	damageSpells[348] = 1 		--Жертвенный огонь
+	damageSpells[6353] = 1 		--Ожог души
+	damageSpells[105174] = 1 	--Рука Гул'дана
+	damageSpells[5740] = 1 		--Огненный ливень
+	damageSpells[27243] = 1 	--Семя порчи
+	damageSpells[1949] = 2 		--Адское пламя
+	damageSpells[103103] = 1 	--Похищение души
+	damageSpells[980] = 1 		--Агония
+	damageSpells[17877] = 1 	--Ожог Тьмы
+	damageSpells[48181] = 1 	--Блуждающий дух
+	damageSpells[157695] = 1 	--Демонический заряд
+	damageSpells[152108] = 1 	--Катаклизм
+		
 end
 
 createABFrames()
