@@ -1,11 +1,10 @@
-local ABobjects = {}
+local buttons = {}
 
-local damageSpells = {}
-local healSpells = {}
-local absorbSpells = {}
+local classes = {}
+local currentClass = nil
+local emptyClass = Class:create()
 
 local debugFlag = false
-
 SLASH_SPELLDAMAGE1 = "/spelldamage"
 SLASH_SPELLDAMAGE2 = "/sd"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
@@ -19,6 +18,11 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
 		end
 	end
 end
+function debug(msg)
+	if debugFlag == true then
+		DEFAULT_CHAT_FRAME:AddMessage(msg)
+	end
+end
 
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
@@ -26,164 +30,59 @@ EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" then
-		clearActionBar()
-	elseif event == "ACTIONBAR_SLOT_CHANGED" then
-		local _, id = GetActionInfo(select(1, ...))
-		if damageSpells[id] ~= nil or healSpells[id] ~= nil or absorbSpells[id] ~= nil then
-			clearActionBar()
+	if event == "PLAYER_LOGIN" then
+		local _, className = UnitClass("player")
+		currentClass = classes[className]
+		if currentClass == nil then currentClass = emptyClass end
+	end
+
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" then
+		for _, button in pairs(buttons) do
+			button.centerText:SetText("")
+			button.bottomText:SetText("")
 		end
 	end
 
-	if (event == "UNIT_STATS" and select(1, ...) == "player")
-	or (event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_LOGIN")
-	or (event == "UNIT_AURA" and select(1, ...) == "player") then
-		updateActionBar()
-	elseif event == "ACTIONBAR_SLOT_CHANGED" then
-		local _, id = GetActionInfo(select(1, ...))
-		if damageSpells[id] ~= nil or healSpells[id] ~= nil or absorbSpells[id] ~= nil then
-			updateActionBar()
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED"
+		or (event == "UNIT_STATS" and select(1, ...) == "player")
+		or (event == "UNIT_AURA" and select(1, ...) == "player") then
+		for _, button in pairs(buttons) do
+			local slot = ActionButton_GetPagedID(button) or ActionButton_CalculateAction(button) or button:GetAttribute('action') or 0
+			if HasAction(slot) then
+				local actionType, id = GetActionInfo(slot)
+				if actionType == 'spell' then
+					currentClass:updateButton(button, id)
+				end
+			end
 		end
 	end
 end)
 
-function debug(msg)
-	if debugFlag == true then
-		DEFAULT_CHAT_FRAME:AddMessage(msg)
-	end
-end
-
-function clearActionBar()
-	debug("clearActionBar()")
-	for _, button in pairs(ActionBarButtonEventsFrame.frames) do
-		if (button.textCenter) then
-			button.textCenter:SetText("")
-		end
-		if button.textBottom then
-			button.textBottom:SetText("")
-		end
-	end
-end
-
-function updateActionBar()
-	debug("updateActionBar()")
-	for _, ActionButton in pairs(ABobjects) do       
-		local slot = ActionButton_GetPagedID(ActionButton) or ActionButton_CalculateAction(ActionButton) or ActionButton:GetAttribute('action') or 0
-		if HasAction(slot) then
-			local actionType, id = GetActionInfo(slot)
-			if actionType == 'spell' then
-				local num = damageSpells[id]
-				if num ~= nil then
-					ActionButton.textCenter:SetText(
-						shortNumber(
-							tonumber(
-								matchIndex(GetSpellDescription(id), "%d+%.?%d*", num)
-								)
-							)
-						)
-				end
-
-				num = healSpells[id]
-				if num ~= nil then
-					ActionButton.textBottom:SetText(
-						shortNumber(
-							tonumber(
-								matchIndex(GetSpellDescription(id), "%d+%.?%d*", num)
-								)
-							)
-						)
-					ActionButton.textBottom:SetTextColor(0, 1, 0, 1)
-				else
-					num = absorbSpells[id]
-					if num ~= nil then
-						ActionButton.textBottom:SetText(
-						shortNumber(
-							tonumber(
-								matchIndex(GetSpellDescription(id), "%d+%.?%d*", num)
-								)
-							)
-						)
-						ActionButton.textBottom:SetTextColor(1, 0.5, 1, 1)
-					end
-				end
-			end
-		end  
-	end      
-end
-
-function shortNumber(number)
-	if number == nil then
-		return number
-	end
-	if number >= 1000000 then
-		return string.format("%.1fm", number / 1000000)
-	elseif number >= 1000 then
-		return string.format("%.1fk", number / 1000)
-	end
-	return number
-end
-
-function matchIndex(str, pattern, index)
-  local i = 1
-  for value in str:gmatch(pattern) do
-    if(i == index) then return value end
-    i = i + 1
-  end
-  return nil
-end
-
-local function createABFrames()	
+local function createButtons()	
 	for i = 1, 6 do
 		for j = 1, 12 do
-			table.insert(ABobjects,_G[((select(i,"ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
+			table.insert(buttons, _G[((select(i,"ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
 		end
 	end
 
-	for _, ActionButton in pairs(ABobjects) do     
-		ActionButton.textCenter = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
-		ActionButton.textCenter:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		ActionButton.textCenter:SetPoint("CENTER" , 0, 0)	
-		ActionButton.textCenter:SetPoint("LEFT", 0, 0)	
-		ActionButton.textCenter:SetTextColor(1, 1, 0, 1)
+	for _, button in pairs(buttons) do     
+		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
+		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		button.centerText:SetPoint("CENTER" , 0, 0)	
+		button.centerText:SetPoint("LEFT", 0, 0)	
 		
-		ActionButton.textBottom = ActionButton:CreateFontString(nil, nil, "GameFontNormalLeft")
-		ActionButton.textBottom:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		ActionButton.textBottom:SetPoint("BOTTOM" , 0, 0)	
-		ActionButton.textBottom:SetPoint("LEFT", 0, 0)	
-		ActionButton.textBottom:SetTextColor(0, 1, 0, 1)
+		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
+		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		button.bottomText:SetPoint("BOTTOM" , 0, 0)	
+		button.bottomText:SetPoint("LEFT", 0, 0)	
 	end
+end
+
+local function createClasses()
+	classes["MAGE"] = Mage
 end
 
 local function createSpellsTable()
-	--Маг:
-	damageSpells[44614] = 1 	--Стрела ледяного огня
-	damageSpells[122] = 2 		--Кольцо льда
-	damageSpells[2136] = 1 		--Огненный взрыв
-	damageSpells[11366] = 1 	--Огненная глыба
-	damageSpells[30451] = 1		--Чародейская вспышка
-	damageSpells[116] = 1 		--Ледяная стрела
-	damageSpells[133] = 1 		--Огненный шар
-	damageSpells[1449] = 1 		--Чародейский взрыв
-	damageSpells[2948] = 1 		--Ожог
-	damageSpells[30455] = 1 	--Ледяное копье
-	damageSpells[108853] = 1 	--Пламенный взрыв
-	damageSpells[5143] = 3 		--Чародейские стрелы
-	damageSpells[120] = 1 		--Конус холода
-	damageSpells[2120] = 1 		--Огненный столб
-	damageSpells[10] = 1 		--Снежная буря
-	damageSpells[31661] = 1 	--Дыхание дракона
-	damageSpells[84714] = 1 	--Ледяной шар
-	damageSpells[114923] = 1 	--Буря Пустоты
-	damageSpells[157981] = 1 	--Взрывная волна
-	damageSpells[44457] = 1 	--Живая бомба
-	damageSpells[157997] = 1 	--Кольцо обледенения
-	damageSpells[157980] = 1 	--Сверхновая
-	damageSpells[153595] = 2 	--Буря комет
-	damageSpells[153561] = 2 	--Метеор
-	damageSpells[153626] = 2 	--Чародейский шар
-
-	absorbSpells[11426] = 1 	--Ледяная преграда
-
 	--Жрец:
 	damageSpells[585] = 1 		--Кара
 	damageSpells[589] = 1 		--Слово Тьмы: Боль
@@ -466,5 +365,5 @@ local function createSpellsTable()
 	absorbSpells[18270] = 3 	--Тотем каменной преграды
 end
 
-createABFrames()
-createSpellsTable()
+createClasses()
+createButtons()
