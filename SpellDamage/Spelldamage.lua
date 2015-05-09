@@ -435,7 +435,35 @@ local function createSpellsTable()
 	damageSpells[48181] = 1 	--Блуждающий дух
 	damageSpells[157695] = 1 	--Демонический заряд
 	damageSpells[152108] = 1 	--Катаклизм
-		
+
+	--Шаман:
+	damageSpells[403] = 1 		--Молния
+	damageSpells[73899] = 1 	--Стихийный удар
+	damageSpells[8042] = 1 		--Земной шок
+	damageSpells[324] = 1 		--Щит молний
+	damageSpells[60103] = 1 	--Вскипание лавы
+	damageSpells[51490] = 1 	--Гром и молния
+	damageSpells[8050] = 1 		--Огненный шок
+	damageSpells[3599] = 5 		--Опаляющий тотем
+	damageSpells[8056] = 1 		--Ледяной шок
+	damageSpells[17364] = 1 	--Удар бури
+	damageSpells[421] = 1 		--Цепная молния
+	damageSpells[51505] = 1 	--Выброс лавы
+	damageSpells[8190] = 4 		--Тотем магмы
+	damageSpells[1535] = 2 		--Кольцо огня
+	damageSpells[61882] = 2 	--Землетрясение
+	damageSpells[117014] = 1 	--Удар духов стихии
+
+	healSpells[8004] = 1 		--Исцеляющий всплеск
+	healSpells[61295] = 1 		--Быстрина
+	healSpells[974] = 2 		--Щит земли
+	healSpells[5394] = 3 		--Тотем исцеляющего потока
+	healSpells[1064] = 1 		--Цепное исцеление
+	healSpells[77472] = 1 		--Волна исцеления
+	healSpells[73920] = 1 		--Целительный ливень
+	healSpells[108280] = 5 		--Тотем целительного прилива
+
+	absorbSpells[18270] = 3 	--Тотем каменной преграды
 end
 
 createABFrames()
