@@ -25,8 +25,9 @@ EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
+EventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" then
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" then
 		clearActionBar()
 	elseif event == "ACTIONBAR_SLOT_CHANGED" then
 		local _, id = GetActionInfo(select(1, ...))
@@ -37,7 +38,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 
 	if (event == "UNIT_STATS" and select(1, ...) == "player")
 	or (event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_LOGIN")
-	or (event == "UNIT_AURA" and select(1, ...) == "player") then
+	or (event == "UNIT_AURA" and select(1, ...) == "player")
+	or event == "ACTIONBAR_PAGE_CHANGED" then
 		updateActionBar()
 	elseif event == "ACTIONBAR_SLOT_CHANGED" then
 		local _, id = GetActionInfo(select(1, ...))
