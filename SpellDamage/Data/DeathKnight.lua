@@ -1,0 +1,28 @@
+--Удар Плети:
+ScourgeStrike = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
+	data.damage = match[1] + match[2]
+	end)
+
+--Смертельное поглощение:
+DeathSiphon = MultiParser:create(SpellDamageAndHeal, {1, 2}, function(data, match)
+	data.damage = match[1]
+	data.heal = data.damage * match[2] / 100
+	end)
+
+DeathKnight = Class:create()
+DeathKnight.spells[49184]	= SimpleDamageParser 		--Воющий ветер
+DeathKnight.spells[50842]	= SimpleDamageParser 		--Вскипание крови
+DeathKnight.spells[45477]	= SimpleDamageParser 		--Ледяное прикосновение
+DeathKnight.spells[47541]	= DoubleParser:create(SpellDamageAndHeal, 1, 2) 	--Лик смерти
+DeathKnight.spells[45462]	= SimpleDamageParser 		--Удар чумы
+DeathKnight.spells[49998]	= SimpleDamageParser		--Удар смерти
+DeathKnight.spells[55090]	= ScourgeStrike 			--Удар Плети
+DeathKnight.spells[49020]	= SimpleDamageParser 		--Уничтожение
+DeathKnight.spells[43265]	= SimpleTimeDamageParser 	--Смерть и разложение
+DeathKnight.spells[85948]	= SimpleDamageParser 		--Удар разложения
+DeathKnight.spells[108196]	= DeathSiphon			 	--Смертельное поглощение
+DeathKnight.spells[114866]	= SimpleDamageParser 		--Жнец душ
+DeathKnight.spells[130735]	= SimpleDamageParser 		--Жнец душ
+DeathKnight.spells[130736]	= SimpleDamageParser 		--Жнец душ
+DeathKnight.spells[152279]	= SimpleTimeDamageParser 	--Дыхание Синдрагосы
+DeathKnight.spells[152280]	= SimpleTimeDamage2 	--Осквернение

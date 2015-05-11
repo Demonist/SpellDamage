@@ -1,5 +1,69 @@
+--Unilites:
+
+function shortNumber(number)
+	if number == nil then
+		return ""
+	end
+
+	if number >= 1000000 then
+		return string.format("%.1fm", number / 1000000)
+	elseif number >= 1000 then
+		return string.format("%.1fk", number / 1000)
+	end
+	return tostring(number)
+end
+
+function matchDigit(str, index)
+	local i = 1
+	for match in str:gmatch("%d+[%.,]?%d*") do
+		if i == index then return tonumber(match) end
+		i = i + 1
+	end
+	return nil
+end
+
+function matchDigits(str, indexTable)
+	local ret = {}
+	local keys = {}
+	for _, key in pairs(indexTable) do keys[key] = true end
+	local i, matched = 1, 0
+	for match in str:gmatch("%d+[%.,]?%d*") do
+		if keys[i] ~= nil then
+			ret[i] = tonumber(match)
+			matched = matched + 1
+		end
+		i = i + 1
+	end
+	if matched == #indexTable then return ret end
+	return nil
+end
+
+function printTable(table)
+	for key, value in pairs(table) do
+		DEFAULT_CHAT_FRAME:AddMessage(key .. " -> " .. value)
+	end
+end
+
+local SPELL_COMBO_POINTS = 4
+function comboMatch(list)
+	local combo = UnitPower("player", SPELL_COMBO_POINTS)
+	if combo >= 5 then return list[5] end
+	for i, index in pairs(list) do
+		if i == combo then return index end
+	end
+	return nil
+end
+function comboHelper(type, field, indexTable)
+	return MultiParser:create(type, indexTable, function(data, match)
+		local index = comboMatch(indexTable)
+		if index ~= nil then data[field] = match[index] end
+	end)
+end
+
+--Data:
+
 SpellUnknown, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7
-SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal = 10, 11, 12
+SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal = 10, 11, 12, 13, 14
 SpellData = {}
 function SpellData:create(type)
 	local data = {}
@@ -25,7 +89,7 @@ function SpellParser:create()
 end
 
 function SpellParser:getData(description)
-	return SpellData.create(SpellUnknown)
+	return SpellData:create(SpellUnknown)
 end
 
 SimpleParser = SpellParser:create()
@@ -61,6 +125,9 @@ SimpleManaParser, SimpleTimeManaParser = SimpleParser:create(SpellMana, 1), Simp
 SimpleAbsorbParser = SimpleParser:create(SpellAbsorb, 1)
 
 SimpleDamageParser2 = SimpleParser:create(SpellDamage, 2)
+SimpleTimeDamage2 = SimpleParser:create(SpellTimeDamage, 2)
+SimpleHealParser2 = SimpleParser:create(SpellHeal, 2)
+SimpleTimeHealParser2 = SimpleParser:create(SpellTimeHeal, 2)
 
 --
 
@@ -88,12 +155,60 @@ function DoubleParser:getData(description)
 		elseif self.type == SpellDamageAndHeal then
 			data.damage = match[self.directIndex]
 			data.heal = match[self.timeIndex]
+		elseif self.type == SpellDamageAndTimeHeal then
+			data.damage = match[self.directIndex]
+			data.timeHeal = match[self.timeIndex]
 		end
 	end
 	return data
 end
 
 DoubleDamageParser = DoubleParser:create(SpellDamageAndTimeDamage, 1, 2)
+
+--
+
+MultiParser = SpellParser:create()
+function MultiParser:create(type, indexTable, func)
+	local parser = {}
+	parser.type = type
+	parser.indexTable = indexTable
+	parser.computeFunc = func
+	self.__index = self
+	return setmetatable(parser, self)
+end
+
+function MultiParser:getData(description)
+	local data = SpellData:create(SpellUnknown)
+	local match = matchDigits(description, self.indexTable)
+	if match ~= nil then
+		data.type = self.type
+		self.computeFunc(data, match)
+	end
+	return data
+end
+
+--
+
+AverageParser = SpellParser:create()
+function AverageParser:create(firstIndex, secondIndex)
+	local parser = {}
+	parser.firstIndex = firstIndex
+	parser.secondIndex = secondIndex
+	self.__index = self
+	return setmetatable(parser, self)
+end
+
+function AverageParser:getData(description)
+	local data = SpellData:create(SpellUnknown)
+	local match = matchDigits(description, {self.firstIndex, self.secondIndex})
+	if match ~= nil then
+		data.type = SpellDamage
+		data.damage = (match[self.firstIndex] + match[self.secondIndex]) / 2
+	end
+	return data
+end
+
+SimpleAverageParser = AverageParser:create(1, 2)
 
 --Class:
 
@@ -102,6 +217,8 @@ function Class:create()
 	local class = {}
 	class.spells = {}
 	self.__index = self
+	self.dependFromPower = false
+	class.dependPowerTypes = {}
 	return setmetatable(class, self)
 end
 
@@ -122,7 +239,7 @@ function Class:updateButton(button, spellId)
 		button.bottomText:SetText( shortNumber(data.heal) )
 		button.bottomText:SetTextColor(0, 1, 0, 1)
 	elseif data.type == SpellTimeHeal then
-		button.bottomText:SetText("(".. shortNumber(data.heal) ..")")
+		button.bottomText:SetText("(".. shortNumber(data.timeHeal) ..")")
 		button.bottomText:SetTextColor(0, 1, 0, 1)
 	elseif data.type == SpellMana then
 		button.bottomText:SetText( shortNumber(data.mana) )
@@ -138,48 +255,24 @@ function Class:updateButton(button, spellId)
 		button.centerText:SetTextColor(1, 1, 0, 1)
 		button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
 		button.bottomText:SetTextColor(1, 1, 0, 1)
-	end
-end
-
---Unilites:
-
-function shortNumber(number)
-	if number == nil then
-		return ""
-	end
-
-	if number >= 1000000 then
-		return string.format("%.1fm", number / 1000000)
-	elseif number >= 1000 then
-		return string.format("%.1fk", number / 1000)
-	end
-	return tostring(number)
-end
-
-function matchDigit(str, index)
-	local i = 1
-	for match in str:gmatch("%d+%.?%d*") do
-		if i == index then return tonumber(match) end
-		i = i + 1
-	end
-	return nil
-end
-
-function matchDigits(str, indexTable)
-	local ret = {}
-	local keys = {}
-	for _, key in pairs(indexTable) do keys[key] = true end
-	local i = 1
-	for match in str:gmatch("%d+%.?%d*") do
-		if keys[i] ~= nil then ret[i] = tonumber(match) end
-		i = i + 1
-	end
-	if #ret == #indexTable then return ret end
-	return nil
-end
-
-function printTable(table)
-	for key, value in pairs(table) do
-		DEFAULT_CHAT_FRAME:AddMessage(key .. " -> " .. value)
+	elseif data.type == SpellHealAndTimeHeal then
+		button.centerText:SetText( shortNumber(data.heal) )
+		button.centerText:SetTextColor(0, 1, 0, 1)
+		button.bottomText:SetText("(".. shortNumber(data.timeHeal) ..")")
+		button.bottomText:SetTextColor(0, 1, 0, 1)
+	elseif data.type == SpellDamageAndHeal then
+		button.centerText:SetText( shortNumber(data.damage) )
+		button.centerText:SetTextColor(1, 1, 0, 1)
+		button.bottomText:SetText("(".. shortNumber(data.heal) ..")")
+		button.bottomText:SetTextColor(0, 1, 0, 1)
+	elseif data.type == SpellTimeDamageAndTimeHeal then
+		button.centerText:SetText("(".. shortNumber(data.timeDamage) ..")")
+		button.centerText:SetTextColor(1, 1, 0, 1)
+		button.bottomText:SetText("(".. shortNumber(data.timeHeal) ..")")
+		button.bottomText:SetTextColor(0, 1, 0, 1)
+	elseif data.type == SpellDamageAndTimeHeal then
+		button.centerText:SetText( shortNumber(data.damage) )
+		button.centerText:SetTextColor(1, 1, 0, 1)
+		button.bottomText:SetText("(".. shortNumber(data.timeHeal) ..")")
 	end
 end
