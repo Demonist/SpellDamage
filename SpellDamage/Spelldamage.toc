@@ -1,7 +1,21 @@
 ## Interface: 60100
 ## Title: SpellDamage
 ## Author: Demonist
-## Version: 0.4.1
+## Version: 0.5
 ## Notes: Displays spell's damage, heal or absorb on action bar.
+
+Data/Core.lua
+
+Data/DeathKnight.lua
+Data/Druid.lua
+Data/Hunter.lua
+Data/Mage.lua
+Data/Monk.lua
+Data/Paladin.lua
+Data/Priest.lua
+Data/Rogue.lua
+Data/Shaman.lua
+Data/Warlock.lua
+Data/Warrior.lua
 
 SpellDamage.lua
