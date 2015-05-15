@@ -1,23 +1,23 @@
---Правосудие:
-Judgment = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
-	data.damage = match[1] + match[2]
-end)
+--Возложение рук:
+local LayOnHands = MultiParser:create(SpellHeal, {1}, function(data, match)
+	data.heal = UnitHealthMax("player")
+	end)
 
 --Вечное пламя:
-EternalFlame = MultiParser:create(SpellHealAndTimeHeal, {2, 3}, function(data, match)
+local EternalFlame = MultiParser:create(SpellHealAndTimeHeal, {2, 3}, function(data, match)
 	data.heal = match[2]
 	data.timeHeal = match[3] * 15
 end)
 
 --Молот Света:
-LightsHammer = MultiParser:create(SpelLDamageAndHeal, {4, 8}, function(data, match)
+local LightsHammer = MultiParser:create(SpelLDamageAndHeal, {4, 8}, function(data, match)
 	data.damage = match[4] * 7
 	data.timeHeal = match[8] * 7
 end)
 
 Paladin = Class:create()
 Paladin.spells[35395]	= SimpleDamageParser 									--Удар воина Света
-Paladin.spells[20271]	= Judgment 												--Правосудие
+Paladin.spells[20271]	= SimpleDamageParser 									--Правосудие
 Paladin.spells[130552]	= SimpleHealParser2 									--Резкое слово
 Paladin.spells[85673]	= SimpleHealParser2 									--Торжество
 Paladin.spells[136494]	= SimpleHealParser2 									--Торжество
@@ -25,6 +25,7 @@ Paladin.spells[85256]	= SimpleDamageParser 									--Вердикт храмо�
 Paladin.spells[20473]	= DoubleParser:create(SpellDamageAndHeal, 1, 2) 		--Шок небес
 Paladin.spells[31935]	= SimpleDamageParser 									--Щит мстителя
 Paladin.spells[19750]	= SimpleHealParser 	 									--Вспышка Света
+Paladin.spells[633] 	= LayOnHands 											--Возложение рук
 Paladin.spells[2812]	= SimpleDamageParser 									--Обличение
 Paladin.spells[119072]	= SimpleDamageParser 									--Гнев небес
 Paladin.spells[53595]	= SimpleDamageParser 									--Молот праведника

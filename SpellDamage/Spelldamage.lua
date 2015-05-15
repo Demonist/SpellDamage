@@ -62,7 +62,7 @@ local function createButtons()
 end
 
 local function createClasses()
-	classes["DEATH KNIGHT"]	= DeathKnight
+	classes["DEATHKNIGHT "]	= DeathKnight
 	classes["DRUID"]		= Druid
 	classes["HUNTER"]		= Hunter
 	classes["MAGE"]			= Mage

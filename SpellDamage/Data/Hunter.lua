@@ -4,6 +4,12 @@ local ExplosiveShot = MultiParser:create(SpellDamageAndTimeDamage, {1, 2}, funct
 	data.timeDamage = data.damage * match[2]
 	end)
 
+--Убийственный выстрел:
+local KillShot = MultiParser:create(SpellDamageAndHeal, {1, 3}, function(data, match)
+	data.damage = match[1]
+	data.heal = match[3] * UnitHealthMax("player") / 100
+	end)
+
 Hunter = Class:create()
 Hunter.spells[3044]		= SimpleDamageParser 		--Чародейский выстрел
 Hunter.spells[56641]	= SimpleDamageParser 		--Верный выстрел
@@ -11,9 +17,10 @@ Hunter.spells[34026]	= SimpleDamageParser 		--Команда "Взять!"
 Hunter.spells[19434]	= SimpleDamageParser 		--Прицельный выстрел
 Hunter.spells[53301]	= ExplosiveShot 			--Разрывной выстрел
 Hunter.spells[2643]		= SimpleDamageParser2 		--Залп
-Hunter.spells[53351]	= SimpleDamageParser 		--Убийственный выстрел
+Hunter.spells[53351]	= KillShot 					--Убийственный выстрел
 Hunter.spells[13813]	= DoubleParser:create(SpellDamageAndTimeDamage, 1, 3) 	--Взрывная ловушка
 Hunter.spells[3674]		= SimpleTimeDamageParser 	--Черная стрела
+Hunter.spells[53209]	= SimpleDamageParser 		--Выстрел химеры
 Hunter.spells[77767]	= SimpleDamageParser 		--Выстрел кобры
 Hunter.spells[117050]	= SimpleParser:create(SpellDamage, 3) 	--Бросок глеф
 Hunter.spells[109259]	= SimpleDamageParser 		--Мощный выстрел

@@ -1,23 +1,49 @@
 local SPELL_POWER_LIGHT_FORCE = 12
 
 --Устранение вреда:
-ExpelHarm = MultiParser:create(SpellDamageAndHeal, {1, 2, 4}, function(data, match)
+local ExpelHarm = MultiParser:create(SpellDamageAndHeal, {1, 2, 4}, function(data, match)
 	data.heal = (match[1] + match[2]) / 2
 	data.damage = data.heal * match[4] / 100
 	end)
 
+--Сфера дзен:
+local ZenSphere = MultiParser:create(SpellTimeDamageAndTimeHeal, {1, 2}, function(data, match)
+	data.timeHeal = match[1] * 8
+	data.timeDamage = match[2] * 8
+	end)
+
+--Танцующий журавль:
+local SpinningCraneKick = SpellParser:create()
+function SpinningCraneKick:getData(description)
+	local data = SpellData:create(SpellUnknown)
+	local firstSpecializationNumber = GetSpecialization(false, false, 1)
+	local secondSpecializationNumber = GetSpecialization(false, false, 2)
+	local firstSpicializationId = 0
+	local secondSpecializationId = 0
+	if firstSpecializationNumber ~= nil then firstSpicializationId = GetSpecializationInfo(firstSpecializationNumber) end
+	if secondSpecializationNumber ~= nil then secondSpecializationId = GetSpecializationInfo(secondSpecializationNumber) end
+	if firstSpicializationId == 270 or secondSpecializationId == 270 then
+		data.type = SpellTimeHeal
+		data.timeHeal = matchDigit(description, 3)
+	else
+		data.type = SpellTimeDamage
+		data.timeDamage = matchDigit(description, 1)
+	end
+	return data
+end
+
 --Дыхание Змеи:
-BreathOfTheSerpent = MultiParser:create(SpellTimeHeal, {2, 4}, function(data, match)
+local BreathOfTheSerpent = MultiParser:create(SpellTimeHeal, {2, 4}, function(data, match)
 	data.timeHeal = match[2] * match[4]
 	end)
 
 --Ураганный удар:
-HurricaneStrike = MultiParser:create(SpellTimeDamage, {2, 3}, function(data, match)
+local HurricaneStrike = MultiParser:create(SpellTimeDamage, {2, 3}, function(data, match)
 	data.timeDamage = (match[2] + match[3]) / 2
 	end)
 
 --Взрыв ци:
-ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4, 6}, function(data, match)
+local ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4, 6}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
 	data.heal = match[3] + (chi * match[4])
 	if chi > 0 then 
@@ -27,7 +53,7 @@ ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4, 6}, function(data, match)
 	end)
 
 --Взрыв ци:
-ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4, 6}, function(data, match)
+local ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4, 6}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
 	data.damage = match[3] + (chi * match[4])
 	if chi > 0 then 
@@ -37,7 +63,7 @@ ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4, 6}, function(data, match)
 	end)
 
 --Взрыв ци:
-ChiExplosion3 = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
+local ChiExplosion3 = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
 	data.damage = match[3] + (chi * match[4])
 	end)
@@ -61,8 +87,9 @@ Monk.spells[115295] = SimpleParser:create(SpellAbsort, 2) 				--Защита
 Monk.spells[115072] = ExpelHarm 										--Устранение вреда
 Monk.spells[115098] = DoubleParser:create(SpellDamageAndHeal, 1, 2) 	--Волна ци
 Monk.spells[123986] = DoubleParser:create(SpellDamageAndHeal, 2, 2) 	--Выброс ци
+Monk.spells[124081]	= ZenSphere 										--Сфера дзен
 Monk.spells[115288] = SimpleManaParser									--Будоражащий отвар
-Monk.spells[101546] = SimpleTimeDamageParser 							--Танцующий журавль
+Monk.spells[101546] = SpinningCraneKick 								--Танцующий журавль
 Monk.spells[116849] = SimpleAbsorbParser 								--Исцеляющий кокон
 Monk.spells[117952] = SimpleTimeDamageParser 							--Сверкающая нефритовая молния
 Monk.spells[107428] = SimpleAverageParser 								--Удар восходящего солнца

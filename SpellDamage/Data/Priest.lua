@@ -1,16 +1,22 @@
+--Божественный оплот:
+local AngelicBulwark = MultiParser:create(SpellAbsorb, {1}, function(data, match)
+	data.absorb = match[1] * UnitHealthMax("player") / 100
+	end)
+
 Priest = Class:create()
 Priest.spells[585]		= SimpleDamageParser 								--Кара
 Priest.spells[589]		= DoubleDamageParser 								--Слово Тьмы: Боль
 Priest.spells[17]		= SimpleAbsorbParser 								--Слово силы: Щит
 Priest.spells[2061]		= SimpleHealParser 									--Быстрое исцеление
-Priest.spells[47540]	= DoubleParser:create(SpellDamageAndHeal, 1, 2) 	--Исповедь
+Priest.spells[47540]	= DoubleParser:create(SpellDamageAndTimeHeal, 1, 2) --Исповедь
 Priest.spells[15407]	= SimpleTimeDamageParser 							--Пытка разума
 Priest.spells[88625]	= SimpleDamageParser 								--Слово Света: Воздаяние
+Priest.spells[108945]	= AngelicBulwark 									--Божественный оплот
 Priest.spells[14914]	= DoubleDamageParser 								--Священный огонь
 Priest.spells[132157]	= DoubleParser:create(SpellDamageAndHeal, 1, 3) 	--Кольцо света
 Priest.spells[88684]	= SimpleHealParser 									--Слово Света: Безмятежность
 Priest.spells[8092]		= SimpleDamageParser 								--Взрыв разума
-Priest.spells[2944]		= SimpleDamageParser 								--Всепожирающая чума
+Priest.spells[2944]		= DoubleParser:create(SpellDamageAndHeal, 2, 3) 	--Всепожирающая чума
 Priest.spells[139]		= SimpleTimeHealParser 								--Обновление
 Priest.spells[34914]	= SimpleTimeDamageParser 							--Прикосновение вампира
 Priest.spells[48045]	= SimpleTimeDamageParser 							--Иссушение разума

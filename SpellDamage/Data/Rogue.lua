@@ -1,24 +1,24 @@
 --Кровоизлияние:
-Hemorrhage = DoubleParser:create(SpellDamageAndTimeDamage, 1, 3)
+local Hemorrhage = DoubleParser:create(SpellDamageAndTimeDamage, 1, 3)
 
 --Расправа:
-Mutilate = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
+local Mutilate = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
 	data.damage = match[1] + match[3]
 end)
 
 --Заживление ран:
-Recuperate = MultiParser:create(SpellTimeHeal, {1, 2}, function(data, match)
+local Recuperate = MultiParser:create(SpellTimeHeal, {1, 2}, function(data, match)
 	local heal = match[1] * UnitHealthMax("player") / 100
 	data.timeHeal = UnitPower("player", SPELL_COMBO_POINTS) * 2 * heal
 end)
 
 --Череда убийств:
-KillingSpree = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
-	data.damage = match[3] + match[4]
+local KillingSpree = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
+	data.damage = (match[3] + match[4]) * 7
 end)
 
 --Кровавый вихрь:
-CrimsonTempest = SpellParser:create()
+local CrimsonTempest = SpellParser:create()
 function CrimsonTempest:getData(description)
 	local data = SpellData:create(SpellUnknown)
 	local timeMulpiplier = matchDigit(description, 2)
@@ -51,5 +51,5 @@ Rogue.spells[703]		= SimpleTimeDamageParser	--Гаррота
 Rogue.spells[51723]		= SimpleDamageParser2 		--Веер клинков
 Rogue.spells[51690]		= KillingSpree 				--Череда убийств
 Rogue.spells[121411]	= CrimsonTempest			--Кровавый вихрь
-Rogue.spells[114014]	= SimpleDamageParser 	--Бросок сюрикена
-Rogue.spells[152150]	= SimpleDamageParser 	--Смерть с небес
+Rogue.spells[114014]	= SimpleDamageParser 		--Бросок сюрикена
+Rogue.spells[152150]	= SimpleDamageParser 		--Смерть с небес

@@ -1,25 +1,25 @@
 --Обновление
-Renewal = MultiParser:create(SpellHeal, {1}, function(data, match)
+local Renewal = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
 --Жизнецвет:
-Lifebloom = MultiParser:create(SpellTimeHeal, {1, 3}, function(data, match)
+local Lifebloom = MultiParser:create(SpellTimeHeal, {1, 3}, function(data, match)
 	data.timeHeal = match[1] + match[3]
 end)
 
 --Сила Природы:
-ForceOfNature = MultiParser:create(SpellTimeDamage, {3}, function(data, match)
+local ForceOfNature = MultiParser:create(SpellTimeDamage, {3}, function(data, match)
 	data.timeHeal = match[3] * 7
 end)
 
 --Звездопад:
-Starfall = MultiParser:create(SpellTimeDamage, {2}, function(data, match)
+local Starfall = MultiParser:create(SpellTimeDamage, {2}, function(data, match)
 	data.timeHeal = match[3] * 10
 end)
 
 --Дикий гриб:
-WildMushroom = MultiParser:create(SpellTimeHeal, {3}, function(data, match)
+local WildMushroom = MultiParser:create(SpellTimeHeal, {4}, function(data, match)
 	data.timeHeal = match[4] * 15
 end)
 
@@ -38,7 +38,7 @@ Druid.spells[2912]		= SimpleDamageParser 		--Звездный огонь
 Druid.spells[18562]		= SimpleHealParser 			--Быстрое восстановление
 Druid.spells[6807]		= SimpleDamageParser 		--Трепка
 Druid.spells[78674]		= SimpleDamageParser 		--Звездный поток
-Druid.spells[8936]		= DoubleParser:create(SpellHealAndTimeHeal, 1, 2) 						--Восстановление
+Druid.spells[8936]		= DoubleParser:create(SpellHealAndTimeHeal, 1, 2) 				--Восстановление
 Druid.spells[164815]	= DoubleDamageParser 		--Солнечный огонь
 Druid.spells[1079]		= comboHelper(SpellTimeDamage, "timeDamage", {3, 5, 7, 9, 11})	--Разорвать
 Druid.spells[106785]	= SimpleDamageParser 		--Размах
@@ -54,6 +54,7 @@ Druid.spells[33831]		= ForceOfNature 			--Сила Природы
 Druid.spells[102693]	= SimpleTimeHealParser 		--Сила Природы
 Druid.spells[102703]	= ForceOfNature				--Сила Природы
 Druid.spells[102706]	= ForceOfNature 			--Сила Природы
+Druid.spells[22842]		= SimpleHealParser2 		--Неистовое восстановление
 Druid.spells[740]		= SimpleTimeHealParser 		--Спокойствие
 Druid.spells[48438]		= SimpleParser:create(SpellTimeHeal, 3) 				--Буйный рост
 Druid.spells[48505]		= Starfall 				 	--Звездопад
@@ -61,8 +62,3 @@ Druid.spells[22570]		= comboHelper(SpellDamage, "damage", {2, 5, 8, 11, 14})	--�
 Druid.spells[145205]	= WildMushroom 				--Дикий гриб
 Druid.spells[152221]	= DoubleDamageParser 		--Звездная вспышка
 Druid.spells[80313]		= SimpleDamageParser2 		--Раздавить
-
-
-
-
-

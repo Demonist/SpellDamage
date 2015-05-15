@@ -44,7 +44,7 @@ function printTable(table)
 	end
 end
 
-local SPELL_COMBO_POINTS = 4
+SPELL_COMBO_POINTS = 4
 function comboMatch(list)
 	local combo = UnitPower("player", SPELL_COMBO_POINTS)
 	if combo >= 5 then return list[5] end
@@ -63,7 +63,7 @@ end
 --Data:
 
 SpellUnknown, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7
-SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal = 10, 11, 12, 13, 14
+SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana = 10, 11, 12, 13, 14, 15
 SpellData = {}
 function SpellData:create(type)
 	local data = {}
@@ -274,5 +274,11 @@ function Class:updateButton(button, spellId)
 		button.centerText:SetText( shortNumber(data.damage) )
 		button.centerText:SetTextColor(1, 1, 0, 1)
 		button.bottomText:SetText("(".. shortNumber(data.timeHeal) ..")")
+		button.bottomText:SetTextColor(0, 1, 0, 1)
+	elseif data.type == SpellManaAndTimeMana then
+		button.centerText:SetText( shortNumber(data.mana) )
+		button.centerText:SetTextColor(0.5, 0.5, 1, 1)
+		button.bottomText:SetText("(".. shortNumber(data.timeMana) ..")")
+		button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 	end
 end
