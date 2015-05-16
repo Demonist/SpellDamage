@@ -7,7 +7,7 @@ end)
 --Углеотвод:
 local EmberTap = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
-	end)
+end)
 
 --Лик тлена:
 local MortalCoil = MultiParser:create(SpellHeal, {2}, function(data, match)
