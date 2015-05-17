@@ -3,7 +3,7 @@ local Evocation = MultiParser:create(SpellManaAndTimeMana, {1, 2}, function(data
 	local maxMana = UnitManaMax("player")
 	data.mana = match[1] * maxMana / 100
 	data.timeMana = match[2] * maxMana / 100
-	end)
+end)
 
 Mage = Class:create()
 Mage.spells[44614]		= SimpleDamageParser					--Стрела ледяного огня

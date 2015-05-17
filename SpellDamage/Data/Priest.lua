@@ -1,12 +1,12 @@
 --Божественный оплот:
 local AngelicBulwark = MultiParser:create(SpellAbsorb, {1}, function(data, match)
 	data.absorb = match[1] * UnitHealthMax("player") / 100
-	end)
+end)
 
 --Молитва отчаяния:
 local DesperatePrayer = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
-	end)
+end)
 
 Priest = Class:create()
 Priest.spells[585]		= SimpleDamageParser 								--Кара
@@ -31,6 +31,8 @@ Priest.spells[126135]	= SimpleParser:create(SpellTimeHeal, 3)				--Колоде�
 Priest.spells[73510]	= SimpleDamageParser 								--Пронзание разума
 Priest.spells[129250]	= DoubleDamageParser 								--Слово силы: Утешение
 Priest.spells[596]		= SimpleHealParser2 								--Молитва исцеления
+Priest.spells[129197]	= SimpleTimeDamageParser 							--Безумие
+Priest.spells[179338]	= SimpleTimeDamageParser 							--Полное безумие
 Priest.spells[32379]	= SimpleTimeDamageParser 							--Слово Тьмы: Смерть
 Priest.spells[32546]	= SimpleHealParser 									--Связующее исцеление
 Priest.spells[34861]	= SimpleParser:create(SpellHeal, 3) 				--Круг исцеления

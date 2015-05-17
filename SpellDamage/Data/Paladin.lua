@@ -1,7 +1,7 @@
 --Возложение рук:
 local LayOnHands = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = UnitHealthMax("player")
-	end)
+end)
 
 --Вечное пламя:
 local EternalFlame = MultiParser:create(SpellHealAndTimeHeal, {2, 3}, function(data, match)

@@ -1,23 +1,23 @@
 --Удар Плети:
 local ScourgeStrike = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
 	data.damage = match[1] + match[2]
-	end)
+end)
 
 --Преобразование:
 local Conversion = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
-	end)
+end)
 
 --Смертельное поглощение:
 local DeathSiphon = MultiParser:create(SpellDamageAndHeal, {1, 2}, function(data, match)
 	data.damage = match[1]
 	data.heal = data.damage * match[2] / 100
-	end)
+end)
 
 --Смертельный союз:
 local DeathPact = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
-	end)
+end)
 
 DeathKnight = Class:create()
 DeathKnight.spells[49184]	= SimpleDamageParser 		--Воющий ветер

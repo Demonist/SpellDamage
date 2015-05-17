@@ -4,7 +4,7 @@ local SPELL_POWER_LIGHT_FORCE = 12
 local ExpelHarm = MultiParser:create(SpellDamageAndHeal, {1, 2, 4}, function(data, match)
 	data.heal = (match[1] + match[2]) / 2
 	data.damage = data.heal * match[4] / 100
-	end)
+end)
 
 --Сфера дзен:
 local ZenSphere = MultiParser:create(SpellTimeDamageAndTimeHeal, {1, 2}, function(data, match)
@@ -35,12 +35,12 @@ end
 --Дыхание Змеи:
 local BreathOfTheSerpent = MultiParser:create(SpellTimeHeal, {2, 4}, function(data, match)
 	data.timeHeal = match[2] * match[4]
-	end)
+end)
 
 --Ураганный удар:
 local HurricaneStrike = MultiParser:create(SpellTimeDamage, {2, 3}, function(data, match)
 	data.timeDamage = (match[2] + match[3]) / 2
-	end)
+end)
 
 --Взрыв ци:
 local ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4, 6}, function(data, match)
@@ -50,7 +50,7 @@ local ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4, 6}, function(data, 
 		data.type = SpellDamageAndTimeDamage
 		data.timeDamage = match[6]
 	end
-	end)
+end)
 
 --Взрыв ци:
 local ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4, 6}, function(data, match)
@@ -60,19 +60,20 @@ local ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4, 6}, function(data, ma
 		data.type = SpellHealAndTimeHeal
 		data.timeHeal = match[6]
 	end
-	end)
+end)
 
 --Взрыв ци:
 local ChiExplosion3 = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
 	data.damage = match[3] + (chi * match[4])
-	end)
+end)
 
 Monk = Class:create()
 Monk.dependFromPower = true
 Monk.dependPowerTypes["CHI"] = true
 Monk.spells[100780] = SimpleAverageParser 								--Дзуки
 Monk.spells[108557] = SimpleAverageParser 								--Дзуки
+Monk.spells[115698] = SimpleAverageParser 								--Дзуки
 Monk.spells[100787] = SimpleAverageParser 								--Лапа тигра
 Monk.spells[100784] = SimpleAverageParser 								--Нокаутирующий удар
 Monk.spells[113656] = SimpleTimeDamageParser 							--Неистовые кулаки
@@ -86,7 +87,7 @@ Monk.spells[115151] = SimpleTimeHealParser2 							--Заживляющий ту
 Monk.spells[115295] = SimpleParser:create(SpellAbsort, 2) 				--Защита
 Monk.spells[115072] = ExpelHarm 										--Устранение вреда
 Monk.spells[115098] = DoubleParser:create(SpellDamageAndHeal, 1, 2) 	--Волна ци
-Monk.spells[123986] = DoubleParser:create(SpellDamageAndHeal, 2, 2) 	--Выброс ци
+Monk.spells[123986] = DoubleParser:create(SpellDamageAndHeal, 2, 3) 	--Выброс ци
 Monk.spells[124081]	= ZenSphere 										--Сфера дзен
 Monk.spells[115288] = SimpleManaParser									--Будоражащий отвар
 Monk.spells[101546] = SpinningCraneKick 								--Танцующий журавль

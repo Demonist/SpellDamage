@@ -1,31 +1,31 @@
 --Опустошитель:
 local Ravager = MultiParser:create(SpellTimeDamage, {1, 4}, function(data, match)
 	data.timeDamage = match[1] * match[4]
-	end)
+end)
 
 --Победный раж:
 local VictoryRush = MultiParser:create(SpellDamageAndHeal, {1, 2}, function(data, match)
 	data.damage = match[1]
 	data.heal = match[2] * UnitHealthMax("player") / 100
-	end)
+end)
 
 --Кровопускание:
 local Rend = MultiParser:create(SpellTimeDamage, {1, 3}, function(data, match)
 	data.timeDamage = match[1] + match[3]
-	end)
+end)
 
 --Кровожадность:
 local Bloodthirst = MultiParser:create(SpellDamageAndHeal, {1, 3}, function(data, match)
 	data.damage = match[1]
 	data.heal = match[3] * UnitHealthMax("player") / 100
-	end)
+end)
 
 --Безудержное восстановление:
 local EnragedRegeneration = MultiParser:create(SpellHealAndTimeHeal, {1, 2}, function(data, match)
 	local maxHealth = UnitHealthMax("player")
 	data.heal = match[1] * maxHealth / 100
 	data.timeHeal = match[2] * maxHealth / 100
-	end)
+end)
 
 --Верная победа:
 local ImpendingVictory = VictoryRush
@@ -33,12 +33,12 @@ local ImpendingVictory = VictoryRush
 --Яростный выпад:
 local RagingBlow = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
 	data.damage = match[1] + match[2]
-	end)
+end)
 
 --Вихрь клинков
 local Bladestorm = MultiParser:create(SpellTimeDamage, {2, 4}, function(data, match)
 	data.timeDamage = match[2] * match[4]
-	end)
+end)
 
 Warrior = Class:create()
 Warrior.spells[156287]	= Ravager 				--Опустошитель
@@ -70,6 +70,7 @@ Warrior.spells[46968]	= SimpleDamageParser 	--Ударная волна
 Warrior.spells[12328]	= SimpleDamageParser 	--Размашистые удары
 Warrior.spells[64382]	= SimpleDamageParser 	--Сокрушительный бросок
 Warrior.spells[174926]	= SimpleAbsorbParser 	--Непроницаемый щит
+Warrior.spells[112048]	= SimpleAbsorbParser 	--Непроницаемый щит
 Warrior.spells[167105]	= SimpleDamageParser 	--Удар колосса
 Warrior.spells[6544]	= SimpleDamageParser2 	--Героический прыжок
 Warrior.spells[46924]	= Bladestorm 			--Вихрь клинков

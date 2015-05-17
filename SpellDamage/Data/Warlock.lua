@@ -1,17 +1,23 @@
 --Похищение жизни:
 local DrainLife = MultiParser:create(SpellDamageAndTimeHeal, {1, 2}, function(data, match)
 	data.damage = match[1]
-	data.timeHeal = match[2] * UnitHealthMax("player") / 100
+	data.timeHeal = 0 --match[2] * UnitHealthMax("player") / 100
 end)
 
 --Углеотвод:
 local EmberTap = MultiParser:create(SpellHeal, {1}, function(data, match)
-	data.heal = match[1] * UnitHealthMax("player") / 100
+	if match[1] == nil then 
+		data.heal = -1
+		return
+	end
+	local health = UnitHealthMax("player")
+	if health ~= nil then data.heal = match[1] * UnitHealthMax("player") / 100
+	else data.heal = -2 end
 end)
 
 --Лик тлена:
 local MortalCoil = MultiParser:create(SpellHeal, {2}, function(data, match)
-	data.timeHeal = match[2] * UnitHealthMax("player") / 100
+	data.timeHeal = 0 --match[2] * UnitHealthMax("player") / 100
 end)
 
 Warlock = Class:create()
@@ -28,6 +34,7 @@ Warlock.spells[114635]	= EmberTap 					--Углеотвод
 Warlock.spells[1454]	= SimpleManaParser 			--Жизнеотвод
 Warlock.spells[105174]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 3) 	--Рука Гул'дана
 Warlock.spells[5740]	= SimpleTimeDamageParser 	--Огненный ливень
+Warlock.spells[104232]	= SimpleTimeDamageParser 	--Огненный ливень
 Warlock.spells[27243]	= SimpleTimeDamageParser 	--Семя порчи
 Warlock.spells[1949]	= SimpleTimeDamageParser2 	--Адское пламя
 Warlock.spells[103103]	= SimpleTimeDamageParser 	--Похищение души
