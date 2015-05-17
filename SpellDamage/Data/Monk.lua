@@ -10,24 +10,30 @@ end)
 local ZenSphere = MultiParser:create(SpellTimeDamageAndTimeHeal, {1, 2}, function(data, match)
 	data.timeHeal = match[1] * 8
 	data.timeDamage = match[2] * 8
-	end)
+end)
+
+--Маначай:
+local ManaTea = MultiParser:create(SpellTimeHeal, {3}, function(data, match)
+	local spirit = UnitStat("player", 5)
+	data.timeHeal = match[3] * spirit
+end)
 
 --Танцующий журавль:
 local SpinningCraneKick = SpellParser:create()
 function SpinningCraneKick:getData(description)
 	local data = SpellData:create(SpellUnknown)
-	local firstSpecializationNumber = GetSpecialization(false, false, 1)
-	local secondSpecializationNumber = GetSpecialization(false, false, 2)
-	local firstSpicializationId = 0
-	local secondSpecializationId = 0
-	if firstSpecializationNumber ~= nil then firstSpicializationId = GetSpecializationInfo(firstSpecializationNumber) end
-	if secondSpecializationNumber ~= nil then secondSpecializationId = GetSpecializationInfo(secondSpecializationNumber) end
-	if firstSpicializationId == 270 or secondSpecializationId == 270 then
-		data.type = SpellTimeHeal
-		data.timeHeal = matchDigit(description, 3)
-	else
-		data.type = SpellTimeDamage
-		data.timeDamage = matchDigit(description, 1)
+	data.type = SpellTimeDamage
+	data.timeDamage = matchDigit(description, 1)
+
+	local specialization = GetSpecialization()
+	if specialization ~= nil and 270 == GetSpecializationInfo(specialization) then 	--Ткач туманов
+		local stanceIndex = GetShapeshiftForm()
+		if stanceIndex ~= 0 then
+			if 125070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 		--Стойка мудрой змеи
+				data.type = SpellTimeHeal
+				data.timeHeal = matchDigit(description, 3)
+			end
+		end
 	end
 	return data
 end
@@ -74,6 +80,7 @@ Monk.dependPowerTypes["CHI"] = true
 Monk.spells[100780] = SimpleAverageParser 								--Дзуки
 Monk.spells[108557] = SimpleAverageParser 								--Дзуки
 Monk.spells[115698] = SimpleAverageParser 								--Дзуки
+Monk.spells[115695] = SimpleAverageParser 								--Дзуки
 Monk.spells[100787] = SimpleAverageParser 								--Лапа тигра
 Monk.spells[100784] = SimpleAverageParser 								--Нокаутирующий удар
 Monk.spells[113656] = SimpleTimeDamageParser 							--Неистовые кулаки
@@ -94,6 +101,7 @@ Monk.spells[101546] = SpinningCraneKick 								--Танцующий журав�
 Monk.spells[116849] = SimpleAbsorbParser 								--Исцеляющий кокон
 Monk.spells[117952] = SimpleTimeDamageParser 							--Сверкающая нефритовая молния
 Monk.spells[107428] = SimpleAverageParser 								--Удар восходящего солнца
+Monk.spells[115294]	= ManaTea 											--Маначай
 Monk.spells[116670] = SimpleHealParser 									--Духовный подъем
 Monk.spells[15310]	= SimpleHealParser2 								--Восстановление сил
 Monk.spells[116847] = SimpleTimeDamageParser 							--Порыв нефритового ветра
