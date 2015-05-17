@@ -1,7 +1,7 @@
 --Похищение жизни:
 local DrainLife = MultiParser:create(SpellDamageAndTimeHeal, {1, 2}, function(data, match)
 	data.damage = match[1]
-	data.timeHeal = 0 --match[2] * UnitHealthMax("player") / 100
+	data.timeHeal = match[2] * UnitHealthMax("player") / 100
 end)
 
 --Углеотвод:
@@ -11,13 +11,13 @@ local EmberTap = MultiParser:create(SpellHeal, {1}, function(data, match)
 		return
 	end
 	local health = UnitHealthMax("player")
-	if health ~= nil then data.heal = match[1] * UnitHealthMax("player") / 100
+	if health ~= nil then data.heal = match[1] * health / 100
 	else data.heal = -2 end
 end)
 
 --Лик тлена:
-local MortalCoil = MultiParser:create(SpellHeal, {2}, function(data, match)
-	data.timeHeal = 0 --match[2] * UnitHealthMax("player") / 100
+local MortalCoil = MultiParser:create(SpellHeal, {1}, function(data, match)
+	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
 Warlock = Class:create()
