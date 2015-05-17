@@ -6,13 +6,7 @@ end)
 
 --Углеотвод:
 local EmberTap = MultiParser:create(SpellHeal, {1}, function(data, match)
-	if match[1] == nil then 
-		data.heal = -1
-		return
-	end
-	local health = UnitHealthMax("player")
-	if health ~= nil then data.heal = match[1] * health / 100
-	else data.heal = -2 end
+	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
 --Лик тлена:

@@ -6,17 +6,20 @@ function shortNumber(number)
 	end
 
 	if number >= 1000000 then
-		return string.format("%.1fm", number / 1000000)
+		return string.format("%d m", number / 1000000)
 	elseif number >= 1000 then
-		return string.format("%.1fk", number / 1000)
+		return string.format("%d k", number / 1000)
 	end
-	return tostring(number)
+	return string.format("%d", number)
 end
 
 function matchDigit(str, index)
 	local i = 1
 	for match in str:gmatch("%d+[%.,]?%d*") do
-		if i == index then return tonumber(match) end
+		if i == index then
+			local m = match:gsub(",", ".")
+			return tonumber(m)
+		end
 		i = i + 1
 	end
 	return nil
@@ -29,7 +32,8 @@ function matchDigits(str, indexTable)
 	local i, matched = 1, 0
 	for match in str:gmatch("%d+[%.,]?%d*") do
 		if keys[i] ~= nil then
-			ret[i] = tonumber(match)
+			local m = match:gsub(",", ".")
+			ret[i] = tonumber(m)
 			matched = matched + 1
 		end
 		i = i + 1
