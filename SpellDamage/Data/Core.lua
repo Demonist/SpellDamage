@@ -6,9 +6,9 @@ function shortNumber(number)
 	end
 
 	if number >= 1000000 then
-		return string.format("%d m", number / 1000000)
+		return string.format("%d m", math.floor(number / 1000000 + 0.5))
 	elseif number >= 1000 then
-		return string.format("%d k", number / 1000)
+		return string.format("%d k", math.floor(number / 1000 + 0.5))
 	end
 	return string.format("%d", number)
 end
