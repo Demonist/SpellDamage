@@ -25,14 +25,11 @@ function SpinningCraneKick:getData(description)
 	data.type = SpellTimeDamage
 	data.timeDamage = matchDigit(description, 1)
 
-	local specialization = GetSpecialization()
-	if specialization ~= nil and 270 == GetSpecializationInfo(specialization) then 	--Ткач туманов
-		local stanceIndex = GetShapeshiftForm()
-		if stanceIndex ~= 0 then
-			if 125070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 		--Стойка мудрой змеи
-				data.type = SpellTimeHeal
-				data.timeHeal = matchDigit(description, 3)
-			end
+	local stanceIndex = GetShapeshiftForm()
+	if stanceIndex ~= 0 then
+		if 125070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 		--Стойка мудрой змеи
+			data.type = SpellTimeHeal
+			data.timeHeal = matchDigit(description, 3)
 		end
 	end
 	return data
