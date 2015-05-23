@@ -27,7 +27,7 @@ function SpinningCraneKick:getData(description)
 
 	local stanceIndex = GetShapeshiftForm()
 	if stanceIndex ~= 0 then
-		if 125070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 		--Стойка мудрой змеи
+		if 115070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 		--Стойка мудрой змеи
 			data.type = SpellTimeHeal
 			data.timeHeal = matchDigit(description, 3)
 		end
