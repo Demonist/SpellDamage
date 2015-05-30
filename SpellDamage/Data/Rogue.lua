@@ -3,7 +3,7 @@ local Hemorrhage = DoubleParser:create(SpellDamageAndTimeDamage, 1, 3)
 
 --Расправа:
 local Mutilate = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
-	data.damage = match[1] + match[3]
+	data.damage = match[1] + match[2]
 end)
 
 --Заживление ран:
