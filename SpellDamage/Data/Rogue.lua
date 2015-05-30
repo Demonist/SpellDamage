@@ -1,5 +1,29 @@
+function useDaggers()
+	local slotId = GetInventorySlotInfo("MainHandSlot")
+	if slotId then
+		local mainHandLink = GetInventoryItemLink("player", slotId)
+		if mainHandLink then
+			local _, _, _, _, _, _, itemType = GetItemInfo(mainHandLink)
+			if itemType == "Кинжалы" then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+--Внезапный удар:
+local Ambush = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
+	if useDaggers() == true then data.damage = match[1] + match[1] * match[2] / 100 
+	else data.damage = match[1] end
+end)
+
 --Кровоизлияние:
-local Hemorrhage = DoubleParser:create(SpellDamageAndTimeDamage, 1, 3)
+local Hemorrhage = MultiParser:create(SpellDamage, {1, 2, 3}, function(data, match)
+	if useDaggers() == true then data.damage = match[1] + match[1] * match[2] / 100
+	else data.damage = match[1] end
+	data.timeDamage = match[3]
+end)
 
 --Расправа:
 local Mutilate = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
@@ -37,7 +61,7 @@ Rogue.dependFromPower = true
 Rogue.dependPowerTypes["COMBO_POINTS"] = true
 Rogue.spells[1752]		= SimpleDamageParser 		--Коварный удар
 Rogue.spells[2098]		= comboHelper(SpellDamage, "damage", {2, 4, 6, 8, 10})			--Потрошение
-Rogue.spells[8676]		= SimpleDamageParser 		--Внезапный удар
+Rogue.spells[8676]		= Ambush 			 		--Внезапный удар
 Rogue.spells[16511]		= Hemorrhage 			 	--Кровоизлияние
 Rogue.spells[1329]		= Mutilate 			 		--Расправа
 Rogue.spells[73651]		= Recuperate 				--Заживление ран
