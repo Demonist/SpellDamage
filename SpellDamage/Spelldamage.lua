@@ -11,6 +11,7 @@ EventFrame:RegisterEvent("UNIT_AURA")
 EventFrame:RegisterEvent("UNIT_POWER")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
+EventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		local _, className = UnitClass("player")
@@ -18,14 +19,14 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		if currentClass == nil then currentClass = emptyClass end
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" then
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" then
 		for _, button in pairs(buttons) do
 			button.centerText:SetText("")
 			button.bottomText:SetText("")
 		end
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED"
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil) then
