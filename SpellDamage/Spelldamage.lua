@@ -17,6 +17,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		local _, className = UnitClass("player")
 		currentClass = classes[className]
 		if currentClass == nil then currentClass = emptyClass end
+		
+		createButtons()
 	end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" then
@@ -30,8 +32,11 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil) then
+
 		for _, button in pairs(buttons) do
-			local slot = ActionButton_GetPagedID(button) or ActionButton_CalculateAction(button) or button:GetAttribute('action') or 0
+			local slot = ActionButton_GetPagedID(button)
+			if slot == 0 then slot = ActionButton_CalculateAction(button) end
+			if slot == 0 then slot = button:GetAttribute("action") end
 			if HasAction(slot) then
 				local actionType, id = GetActionInfo(slot)
 				if actionType == 'spell' then
@@ -39,21 +44,30 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 				end
 			end
 		end
+
 	end
 end)
 
-local function createButtons()	
-	for i = 1, 6 do
-		for j = 1, 12 do
-			table.insert(buttons, _G[((select(i,"ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
+function createButtons()
+	if IsAddOnLoaded("ElvUI") then
+		for i = 1, 6 do
+			for j = 1, 12 do
+				table.insert(buttons, _G["ElvUI_Bar"..i.."Button"..j])
+			end
+		end
+	else
+		for i = 1, 6 do
+			for j = 1, 12 do
+				table.insert(buttons, _G[((select(i, "ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
+			end
 		end
 	end
 
-	for _, button in pairs(buttons) do     
+	for _, button in pairs(buttons) do   
 		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
 		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 		button.centerText:SetPoint("CENTER" , 0, 0)	
-		button.centerText:SetPoint("LEFT", 0, 0)	
+		button.centerText:SetPoint("LEFT", 0, 0)
 		
 		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
 		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
@@ -76,6 +90,5 @@ local function createClasses()
 	classes["WARRIOR"]		= Warrior
 end
 
-
 createClasses()
-createButtons()
+
