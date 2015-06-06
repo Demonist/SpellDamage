@@ -1,3 +1,8 @@
+--Пламенный взрыв:
+local InfernoBlast = MultiParser:create(SpellDamage, {1}, function(data, match)
+	data.damage = match[1] * 2
+end)
+
 --Прилив сил:
 local Evocation = MultiParser:create(SpellManaAndTimeMana, {1, 2}, function(data, match)
 	local maxMana = UnitManaMax("player")
@@ -17,7 +22,7 @@ Mage.spells[44425]		= SimpleDamageParser					--Чародейский обстр
 Mage.spells[1449]		= SimpleDamageParser 					--Чародейский взрыв
 Mage.spells[2948]		= SimpleDamageParser 					--Ожог
 Mage.spells[30455]		= SimpleDamageParser 					--Ледяное копье
-Mage.spells[108853]		= SimpleDamageParser 					--Пламенный взрыв
+Mage.spells[108853]		= InfernoBlast 							--Пламенный взрыв
 Mage.spells[5143]		= SimpleParser:create(SpellDamage, 3) 	--Чародейские стрелы
 Mage.spells[120]		= SimpleDamageParser				 	--Конус холода
 Mage.spells[11426]		= SimpleAbsorbParser 					--Ледяная преграда
