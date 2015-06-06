@@ -6,9 +6,19 @@ function shortNumber(number)
 	end
 
 	if number >= 1000000 then
-		return string.format("%d m", math.floor(number / 1000000 + 0.5))
+		local intValue = math.floor(number / 1000000 + 0.5)
+		if intValue >= 10 then
+			return string.format("%d m", intValue)
+		else
+			return string.format("%.1f m", number / 1000000)
+		end
 	elseif number >= 1000 then
-		return string.format("%d k", math.floor(number / 1000 + 0.5))
+		local intValue = math.floor(number / 1000 + 0.5)
+		if intValue >= 10 then
+			return string.format("%d k", intValue)
+		else 
+			return string.format("%.1f k", number / 1000)
+		end
 	end
 	return string.format("%d", number)
 end
