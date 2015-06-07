@@ -8,6 +8,27 @@ local DesperatePrayer = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
+--Обновление:
+local Renew = SpellParser:create()
+function Renew:getData(description)
+	local data = SpellData:create(SpellUnknown)
+	if IsSpellKnown(95649) == true then		--Мгновенное обновление
+		local match = matchDigits(description, {1, 2})
+		if match then
+			data.type = SpellHealAndTimeHeal
+			data.heal = match[1]
+			data.timeHeal = match[2]
+		end
+	else
+		local heal = matchDigit(description, 1)
+		if heal then
+			data.type = SpellTimeHeal
+			data.timeHeal = heal
+		end
+	end
+	return data
+end
+
 Priest = Class:create()
 Priest.spells[585]		= SimpleDamageParser 								--Кара
 Priest.spells[589]		= DoubleDamageParser 								--Слово Тьмы: Боль
@@ -23,7 +44,7 @@ Priest.spells[132157]	= DoubleParser:create(SpellDamageAndHeal, 1, 3) 	--Кол�
 Priest.spells[88684]	= SimpleHealParser 									--Слово Света: Безмятежность
 Priest.spells[8092]		= SimpleDamageParser 								--Взрыв разума
 Priest.spells[2944]		= DoubleParser:create(SpellDamageAndHeal, 2, 3) 	--Всепожирающая чума
-Priest.spells[139]		= SimpleTimeHealParser 								--Обновление
+Priest.spells[139]		= Renew 			 								--Обновление
 Priest.spells[34914]	= SimpleTimeDamageParser 							--Прикосновение вампира
 Priest.spells[48045]	= SimpleTimeDamageParser 							--Иссушение разума
 Priest.spells[2060]		= SimpleHealParser 									--Исцеление
