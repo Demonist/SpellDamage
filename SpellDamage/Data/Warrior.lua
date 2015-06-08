@@ -14,6 +14,25 @@ local Rend = MultiParser:create(SpellTimeDamage, {1, 3}, function(data, match)
 	data.timeDamage = match[1] + match[3]
 end)
 
+--Вихрь:
+local Whirlwind = SpellParser:create()
+function Whirlwind:getData(description)
+	local data = SpellData:create(SpellUnknown)
+	data.type = SpellDamage
+	local currentSpecNum = GetSpecialization()
+	if currentSpecNum then
+		local currentSpecId = GetSpecializationInfo(currentSpecNum)
+		if currentSpecId == 71 then 		--Оружие
+			local match = matchDigit(description, 2)
+			if match then data.damage = match end
+		elseif currentSpecId == 32 then		--Неистовство
+			local match = matchDigits(description, {2, 3})
+			if match then data.damage = match[2] + match[3] end
+		end
+	end
+	return data
+end
+
 --Кровожадность:
 local Bloodthirst = MultiParser:create(SpellDamageAndHeal, {1, 3}, function(data, match)
 	data.damage = match[1]
@@ -56,7 +75,7 @@ Warrior.spells[12294]	= SimpleDamageParser 	--Смертельный удар
 Warrior.spells[6343]	= SimpleDamageParser2 	--Удар грома
 Warrior.spells[100130]	= SimpleDamageParser 	--Зверский удар
 Warrior.spells[57755]	= SimpleDamageParser 	--Героический бросок
-Warrior.spells[1680]	= SimpleDamageParser2 	--Вихрь
+Warrior.spells[1680]	= Whirlwind 			--Вихрь
 Warrior.spells[20243]	= SimpleDamageParser 	--Сокрушение
 Warrior.spells[55694]	= EnragedRegeneration 	--Безудержное восстановление
 Warrior.spells[103840]	= ImpendingVictory 		--Верная победа
