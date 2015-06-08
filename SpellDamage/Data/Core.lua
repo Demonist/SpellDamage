@@ -77,7 +77,7 @@ end
 --Data:
 
 SpellUnknown, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7
-SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana = 10, 11, 12, 13, 14, 15
+SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana = 10, 11, 12, 13, 14, 15, 16
 SpellData = {}
 function SpellData:create(type)
 	local data = {}
@@ -237,12 +237,11 @@ function Class:create()
 end
 
 function Class:updateButton(button, spellId)
-	button.centerText:SetText("")
-	button.bottomText:SetText("")
-
-	if self.spells[spellId] == nil then return end
+	if self.spells[spellId] == nil then return false end
 
 	local data = self.spells[spellId]:getData(GetSpellDescription(spellId))
+	if data.type == SpellUnknown then return false end
+
 	if data.type == SpellDamage then
 		button.centerText:SetText( shortNumber(data.damage) )
 		button.centerText:SetTextColor(1, 1, 0, 1)
@@ -294,5 +293,11 @@ function Class:updateButton(button, spellId)
 		button.centerText:SetTextColor(0.5, 0.5, 1, 1)
 		button.bottomText:SetText("(".. shortNumber(data.timeMana) ..")")
 		button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
+	elseif data.type == SpellTimeHealAndTimeMana then
+		button.centerText:SetText("(".. shortNumber(data.timeHeal) ..")")
+		button.centerText:SetTextColor(0, 1, 0, 1)
+		button.bottomText:SetText("(".. shortNumber(data.timeMana) ..")")
+		button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 	end
+	return true
 end

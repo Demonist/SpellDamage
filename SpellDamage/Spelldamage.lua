@@ -3,6 +3,7 @@ local buttons = {}
 local classes = {}
 local emptyClass = Class:create()
 local currentClass = emptyClass
+local race = Race
 
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
@@ -40,7 +41,12 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 			if HasAction(slot) then
 				local actionType, id = GetActionInfo(slot)
 				if actionType == 'spell' then
-					currentClass:updateButton(button, id)
+					button.centerText:SetText("")
+					button.bottomText:SetText("")
+					
+					if false == currentClass:updateButton(button, id) then
+						race:updateButton(button, id)
+					end
 				end
 			end
 		end
