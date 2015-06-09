@@ -19,21 +19,18 @@ local ManaTea = MultiParser:create(SpellTimeHeal, {3}, function(data, match)
 end)
 
 --Танцующий журавль:
-local SpinningCraneKick = SpellParser:create()
-function SpinningCraneKick:getData(description)
-	local data = SpellData:create(SpellUnknown)
+local SpinningCraneKick = CustomParser:create(function(data, description)
 	data.type = SpellTimeDamage
 	data.timeDamage = matchDigit(description, 1)
 
 	local stanceIndex = GetShapeshiftForm()
 	if stanceIndex ~= 0 then
-		if 115070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 		--Стойка мудрой змеи
+		if 115070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 	--Стойка мудрой змеи
 			data.type = SpellTimeHeal
 			data.timeHeal = matchDigit(description, 3)
 		end
 	end
-	return data
-end
+end)
 
 --Дыхание Змеи:
 local BreathOfTheSerpent = MultiParser:create(SpellTimeHeal, {2, 4}, function(data, match)
@@ -74,36 +71,36 @@ end)
 Monk = Class:create()
 Monk.dependFromPower = true
 Monk.dependPowerTypes["CHI"] = true
-Monk.spells[100780] = SimpleAverageParser 								--Дзуки
-Monk.spells[108557] = SimpleAverageParser 								--Дзуки
-Monk.spells[115698] = SimpleAverageParser 								--Дзуки
-Monk.spells[115695] = SimpleAverageParser 								--Дзуки
-Monk.spells[100787] = SimpleAverageParser 								--Лапа тигра
-Monk.spells[100784] = SimpleAverageParser 								--Нокаутирующий удар
-Monk.spells[113656] = SimpleTimeDamageParser 							--Неистовые кулаки
-Monk.spells[115175] = SimpleTimeHealParser2 							--Успокаивающий туман
-Monk.spells[121253] = SimpleAverageParser 								--Удар бочонком
-Monk.spells[116694] = SimpleHealParser 									--Благотворный туман
-Monk.spells[124682] = SimpleTimeHealParser2 							--Окутывающий туман
-Monk.spells[115181] = SimpleDamageParser 								--Пламенное дыхание
-Monk.spells[101545] = SimpleDamageParser2 								--Удар летящего змея
-Monk.spells[115151] = SimpleTimeHealParser2 							--Заживляющий туман
-Monk.spells[115295] = SimpleParser:create(SpellAbsort, 2) 				--Защита
-Monk.spells[115072] = ExpelHarm 										--Устранение вреда
-Monk.spells[115098] = DoubleParser:create(SpellDamageAndHeal, 1, 2) 	--Волна ци
-Monk.spells[123986] = DoubleParser:create(SpellDamageAndHeal, 2, 3) 	--Выброс ци
-Monk.spells[124081]	= ZenSphere 										--Сфера дзен
-Monk.spells[115288] = SimpleManaParser									--Будоражащий отвар
-Monk.spells[101546] = SpinningCraneKick 								--Танцующий журавль
-Monk.spells[116849] = SimpleAbsorbParser 								--Исцеляющий кокон
-Monk.spells[117952] = SimpleTimeDamageParser 							--Сверкающая нефритовая молния
-Monk.spells[107428] = SimpleAverageParser 								--Удар восходящего солнца
-Monk.spells[115294]	= ManaTea 											--Маначай
-Monk.spells[116670] = SimpleHealParser 									--Духовный подъем
-Monk.spells[15310]	= SimpleHealParser2 								--Восстановление сил
-Monk.spells[116847] = SimpleTimeDamageParser 							--Порыв нефритового ветра
-Monk.spells[152174] = ChiExplosion1 									--Взрыв ци
-Monk.spells[157675] = ChiExplosion2 									--Взрыв ци
-Monk.spells[157676] = ChiExplosion3 									--Взрыв ци
-Monk.spells[157535]	= BreathOfTheSerpent 								--Дыхание Змеи
-Monk.spells[152175] = HurricaneStrike 									--Ураганный удар
+Monk.spells[100780] = SimpleAverageParser 							--Дзуки
+Monk.spells[108557] = SimpleAverageParser 							--Дзуки
+Monk.spells[115698] = SimpleAverageParser 							--Дзуки
+Monk.spells[115695] = SimpleAverageParser 							--Дзуки
+Monk.spells[100787] = SimpleAverageParser 							--Лапа тигра
+Monk.spells[100784] = SimpleAverageParser 							--Нокаутирующий удар
+Monk.spells[113656] = SimpleTimeDamageParser 						--Неистовые кулаки
+Monk.spells[115175] = SimpleTimeHealParser2 						--Успокаивающий туман
+Monk.spells[121253] = SimpleAverageParser 							--Удар бочонком
+Monk.spells[116694] = SimpleHealParser 								--Благотворный туман
+Monk.spells[124682] = SimpleTimeHealParser2 						--Окутывающий туман
+Monk.spells[115181] = SimpleDamageParser 							--Пламенное дыхание
+Monk.spells[101545] = SimpleDamageParser2 							--Удар летящего змея
+Monk.spells[115151] = SimpleTimeHealParser2 						--Заживляющий туман
+Monk.spells[115295] = SimpleParser:create(SpellAbsort, 2) 			--Защита
+Monk.spells[115072] = ExpelHarm 									--Устранение вреда
+Monk.spells[115098] = DoubleParser:create(SpellDamageAndHeal, 1, 2)	--Волна ци
+Monk.spells[123986] = DoubleParser:create(SpellDamageAndHeal, 2, 3) --Выброс ци
+Monk.spells[124081]	= ZenSphere 									--Сфера дзен
+Monk.spells[115288] = SimpleManaParser								--Будоражащий отвар
+Monk.spells[101546] = SpinningCraneKick 							--Танцующий журавль
+Monk.spells[116849] = SimpleAbsorbParser 							--Исцеляющий кокон
+Monk.spells[117952] = SimpleTimeDamageParser 						--Сверкающая нефритовая молния
+Monk.spells[107428] = SimpleAverageParser 							--Удар восходящего солнца
+Monk.spells[115294]	= ManaTea 										--Маначай
+Monk.spells[116670] = SimpleHealParser 								--Духовный подъем
+Monk.spells[15310]	= SimpleHealParser2 							--Восстановление сил
+Monk.spells[116847] = SimpleTimeDamageParser 						--Порыв нефритового ветра
+Monk.spells[152174] = ChiExplosion1 								--Взрыв ци
+Monk.spells[157675] = ChiExplosion2 								--Взрыв ци
+Monk.spells[157676] = ChiExplosion3 								--Взрыв ци
+Monk.spells[157535]	= BreathOfTheSerpent 							--Дыхание Змеи
+Monk.spells[152175] = HurricaneStrike 								--Ураганный удар

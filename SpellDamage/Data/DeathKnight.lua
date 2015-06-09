@@ -1,3 +1,11 @@
+--Ледяные оковы:
+local ChainsOfIce = CustomParser:create(function(data, description)
+	if Glyphs:contains(58620) then	--Символ ледяных оков
+		data.type = SpellDamage
+		data.damage = matchDigit(description, 1)
+	end
+end)
+
 --Удар Плети:
 local ScourgeStrike = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
 	data.damage = match[1] + match[2]
@@ -19,23 +27,35 @@ local DeathPact = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
+--Усиление рунического оружия:
+local EmpowerRuneWeapon = CustomParser:create(function(data, description)
+	if Glyphs:contains(159421) then	--Символ усиления
+		data.type = SpellHeal
+		data.heal = UnitHealthMax("player") * 0.3
+	end
+end)
+
 DeathKnight = Class:create()
-DeathKnight.spells[49184]	= SimpleDamageParser 		--Воющий ветер
-DeathKnight.spells[49143]	= SimpleDamageParser 		--Ледяной удар
-DeathKnight.spells[50842]	= SimpleDamageParser 		--Вскипание крови
-DeathKnight.spells[45477]	= SimpleDamageParser 		--Ледяное прикосновение
+DeathKnight.spells[49184]	= SimpleDamageParser 								--Воющий ветер
+DeathKnight.spells[49143]	= SimpleDamageParser 								--Ледяной удар
+DeathKnight.spells[50842]	= SimpleDamageParser 								--Вскипание крови
+DeathKnight.spells[45477]	= SimpleDamageParser 								--Ледяное прикосновение
 DeathKnight.spells[47541]	= DoubleParser:create(SpellDamageAndHeal, 1, 2) 	--Лик смерти
-DeathKnight.spells[45462]	= SimpleDamageParser 		--Удар чумы
+DeathKnight.spells[45462]	= SimpleDamageParser 								--Удар чумы
 DeathKnight.spells[49998]	= DoubleParser:create(SpellDamageAndHeal, 1, 2)		--Удар смерти
-DeathKnight.spells[55090]	= ScourgeStrike 			--Удар Плети
-DeathKnight.spells[49020]	= SimpleDamageParser 		--Уничтожение
-DeathKnight.spells[43265]	= SimpleTimeDamageParser 	--Смерть и разложение
-DeathKnight.spells[85948]	= SimpleDamageParser 		--Удар разложения
-DeathKnight.spells[119975]	= Conversion 				--Преобразование
-DeathKnight.spells[108196]	= DeathSiphon			 	--Смертельное поглощение
-DeathKnight.spells[48743]	= DeathPact 				--Смертельный союз
-DeathKnight.spells[114866]	= SimpleDamageParser 		--Жнец душ
-DeathKnight.spells[130735]	= SimpleDamageParser 		--Жнец душ
-DeathKnight.spells[130736]	= SimpleDamageParser 		--Жнец душ
-DeathKnight.spells[152279]	= SimpleTimeDamageParser 	--Дыхание Синдрагосы
-DeathKnight.spells[152280]	= SimpleTimeDamage2 		--Осквернение
+DeathKnight.spells[45524]	= ChainsOfIce 										--Ледяные оковы
+DeathKnight.spells[55090]	= ScourgeStrike 									--Удар Плети
+DeathKnight.spells[49020]	= SimpleDamageParser 								--Уничтожение
+DeathKnight.spells[43265]	= SimpleTimeDamageParser 							--Смерть и разложение
+DeathKnight.spells[85948]	= SimpleDamageParser 								--Удар разложения
+DeathKnight.spells[119975]	= Conversion 										--Преобразование
+DeathKnight.spells[108196]	= DeathSiphon			 							--Смертельное поглощение
+DeathKnight.spells[48743]	= DeathPact 										--Смертельный союз
+DeathKnight.spells[47568]	= EmpowerRuneWeapon 								--Усиление рунического оружия
+DeathKnight.spells[114866]	= SimpleDamageParser 								--Жнец душ
+DeathKnight.spells[130735]	= SimpleDamageParser 								--Жнец душ
+DeathKnight.spells[130736]	= SimpleDamageParser 								--Жнец душ
+DeathKnight.spells[152279]	= SimpleTimeDamageParser 							--Дыхание Синдрагосы
+DeathKnight.spells[152280]	= SimpleTimeDamage2 								--Осквернение
+
+DeathKnight.spells[53717]	= SimpleDamageParser2 								--Взрыв трупа

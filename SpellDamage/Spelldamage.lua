@@ -4,6 +4,7 @@ local classes = {}
 local emptyClass = Class:create()
 local currentClass = emptyClass
 local race = Race
+local glyphs = Glyphs
 
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
@@ -13,6 +14,11 @@ EventFrame:RegisterEvent("UNIT_POWER")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
 EventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
+EventFrame:RegisterEvent("GLYPH_ADDED")
+EventFrame:RegisterEvent("GLYPH_DISABLED")
+EventFrame:RegisterEvent("GLYPH_ENABLED")
+EventFrame:RegisterEvent("GLYPH_REMOVED")
+EventFrame:RegisterEvent("GLYPH_UPDATED")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		local _, className = UnitClass("player")
@@ -20,6 +26,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		if currentClass == nil then currentClass = emptyClass end
 		
 		createButtons()
+		glyphs:update()
 	end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" then
@@ -29,10 +36,17 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		end
 	end
 
+	local glyphsUpdated = false
+	if event == "GLYPH_ADDED" or event == "GLYPH_DISABLED" or event == "GLYPH_ENABLED" or event == "GLYPH_REMOVED" or event == "GLYPH_UPDATED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
+		glyphsUpdated = true
+		glyphs:update()
+	end
+
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
-		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil) then
+		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
+		or glyphsUpdated == true then
 
 		for _, button in pairs(buttons) do
 			local slot = ActionButton_GetPagedID(button)
@@ -44,13 +58,11 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 					button.centerText:SetText("")
 					button.bottomText:SetText("")
 					
-					if false == currentClass:updateButton(button, id) then
-						race:updateButton(button, id)
-					end
+					local used = currentClass:updateButton(button, id)
+					if used == false then used = race:updateButton(button, id) end
 				end
 			end
 		end
-
 	end
 end)
 
@@ -97,4 +109,3 @@ local function createClasses()
 end
 
 createClasses()
-

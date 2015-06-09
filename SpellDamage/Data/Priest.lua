@@ -1,3 +1,14 @@
+--Слово силы: Щит:
+local PowerWordShield = CustomParser:create(function(data, description)
+	data.type = SpellAbsorb
+	data.absorb = matchDigit(description, 1)
+
+	if Glyphs:contains(55672) then		--Символ слова силы: Щит
+		data.type = SpellAbsorbAndHeal
+		data.heal = data.absorb * 0.2
+	end
+end)
+
 --Божественный оплот:
 local AngelicBulwark = MultiParser:create(SpellAbsorb, {1}, function(data, match)
 	data.absorb = match[1] * UnitHealthMax("player") / 100
@@ -9,9 +20,7 @@ local DesperatePrayer = MultiParser:create(SpellHeal, {1}, function(data, match)
 end)
 
 --Обновление:
-local Renew = SpellParser:create()
-function Renew:getData(description)
-	local data = SpellData:create(SpellUnknown)
+local Renew = CustomParser:create(function(data, description)
 	if IsSpellKnown(95649) == true then		--Мгновенное обновление
 		local match = matchDigits(description, {1, 2})
 		if match then
@@ -26,13 +35,12 @@ function Renew:getData(description)
 			data.timeHeal = heal
 		end
 	end
-	return data
-end
+end)
 
 Priest = Class:create()
 Priest.spells[585]		= SimpleDamageParser 								--Кара
 Priest.spells[589]		= DoubleDamageParser 								--Слово Тьмы: Боль
-Priest.spells[17]		= SimpleAbsorbParser 								--Слово силы: Щит
+Priest.spells[17]		= PowerWordShield 									--Слово силы: Щит
 Priest.spells[2061]		= SimpleHealParser 									--Быстрое исцеление
 Priest.spells[47540]	= DoubleParser:create(SpellDamageAndTimeHeal, 1, 2) --Исповедь
 Priest.spells[15407]	= SimpleTimeDamageParser 							--Пытка разума

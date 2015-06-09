@@ -15,9 +15,7 @@ local Rend = MultiParser:create(SpellTimeDamage, {1, 3}, function(data, match)
 end)
 
 --Вихрь:
-local Whirlwind = SpellParser:create()
-function Whirlwind:getData(description)
-	local data = SpellData:create(SpellUnknown)
+local Whirlwind = CustomParser:create(function(data, description)
 	data.type = SpellDamage
 	local currentSpecNum = GetSpecialization()
 	if currentSpecNum then
@@ -30,8 +28,7 @@ function Whirlwind:getData(description)
 			if match then data.damage = match[2] + match[3] end
 		end
 	end
-	return data
-end
+end)
 
 --Кровожадность:
 local Bloodthirst = MultiParser:create(SpellDamageAndHeal, {1, 3}, function(data, match)
