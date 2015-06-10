@@ -23,18 +23,18 @@ end)
 local Renew = CustomParser:create(function(data, description)
 	if IsSpellKnown(95649) == true then		--Мгновенное обновление
 		local match = matchDigits(description, {1, 2})
-		if match then
-			data.type = SpellHealAndTimeHeal
-			data.heal = match[1]
-			data.timeHeal = match[2]
-		end
+		data.type = SpellHealAndTimeHeal
+		data.heal = match[1]
+		data.timeHeal = match[2]
 	else
-		local heal = matchDigit(description, 1)
-		if heal then
-			data.type = SpellTimeHeal
-			data.timeHeal = heal
-		end
+		data.type = SpellTimeHeal
+		data.timeHeal = matchDigit(description, 1)
 	end
+end)
+
+--Слово Света: Святилище:
+local HolyWordSanctuary = MultiParser:create(SpellTimeHeal, {2, 3, 4}, function(data, match)
+	data.timeHeal = math.floor(match[4] / match[3]) * match[2]
 end)
 
 Priest = Class:create()
@@ -77,3 +77,5 @@ Priest.spells[152116]	= SimpleHealParser 									--Спасительная с�
 Priest.spells[155361]	= SimpleTimeDamage2 					 			--Энтропия Бездны
 Priest.spells[155245]	= SimpleHealParser 									--Ясная цель
 Priest.spells[152118]	= SimpleAbsorbParser 								--Ясность воли
+
+Priest.spells[88685]	= HolyWordSanctuary 								--Слово Света: Святилище

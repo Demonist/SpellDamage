@@ -24,7 +24,7 @@ local Whirlwind = CustomParser:create(function(data, description)
 			data.damage = matchDigit(description, 2)
 		elseif currentSpecId == 72 then		--Неистовство
 			local match = matchDigits(description, {2, 3})
-			data.damage = match[2] + match[3]
+			if match then data.damage = match[2] + match[3] end
 		end
 	end
 end)
