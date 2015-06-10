@@ -21,11 +21,10 @@ local Whirlwind = CustomParser:create(function(data, description)
 	if currentSpecNum then
 		local currentSpecId = GetSpecializationInfo(currentSpecNum)
 		if currentSpecId == 71 then 		--Оружие
-			local match = matchDigit(description, 2)
-			if match then data.damage = match end
-		elseif currentSpecId == 32 then		--Неистовство
+			data.damage = matchDigit(description, 2)
+		elseif currentSpecId == 72 then		--Неистовство
 			local match = matchDigits(description, {2, 3})
-			if match then data.damage = match[2] + match[3] end
+			data.damage = match[2] + match[3]
 		end
 	end
 end)
