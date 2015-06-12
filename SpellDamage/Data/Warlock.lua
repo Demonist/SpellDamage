@@ -4,6 +4,11 @@ local DrainLife = MultiParser:create(SpellDamageAndTimeHeal, {1, 2}, function(da
 	data.timeHeal = match[2] * UnitHealthMax("player") / 100
 end)
 
+--Стрела Хаоса:
+local ChaosBolt = MultiParser:create(SpellDamage, {1}, function(data, match)
+	data.damage = match[1] * 2
+end)
+
 --Канал здоровья:
 local HealthFunnel = CustomParser:create(function(data, description)
 	data.type = SpellHeal
@@ -42,7 +47,7 @@ Warlock.spells[172]		= SimpleTimeDamageParser 								--Порча
 Warlock.spells[689]		= DrainLife 		 									--Похищение жизни
 Warlock.spells[114654]	= SimpleDamageParser 									--Испепеление
 Warlock.spells[29722]	= SimpleDamageParser 									--Испепеление
-Warlock.spells[116858]	= SimpleDamageParser 									--Стрела Хаоса
+Warlock.spells[116858]	= ChaosBolt 											--Стрела Хаоса
 Warlock.spells[30108]	= SimpleTimeDamageParser 								--Нестабильное колдовство
 Warlock.spells[17962]	= SimpleDamageParser 									--Поджигание
 Warlock.spells[108685]	= SimpleDamageParser2 									--Поджигание
