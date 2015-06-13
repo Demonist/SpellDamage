@@ -1,3 +1,8 @@
+if GetLocale() ~= "ruRU" then
+	DEFAULT_CHAT_FRAME:AddMessage("SpellDamage addon can't work in non russian locale! Addon disabled.", 1, 0, 0)
+	DisableAddOn("SpellDamage")
+end
+
 local buttons = {}
 
 local classes = {}
