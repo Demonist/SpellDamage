@@ -46,7 +46,7 @@ local CrimsonTempest = CustomParser:create(function(data, description)
 	local timeMulpiplier = matchDigit(description, 2)
 	local match = matchDigits(description, {5, 7, 9, 11, 13})
 	local index = comboMatch({5, 7, 9, 11, 13})
-	if timeMulpiplier ~= nil and match ~= nil and index ~= nil then
+	if timeMulpiplier and match and index then
 		data.type = SpellDamageAndTimeDamage
 		data.damage = match[index]
 		data.timeDamage = data.damage * timeMulpiplier / 100

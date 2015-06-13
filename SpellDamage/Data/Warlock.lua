@@ -27,12 +27,17 @@ end)
 
 --Жизнеотвод:
 local LifeTap = CustomParser:create(function(data, description)
-	data.type = SpellMana
-
+	local match = nil
+	
 	if Glyphs:contains(63320) then		--Символ жизнеотвода
-		data.mana = matchDigit(description, 2)
+		match = matchDigit(description, 2)
 	else
-		data.mana = matchDigit(description, 1)
+		match = matchDigit(description, 1)
+	end
+
+	if match then
+		data.type = SpellMana
+		data.mana = match
 	end
 end)
 

@@ -16,15 +16,21 @@ end)
 
 --Вихрь:
 local Whirlwind = CustomParser:create(function(data, description)
-	data.type = SpellDamage
 	local currentSpecNum = GetSpecialization()
 	if currentSpecNum then
 		local currentSpecId = GetSpecializationInfo(currentSpecNum)
 		if currentSpecId == 71 then 		--Оружие
-			data.damage = matchDigit(description, 2)
+			local match = matchDigit(description, 2)
+			if match then
+				data.type = SpellDamage
+				data.damage = match
+			end
 		elseif currentSpecId == 72 then		--Неистовство
 			local match = matchDigits(description, {2, 3})
-			if match then data.damage = match[2] + match[3] end
+			if match then
+				data.type = SpellDamage
+				data.damage = match[2] + match[3]
+			end
 		end
 	end
 end)

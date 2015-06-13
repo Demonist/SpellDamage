@@ -18,12 +18,18 @@ end)
 --Восстановление:
 local Regrowth = CustomParser:create(function(data, description)
 	if Glyphs:contains(116218) then	--Символ восстановления
-		data.type = SpellHeal
-		data.heal = matchDigit(description, 1)
+		local match = matchDigit(description, 1)
+		if match then
+			data.type = SpellHeal
+			data.heal = match
+		end
 	else
-		data.type = SpellHealAndTimeHeal
-		data.heal = matchDigit(description, 1)
-		data.timeHeal = matchDigit(description, 2)
+		local match = matchDigits(description, {1, 2})
+		if match then
+			data.type = SpellHealAndTimeHeal
+			data.heal = match[1]
+			data.timeHeal = match[2]
+		end
 	end
 end)
 

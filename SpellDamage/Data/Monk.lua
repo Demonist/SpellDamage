@@ -20,14 +20,21 @@ end)
 
 --Танцующий журавль:
 local SpinningCraneKick = CustomParser:create(function(data, description)
-	data.type = SpellTimeDamage
-	data.timeDamage = matchDigit(description, 1)
+	local match = matchDigit(description, 1)
+	if match then
+		data.type = SpellTimeDamage
+		data.timeDamage = match
+	end
 
 	local stanceIndex = GetShapeshiftForm()
 	if stanceIndex ~= 0 then
 		if 115070 == select(5, GetShapeshiftFormInfo(stanceIndex)) then 	--Стойка мудрой змеи
-			data.type = SpellTimeHeal
-			data.timeHeal = matchDigit(description, 3)
+			data.type = SpellUnknown
+			local match = matchDigit(description, 3)
+			if match then
+				data.type = SpellTimeHeal
+				data.timeHeal = match
+			end
 		end
 	end
 end)

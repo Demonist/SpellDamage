@@ -1,4 +1,4 @@
-local _Glyphs = {}
+﻿local _Glyphs = {}
 function _Glyphs:create()
 	local glyphs = {}
 	glyphs.glyphs = {}

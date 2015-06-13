@@ -1,4 +1,4 @@
-SpellUnknown, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7
+﻿SpellUnknown, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7
 SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17
 
 SpellData = {}
@@ -17,6 +17,8 @@ function SpellData:create(type)
 	return setmetatable(data, self)
 end
 
+displayErrors = true
+
 Class = {}
 function Class:create()
 	local class = {}
@@ -31,7 +33,10 @@ function Class:updateButton(button, spellId)
 	if self.spells[spellId] == nil then return false end
 
 	local data = self.spells[spellId]:getData(GetSpellDescription(spellId))
-	if data.type == SpellUnknown then return false end
+	if data.type == SpellUnknown and displayErrors == true then 
+		DEFAULT_CHAT_FRAME:AddMessage("SpellDamage: Ошибка парсинга умения с id '"..spellId.."'", 1, 0, 0)
+		return false 
+	end
 
 	if data.type == SpellDamage then
 		button.centerText:SetText( shortNumber(data.damage) )
@@ -94,6 +99,8 @@ function Class:updateButton(button, spellId)
 		button.centerText:SetTextColor(1, 0.5, 1, 1)
 		button.bottomText:SetText( shortNumber(data.heal) )
 		button.bottomText:SetTextColor(0, 1, 0, 1)
+	elseif displayErrors == true then
+		DEFAULT_CHAT_FRAME:AddMessage("SpellDamage: Ошибка определения типа умения с id '"..spellId.."'", 1, 0, 0)
 	end
 	return true
 end

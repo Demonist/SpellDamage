@@ -8,8 +8,11 @@ end)
 
 --Лечение питомца:
 local MendPet = CustomParser:create(function(data, description)
-	data.type = SpellTimeHeal
-	data.timeHeal = matchDigit(description, 1) * UnitHealthMax("pet") / 100
+	local match = matchDigit(description, 1)
+	if match then
+		data.type = SpellTimeHeal
+		data.timeHeal = match * UnitHealthMax("pet") / 100
+	end
 end)
 
 --Разрывной выстрел:
@@ -27,20 +30,26 @@ end)
 --Взрывная ловушка:
 local ExplosiveTrap = CustomParser:create(function(data, description)
 	if not Glyphs:contains(119403) then		--Символ взрывной ловушки
-		data.type = SpellDamageAndTimeDamage
-		data.damage = matchDigit(description, 1)
-		data.timeDamage = matchDigit(description, 3)
+		local match = matchDigits(description, {1, 3})
+		if match then
+			data.type = SpellDamageAndTimeDamage
+			data.damage = match[1]
+			data.timeDamage = match[3]
+		end
 	end
 end)
 
 --Выстрел химеры:
 local ChimaeraShot = CustomParser:create(function(data, description)
-	data.type = SpellDamage
-	data.damage = matchDigit(description, 1)
+	local match = matchDigit(description, 1)
+	if match then
+		data.type = SpellDamage
+		data.damage = match
 
-	if Glyphs:contains(119447) then		--Символ выстрела химеры
-		data.type = SpellDamageAndHeal
-		data.heal = UnitHealthMax("player") * 0.02
+		if Glyphs:contains(119447) then		--Символ выстрела химеры
+			data.type = SpellDamageAndHeal
+			data.heal = UnitHealthMax("player") * 0.02
+		end
 	end
 end)
 

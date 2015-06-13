@@ -1,8 +1,11 @@
 --Ледяные оковы:
 local ChainsOfIce = CustomParser:create(function(data, description)
 	if Glyphs:contains(58620) then	--Символ ледяных оков
-		data.type = SpellDamage
-		data.damage = matchDigit(description, 1)
+		local match = matchDigit(description, 1)
+		if match then
+			data.type = SpellDamage
+			data.damage = match
+		end
 	end
 end)
 

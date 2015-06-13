@@ -1,11 +1,14 @@
 --Слово силы: Щит:
 local PowerWordShield = CustomParser:create(function(data, description)
-	data.type = SpellAbsorb
-	data.absorb = matchDigit(description, 1)
+	local match = matchDigit(description, 1)
+	if match then
+		data.type = SpellAbsorb
+		data.absorb = match
 
-	if Glyphs:contains(55672) then		--Символ слова силы: Щит
-		data.type = SpellAbsorbAndHeal
-		data.heal = data.absorb * 0.2
+		if Glyphs:contains(55672) then		--Символ слова силы: Щит
+			data.type = SpellAbsorbAndHeal
+			data.heal = data.absorb * 0.2
+		end
 	end
 end)
 
@@ -23,12 +26,17 @@ end)
 local Renew = CustomParser:create(function(data, description)
 	if IsSpellKnown(95649) == true then		--Мгновенное обновление
 		local match = matchDigits(description, {1, 2})
-		data.type = SpellHealAndTimeHeal
-		data.heal = match[1]
-		data.timeHeal = match[2]
+		if match then
+			data.type = SpellHealAndTimeHeal
+			data.heal = match[1]
+			data.timeHeal = match[2]
+		end
 	else
-		data.type = SpellTimeHeal
-		data.timeHeal = matchDigit(description, 1)
+		local match = matchDigit(description, 1)
+		if match then
+			data.type = SpellTimeHeal
+			data.timeHeal = match
+		end
 	end
 end)
 

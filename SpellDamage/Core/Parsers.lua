@@ -1,4 +1,4 @@
-SpellParser = {}
+﻿SpellParser = {}
 function SpellParser:create()
 	self.__index = self
 	return setmetatable({}, self)

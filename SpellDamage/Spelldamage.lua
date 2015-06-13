@@ -5,6 +5,37 @@ local emptyClass = Class:create()
 local currentClass = emptyClass
 local race = Race
 local glyphs = Glyphs
+local debuging = false
+local eventDebuging = false
+
+SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
+function SlashCmdList.SPELLDAMAGE(msg, editbox)
+ 	local debugState = function() if debuging == true then return "Отладка включена" else return "Отладка выключена" end end
+ 	local eventsState = function() if eventDebuging == true then return "Просмотр событий включен" else return "Просмотр событий выключен" end end
+ 	local errorsState = function() if displayErrors == true then return "Отображение ошибок включено" else return "Отображение ошибок выключено" end end
+
+ 	if msg == "debug" then
+ 		debuging = not debuging
+ 		sdDebug("SpellDamage: "..debugState())
+ 	elseif msg == "events" then
+ 		eventDebuging = not eventDebuging
+  		sdDebug("SpellDamage: "..eventsState())
+ 	elseif msg == "errors" then
+ 		displayErrors = not displayErrors
+ 		sdDebug("SpellDamage: "..errorsState())
+ 	elseif msg == "status" then
+ 		sdDebug("SpellDamage, текущие настройки:")
+ 		sdDebug("   "..debugState())
+ 		sdDebug("   "..eventsState())
+ 		sdDebug("   "..errorsState())
+ 	else
+ 		sdDebug("SpellDamage, доступные команды:")
+ 		sdDebug("   /sd status - отображает текущие настройки")
+ 		sdDebug("   /sd debug - включает или выключает отладку")
+ 		sdDebug("   /sd events - включает или выключает просмотр событий")
+ 		sdDebug("   /sd errors - включает или выключает отображение ошибок")
+ 	end
+end
 
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
@@ -20,6 +51,9 @@ EventFrame:RegisterEvent("GLYPH_ENABLED")
 EventFrame:RegisterEvent("GLYPH_REMOVED")
 EventFrame:RegisterEvent("GLYPH_UPDATED")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
+	if debuging == true then debugprofilestart() end
+	if eventDebuging == true then sdDebug("SpellDamage: event '"..event.."'") end
+
 	if event == "PLAYER_LOGIN" then
 		local _, className = UnitClass("player")
 		currentClass = classes[className]
@@ -30,6 +64,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 	end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" then
+		if debuging == true then sdDebug("SpellDamage: clear on '"..event.."' event") end
+
 		for _, button in pairs(buttons) do
 			button.centerText:SetText("")
 			button.bottomText:SetText("")
@@ -38,6 +74,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 
 	local glyphsUpdated = false
 	if event == "GLYPH_ADDED" or event == "GLYPH_DISABLED" or event == "GLYPH_ENABLED" or event == "GLYPH_REMOVED" or event == "GLYPH_UPDATED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
+		if debuging == true then sdDebug("SpellDamage: glyphs updated on '"..event.."' event") end
 		glyphsUpdated = true
 		glyphs:update()
 	end
@@ -63,6 +100,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 				end
 			end
 		end
+
+		if debuging == true then sdDebug("SpellDamage: updating on '"..event.."' event ("..debugprofilestop().." ms)") end
 	end
 end)
 

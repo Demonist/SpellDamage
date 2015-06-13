@@ -1,4 +1,4 @@
-function shortNumber(number)
+﻿function shortNumber(number)
 	if number == nil then
 		return ""
 	end
@@ -52,8 +52,12 @@ end
 
 function printTable(table)
 	for key, value in pairs(table) do
-		DEFAULT_CHAT_FRAME:AddMessage(key .. " -> " .. value)
+		sdDebug(key .. " -> " .. value)
 	end
+end
+
+function sdDebug(msg)
+	DEFAULT_CHAT_FRAME:AddMessage(msg, 1, 1, 0)
 end
 
 SPELL_COMBO_POINTS = 4

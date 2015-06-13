@@ -1,8 +1,11 @@
 --Ледяная глыба:
 local IceBlock = CustomParser:create(function(data, description)
 	if Glyphs:contains(159486) then		--Символ возрождающего льда
-		data.type = SpellTimeHeal
-		data.timeHeal = UnitHealthMax("player") * 0.04 * matchDigit(description, 1)
+		local match = matchDigit(description, 1)
+		if match then
+			data.type = SpellTimeHeal
+			data.timeHeal = UnitHealthMax("player") * 0.04 * match
+		end
 	end
 end)
 

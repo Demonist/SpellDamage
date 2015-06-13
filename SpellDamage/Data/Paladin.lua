@@ -1,11 +1,14 @@
 --Торжество:
 local WordOfGlory = CustomParser:create(function(data, description)
-	data.type = SpellHeal
-	data.heal = matchDigit(description, 2)
+	local match = matchDigit(description, 2)
+	if match then
+		data.type = SpellHeal
+		data.heal = match
 
-	if Glyphs:contains(54938) then		--Символ резких слов
-		data.type = SpellDamageAndHeal
-		data.damage = data.heal
+		if Glyphs:contains(54938) then		--Символ резких слов
+			data.type = SpellDamageAndHeal
+			data.damage = data.heal
+		end
 	end
 end)
 
@@ -16,12 +19,15 @@ end)
 
 --Божественная буря:
 local DivineStorm = CustomParser:create(function(data, description)
-	data.type = SpellDamage
-	data.damage = matchDigit(description, 1)
+	local match = matchDigit(description, 1)
+	if match then
+		data.type = SpellDamage
+		data.damage = match
 
-	if Glyphs:contains(63220) then		--Символ божественной бури
-		data.type = SpellDamageAndHeal
-		data.heal = UnitHealthMax("player") * 0.04
+		if Glyphs:contains(63220) then		--Символ божественной бури
+			data.type = SpellDamageAndHeal
+			data.heal = UnitHealthMax("player") * 0.04
+		end
 	end
 end)
 
@@ -34,9 +40,11 @@ end)
 --Гнев карателя:
 local AvengingWrath = CustomParser:create(function(data, description)
 	if Glyphs:contains(54927) then		--Символ гнева карателя
-		data.type = SpellTimeHeal
 		local duration = matchDigit(description, 2)
-		data.timeHeal = UnitHealthMax("player") * 0.01 * (duration / 4)
+		if duration then
+			data.type = SpellTimeHeal
+			data.timeHeal = UnitHealthMax("player") * 0.01 * (duration / 4)
+		end
 	end
 end)
 

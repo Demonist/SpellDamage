@@ -1,8 +1,9 @@
-## Interface: 60100-60200
+﻿## Interface: 60100-60200
 ## Title: SpellDamage
 ## Author: Demonist
-## Version: 0.7.0.4
-## Notes: Displays spell's damage, heal or absorb on action bar.
+## Version: 0.7.1.0
+## Notes: Displays spell's damage, heal or absorb on action bar
+## Notes-ruRU: Отображает |cFFffff00урон|r, |cFF00ff00лечение|r или |cFFff7fffпоглощение|r умений на панели
 
 Core/Utilites.lua
 Core/Core.lua
