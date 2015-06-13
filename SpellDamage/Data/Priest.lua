@@ -24,7 +24,7 @@ end)
 
 --Обновление:
 local Renew = CustomParser:create(function(data, description)
-	if IsSpellKnown(95649) == true then		--Мгновенное обновление
+	if UnitLevel("player") >= 64 then
 		local match = matchDigits(description, {1, 2})
 		if match then
 			data.type = SpellHealAndTimeHeal
