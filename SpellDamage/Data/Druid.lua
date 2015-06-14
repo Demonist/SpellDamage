@@ -3,15 +3,19 @@ local FerociousBite = CustomParser:create(function(data, description)
 	local list = {4, 6, 8, 10, 12}
 	local match = matchDigits(description, list)
 	local index = comboMatch(list)
-	if match and index then
-		data.type = SpellDamage
-		data.damage = match[index]
-	end
+	if match then
+		if index then
+			data.type = SpellDamage
+			data.damage = match[index]
 
-	if Glyphs:contains(67598) then	--Символ свирепого укуса
-		data.type = SpellDamageAndHeal
-		local energy = matchDigit(description, 1)
-		data.heal = UnitHealthMax("player") * 0.015 * math.floor(energy / 10)
+			if Glyphs:contains(67598) then	--Символ свирепого укуса
+				data.type = SpellDamageAndHeal
+				local energy = matchDigit(description, 1)
+				data.heal = UnitHealthMax("player") * 0.015 * math.floor(energy / 10)
+			end
+		else
+			data.type = SpellEmpty
+		end
 	end
 end)
 

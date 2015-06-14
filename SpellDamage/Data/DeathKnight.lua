@@ -6,6 +6,8 @@ local ChainsOfIce = CustomParser:create(function(data, description)
 			data.type = SpellDamage
 			data.damage = match
 		end
+	else
+		data.type = SpellEmpty
 	end
 end)
 

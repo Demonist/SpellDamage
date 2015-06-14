@@ -1,4 +1,4 @@
-﻿SpellUnknown, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7
+﻿SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7, 8
 SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17
 
 SpellData = {}
@@ -37,6 +37,8 @@ function Class:updateButton(button, spellId)
 		DEFAULT_CHAT_FRAME:AddMessage("SpellDamage: Ошибка парсинга умения с id '"..spellId.."'", 1, 0, 0)
 		return false 
 	end
+
+	if data.type == SpellEmpty then return true end
 
 	if data.type == SpellDamage then
 		button.centerText:SetText( shortNumber(data.damage) )

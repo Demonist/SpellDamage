@@ -6,6 +6,8 @@ local IceBlock = CustomParser:create(function(data, description)
 			data.type = SpellTimeHeal
 			data.timeHeal = UnitHealthMax("player") * 0.04 * match
 		end
+	else
+		data.type = SpellEmpty
 	end
 end)
 

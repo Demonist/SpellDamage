@@ -3,6 +3,8 @@ local Disengage = CustomParser:create(function(data, description)
 	if Glyphs:contains(132106) then		--Символ освобождения
 		data.type = SpellHeal
 		data.heal = UnitHealthMax("player") * 0.04
+	else
+		data.type = SpellEmpty
 	end
 end)
 
