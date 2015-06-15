@@ -23,6 +23,12 @@ local Evocation = MultiParser:create(SpellManaAndTimeMana, {1, 2}, function(data
 	data.timeMana = match[2] * maxMana / 100
 end)
 
+--Живая бомба:
+local LivingBomb = MultiParser:create(SpellDamageAndTimeDamage, {1, 4}, function(data, match)
+	data.damage = match[4]
+	data.timeDamage = match[1]
+end)
+
 Mage = Class:create()
 Mage.spells[44614]	= SimpleDamageParser					--Стрела ледяного огня
 Mage.spells[122]	= SimpleDamageParser2					--Кольцо льда
@@ -47,7 +53,7 @@ Mage.spells[31661]	= SimpleDamageParser 					--Дыхание дракона
 Mage.spells[84714]	= SimpleTimeDamageParser 				--Ледяной шар
 Mage.spells[114923]	= SimpleTimeDamageParser 				--Буря Пустоты
 Mage.spells[157981]	= SimpleDamageParser 					--Взрывная волна
-Mage.spells[44457]	= SimpleTimeDamageParser 				--Живая бомба
+Mage.spells[44457]	= LivingBomb 							--Живая бомба
 Mage.spells[157997]	= SimpleDamageParser 					--Кольцо обледенения
 Mage.spells[157980]	= SimpleDamageParser 					--Сверхновая
 Mage.spells[153595]	= SimpleDamageParser2					--Буря комет
