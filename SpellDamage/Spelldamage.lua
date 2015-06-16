@@ -50,6 +50,7 @@ EventFrame:RegisterEvent("UNIT_POWER")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
 EventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
+EventFrame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 EventFrame:RegisterEvent("GLYPH_ADDED")
 EventFrame:RegisterEvent("GLYPH_DISABLED")
 EventFrame:RegisterEvent("GLYPH_ENABLED")
@@ -68,7 +69,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		glyphs:update()
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" then
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR" then
 		if debuging == true then sdDebug("SpellDamage: clear on '"..event.."' event") end
 
 		for _, button in pairs(buttons) do
@@ -83,6 +84,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		glyphsUpdated = true
 		glyphs:update()
 	end
+
+	if UnitInVehicle("player") then return end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
