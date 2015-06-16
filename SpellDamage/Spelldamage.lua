@@ -12,6 +12,7 @@ local race = Race
 local glyphs = Glyphs
 local debuging = false
 local eventDebuging = false
+local elvUi_updateFix = 0
 
 SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
@@ -56,7 +57,8 @@ EventFrame:RegisterEvent("GLYPH_DISABLED")
 EventFrame:RegisterEvent("GLYPH_ENABLED")
 EventFrame:RegisterEvent("GLYPH_REMOVED")
 EventFrame:RegisterEvent("GLYPH_UPDATED")
-EventFrame:SetScript("OnEvent", function(self, event, ...)
+
+function EventHandler(self, event, ...)
 	if debuging == true then debugprofilestart() end
 	if eventDebuging == true then sdDebug("SpellDamage: event '"..event.."'") end
 
@@ -93,6 +95,15 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
 		or glyphsUpdated == true then
 
+		if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then
+			if elvUi_updateFix == 0 then 
+				elvUi_updateFix = 1
+				return 
+			elseif elvUi_updateFix == 2 then
+				elvUi_updateFix = 0
+			end
+		end
+
 		for _, button in pairs(buttons) do
 			local slot = ActionButton_GetPagedID(button)
 			if slot == 0 then slot = ActionButton_CalculateAction(button) end
@@ -111,7 +122,16 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 
 		if debuging == true then sdDebug("SpellDamage: updating on '"..event.."' event ("..debugprofilestop().." ms)") end
 	end
+end
+
+EventFrame:SetScript("OnUpdate", function(self, elapsed)
+	if elvUi_updateFix == 1 then
+		elvUi_updateFix = 2
+		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
+	end
 end)
+
+EventFrame:SetScript("OnEvent", EventHandler)
 
 function createButtons()
 	if IsAddOnLoaded("ElvUI") then
