@@ -15,6 +15,7 @@ local emptyClass = Class:create()
 local currentClass = emptyClass
 local race = Race
 local glyphs = Glyphs
+local items = Items
 
 local debuging = false
 local eventDebuging = false
@@ -195,12 +196,16 @@ local function EventHandler(self, event, ...)
 			if slot == 0 then slot = button:GetAttribute("action") end
 			if HasAction(slot) then
 				local actionType, id = GetActionInfo(slot)
-				if actionType == 'spell' then
+				if actionType == "spell" then
 					button.centerText:SetText("")
 					button.bottomText:SetText("")
 					
 					local used = currentClass:updateButton(button, id)
 					if used == false then used = race:updateButton(button, id) end
+				elseif actionType == "item" and id then
+					local _, link = GetItemInfo(tonumber(id))
+					print(id,link)
+					--local used = items:updateButton(button, id)
 				end
 			end
 		end

@@ -1,5 +1,5 @@
 ﻿SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7, 8
-SpellDamageAndTimeDamage, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17
+SpellDamageAndTimeDamage, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18
 
 SpellData = {}
 function SpellData:create(type)
@@ -25,6 +25,7 @@ function Class:create()
 	class.spells = {}
 	class.dependFromPower = false
 	class.dependPowerTypes = {}
+	class.type = "умения"
 	self.__index = self
 	return setmetatable(class, self)
 end
@@ -34,7 +35,7 @@ function Class:updateButton(button, spellId)
 
 	local data = self.spells[spellId]:getData(GetSpellDescription(spellId))
 	if data.type == SpellUnknown and displayErrors == true then 
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга умения с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..self.type.." с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
 		return false 
 	end
 
@@ -101,8 +102,13 @@ function Class:updateButton(button, spellId)
 		button.centerText:SetTextColor(1, 0.5, 1, 1)
 		button.bottomText:SetText( shortNumber(data.heal) )
 		button.bottomText:SetTextColor(0, 1, 0, 1)
+	elseif data.type == SpellHealAndMana then
+		button.centerText:SetText( shortNumber(data.heal) )
+		button.centerText:SetTextColor(0, 1, 0, 1)
+		button.bottomText:SetText( shortNumber(data.mana) )
+		button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 	elseif displayErrors == true then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа умения с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа "..self.type.." с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
 	end
 	return true
 end

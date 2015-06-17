@@ -23,5 +23,6 @@ Data/Warlock.lua
 Data/Warrior.lua
 
 Data/Race.lua
+Data/Items.lua
 
 SpellDamage.lua

@@ -80,6 +80,7 @@ function DoubleParser:getData(description)
 end
 
 DoubleDamageParser = DoubleParser:create(SpellDamageAndTimeDamage, 1, 2)
+DoubleHealManaParser = DoubleParser:create(SpellHealAndMana, 1, 2)
 
 --
 
