@@ -1,8 +1,3 @@
-if GetLocale() ~= "ruRU" then
-	DEFAULT_CHAT_FRAME:AddMessage("SpellDamage addon can't work in non russian locale! Addon disabled.", 1, 0, 0)
-	DisableAddOn("SpellDamage")
-end
-
 local buttons = {}
 
 local classes = {}
@@ -14,37 +9,55 @@ local debuging = false
 local eventDebuging = false
 local elvUi_updateFix = 0
 
+local function checkRequirements()
+	if GetLocale() ~= "ruRU" then
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in non russian locale! Addon disabled, sorry.", 1, 0, 0)
+		DisableAddOn("SpellDamage")
+	elseif GetCVar("SpellTooltip_DisplayAvgValues") == "0" then
+		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не может работать с НЕусредненными показателями. Аддон будет выключен. Зайдите в настройки интерфейса, изображение и установите галочку \"|cFFffff00Усредненные показатели|r\", затем включите аддон.", 1, 0, 0)
+
+		for _, button in pairs(buttons) do
+			button.centerText:SetText("")
+			button.bottomText:SetText("")
+		end
+
+		DisableAddOn("SpellDamage")
+	end
+end
+checkRequirements()
+
 SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
- 	local debugState = function() if debuging == true then return "Отладка включена" else return "Отладка выключена" end end
- 	local eventsState = function() if eventDebuging == true then return "Просмотр событий включен" else return "Просмотр событий выключен" end end
- 	local errorsState = function() if displayErrors == true then return "Отображение ошибок включено" else return "Отображение ошибок выключено" end end
+ 	local debugState = function() if debuging == true then return "Отладка |cFFc0ffc0включена|r" else return "Отладка |cFFffc0c0выключена|r" end end
+ 	local eventsState = function() if eventDebuging == true then return "Просмотр событий |cFFc0ffc0включен|r" else return "Просмотр событий |cFFffc0c0выключен|r" end end
+ 	local errorsState = function() if displayErrors == true then return "Отображение ошибок |cFFc0ffc0включено|r" else return "Отображение ошибок |cFFffc0c0выключено|r" end end
 
  	if msg == "debug" then
  		debuging = not debuging
- 		sdDebug("SpellDamage: "..debugState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..debugState())
  	elseif msg == "events" then
  		eventDebuging = not eventDebuging
-  		sdDebug("SpellDamage: "..eventsState())
+  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..eventsState())
  	elseif msg == "errors" then
  		displayErrors = not displayErrors
- 		sdDebug("SpellDamage: "..errorsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
  	elseif msg == "status" then
- 		sdDebug("SpellDamage, текущие настройки:")
- 		sdDebug("   "..debugState())
- 		sdDebug("   "..eventsState())
- 		sdDebug("   "..errorsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, текущие настройки:")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..debugState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..eventsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
  	else
- 		sdDebug("SpellDamage, доступные команды:")
- 		sdDebug("   /sd status - отображает текущие настройки")
- 		sdDebug("   /sd debug - включает или выключает отладку")
- 		sdDebug("   /sd events - включает или выключает просмотр событий")
- 		sdDebug("   /sd errors - включает или выключает отображение ошибок")
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, доступные команды:")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - отображает текущие настройки")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd debug|r - включает или выключает отладку")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd events|r - включает или выключает просмотр событий")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - включает или выключает отображение ошибок")
  	end
 end
 
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
+EventFrame:RegisterEvent("CVAR_UPDATE")
 EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
 EventFrame:RegisterEvent("UNIT_POWER")
@@ -58,9 +71,9 @@ EventFrame:RegisterEvent("GLYPH_ENABLED")
 EventFrame:RegisterEvent("GLYPH_REMOVED")
 EventFrame:RegisterEvent("GLYPH_UPDATED")
 
-function EventHandler(self, event, ...)
+local function EventHandler(self, event, ...)
 	if debuging == true then debugprofilestart() end
-	if eventDebuging == true then sdDebug("SpellDamage: event '"..event.."'") end
+	if eventDebuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r event |cFFffffc0"..event.."|r") end
 
 	if event == "PLAYER_LOGIN" then
 		local _, className = UnitClass("player")
@@ -71,8 +84,13 @@ function EventHandler(self, event, ...)
 		glyphs:update()
 	end
 
+	if event == "CVAR_UPDATE" then
+		local variable = select(1, ...)
+		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
+	end
+
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR" then
-		if debuging == true then sdDebug("SpellDamage: clear on '"..event.."' event") end
+		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
 
 		for _, button in pairs(buttons) do
 			button.centerText:SetText("")
@@ -82,7 +100,7 @@ function EventHandler(self, event, ...)
 
 	local glyphsUpdated = false
 	if event == "GLYPH_ADDED" or event == "GLYPH_DISABLED" or event == "GLYPH_ENABLED" or event == "GLYPH_REMOVED" or event == "GLYPH_UPDATED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
-		if debuging == true then sdDebug("SpellDamage: glyphs updated on '"..event.."' event") end
+		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r glyphs updated on |cFFffffc0"..event.."|r event") end
 		glyphsUpdated = true
 		glyphs:update()
 	end
@@ -120,7 +138,7 @@ function EventHandler(self, event, ...)
 			end
 		end
 
-		if debuging == true then sdDebug("SpellDamage: updating on '"..event.."' event ("..debugprofilestop().." ms)") end
+		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r updating on |cFFffffc0"..event.."|r event (|cFFc0c0c0"..string.format("%.1f", debugprofilestop()).."|r ms)") end
 	end
 end
 

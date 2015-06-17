@@ -34,7 +34,7 @@ function Class:updateButton(button, spellId)
 
 	local data = self.spells[spellId]:getData(GetSpellDescription(spellId))
 	if data.type == SpellUnknown and displayErrors == true then 
-		DEFAULT_CHAT_FRAME:AddMessage("SpellDamage: Ошибка парсинга умения с id '"..spellId.."'", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга умения с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
 		return false 
 	end
 
@@ -102,7 +102,7 @@ function Class:updateButton(button, spellId)
 		button.bottomText:SetText( shortNumber(data.heal) )
 		button.bottomText:SetTextColor(0, 1, 0, 1)
 	elseif displayErrors == true then
-		DEFAULT_CHAT_FRAME:AddMessage("SpellDamage: Ошибка определения типа умения с id '"..spellId.."'", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа умения с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
 	end
 	return true
 end
