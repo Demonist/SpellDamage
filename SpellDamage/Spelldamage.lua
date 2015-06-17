@@ -1,33 +1,87 @@
-local buttons = {}
-
 local classes = {}
+classes["DEATHKNIGHT"]	= DeathKnight
+classes["DRUID"]		= Druid
+classes["HUNTER"]		= Hunter
+classes["MAGE"]			= Mage
+classes["MONK"]			= Monk
+classes["PALADIN"]		= Paladin
+classes["PRIEST"]		= Priest
+classes["ROGUE"]		= Rogue
+classes["SHAMAN"]		= Shaman
+classes["WARLOCK"]		= Warlock
+classes["WARRIOR"]		= Warrior
+
 local emptyClass = Class:create()
 local currentClass = emptyClass
 local race = Race
 local glyphs = Glyphs
+
 local debuging = false
 local eventDebuging = false
 local elvUi_updateFix = 0
 
+local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
+local addonDisableReason = DisableReason_Unknown
+
+local buttons = {}
+
+local function clearButtons()
+	for _, button in pairs(buttons) do
+		button.centerText:SetText("")
+		button.bottomText:SetText("")
+	end
+end
+
+local function createButtons()
+	if IsAddOnLoaded("ElvUI") then
+		for i = 1, 6 do
+			for j = 1, 12 do
+				table.insert(buttons, _G["ElvUI_Bar"..i.."Button"..j])
+			end
+		end
+	else
+		for i = 1, 6 do
+			for j = 1, 12 do
+				table.insert(buttons, _G[((select(i, "ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
+			end
+		end
+	end
+
+	for _, button in pairs(buttons) do   
+		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
+		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		button.centerText:SetPoint("CENTER" , 0, 0)	
+		button.centerText:SetPoint("LEFT", 0, 0)
+		
+		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
+		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+		button.bottomText:SetPoint("BOTTOM" , 0, 0)	
+		button.bottomText:SetPoint("LEFT", 0, 0)	
+	end
+end
+
 local function checkRequirements()
 	if GetLocale() ~= "ruRU" then
 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in non russian locale! Addon disabled, sorry.", 1, 0, 0)
+		addonDisableReason = DisableReason_Language
 		DisableAddOn("SpellDamage")
 	elseif GetCVar("SpellTooltip_DisplayAvgValues") == "0" then
-		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не может работать с НЕусредненными показателями. Аддон будет выключен. Зайдите в настройки интерфейса, изображение и установите галочку \"|cFFffff00Усредненные показатели|r\", затем включите аддон.", 1, 0, 0)
-
-		for _, button in pairs(buttons) do
-			button.centerText:SetText("")
-			button.bottomText:SetText("")
-		end
-
-		DisableAddOn("SpellDamage")
+		clearButtons()
+		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не может работать с НЕусредненными показателями. Зайдите в настройки интерфейса, изображение и установите галочку \"|cFFffff00Усредненные показатели|r\".", 1, 0, 0)
+		addonDisableReason = DisableReason_Average
 	end
 end
-checkRequirements()
 
 SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
+	if addonDisableReason == DisableReason_Language then
+		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r выключен из-за настроек языка.")
+		return
+	elseif addonDisableReason == DisableReason_Average then
+		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не работает из-за настройки усредненных показателей.")
+		return
+	end
+
  	local debugState = function() if debuging == true then return "Отладка |cFFc0ffc0включена|r" else return "Отладка |cFFffc0c0выключена|r" end end
  	local eventsState = function() if eventDebuging == true then return "Просмотр событий |cFFc0ffc0включен|r" else return "Просмотр событий |cFFffc0c0выключен|r" end end
  	local errorsState = function() if displayErrors == true then return "Отображение ошибок |cFFc0ffc0включено|r" else return "Отображение ошибок |cFFffc0c0выключено|r" end end
@@ -72,6 +126,18 @@ EventFrame:RegisterEvent("GLYPH_REMOVED")
 EventFrame:RegisterEvent("GLYPH_UPDATED")
 
 local function EventHandler(self, event, ...)
+	if addonDisableReason ~= DisableReason_Unknown then
+		if addonDisableReason == DisableReason_Average and event == "CVAR_UPDATE" then
+			local variable = select(1, ...)
+			if variable == "SHOW_POINTS_AS_AVG" and GetCVar("SpellTooltip_DisplayAvgValues") == "1" then
+				DEFAULT_CHAT_FRAME:AddMessage("Отлично! Настройки изменены, аддон |cFFffff00SpellDamage|r вновь работает.", 0, 1, 0)
+				addonDisableReason = DisableReason_Unknown
+				EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
+			end
+		end
+		return
+	end
+
 	if debuging == true then debugprofilestart() end
 	if eventDebuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r event |cFFffffc0"..event.."|r") end
 
@@ -81,6 +147,8 @@ local function EventHandler(self, event, ...)
 		if currentClass == nil then currentClass = emptyClass end
 		
 		createButtons()
+		checkRequirements()
+		if addonDisableReason ~= DisableReason_Unknown then return end
 		glyphs:update()
 	end
 
@@ -89,23 +157,21 @@ local function EventHandler(self, event, ...)
 		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR" then
-		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR"
+		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
-		for _, button in pairs(buttons) do
-			button.centerText:SetText("")
-			button.bottomText:SetText("")
-		end
+		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
+		clearButtons()
 	end
 
+	if UnitInVehicle("player") == true then return end
+
 	local glyphsUpdated = false
-	if event == "GLYPH_ADDED" or event == "GLYPH_DISABLED" or event == "GLYPH_ENABLED" or event == "GLYPH_REMOVED" or event == "GLYPH_UPDATED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
+	if event == "GLYPH_ADDED" or event == "GLYPH_UPDATED" or event == "GLYPH_REMOVED" or event == "GLYPH_ENABLED" or event == "GLYPH_DISABLED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r glyphs updated on |cFFffffc0"..event.."|r event") end
 		glyphsUpdated = true
 		glyphs:update()
 	end
-
-	if UnitInVehicle("player") then return end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
@@ -150,47 +216,3 @@ EventFrame:SetScript("OnUpdate", function(self, elapsed)
 end)
 
 EventFrame:SetScript("OnEvent", EventHandler)
-
-function createButtons()
-	if IsAddOnLoaded("ElvUI") then
-		for i = 1, 6 do
-			for j = 1, 12 do
-				table.insert(buttons, _G["ElvUI_Bar"..i.."Button"..j])
-			end
-		end
-	else
-		for i = 1, 6 do
-			for j = 1, 12 do
-				table.insert(buttons, _G[((select(i, "ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
-			end
-		end
-	end
-
-	for _, button in pairs(buttons) do   
-		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
-		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		button.centerText:SetPoint("CENTER" , 0, 0)	
-		button.centerText:SetPoint("LEFT", 0, 0)
-		
-		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
-		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		button.bottomText:SetPoint("BOTTOM" , 0, 0)	
-		button.bottomText:SetPoint("LEFT", 0, 0)	
-	end
-end
-
-local function createClasses()
-	classes["DEATHKNIGHT"]	= DeathKnight
-	classes["DRUID"]		= Druid
-	classes["HUNTER"]		= Hunter
-	classes["MAGE"]			= Mage
-	classes["MONK"]			= Monk
-	classes["PALADIN"]		= Paladin
-	classes["PRIEST"]		= Priest
-	classes["ROGUE"]		= Rogue
-	classes["SHAMAN"]		= Shaman
-	classes["WARLOCK"]		= Warlock
-	classes["WARRIOR"]		= Warrior
-end
-
-createClasses()
