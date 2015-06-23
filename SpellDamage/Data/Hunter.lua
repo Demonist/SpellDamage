@@ -55,23 +55,28 @@ local ChimaeraShot = CustomParser:create(function(data, description)
 	end
 end)
 
+--Бросок глеф:
+local GlaiveToss = MultiParser:create(SpellDamage, {3}, function(data, match)
+	data.damage = match[3] * 8
+end)
+
 Hunter = Class:create()
-Hunter.spells[3044]		= SimpleDamageParser 					--Чародейский выстрел
-Hunter.spells[56641]	= SimpleDamageParser 					--Верный выстрел
-Hunter.spells[781]		= Disengage 							--Отрыв
-Hunter.spells[136]		= MendPet 								--Лечение питомца
-Hunter.spells[34026]	= SimpleDamageParser 					--Команда "Взять!"
-Hunter.spells[19434]	= SimpleDamageParser 					--Прицельный выстрел
-Hunter.spells[53301]	= ExplosiveShot 						--Разрывной выстрел
-Hunter.spells[2643]		= SimpleDamageParser2 					--Залп
-Hunter.spells[53351]	= KillShot 								--Убийственный выстрел
-Hunter.spells[13813]	= ExplosiveTrap			 				--Взрывная ловушка
-Hunter.spells[82939]	= ExplosiveTrap			 				--Взрывная ловушка, в режиме метания
-Hunter.spells[3674]		= SimpleTimeDamageParser 				--Черная стрела
-Hunter.spells[53209]	= ChimaeraShot 							--Выстрел химеры
-Hunter.spells[77767]	= SimpleDamageParser 					--Выстрел кобры
-Hunter.spells[117050]	= SimpleParser:create(SpellDamage, 3) 	--Бросок глеф
-Hunter.spells[109259]	= SimpleDamageParser 					--Мощный выстрел
-Hunter.spells[120360]	= SimpleDamageParser2 					--Шквал
-Hunter.spells[152245]	= SimpleDamageParser 					--Сосредоточенный выстрел
-Hunter.spells[163485]	= SimpleDamageParser 					--Сосредоточенный выстрел
+Hunter.spells[3044]		= SimpleDamageParser 		--Чародейский выстрел
+Hunter.spells[56641]	= SimpleDamageParser 		--Верный выстрел
+Hunter.spells[781]		= Disengage 				--Отрыв
+Hunter.spells[136]		= MendPet 					--Лечение питомца
+Hunter.spells[34026]	= SimpleDamageParser 		--Команда "Взять!"
+Hunter.spells[19434]	= SimpleDamageParser 		--Прицельный выстрел
+Hunter.spells[53301]	= ExplosiveShot 			--Разрывной выстрел
+Hunter.spells[2643]		= SimpleDamageParser2 		--Залп
+Hunter.spells[53351]	= KillShot 					--Убийственный выстрел
+Hunter.spells[13813]	= ExplosiveTrap			 	--Взрывная ловушка
+Hunter.spells[82939]	= ExplosiveTrap			 	--Взрывная ловушка, в режиме метания
+Hunter.spells[3674]		= SimpleTimeDamageParser 	--Черная стрела
+Hunter.spells[53209]	= ChimaeraShot 				--Выстрел химеры
+Hunter.spells[77767]	= SimpleDamageParser 		--Выстрел кобры
+Hunter.spells[117050]	= GlaiveToss 				--Бросок глеф
+Hunter.spells[109259]	= SimpleDamageParser 		--Мощный выстрел
+Hunter.spells[120360]	= SimpleDamageParser2 		--Шквал
+Hunter.spells[152245]	= SimpleDamageParser 		--Сосредоточенный выстрел
+Hunter.spells[163485]	= SimpleDamageParser 		--Сосредоточенный выстрел
