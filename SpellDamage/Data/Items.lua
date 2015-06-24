@@ -7,7 +7,7 @@ end)
 
 Items = Class:create(ClassItems)
 
---Зелья:
+-- Зелья:
 
 --Лечебное зелье(Предмет для сценария):
 local HealingPotionScenario = MultiParser:create(SpelLHeal, {1}, function(data, match)
@@ -145,3 +145,42 @@ Items.spells[117415]	= SimpleHealParser 								--Контрабандный т�
 Items.spells[118006]	= SimpleAbsorbParser 							--Щитотронный щит
 Items.spells[118262]	= SimpleTimeManaParser 							--Бриллиантовый мечтоцвет
 Items.spells[118916]	= SimpleHealParser 								--Лечебное снадобье буяна
+
+-- Бинты:
+
+Items.spells[8544]		= SimpleTimeHealParser 	--Бинты из магической ткани
+Items.spells[6451]		= SimpleTimeHealParser 	--Плотные шелковые бинты
+Items.spells[6450]		= SimpleTimeHealParser 	--Шелковые бинты
+Items.spells[6531]		= SimpleTimeHealParser 	--Плотные шерстяные бинты
+Items.spells[3530]		= SimpleTimeHealParser 	--Шерстяные бинты
+Items.spells[2581]		= SimpleTimeHealParser 	--Плотные льняные бинты
+Items.spells[1251]		= SimpleTimeHealParser 	--Льняные бинты
+Items.spells[8545]		= SimpleTimeHealParser 	--Плотные бинты из магической ткани
+Items.spells[20244]		= SimpleTimeHealParser 	--Шелковые бинты горца
+Items.spells[20235]		= SimpleTimeHealParser 	--Шелковые бинты Осквернителя
+Items.spells[20067]		= SimpleTimeHealParser 	--Шелковые бинты из Низины Арати
+Items.spells[19068]		= SimpleTimeHealParser 	--Шелковые бинты из Ущелья Песни Войны
+Items.spells[19067]		= SimpleTimeHealParser 	--Бинты Ущелья Песни Войны из магической ткани
+Items.spells[20065]		= SimpleTimeHealParser 	--Бинты Низины Арати из магической ткани
+Items.spells[20232]		= SimpleTimeHealParser 	--Бинты Осквернителя из магической ткани
+Items.spells[20237]		= SimpleTimeHealParser 	--Бинты горца из магической ткани
+Items.spells[14529]		= SimpleTimeHealParser 	--Бинты из рунической ткани
+Items.spells[20243]		= SimpleTimeHealParser 	--Бинты горца из рунической ткани
+Items.spells[20234]		= SimpleTimeHealParser 	--Бинты Осквернителя из рунической ткани
+Items.spells[20066]		= SimpleTimeHealParser 	--Бинты из рунической ткани из Низины Арати
+Items.spells[19066]		= SimpleTimeHealParser 	--Бинты из рунической ткани из Ущелья Песни Войны
+Items.spells[14530]		= SimpleTimeHealParser 	--Плотные бинты из рунической ткани
+Items.spells[19307]		= SimpleTimeHealParser 	--Плотные альтеракские бинты из рунической ткани
+Items.spells[21990]		= SimpleTimeHealParser 	--Бинты из ткани Пустоты
+Items.spells[21991]		= SimpleTimeHealParser 	--Плотные бинты из ткани Пустоты
+Items.spells[34721]		= SimpleTimeHealParser 	--Бинты из ледяной ткани
+Items.spells[34722]		= SimpleTimeHealParser 	--Плотные бинты из ледяной ткани
+Items.spells[53049]		= SimpleTimeHealParser 	--Бинты из угольного шелка
+Items.spells[53050]		= SimpleTimeHealParser 	--Плотные бинты из угольного шелка
+Items.spells[53051]		= SimpleTimeHealParser 	--Крепкие бинты из угольного шелка
+Items.spells[63391]		= SimpleTimeHealParser 	--Бинты защитников Тол Барада
+Items.spells[94995]		= SimpleTimeHealParser 	--Бинты батальона Адского Крика
+Items.spells[72985]		= SimpleTimeHealParser 	--Бинты из ветрошерсти
+Items.spells[72986]		= SimpleTimeHealParser 	--Плотные бинты из ветрошерсти
+Items.spells[111603]	= SimpleTimeHealParser 	--Пропитанные антисептиком бинты
+Items.spells[115497]	= SimpleTimeHealParser 	--Ашранские бинты
