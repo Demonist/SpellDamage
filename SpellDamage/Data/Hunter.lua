@@ -60,7 +60,7 @@ local GlaiveToss = MultiParser:create(SpellDamage, {3}, function(data, match)
 	data.damage = match[3] * 8
 end)
 
-Hunter = Class:create()
+Hunter = Class:create(ClassSpells)
 Hunter.spells[3044]		= SimpleDamageParser 		--Чародейский выстрел
 Hunter.spells[56641]	= SimpleDamageParser 		--Верный выстрел
 Hunter.spells[781]		= Disengage 				--Отрыв

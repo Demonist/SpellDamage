@@ -11,7 +11,7 @@ classes["SHAMAN"]		= Shaman
 classes["WARLOCK"]		= Warlock
 classes["WARRIOR"]		= Warrior
 
-local emptyClass = Class:create()
+local emptyClass = Class:create(ClassSpells)
 local currentClass = emptyClass
 local race = Race
 local glyphs = Glyphs
@@ -203,9 +203,7 @@ local function EventHandler(self, event, ...)
 					local used = currentClass:updateButton(button, id)
 					if used == false then used = race:updateButton(button, id) end
 				elseif actionType == "item" and id then
-					local _, link = GetItemInfo(tonumber(id))
-					print(id,link)
-					--local used = items:updateButton(button, id)
+					items:updateButton(button, id)
 				end
 			end
 		end
@@ -222,3 +220,22 @@ EventFrame:SetScript("OnUpdate", function(self, elapsed)
 end)
 
 EventFrame:SetScript("OnEvent", EventHandler)
+
+function sdTest(link)
+	local tip = myTooltip or CreateFrame("GAMETOOLTIP", "myTooltip")
+	local L = L or tip:CreateFontString()
+	local R = R or tip:CreateFontString()
+	L:SetFontObject(GameFontNormal)
+	R:SetFontObject(GameFontNormal)
+	tip:AddFontStrings(L,R)
+	tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+	tip:ClearLines()
+	tip:SetHyperlink(link)
+	local lines = tip:NumLines()
+	print(lines, text, L:GetText(), R:GetText())
+	for i=1,tip:NumLines() do
+		if _G["myTooltipTextLeft"..i] then
+			print(i, _G["myTooltipTextLeft"..i]:GetText())
+		end
+	end
+end

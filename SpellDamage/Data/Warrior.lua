@@ -61,7 +61,7 @@ local Bladestorm = MultiParser:create(SpellTimeDamage, {2, 4}, function(data, ma
 	data.timeDamage = match[2] * match[4]
 end)
 
-Warrior = Class:create()
+Warrior = Class:create(ClassSpells)
 Warrior.spells[156287]	= Ravager 				--Опустошитель
 Warrior.spells[176318]	= SimpleDamageParser 	--Стенолом – левая рука
 Warrior.spells[78]		= SimpleDamageParser 	--Удар героя

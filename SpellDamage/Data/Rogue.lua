@@ -57,7 +57,7 @@ local CrimsonTempest = CustomParser:create(function(data, description)
 	end
 end)
 
-Rogue = Class:create()
+Rogue = Class:create(ClassSpells)
 Rogue.dependFromPower = true
 Rogue.dependPowerTypes["COMBO_POINTS"] = true
 Rogue.spells[1752]		= SimpleDamageParser 											--Коварный удар

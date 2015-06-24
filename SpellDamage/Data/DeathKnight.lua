@@ -40,7 +40,7 @@ local EmpowerRuneWeapon = CustomParser:create(function(data, description)
 	end
 end)
 
-DeathKnight = Class:create()
+DeathKnight = Class:create(ClassSpells)
 DeathKnight.spells[49184]	= SimpleDamageParser 								--Воющий ветер
 DeathKnight.spells[49143]	= SimpleDamageParser 								--Ледяной удар
 DeathKnight.spells[50842]	= SimpleDamageParser 								--Вскипание крови

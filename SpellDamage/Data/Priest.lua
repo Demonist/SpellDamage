@@ -45,7 +45,7 @@ local HolyWordSanctuary = MultiParser:create(SpellTimeHeal, {2, 3, 4}, function(
 	data.timeHeal = math.floor(match[4] / match[3]) * match[2]
 end)
 
-Priest = Class:create()
+Priest = Class:create(ClassSpells)
 Priest.spells[585]		= SimpleDamageParser 								--Кара
 Priest.spells[589]		= DoubleDamageParser 								--Слово Тьмы: Боль
 Priest.spells[17]		= PowerWordShield 									--Слово силы: Щит
