@@ -161,9 +161,25 @@ function Class:updateButton(button, spellId)
 			button.centerText:SetTextColor(0, 1, 0, 1)
 			button.bottomText:SetText( shortNumber(data.mana) )
 			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
+		elseif data.type == SpellTimeHealAndTimeMana then
+			button.centerText:SetText("(".. shortNumber(data.timeHeal) ..")")
+			button.centerText:SetTextColor(0, 1, 0, 1)
+			button.bottomText:SetText("(".. shortNumber(data.timeMana) ..")")
+			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif data.type == SpellAbsorb then
 			button.centerText:SetText( shortNumber(data.absorb) )
 			button.centerText:SetTextColor(1, 0.5, 1, 1)
+		elseif data.type == SpellDamage then
+			button.centerText:SetText( shortNumber(data.damage) )
+			button.centerText:SetTextColor(1, 1, 0, 1)
+		elseif data.type == SpellTimeDamage then
+			button.centerText:SetText("(".. shortNumber(data.timeDamage) ..")")
+			button.centerText:SetTextColor(1, 1, 0, 1)
+		elseif data.type == SpellDamageAndTimeDamage then
+			button.centerText:SetText( shortNumber(data.damage) )
+			button.centerText:SetTextColor(1, 1, 0, 1)
+			button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
+			button.bottomText:SetTextColor(1, 1, 0, 1)
 		end
 	end
 	return true

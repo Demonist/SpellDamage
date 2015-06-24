@@ -3,6 +3,10 @@ local HealAndMana = MultiParser:create(SpellHealAndMana, {1}, function(data, mat
 	data.heal = match[1]
 	data.mana = match[1]
 end)
+local TimeHealAndTimeMana = MultiParser:create(SpellHealAndMana, {1}, function(data, match)
+	data.timeHeal = match[1]
+	data.timeMana = match[1]
+end)
 
 
 Items = Class:create(ClassItems)
@@ -184,3 +188,31 @@ Items.spells[72985]		= SimpleTimeHealParser 	--Бинты из ветрошер�
 Items.spells[72986]		= SimpleTimeHealParser 	--Плотные бинты из ветрошерсти
 Items.spells[111603]	= SimpleTimeHealParser 	--Пропитанные антисептиком бинты
 Items.spells[115497]	= SimpleTimeHealParser 	--Ашранские бинты
+
+--Разное:
+
+--Воспламеняющая смесь:
+local OilOfImmolation = MultiParser:create(SpellTimeDamage, {1, 3, 4}, function(data, match)
+	data.timeDamage = match[1] * math.floor(match[4] / match[3])
+end)
+local GoblinDragonGunMarkII = OilOfImmolation
+
+--Фрагмент духа стихии:
+local ElementalFragment = MultiParser(SpelLHeal, {1}, function(data, match)
+	data.heal = UnitHealthMax("player") * match[1] / 100
+end)
+
+Items.spells[1399]		= DoubleDamageParser 	--Волшебная свеча
+Items.spells[1178]		= SimpleDamageParser 	--Взрывчатая ракета
+Items.spells[5512]		= SimpleHealParser 		--Камень здоровья
+Items.spells[6458]		= SimpleTimeHealParser 	--Рыба в масле
+Items.spells[5205]		= SimpleTimeHealParser	--Росток папоротника
+Items.spells[118699]	= OilOfImmolation		--Воспламеняющая смесь
+Items.spells[8956]		= OilOfImmolation		--Воспламеняющая смесь
+Items.spells[11952]		= DoubleParser:create(SpellHealAndMana, 2, 1)	--Дыхание ночного дракона
+Items.spells[11950]		= SimpleTimeHealParser	--Ягоды ветроцвета
+Items.spells[29531]		= TimeHealAndTimeMana	--Барабаны восстановления
+Items.spells[49634]		= TimeHealAndTimeMana	--Барабаны дикой природы
+Items.spells[86607]		= GoblinDragonGunMarkII	--Гоблинское драконье ружье, модель II
+Items.spells[113545]	= SimpleManaParser 		--Резной рог для питья
+Items.spells[115466]	= ElementalFragment 	--Фрагмент духа стихии
