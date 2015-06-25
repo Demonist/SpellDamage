@@ -68,7 +68,6 @@ function Class:updateButton(button, spellId)
 
 	local data = self.spells[spellId]:getData(self.getSpellText(spellId))
 	if data.type == SpellUnknown and displayErrors == true then
-		print(self.getSpellText(spellId)) 
 		local slot = "умения"
 		if self.type == ClassItems then slot = "предмета" end
 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)

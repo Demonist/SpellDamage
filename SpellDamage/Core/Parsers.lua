@@ -74,6 +74,11 @@ function DoubleParser:getData(description)
 		elseif self.type == SpellDamageAndTimeHeal then
 			data.damage = match[self.directIndex]
 			data.timeHeal = match[self.timeIndex]
+		elseif self.type == SpellHealAndMana then
+			data.heal = match[self.directIndex]
+			data.mana = match[self.timeIndex]
+		else
+			data.type = SpellUnknown
 		end
 	end
 	return data
