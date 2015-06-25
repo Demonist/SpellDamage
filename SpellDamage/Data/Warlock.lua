@@ -46,7 +46,7 @@ local MortalCoil = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
-Warlock = Class:create()
+Warlock = Class:create(ClassSpells)
 Warlock.spells[686]		= SimpleDamageParser 									--Стрела Тьмы
 Warlock.spells[172]		= SimpleTimeDamageParser 								--Порча
 Warlock.spells[689]		= DrainLife 		 									--Похищение жизни

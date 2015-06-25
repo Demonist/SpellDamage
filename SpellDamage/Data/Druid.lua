@@ -62,7 +62,7 @@ local WildMushroom = MultiParser:create(SpellTimeHeal, {4}, function(data, match
 	data.timeHeal = match[4] * 15
 end)
 
-Druid = Class:create()
+Druid = Class:create(ClassSpells)
 Druid.dependFromPower = true
 Druid.dependPowerTypes["COMBO_POINTS"] = true
 Druid.spells[5176]		= SimpleDamageParser 											--Гнев

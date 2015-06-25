@@ -54,7 +54,7 @@ local LightsHammer = MultiParser:create(SpelLDamageAndHeal, {4, 8}, function(dat
 	data.timeHeal = match[8] * 7
 end)
 
-Paladin = Class:create()
+Paladin = Class:create(ClassSpells)
 Paladin.spells[35395]	= SimpleDamageParser 									--Удар воина Света
 Paladin.spells[20271]	= SimpleDamageParser 									--Правосудие
 Paladin.spells[130552]	= SimpleHealParser2 									--Резкое слово

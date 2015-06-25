@@ -15,7 +15,7 @@ local Cannibalize = MultiParser:create(SpellTimeHealAndTimeMana, {1, 2, 3}, func
 	data.timeMana = match[1] * UnitManaMax("player") / 100 * times
 end)
 
-Race = Class:create()
+Race = Class:create(ClassSpells)
 Race.spells[28730]	= ArcaneTorrent 						--Эльф крови, Волшебный поток
 Race.spells[121093]	= GiftOfTheNaaru 						--Дреней, Дар наару
 Race.spells[28880]	= GiftOfTheNaaru 						--Дреней, Дар наару

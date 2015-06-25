@@ -29,7 +29,7 @@ local LivingBomb = MultiParser:create(SpellDamageAndTimeDamage, {1, 4}, function
 	data.timeDamage = match[1]
 end)
 
-Mage = Class:create()
+Mage = Class:create(ClassSpells)
 Mage.spells[44614]	= SimpleDamageParser					--Стрела ледяного огня
 Mage.spells[122]	= SimpleDamageParser2					--Кольцо льда
 Mage.spells[2136]	= SimpleDamageParser					--Огненный взрыв

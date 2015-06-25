@@ -75,7 +75,7 @@ local ChiExplosion3 = MultiParser:create(SpellDamage, {3, 4}, function(data, mat
 	data.damage = match[3] + (chi * match[4])
 end)
 
-Monk = Class:create()
+Monk = Class:create(ClassSpells)
 Monk.dependFromPower = true
 Monk.dependPowerTypes["CHI"] = true
 Monk.spells[100780] = SimpleAverageParser 							--Дзуки

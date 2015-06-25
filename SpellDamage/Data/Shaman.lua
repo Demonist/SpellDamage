@@ -18,7 +18,7 @@ local HealingTideTotem = MultiParser:create(SpellTimeHeal, {5}, function(data, m
 	data.timeHeal = match[5] * 5
 end)
 
-Shaman = Class:create()
+Shaman = Class:create(ClassSpells)
 Shaman.spells[403]		= SimpleDamageParser 								--Молния
 Shaman.spells[73899]	= SimpleDamageParser 								--Стихийный удар
 Shaman.spells[8042]		= SimpleDamageParser 								--Земной шок
