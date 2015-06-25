@@ -19,6 +19,7 @@ local items = Items
 
 local debuging = false
 local eventDebuging = false
+local showItems = true
 local elvUi_updateFix = 0
 
 local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
@@ -73,45 +74,9 @@ local function checkRequirements()
 	end
 end
 
-SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
-function SlashCmdList.SPELLDAMAGE(msg, editbox)
-	if addonDisableReason == DisableReason_Language then
-		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r выключен из-за настроек языка.")
-		return
-	elseif addonDisableReason == DisableReason_Average then
-		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не работает из-за настройки усредненных показателей.")
-		return
-	end
-
- 	local debugState = function() if debuging == true then return "Отладка |cFFc0ffc0включена|r" else return "Отладка |cFFffc0c0выключена|r" end end
- 	local eventsState = function() if eventDebuging == true then return "Просмотр событий |cFFc0ffc0включен|r" else return "Просмотр событий |cFFffc0c0выключен|r" end end
- 	local errorsState = function() if displayErrors == true then return "Отображение ошибок |cFFc0ffc0включено|r" else return "Отображение ошибок |cFFffc0c0выключено|r" end end
-
- 	if msg == "debug" then
- 		debuging = not debuging
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..debugState())
- 	elseif msg == "events" then
- 		eventDebuging = not eventDebuging
-  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..eventsState())
- 	elseif msg == "errors" then
- 		displayErrors = not displayErrors
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
- 	elseif msg == "status" then
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, текущие настройки:")
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..debugState())
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..eventsState())
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
- 	else
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, доступные команды:")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - отображает текущие настройки")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd debug|r - включает или выключает отладку")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd events|r - включает или выключает просмотр событий")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - включает или выключает отображение ошибок")
- 	end
-end
-
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
+EventFrame:RegisterEvent("PLAYER_LOGOUT")
 EventFrame:RegisterEvent("CVAR_UPDATE")
 EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
@@ -126,7 +91,7 @@ EventFrame:RegisterEvent("GLYPH_DISABLED")
 EventFrame:RegisterEvent("GLYPH_ENABLED")
 EventFrame:RegisterEvent("GLYPH_REMOVED")
 EventFrame:RegisterEvent("GLYPH_UPDATED")
-
+local logined = false
 local function EventHandler(self, event, ...)
 	if addonDisableReason ~= DisableReason_Unknown then
 		if addonDisableReason == DisableReason_Average and event == "CVAR_UPDATE" then
@@ -144,6 +109,7 @@ local function EventHandler(self, event, ...)
 	if eventDebuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r event |cFFffffc0"..event.."|r") end
 
 	if event == "PLAYER_LOGIN" then
+		logined = true
 		local _, className = UnitClass("player")
 		currentClass = classes[className]
 		if currentClass == nil then currentClass = emptyClass end
@@ -158,6 +124,9 @@ local function EventHandler(self, event, ...)
 		local variable = select(1, ...)
 		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
 	end
+
+	if event == "PLAYER_LOGOUT" then logined = false end
+	if logined == false then return end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR"
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
@@ -175,7 +144,7 @@ local function EventHandler(self, event, ...)
 		glyphs:update()
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED"
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
@@ -202,7 +171,7 @@ local function EventHandler(self, event, ...)
 					
 					local used = currentClass:updateButton(button, id)
 					if used == false then used = race:updateButton(button, id) end
-				elseif actionType == "item" and id then
+				elseif showItems == true and actionType == "item" and id then
 					items:updateButton(button, id)
 				end
 			end
@@ -221,21 +190,46 @@ end)
 
 EventFrame:SetScript("OnEvent", EventHandler)
 
-function sdTest(link)
-	local tip = myTooltip or CreateFrame("GAMETOOLTIP", "myTooltip")
-	local L = L or tip:CreateFontString()
-	local R = R or tip:CreateFontString()
-	L:SetFontObject(GameFontNormal)
-	R:SetFontObject(GameFontNormal)
-	tip:AddFontStrings(L,R)
-	tip:SetOwner(WorldFrame, "ANCHOR_NONE")
-	tip:ClearLines()
-	tip:SetHyperlink(link)
-	local lines = tip:NumLines()
-	print(lines, text, L:GetText(), R:GetText())
-	for i=1,tip:NumLines() do
-		if _G["myTooltipTextLeft"..i] then
-			print(i, _G["myTooltipTextLeft"..i]:GetText())
-		end
+SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
+function SlashCmdList.SPELLDAMAGE(msg, editbox)
+	if addonDisableReason == DisableReason_Language then
+		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r выключен из-за настроек языка.")
+		return
+	elseif addonDisableReason == DisableReason_Average then
+		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не работает из-за настройки усредненных показателей.")
+		return
 	end
+
+	local itemsState = function() if showItems == true then return "Отображение на предметах |cFFc0ffc0включено|r" else return "Отображение на предметах |cFFffc0c0выключено|r" end end
+ 	local debugState = function() if debuging == true then return "Отладка |cFFc0ffc0включена|r" else return "Отладка |cFFffc0c0выключена|r" end end
+ 	local eventsState = function() if eventDebuging == true then return "Просмотр событий |cFFc0ffc0включен|r" else return "Просмотр событий |cFFffc0c0выключен|r" end end
+ 	local errorsState = function() if displayErrors == true then return "Отображение ошибок |cFFc0ffc0включено|r" else return "Отображение ошибок |cFFffc0c0выключено|r" end end
+
+ 	if msg == "debug" then
+ 		debuging = not debuging
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..debugState())
+ 	elseif msg == "items" then
+ 		showItems = not showItems
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
+ 		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
+ 	elseif msg == "events" then
+ 		eventDebuging = not eventDebuging
+  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..eventsState())
+ 	elseif msg == "errors" then
+ 		displayErrors = not displayErrors
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
+ 	elseif msg == "status" then
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, текущие настройки:")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..debugState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..eventsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
+ 	else
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, доступные команды:")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - отображает текущие настройки")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - включает или выключает показ значений на предметах")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd debug|r - включает или выключает отладку")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd events|r - включает или выключает просмотр событий")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - включает или выключает отображение ошибок")
+ 	end
 end

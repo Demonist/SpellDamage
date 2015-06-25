@@ -17,25 +17,30 @@ function SpellData:create(type)
 	return setmetatable(data, self)
 end
 
-local ItemTooltip = CreateFrame("GAMETOOLTIP", "spellDamageItemTooltip")
-local L = ItemTooltip:CreateFontString()
-local R = ItemTooltip:CreateFontString()
-L:SetFontObject(GameFontNormal)
-R:SetFontObject(GameFontNormal)
-ItemTooltip:AddFontStrings(L,R)
-ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
-ItemTooltip:ClearLines()
+local sdItemTooltip = nil
 local itemsCache = {}
 local function GetItemDescription(itemId)
 	if itemsCache[itemId] then return itemsCache[itemId] end
 	if #itemsCache >= 100 then itemsCache = {} end
 	
-	ItemTooltip:SetHyperlink("item:"..itemId)
-	for i = 2, ItemTooltip:NumLines() do
+	local toolTip = sdItemTooltip or CreateFrame("GameTooltip", "spellDamageItemTooltip", UIParent)
+	if sdItemTooltip == nil then
+		local leftString = toolTip:CreateFontString()
+		local rightString = toolTip:CreateFontString()
+		leftString:SetFontObject(GameFontNormal)
+		rightString:SetFontObject(GameFontNormal)
+		toolTip:AddFontStrings(leftString, rightString)
+		toolTip:SetOwner(WorldFrame, "ANCHOR_NONE")
+		toolTip:ClearLines()
+	end
+
+	toolTip:SetHyperlink("item:"..itemId)
+	for i = 2, toolTip:NumLines() do
 		local str = _G["spellDamageItemTooltipTextLeft"..i]
 		if str then
 			local text = str:GetText()
-			if text:starts("Использование") then
+			if text and text:starts("Использование") then
+				sdItemTooltip = toolTip
 				itemsCache[itemId] = text
 				return text
 			end
@@ -48,16 +53,16 @@ displayErrors = true
 ClassSpells, ClassItems = 1, 2
 
 Class = {}
-function Class:create(type)
+function Class:create(classType)
 	local class = {}
 	class.spells = {}
 	class.dependFromPower = false
 	class.dependPowerTypes = {}
-	class.type = type
-	if type == ClassSpells then
-		class.getSpellText = GetSpellDescription
-	else
+	class.type = classType
+	if classType == ClassItems then
 		class.getSpellText = GetItemDescription
+	else
+		class.getSpellText = GetSpellDescription
 	end
 	self.__index = self
 	return setmetatable(class, self)
@@ -66,11 +71,15 @@ end
 function Class:updateButton(button, spellId)
 	if self.spells[spellId] == nil then return false end
 
-	local data = self.spells[spellId]:getData(self.getSpellText(spellId))
+	local text = self.getSpellText(spellId)
+	
+	if text == "" and self.type == ClassItems and sdItemTooltip == nil then return false end	--Костыль от начальных ошибок предметов.
+
+	local data = self.spells[spellId]:getData(text)
 	if data.type == SpellUnknown and displayErrors == true then
 		local slot = "умения"
 		if self.type == ClassItems then slot = "предмета" end
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r")
 		return false 
 	end
 
@@ -144,7 +153,7 @@ function Class:updateButton(button, spellId)
 			button.bottomText:SetText( shortNumber(data.mana) )
 			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif displayErrors == true then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа умения с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа умения с id|r |cFFffffc0"..spellId.."|r")
 		end
 	else
 		if data.type == SpellHeal then
@@ -184,7 +193,7 @@ function Class:updateButton(button, spellId)
 			button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
 			button.bottomText:SetTextColor(1, 1, 0, 1)
 		elseif displayErrors == true then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа предмета с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа предмета с id|r |cFFffffc0"..spellId.."|r")
 		end
 	end
 	return true
