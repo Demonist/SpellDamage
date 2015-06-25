@@ -31,11 +31,14 @@ local function GetItemDescription(itemId)
 	if #itemsCache >= 100 then itemsCache = {} end
 	
 	ItemTooltip:SetHyperlink("item:"..itemId)
-	if _G["spellDamageItemTooltipTextLeft"..2] then
-		local text = _G["spellDamageItemTooltipTextLeft"..2]:GetText()
-		if text then
-			itemsCache[itemId] = text
-			return text
+	for i = 2, ItemTooltip:NumLines() do
+		local str = _G["spellDamageItemTooltipTextLeft"..i]
+		if str then
+			local text = str:GetText()
+			if text:starts("Использование") then
+				itemsCache[itemId] = text
+				return text
+			end
 		end
 	end
 	return ""
@@ -64,7 +67,8 @@ function Class:updateButton(button, spellId)
 	if self.spells[spellId] == nil then return false end
 
 	local data = self.spells[spellId]:getData(self.getSpellText(spellId))
-	if data.type == SpellUnknown and displayErrors == true then 
+	if data.type == SpellUnknown and displayErrors == true then
+		print(self.getSpellText(spellId)) 
 		local slot = "умения"
 		if self.type == ClassItems then slot = "предмета" end
 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
@@ -180,6 +184,8 @@ function Class:updateButton(button, spellId)
 			button.centerText:SetTextColor(1, 1, 0, 1)
 			button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
 			button.bottomText:SetTextColor(1, 1, 0, 1)
+		elseif displayErrors == true then
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа предмета с id|r |cFFffffc0"..spellId.."|r", 1, 0, 0)
 		end
 	end
 	return true
