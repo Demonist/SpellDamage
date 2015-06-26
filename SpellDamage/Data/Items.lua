@@ -202,7 +202,7 @@ end)
 local GoblinDragonGunMarkII = OilOfImmolation
 
 --Фрагмент духа стихии:
-local ElementalFragment = MultiParser:create(SpelLHeal, {1}, function(data, match)
+local ElementalFragment = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = UnitHealthMax("player") * match[1] / 100
 end)
 

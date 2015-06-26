@@ -49,7 +49,7 @@ local AvengingWrath = CustomParser:create(function(data, description)
 end)
 
 --Молот Света:
-local LightsHammer = MultiParser:create(SpelLDamageAndHeal, {4, 8}, function(data, match)
+local LightsHammer = MultiParser:create(SpellDamageAndHeal, {4, 8}, function(data, match)
 	data.damage = match[4] * 7
 	data.timeHeal = match[8] * 7
 end)

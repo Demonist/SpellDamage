@@ -17,30 +17,27 @@ function SpellData:create(type)
 	return setmetatable(data, self)
 end
 
-local sdItemTooltip = nil
+local toolTip = CreateFrame("GameTooltip", "spellDamageItemTooltip")
+local leftString = toolTip:CreateFontString()
+local rightString = toolTip:CreateFontString()
+leftString:SetFontObject(GameFontNormal)
+rightString:SetFontObject(GameFontNormal)
+toolTip:AddFontStrings(leftString, rightString)
+toolTip:SetOwner(WorldFrame, "ANCHOR_NONE")
+local tooltipInitTime = GetTime()
+
 local itemsCache = {}
 local function GetItemDescription(itemId)
 	if itemsCache[itemId] then return itemsCache[itemId] end
 	if #itemsCache >= 100 then itemsCache = {} end
-	
-	local toolTip = sdItemTooltip or CreateFrame("GameTooltip", "spellDamageItemTooltip", UIParent)
-	if sdItemTooltip == nil then
-		local leftString = toolTip:CreateFontString()
-		local rightString = toolTip:CreateFontString()
-		leftString:SetFontObject(GameFontNormal)
-		rightString:SetFontObject(GameFontNormal)
-		toolTip:AddFontStrings(leftString, rightString)
-		toolTip:SetOwner(WorldFrame, "ANCHOR_NONE")
-		toolTip:ClearLines()
-	end
 
+	toolTip:ClearLines()
 	toolTip:SetHyperlink("item:"..itemId)
 	for i = 2, toolTip:NumLines() do
 		local str = _G["spellDamageItemTooltipTextLeft"..i]
 		if str then
 			local text = str:GetText()
 			if text and text:starts("Использование") then
-				sdItemTooltip = toolTip
 				itemsCache[itemId] = text
 				return text
 			end
@@ -72,14 +69,14 @@ function Class:updateButton(button, spellId)
 	if self.spells[spellId] == nil then return false end
 
 	local text = self.getSpellText(spellId)
-	
-	if text == "" and self.type == ClassItems and sdItemTooltip == nil then return false end	--Костыль от начальных ошибок предметов.
-
 	local data = self.spells[spellId]:getData(text)
+
+	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false end	--Костыль от начальных ошибок предметов
+
 	if data.type == SpellUnknown and displayErrors == true then
 		local slot = "умения"
 		if self.type == ClassItems then slot = "предмета" end
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r "..text)
 		return false 
 	end
 
