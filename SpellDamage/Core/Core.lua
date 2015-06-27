@@ -17,13 +17,13 @@ function SpellData:create(type)
 	return setmetatable(data, self)
 end
 
-local toolTip = CreateFrame("GameTooltip", "spellDamageItemTooltip")
-local leftString = toolTip:CreateFontString()
-local rightString = toolTip:CreateFontString()
+sdItemTooltop = CreateFrame("GameTooltip", "spellDamageItemTooltip")
+local leftString = sdItemTooltop:CreateFontString()
+local rightString = sdItemTooltop:CreateFontString()
 leftString:SetFontObject(GameFontNormal)
 rightString:SetFontObject(GameFontNormal)
-toolTip:AddFontStrings(leftString, rightString)
-toolTip:SetOwner(WorldFrame, "ANCHOR_NONE")
+sdItemTooltop:AddFontStrings(leftString, rightString)
+sdItemTooltop:SetOwner(WorldFrame, "ANCHOR_NONE")
 local tooltipInitTime = GetTime()
 
 local itemsCache = {}
@@ -31,9 +31,9 @@ local function GetItemDescription(itemId)
 	if itemsCache[itemId] then return itemsCache[itemId] end
 	if #itemsCache >= 100 then itemsCache = {} end
 
-	toolTip:ClearLines()
-	toolTip:SetHyperlink("item:"..itemId)
-	for i = 2, toolTip:NumLines() do
+	sdItemTooltop:ClearLines()
+	sdItemTooltop:SetHyperlink("item:"..itemId)
+	for i = 2, sdItemTooltop:NumLines() do
 		local str = _G["spellDamageItemTooltipTextLeft"..i]
 		if str then
 			local text = str:GetText()
@@ -44,6 +44,24 @@ local function GetItemDescription(itemId)
 		end
 	end
 	return ""
+end
+
+function sdDebugItem(itemId)
+	DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemId.."-"..GetItemDescription(itemId))
+	
+	local out = ""
+	sdItemTooltop:ClearLines()
+	sdItemTooltop:SetHyperlink("item:"..itemId)
+	for i = 2, sdItemTooltop:NumLines() do
+		local str = _G["spellDamageItemTooltipTextLeft"..i]
+		if str then
+			local text = str:GetText()
+			if text then
+				out = out..i.."-"..text
+			end
+		end
+	end
+	DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..out)
 end
 
 displayErrors = true
