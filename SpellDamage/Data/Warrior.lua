@@ -19,7 +19,7 @@ local Whirlwind = CustomParser:create(function(data, description)
 	local currentSpecNum = GetSpecialization()
 	if currentSpecNum then
 		local currentSpecId = GetSpecializationInfo(currentSpecNum)
-		if currentSpecId == 71 then 		--Оружие
+		if currentSpecId == 71 or currentSpecId == 73 then 		--"Оружие" или "Защита"
 			local match = matchDigit(description, 2)
 			if match then
 				data.type = SpellDamage
