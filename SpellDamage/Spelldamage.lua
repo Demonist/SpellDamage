@@ -128,7 +128,7 @@ local function EventHandler(self, event, ...)
 	if event == "PLAYER_LOGOUT" then logined = false end
 	if logined == false then return end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR"
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR" or event == "UPDATE_MACROS"
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
@@ -144,7 +144,7 @@ local function EventHandler(self, event, ...)
 		glyphs:update()
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR"
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or event == "UPDATE_MACROS"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
@@ -165,7 +165,16 @@ local function EventHandler(self, event, ...)
 			if slot == 0 then slot = button:GetAttribute("action") end
 			if HasAction(slot) then
 				local actionType, id = GetActionInfo(slot)
-				if actionType == "spell" then
+
+				if actionType == "macro" and id then
+					local match = string.match(GetMacroBody(id), "#%s*sd%s*%d+")
+					if match then
+						actionType = "spell"
+						id = tonumber(string.match(match, "%d+"))
+					end
+				end
+
+				if actionType == "spell" and id then
 					button.centerText:SetText("")
 					button.bottomText:SetText("")
 					
@@ -218,6 +227,9 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "errors" then
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
+ 	elseif msg == "help" then
+ 		displayErrors = not displayErrors
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Для отображение данных на макросах, необходимо в код макроса добавить строчку |cFFffff00#sd <id>|r, где <id> - идентификатор умения, данные которого необходимо отобразить. Например, |cFFffff00#sd 56641|r отобразит 'Верный выстрел' у охотника.")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, текущие настройки:")
  		DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
@@ -231,5 +243,6 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd debug|r - включает или выключает отладку")
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd events|r - включает или выключает просмотр событий")
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - включает или выключает отображение ошибок")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - отображает помощь по использованию аддона с макросами")
  	end
 end
