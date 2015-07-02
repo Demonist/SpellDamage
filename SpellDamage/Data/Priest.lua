@@ -17,11 +17,6 @@ local AngelicBulwark = MultiParser:create(SpellAbsorb, {1}, function(data, match
 	data.absorb = match[1] * UnitHealthMax("player") / 100
 end)
 
---Молитва отчаяния:
-local DesperatePrayer = MultiParser:create(SpellHeal, {1}, function(data, match)
-	data.heal = match[1] * UnitHealthMax("player") / 100
-end)
-
 --Обновление:
 local Renew = CustomParser:create(function(data, description)
 	if UnitLevel("player") >= 64 then
@@ -54,7 +49,7 @@ Priest.spells[47540]	= DoubleParser:create(SpellDamageAndTimeHeal, 1, 2) --Ис�
 Priest.spells[15407]	= SimpleTimeDamageParser 							--Пытка разума
 Priest.spells[88625]	= SimpleDamageParser 								--Слово Света: Воздаяние
 Priest.spells[108945]	= AngelicBulwark 									--Божественный оплот
-Priest.spells[19236]	= DesperatePrayer 									--Молитва отчаяния
+Priest.spells[19236]	= SimpleHealParser 									--Молитва отчаяния
 Priest.spells[14914]	= DoubleDamageParser 								--Священный огонь
 Priest.spells[132157]	= DoubleParser:create(SpellDamageAndHeal, 1, 3) 	--Кольцо света
 Priest.spells[88684]	= SimpleHealParser 									--Слово Света: Безмятежность
