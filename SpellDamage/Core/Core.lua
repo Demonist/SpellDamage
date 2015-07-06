@@ -72,6 +72,7 @@ function Class:create(classType)
 	local class = {}
 	class.spells = {}
 	class.dependFromPower = false
+	class.dependFromTarget = false
 	class.dependPowerTypes = {}
 	class.type = classType
 	if classType == ClassItems then

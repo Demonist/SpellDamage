@@ -1,5 +1,14 @@
 local SPELL_POWER_LIGHT_FORCE = 12
 
+--Пламенное дыхание:
+local BreathOfFire = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
+	data.damage = match[1]
+	if UnitDebuff("target", "Хмельная дымка") then
+		data.type = SpellDamageAndTimeDamage
+		data.timeDamage = match[2]
+	end
+end)
+
 --Устранение вреда:
 local ExpelHarm = MultiParser:create(SpellDamageAndHeal, {1, 2, 4}, function(data, match)
 	data.heal = (match[1] + match[2]) / 2
@@ -76,6 +85,7 @@ local ChiExplosion3 = MultiParser:create(SpellDamage, {3, 4}, function(data, mat
 end)
 
 Monk = Class:create(ClassSpells)
+Monk.dependFromTarget = true
 Monk.dependFromPower = true
 Monk.dependPowerTypes["CHI"] = true
 Monk.spells[100780] = SimpleAverageParser 							--Дзуки
@@ -89,7 +99,7 @@ Monk.spells[115175] = SimpleTimeHealParser2 						--Успокаивающий �
 Monk.spells[121253] = SimpleAverageParser 							--Удар бочонком
 Monk.spells[116694] = SimpleHealParser 								--Благотворный туман
 Monk.spells[124682] = SimpleTimeHealParser2 						--Окутывающий туман
-Monk.spells[115181] = SimpleDamageParser 							--Пламенное дыхание
+Monk.spells[115181] = BreathOfFire 									--Пламенное дыхание
 Monk.spells[101545] = SimpleDamageParser2 							--Удар летящего змея
 Monk.spells[115151] = SimpleTimeHealParser2 						--Заживляющий туман
 Monk.spells[115295] = SimpleParser:create(SpellAbsorb, 2) 			--Защита

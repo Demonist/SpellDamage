@@ -82,6 +82,7 @@ EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
 EventFrame:RegisterEvent("UNIT_POWER")
 EventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+EventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
 EventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
@@ -148,6 +149,7 @@ local function EventHandler(self, event, ...)
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
+		or (event == "PLAYER_TARGET_CHANGED" and currentClass.dependFromTarget == true)
 		or glyphsUpdated == true then
 
 		if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then
