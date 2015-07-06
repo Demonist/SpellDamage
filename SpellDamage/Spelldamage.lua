@@ -150,6 +150,7 @@ local function EventHandler(self, event, ...)
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
 		or (event == "PLAYER_TARGET_CHANGED" and currentClass.dependFromTarget == true)
+		or (event == "UNIT_AURA" and select(1, ...) == "target" and currentClass.dependFromTarget == true)
 		or glyphsUpdated == true then
 
 		if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then
