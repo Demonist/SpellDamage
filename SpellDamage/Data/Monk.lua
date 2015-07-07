@@ -3,7 +3,7 @@ local SPELL_POWER_LIGHT_FORCE = 12
 --Пламенное дыхание:
 local BreathOfFire = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
 	data.damage = match[1]
-	if UnitDebuff("target", "Хмельная дымка") then
+	if UnitDebuff("target", "Хмельная дымка") or UnitDebuff("target", "Удар бочонком") then
 		data.type = SpellDamageAndTimeDamage
 		data.timeDamage = match[2]
 	end

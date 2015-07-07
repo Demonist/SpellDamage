@@ -26,7 +26,7 @@ end)
 --Взрывная волна:
 local BlastWave = MultiParser:create(SpellDamage, {1}, function(data, match)
 	data.damage = match[1]
-	if UnitIsEnemy("target", "player") ==  true then data.damage = data.damage * 2 end
+	if UnitIsEnemy("target", "player") == true then data.damage = data.damage * 2 end
 end)
 
 --Живая бомба:
