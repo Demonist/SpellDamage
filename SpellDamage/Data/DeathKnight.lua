@@ -37,6 +37,8 @@ local EmpowerRuneWeapon = CustomParser:create(function(data, description)
 	if Glyphs:contains(159421) then	--Символ усиления
 		data.type = SpellHeal
 		data.heal = UnitHealthMax("player") * 0.3
+	else
+		data.type = SpellEmpty
 	end
 end)
 

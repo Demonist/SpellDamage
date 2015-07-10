@@ -12,7 +12,7 @@ local TimeDamageHaunt, TimeDamageHaunt2 = TimeDamageHauntHelper(1), TimeDamageHa
 --Похищение жизни:
 local DrainLife = MultiParser:create(SpellDamageAndTimeHeal, {1, 2}, function(data, match)
 	data.damage = match[1]
-	data.timeHeal = match[2] * UnitHealthMax("player") / 100
+	data.timeHeal = match[2]
 end)
 
 --Стрела Хаоса:
