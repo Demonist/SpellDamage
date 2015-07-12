@@ -72,16 +72,19 @@ local Combustion = CustomParser:create(function(data, description)
 	data.type = SpellEmpty
 
 	if StatusTextFrameLabel then
-		local match = StatusTextFrameLabel:GetText():match("Tick : %d+")
-		if match then
-			data.type = SpellTimeDamage
-			data.timeDamage = tonumber(string.sub(match, string.len("Tick : ")))
+		local text = StatusTextFrameLabel:GetText()
+		if text then
+			local match = text:match("Tick : %d+")
+			if match then
+				data.type = SpellTimeDamage
+				data.timeDamage = tonumber(string.sub(match, string.len("Tick : ")))
+			end
 		end
 	end
 end)
 
 function Mage:onLoad()
 	if IsAddOnLoaded("CombustionHelper") then
-		self.onUpdateSpells[11129] = Combustion
+		self.onUpdateSpells[11129] = Combustion 	--Возгорание
 	end
 end
