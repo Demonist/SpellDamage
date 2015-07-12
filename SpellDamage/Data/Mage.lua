@@ -66,3 +66,22 @@ Mage.spells[157980]	= SimpleDamageParser 					--Сверхновая
 Mage.spells[153595]	= SimpleDamageParser2					--Буря комет
 Mage.spells[153561]	= SimpleDamageParser2					--Метеор
 Mage.spells[153626]	= SimpleDamageParser2					--Чародейский шар
+
+--Возгорание:
+local Combustion = CustomParser:create(function(data, description)
+	data.type = SpellEmpty
+
+	if StatusTextFrameLabel then
+		local match = StatusTextFrameLabel:GetText():match("Tick : %d+")
+		if match then
+			data.type = SpellTimeDamage
+			data.timeDamage = tonumber(string.sub(match, string.len("Tick : ")))
+		end
+	end
+end)
+
+function Mage:onLoad()
+	if IsAddOnLoaded("CombustionHelper") then
+		self.onUpdateSpells[11129] = Combustion
+	end
+end

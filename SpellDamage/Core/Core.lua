@@ -74,6 +74,8 @@ function Class:create(classType)
 	class.dependFromPower = false
 	class.dependFromTarget = false
 	class.dependPowerTypes = {}
+	class.onUpdateSpells = {}
+	class.onLoad = function() end
 	class.type = classType
 	if classType == ClassItems then
 		class.getSpellText = GetItemDescription
@@ -85,10 +87,19 @@ function Class:create(classType)
 end
 
 function Class:updateButton(button, spellId)
-	if self.spells[spellId] == nil then return false end
+	local spellParser = self.spells[spellId]
+	local updateParser = self.onUpdateSpells[spellId]
 
-	local text = self.getSpellText(spellId)
-	local data = self.spells[spellId]:getData(text)
+	if spellParser == nil and updateParser == nil then return false end
+
+	local data = SpellData:create(SpellUnknown)
+
+	if spellParser then
+		local text = self.getSpellText(spellId)
+		data = spellParser:getData(text)
+	elseif updateParser then
+		data = updateParser:getData(nil)
+	end
 
 	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false end	--Костыль от начальных ошибок предметов
 

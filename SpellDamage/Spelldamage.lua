@@ -21,11 +21,14 @@ local debuging = false
 local eventDebuging = false
 local showItems = true
 local elvUi_updateFix = 0
+local onUpdateSpells = false
+local onUpdateLastTime = GetTime()
 
 local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
 local addonDisableReason = DisableReason_Unknown
 
 local buttons = {}
+local buttonsCache = {}
 
 local function clearButtons()
 	for _, button in pairs(buttons) do
@@ -109,8 +112,13 @@ local function EventHandler(self, event, ...)
 	if debuging == true then debugprofilestart() end
 	if eventDebuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r event |cFFffffc0"..event.."|r") end
 
+	local needCheckOnUpdate = false
+	local needUpdateButtonsCache = false
+
 	if event == "PLAYER_LOGIN" then
 		logined = true
+		needCheckOnUpdate = true
+		needUpdateButtonsCache = true
 		local _, className = UnitClass("player")
 		currentClass = classes[className]
 		if currentClass == nil then currentClass = emptyClass end
@@ -119,6 +127,10 @@ local function EventHandler(self, event, ...)
 		checkRequirements()
 		if addonDisableReason ~= DisableReason_Unknown then return end
 		glyphs:update()
+
+		for k,v in pairs(classes) do
+			v:onLoad()
+		end
 	end
 
 	if event == "CVAR_UPDATE" then
@@ -134,6 +146,10 @@ local function EventHandler(self, event, ...)
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
 		clearButtons()
+
+		needCheckOnUpdate = true
+		needUpdateButtonsCache = true
+		buttonsCache = {}
 	end
 
 	if UnitInVehicle("player") == true then return end
@@ -145,7 +161,7 @@ local function EventHandler(self, event, ...)
 		glyphs:update()
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or event == "UPDATE_MACROS"
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or event == "UPDATE_MACROS" or event == "CUSTOM_ON_UPDATE_SPELLS"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
@@ -161,8 +177,21 @@ local function EventHandler(self, event, ...)
 				elvUi_updateFix = 0
 			end
 		end
+		
+		local updateSpells = {}
+		if needCheckOnUpdate == true then
+			onUpdateSpells = false
+			needCheckOnUpdate = false
+			for id,_ in pairs(currentClass.onUpdateSpells) do
+				updateSpells[id] = true
+				needCheckOnUpdate = true
+			end
+		end
 
-		for _, button in pairs(buttons) do
+		local currentButtons = buttonsCache
+		if needUpdateButtonsCache == true then currentButtons = buttons end
+
+		for _, button in pairs(currentButtons) do
 			local slot = ActionButton_GetPagedID(button)
 			if slot == 0 then slot = ActionButton_CalculateAction(button) end
 			if slot == 0 then slot = button:GetAttribute("action") end
@@ -180,11 +209,19 @@ local function EventHandler(self, event, ...)
 				if actionType == "spell" and id then
 					button.centerText:SetText("")
 					button.bottomText:SetText("")
+
+					if needCheckOnUpdate == true and updateSpells[id] then
+						onUpdateSpells = true
+						needCheckOnUpdate = false
+						updateSpells = nil
+					end
 					
 					local used = currentClass:updateButton(button, id)
 					if used == false then used = race:updateButton(button, id) end
+					
+					if used and needUpdateButtonsCache then table.insert(buttonsCache, button) end
 				elseif showItems == true and actionType == "item" and id then
-					items:updateButton(button, id)
+					if items:updateButton(button, id) == true and needUpdateButtonsCache then table.insert(buttonsCache, button) end
 				end
 			end
 		end
@@ -194,9 +231,14 @@ local function EventHandler(self, event, ...)
 end
 
 EventFrame:SetScript("OnUpdate", function(self, elapsed)
+	if addonDisableReason ~= DisableReason_Unknown then return end
+
 	if elvUi_updateFix == 1 then
 		elvUi_updateFix = 2
 		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
+	elseif onUpdateSpells == true and GetTime() - onUpdateLastTime > 0.2 then
+		EventHandler(self, "CUSTOM_ON_UPDATE_SPELLS")
+		onUpdateLastTime = GetTime()
 	end
 end)
 
