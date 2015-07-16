@@ -30,7 +30,7 @@ local addonDisableReason = DisableReason_Unknown
 local buttons = {}
 local buttonsCache = {}
 
-local function clearButtons()
+local function clearButtons(buttons)
 	for _, button in pairs(buttons) do
 		button.centerText:SetText("")
 		button.bottomText:SetText("")
@@ -71,7 +71,7 @@ local function checkRequirements()
 		addonDisableReason = DisableReason_Language
 		DisableAddOn("SpellDamage")
 	elseif GetCVar("SpellTooltip_DisplayAvgValues") == "0" then
-		clearButtons()
+		clearButtons(buttons)
 		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не может работать с НЕусредненными показателями. Зайдите в настройки интерфейса, изображение и установите галочку \"|cFFffff00Усредненные показатели|r\".", 1, 0, 0)
 		addonDisableReason = DisableReason_Average
 	end
@@ -145,7 +145,7 @@ local function EventHandler(self, event, ...)
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
-		clearButtons()
+		clearButtons(buttonsCache)
 
 		needCheckOnUpdate = true
 		needUpdateButtonsCache = true
