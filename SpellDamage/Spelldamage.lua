@@ -21,7 +21,7 @@ local debuging = false
 local eventDebuging = false
 local showItems = true
 
-local elvUi_updateFix = 0
+local elvUi_needUpdate = false
 
 local onUpdateSpells = false
 local onUpdateLastTime = GetTime()
@@ -167,7 +167,7 @@ local function EventHandler(self, event, ...)
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_MACROS" 
 		or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR"
-		or event == "CUSTOM_DELAYED_UPDATE"
+		or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_ELVUIFIX"
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
@@ -180,6 +180,11 @@ local function EventHandler(self, event, ...)
 
 	if UnitInVehicle("player") == true then return end
 
+	if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then
+		elvUi_needUpdate = true
+		return
+	end
+
 	local glyphsUpdated = false
 	if event == "GLYPH_ADDED" or event == "GLYPH_UPDATED" or event == "GLYPH_REMOVED" or event == "GLYPH_ENABLED" or event == "GLYPH_DISABLED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r glyphs updated on |cFFffffc0"..event.."|r event") end
@@ -189,22 +194,13 @@ local function EventHandler(self, event, ...)
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_MACROS"
 		or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or evet == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR"
-		or event == "CUSTOM_ON_UPDATE_SPELLS" or event == "CUSTOM_DELAYED_UPDATE"
+		or event == "CUSTOM_ON_UPDATE_SPELLS" or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_ELVUIFIX"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
 		or (event == "PLAYER_TARGET_CHANGED" and currentClass.dependFromTarget == true)
 		or (event == "UNIT_AURA" and select(1, ...) == "target" and currentClass.dependFromTarget == true)
 		or glyphsUpdated == true then
-
-		if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then
-			if elvUi_updateFix == 0 then 
-				elvUi_updateFix = 1
-				return 
-			elseif elvUi_updateFix == 2 then
-				elvUi_updateFix = 0
-			end
-		end
 		
 		local updateSpells = {}
 		if needCheckOnUpdate == true then
@@ -261,13 +257,13 @@ end
 EventFrame:SetScript("OnUpdate", function(self, elapsed)
 	if addonDisableReason ~= DisableReason_Unknown then return end
 
-	if elvUi_updateFix == 1 then
-		elvUi_updateFix = 2
-		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
+	if elvUi_needUpdate == true then
+		elvUi_needUpdate = false
+		EventHandler(self, "CUSTOM_ELVUIFIX")
 	elseif onUpdateSpells == true and GetTime() - onUpdateLastTime > 0.2 then
 		EventHandler(self, "CUSTOM_ON_UPDATE_SPELLS")
 		onUpdateLastTime = GetTime()
-	elseif delayedUpdate == true and GetTime() - delayedUpdateTime > 0.5 then
+	elseif delayedUpdate == true and GetTime() - delayedUpdateTime > 0.2 then
 		delayedUpdate = false
 		EventHandler(self, "CUSTOM_DELAYED_UPDATE")
 	end
