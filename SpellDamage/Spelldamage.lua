@@ -20,9 +20,16 @@ local items = Items
 local debuging = false
 local eventDebuging = false
 local showItems = true
+
 local elvUi_updateFix = 0
+
 local onUpdateSpells = false
 local onUpdateLastTime = GetTime()
+
+local delayedUpdate = false
+local delayedUpdateTime = GetTime()
+
+local updatingHistory = {}
 
 local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
 local addonDisableReason = DisableReason_Unknown
@@ -90,6 +97,8 @@ EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
 EventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
 EventFrame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
+EventFrame:RegisterEvent("UPDATE_EXTRA_ACTIONBAR")
+EventFrame:RegisterEvent("UPDATE_OVERRIDE_ACTIONBAR")
 EventFrame:RegisterEvent("GLYPH_ADDED")
 EventFrame:RegisterEvent("GLYPH_DISABLED")
 EventFrame:RegisterEvent("GLYPH_ENABLED")
@@ -141,7 +150,24 @@ local function EventHandler(self, event, ...)
 	if event == "PLAYER_LOGOUT" then logined = false end
 	if logined == false then return end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR" or event == "UPDATE_MACROS"
+	--Защита от слишком частого обновления:
+	local currentTime = GetTime()
+	if updatingHistory[event] and currentTime - updatingHistory[event] < 0.1 then
+		return
+	else
+		updatingHistory[event] = currentTime
+	end
+
+	--Костыль для селфи камеры:
+	if evet == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR" then
+		delayedUpdate = true
+		delayedUpdateTime = currentTime
+		return
+	end
+
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_MACROS" 
+		or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR"
+		or event == "CUSTOM_DELAYED_UPDATE"
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
@@ -161,7 +187,9 @@ local function EventHandler(self, event, ...)
 		glyphs:update()
 	end
 
-	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or event == "UPDATE_MACROS" or event == "CUSTOM_ON_UPDATE_SPELLS"
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_MACROS"
+		or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or evet == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR"
+		or event == "CUSTOM_ON_UPDATE_SPELLS" or event == "CUSTOM_DELAYED_UPDATE"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
@@ -239,6 +267,9 @@ EventFrame:SetScript("OnUpdate", function(self, elapsed)
 	elseif onUpdateSpells == true and GetTime() - onUpdateLastTime > 0.2 then
 		EventHandler(self, "CUSTOM_ON_UPDATE_SPELLS")
 		onUpdateLastTime = GetTime()
+	elseif delayedUpdate == true and GetTime() - delayedUpdateTime > 0.5 then
+		delayedUpdate = false
+		EventHandler(self, "CUSTOM_DELAYED_UPDATE")
 	end
 end)
 
