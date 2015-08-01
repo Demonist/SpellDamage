@@ -62,12 +62,12 @@ local function createButtons()
 	for _, button in pairs(buttons) do   
 		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
 		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		button.centerText:SetPoint("CENTER" , 0, 0)	
+		button.centerText:SetPoint("CENTER", 0, 0)	
 		button.centerText:SetPoint("LEFT", 0, 0)
 		
 		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
 		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		button.bottomText:SetPoint("BOTTOM" , 0, 0)	
+		button.bottomText:SetPoint("BOTTOM", 0, 0)	
 		button.bottomText:SetPoint("LEFT", 0, 0)	
 	end
 end
