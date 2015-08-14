@@ -4,8 +4,8 @@ local ArcaneTorrent = MultiParser:create(SpellMana, {3}, function(data, match)
 end)
 
 --Дреней, Дар наару:
-local GiftOfTheNaaru = MultiParser:create(SpellTimeMana, {1}, function(data, match)
-	data.timeMana = match[1] * UnitHealthMax("player") / 100
+local GiftOfTheNaaru = MultiParser:create(SpellTimeHeal, {1}, function(data, match)
+	data.timeHeal = match[1] * UnitHealthMax("player") / 100
 end)
 
 --Нежить, Каннибализм:
