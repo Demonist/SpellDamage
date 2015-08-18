@@ -302,6 +302,8 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "help" then
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Для отображение данных на макросах, необходимо в код макроса добавить строчку |cFFffff00#sd <id>|r, где <id> - идентификатор умения, данные которого необходимо отобразить. Например, |cFFffff00#sd 56641|r отобразит 'Верный выстрел' у охотника.")
+	elseif msg == "version" then
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r версия 0.8.5.7")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, текущие настройки:")
  		DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
@@ -316,5 +318,6 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd events|r - включает или выключает просмотр событий")
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - включает или выключает отображение ошибок")
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - отображает помощь по использованию аддона с макросами")
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - отображает текущую версию аддона")
  	end
 end
