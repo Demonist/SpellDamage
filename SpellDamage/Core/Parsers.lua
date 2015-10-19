@@ -44,6 +44,7 @@ SimpleDamageParser2 = SimpleParser:create(SpellDamage, 2)
 SimpleTimeDamage2 = SimpleParser:create(SpellTimeDamage, 2)
 SimpleHealParser2 = SimpleParser:create(SpellHeal, 2)
 SimpleTimeHealParser2 = SimpleParser:create(SpellTimeHeal, 2)
+SimpleManaParser2 = SimpleParser:create(SpellMana, 2)
 
 --
 

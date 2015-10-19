@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Свирепый укус:
 local FerociousBite = CustomParser:create(function(data, description)
 	local list = {4, 6, 8, 10, 12}

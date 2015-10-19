@@ -1,8 +1,8 @@
 ﻿## Interface: 60200
 ## Title: SpellDamage
 ## Author: Demonist
-## Version: 0.8.5.9
-## Notes: Displays spell's or item's |cFFffff00damage|r, |cFF00ff00heal|r or |cFFff7fffabsorb|r on action bar
+## Version: 0.9.0.0
+## Notes: Displays spell's |cFFffff00damage|r, |cFF00ff00heal|r or |cFFff7fffabsorb|r on action bar
 ## Notes-ruRU: Отображает |cFFffff00урон|r, |cFF00ff00лечение|r или |cFFff7fffпоглощение|r умений и зелий на панели
 
 Core/Utilites.lua
@@ -10,19 +10,19 @@ Core/Core.lua
 Core/Parsers.lua
 Core/Glyphs.lua
 
-Data/DeathKnight.lua
-Data/Druid.lua
-Data/Hunter.lua
-Data/Mage.lua
-Data/Monk.lua
-Data/Paladin.lua
-Data/Priest.lua
-Data/Rogue.lua
-Data/Shaman.lua
-Data/Warlock.lua
-Data/Warrior.lua
+Data/ru/DeathKnight.lua
+Data/ru/Druid.lua
+Data/ru/Hunter.lua
+Data/ru/Mage.lua
+Data/ru/Monk.lua
+Data/ru/Paladin.lua
+Data/ru/Priest.lua
+Data/ru/Rogue.lua
+Data/ru/Shaman.lua
+Data/ru/Warlock.lua
+Data/ru/Warrior.lua
 
-Data/Race.lua
-Data/Items.lua
+Data/ru/Race.lua
+Data/ru/Items.lua
 
 SpellDamage.lua

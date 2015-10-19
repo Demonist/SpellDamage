@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Ледяные оковы:
 local ChainsOfIce = CustomParser:create(function(data, description)
 	if Glyphs:contains(58620) then	--Символ ледяных оков

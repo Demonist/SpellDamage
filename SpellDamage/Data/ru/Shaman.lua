@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Земной шок:
 local EarthShock = MultiParser:create(SpellDamage, {1}, function(data, match)
 	data.damage = match[1]

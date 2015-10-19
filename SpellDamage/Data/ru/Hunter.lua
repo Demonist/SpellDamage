@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Отрыв:
 local Disengage = CustomParser:create(function(data, description)
 	if Glyphs:contains(132106) then		--Символ освобождения

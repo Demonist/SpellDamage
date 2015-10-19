@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Слово силы: Щит:
 local PowerWordShield = CustomParser:create(function(data, description)
 	local match = matchDigit(description, 1)

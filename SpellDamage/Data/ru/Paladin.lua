@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Торжество:
 local WordOfGlory = CustomParser:create(function(data, description)
 	local match = matchDigit(description, 2)

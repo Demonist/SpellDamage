@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 local TimeDamageHauntHelper = function(index)
 	return MultiParser:create(SpellTimeDamage, {index}, function(data, match)
 		if UnitDebuff("target", "Блуждающий дух") then

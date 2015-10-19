@@ -1,5 +1,5 @@
 ﻿SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7, 8
-SpellDamageAndTimeDamage, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18
+SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 
 SpellData = {}
 function SpellData:create(type)
@@ -177,6 +177,11 @@ function Class:updateButton(button, spellId)
 		elseif data.type == SpellHealAndMana then
 			button.centerText:SetText( shortNumber(data.heal) )
 			button.centerText:SetTextColor(0, 1, 0, 1)
+			button.bottomText:SetText( shortNumber(data.mana) )
+			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
+		elseif data.type == SpellDamageAndMana then
+			button.centerText:SetText( shortNumber(data.damage) )
+			button.centerText:SetTextColor(1, 1, 0, 1)
 			button.bottomText:SetText( shortNumber(data.mana) )
 			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif displayErrors == true then

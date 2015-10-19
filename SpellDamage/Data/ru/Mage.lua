@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Ледяная глыба:
 local IceBlock = CustomParser:create(function(data, description)
 	if Glyphs:contains(159486) then		--Символ возрождающего льда
