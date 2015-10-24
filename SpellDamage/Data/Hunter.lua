@@ -1,5 +1,3 @@
-if GetLocale() ~= "ruRU" then return end
-
 --Отрыв:
 local Disengage = CustomParser:create(function(data, description)
 	if Glyphs:contains(132106) then		--Символ освобождения
@@ -82,3 +80,42 @@ Hunter.spells[109259]	= SimpleDamageParser 		--Мощный выстрел
 Hunter.spells[120360]	= SimpleDamageParser2 		--Шквал
 Hunter.spells[152245]	= SimpleDamageParser 		--Сосредоточенный выстрел
 Hunter.spells[163485]	= SimpleDamageParser 		--Сосредоточенный выстрел
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+
+	return
+end
+
+if locale == "deDE" then
+
+	return
+end
+
+if locale == "esES" then
+
+	return
+end
+
+if locale == "frFR" then
+	
+	return
+end
+
+if locale == "itIT" then
+	
+	return
+end
+
+if locale == "ptBR" then
+	
+	return
+end
+
+if locale == "zhCN" then
+
+	return
+end

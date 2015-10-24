@@ -1,5 +1,3 @@
-if GetLocale() ~= "ruRU" then return end
-
 local SPELL_POWER_LIGHT_FORCE = 12
 
 --Пламенное дыхание:

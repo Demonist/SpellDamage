@@ -1,5 +1,3 @@
-if GetLocale() ~= "ruRU" then return end
-
 function useDaggers()
 	local slotId = GetInventorySlotInfo("MainHandSlot")
 	if slotId then
