@@ -128,3 +128,42 @@ Monk.spells[157675] = ChiExplosion2 								--Взрыв ци
 Monk.spells[157676] = ChiExplosion3 								--Взрыв ци
 Monk.spells[157535]	= BreathOfTheSerpent 							--Дыхание Змеи
 Monk.spells[152175] = HurricaneStrike 								--Ураганный удар
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+
+	return
+end
+
+if locale == "deDE" then
+	
+	return
+end
+
+if locale == "esES" then
+
+	return
+end
+
+if locale == "frFR" then
+	
+	return
+end
+
+if locale == "itIT" then
+	
+	return
+end
+
+if locale == "ptBR" then
+	
+	return
+end
+
+if locale == "zhCN" then
+
+	return
+end

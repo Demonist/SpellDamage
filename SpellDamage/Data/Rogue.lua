@@ -12,6 +12,7 @@ function useDaggers()
 	return false
 end
 
+
 --Внезапный удар:
 local Ambush = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
 	if useDaggers() == true then data.damage = match[1] + match[1] * match[2] / 100 
@@ -78,3 +79,42 @@ Rogue.spells[51690]		= KillingSpree 													--Череда убийств
 Rogue.spells[121411]	= CrimsonTempest												--Кровавый вихрь
 Rogue.spells[114014]	= SimpleDamageParser 											--Бросок сюрикена
 Rogue.spells[152150]	= SimpleDamageParser 											--Смерть с небес
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+
+	return
+end
+
+if locale == "deDE" then
+	
+	return
+end
+
+if locale == "esES" then
+
+	return
+end
+
+if locale == "frFR" then
+	
+	return
+end
+
+if locale == "itIT" then
+	
+	return
+end
+
+if locale == "ptBR" then
+	
+	return
+end
+
+if locale == "zhCN" then
+
+	return
+end

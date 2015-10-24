@@ -55,3 +55,42 @@ Shaman.spells[61882]	= SimpleTimeDamageParser2 	 							--Землетрясен
 Shaman.spells[73920]	= SimpleTimeHealParser 								--Целительный ливень
 Shaman.spells[108280]	= HealingTideTotem 									--Тотем целительного прилива
 Shaman.spells[117014]	= SimpleDamageParser 	 							--Удар духов стихии
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+
+	return
+end
+
+if locale == "deDE" then
+	
+	return
+end
+
+if locale == "esES" then
+
+	return
+end
+
+if locale == "frFR" then
+	
+	return
+end
+
+if locale == "itIT" then
+	
+	return
+end
+
+if locale == "ptBR" then
+	
+	return
+end
+
+if locale == "zhCN" then
+
+	return
+end

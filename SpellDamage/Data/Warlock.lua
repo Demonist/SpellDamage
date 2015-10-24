@@ -86,3 +86,42 @@ Warlock.spells[17877]	= SimpleDamageParser 									--Ожог Тьмы
 Warlock.spells[48181]	= SimpleDamageParser 									--Блуждающий дух
 Warlock.spells[157695]	= SimpleDamageParser 									--Демонический заряд
 Warlock.spells[152108]	= SimpleDamageParser 	 								--Катаклизм
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+
+	return
+end
+
+if locale == "deDE" then
+	
+	return
+end
+
+if locale == "esES" then
+
+	return
+end
+
+if locale == "frFR" then
+	
+	return
+end
+
+if locale == "itIT" then
+	
+	return
+end
+
+if locale == "ptBR" then
+	
+	return
+end
+
+if locale == "zhCN" then
+
+	return
+end

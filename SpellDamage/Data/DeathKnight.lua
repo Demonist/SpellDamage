@@ -66,3 +66,42 @@ DeathKnight.spells[152279]	= SimpleTimeDamageParser 							--Дыхание Си
 DeathKnight.spells[152280]	= SimpleTimeDamageParser2 								--Осквернение
 
 DeathKnight.spells[53717]	= SimpleDamageParser2 								--Взрыв трупа
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+
+	return
+end
+
+if locale == "deDE" then
+	
+	return
+end
+
+if locale == "esES" then
+
+	return
+end
+
+if locale == "frFR" then
+	
+	return
+end
+
+if locale == "itIT" then
+	
+	return
+end
+
+if locale == "ptBR" then
+	
+	return
+end
+
+if locale == "zhCN" then
+
+	return
+end
