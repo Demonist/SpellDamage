@@ -79,7 +79,7 @@ Priest.spells[127632]	= SimpleDamageParser 								--Каскад
 Priest.spells[120517]	= SimpleHealParser2 								--Сияние
 Priest.spells[120644]	= SimpleDamageParser2 								--Сияние
 Priest.spells[152116]	= SimpleHealParser 									--Спасительная сила
-Priest.spells[155361]	= SimpleTimeDamage2 					 			--Энтропия Бездны
+Priest.spells[155361]	= SimpleTimeDamageParser2 					 			--Энтропия Бездны
 Priest.spells[155245]	= SimpleHealParser 									--Ясная цель
 Priest.spells[152118]	= SimpleAbsorbParser 								--Ясность воли
 

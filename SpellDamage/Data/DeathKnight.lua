@@ -65,6 +65,6 @@ DeathKnight.spells[114866]	= SimpleDamageParser 								--Жнец душ
 DeathKnight.spells[130735]	= SimpleDamageParser 								--Жнец душ
 DeathKnight.spells[130736]	= SimpleDamageParser 								--Жнец душ
 DeathKnight.spells[152279]	= SimpleTimeDamageParser 							--Дыхание Синдрагосы
-DeathKnight.spells[152280]	= SimpleTimeDamage2 								--Осквернение
+DeathKnight.spells[152280]	= SimpleTimeDamageParser2 								--Осквернение
 
 DeathKnight.spells[53717]	= SimpleDamageParser2 								--Взрыв трупа
