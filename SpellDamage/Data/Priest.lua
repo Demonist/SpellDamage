@@ -30,6 +30,11 @@ local Renew = CustomParser:create(function(data, description)
 	end
 end)
 
+--Всепожирающая чума:
+local DevouringPlague = MultiParser:create(SpellDamageAndHeal, {2}, function(data, match)
+	data.damage = match[2]
+	data.heal = match[2]
+end)
 
 --Божественный оплот:
 local AngelicBulwark = MultiParser:create(SpellAbsorb, {1}, function(data, match)
@@ -49,7 +54,7 @@ Priest.spells[589]		= DoubleDamageParser 								--Слово Тьмы: Боль
 Priest.spells[596]		= SimpleHealParser2 								--Молитва исцеления
 Priest.spells[2060]		= SimpleHealParser 									--Исцеление
 Priest.spells[2061]		= SimpleHealParser 									--Быстрое исцеление
-Priest.spells[2944]		= DoubleParser:create(SpellDamageAndHeal, 2, 5) 	--Всепожирающая чума
+Priest.spells[2944]		= DevouringPlague 									--Всепожирающая чума
 Priest.spells[8092]		= SimpleDamageParser 								--Взрыв разума
 Priest.spells[14914]	= DoubleDamageParser 								--Священный огонь
 Priest.spells[15407]	= SimpleTimeDamageParser 							--Пытка разума
