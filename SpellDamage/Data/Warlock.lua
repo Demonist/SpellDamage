@@ -1,9 +1,9 @@
 local TimeDamageHauntHelper = function(index)
 	return MultiParser:create(SpellTimeDamage, {index}, function(data, match)
 		if UnitDebuff("target", "Блуждающий дух") then
-			data.timeDamage = match[1] * 1.3
+			data.timeDamage = match[index] * 1.35
 		else
-			data.timeDamage = match[1]
+			data.timeDamage = match[index]
 		end
 	end)
 end
