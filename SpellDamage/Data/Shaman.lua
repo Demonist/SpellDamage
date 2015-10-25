@@ -23,7 +23,7 @@ end)
 
 --Тотем магмы:
 local MagmaTotem = MultiParser:create(SpellTimeDamage, {4}, function(data, match)
-	data.timeDamage = match[3] * 30
+	data.timeDamage = match[4] * 30
 end)
 
 --Тотем целительного прилива:
