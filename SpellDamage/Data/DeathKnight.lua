@@ -78,6 +78,7 @@ DeathKnight.spells[152280]	= SimpleTimeDamageParser2 							--Осквернен
 DeathKnight.spells[53717]	= SimpleDamageParser2 								--Взрыв трупа
 
 -- Антимагический панцирь ?
+
 -------------------------------------------------------------------------------
 
 local locale = GetLocale()
