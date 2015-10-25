@@ -6,6 +6,7 @@ L["daggers"] = "Daggers"
 L["lightning_shield"] = "Lightning Shield"
 L["frost_bomb"] = "Frost Bomb"
 L["haunt"] = "Haunt"
+L["dizzying_haze"] = "Dizzying Haze"
 
 --------------------------------   ruRU   -------------------------------------
 
@@ -14,7 +15,7 @@ if locale == "ruRU" then
 	L["lightning_shield"] = "Щит молний"
 	L["frost_bomb"] = "Ледяная бомба"
 	L["haunt"] = "Блуждающий дух"
-	return
+	L["dizzying_haze"] = "Хмельная дымка"
 end
 
 --------------------------------   deDE   -------------------------------------
@@ -24,7 +25,7 @@ if locale == "deDE" then
 	L["lightning_shield"] = "Blitzschlagschild"
 	L["frost_bomb"] = "Frostbombe"
 	L["haunt"] = "Heimsuchung"
-	return
+	L["dizzying_haze"] = "Benebelnde Dämpfe"
 end
 
 --------------------------------   esES   -------------------------------------
@@ -34,7 +35,7 @@ if locale == "esES" then
 	L["lightning_shield"] = "Escudo de relámpagos"
 	L["frost_bomb"] = "Bomba de Escarcha"
 	L["haunt"] = "Poseer"
-	return
+	L["dizzying_haze"] = "Estupor mareante"
 end
 
 --------------------------------   frFR   -------------------------------------
@@ -44,7 +45,7 @@ if locale == "frFR" then
 	L["lightning_shield"] = "Bouclier de foudre"
 	L["frost_bomb"] = "Bombe de givre"
 	L["haunt"] = "Hanter"
-	return
+	L["dizzying_haze"] = "Brume vertigineuse"
 end
 
 --------------------------------   itIT   -------------------------------------
@@ -54,7 +55,7 @@ if locale == "itIT" then
 	L["lightning_shield"] = "Scudo di Fulmini"
 	L["frost_bomb"] = "Bomba del Gelo"
 	L["haunt"] = "Tormento"
-	return
+	L["dizzying_haze"] = "Ebbrezza"
 end
 
 --------------------------------   ptBR   -------------------------------------
@@ -64,7 +65,7 @@ if locale == "ptBR" then
 	L["lightning_shield"] = "Escudo de Raios"
 	L["frost_bomb"] = "Bomba Gélida"
 	L["haunt"] = "Possessão"
-	return
+	L["dizzying_haze"] = "Névoa Estonteante"
 end
 
 --------------------------------   zhCN   -------------------------------------
@@ -74,7 +75,7 @@ if locale == "zhCN" then
 	L["lightning_shield"] = "闪电之盾"
 	L["frost_bomb"] = "寒冰炸弹"
 	L["haunt"] = "鬼影缠身"
-	return
+	L["dizzying_haze"] = "迷醉酒雾"
 end
 
 sdLocale = L
