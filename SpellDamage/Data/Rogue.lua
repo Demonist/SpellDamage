@@ -4,7 +4,7 @@ function useDaggers()
 		local mainHandLink = GetInventoryItemLink("player", slotId)
 		if mainHandLink then
 			local _, _, _, _, _, _, itemType = GetItemInfo(mainHandLink)
-			if itemType == "Кинжалы" or itemType == "Daggers" or itemType == "Dolche" or itemType == "Dagas" or itemType == "Dagues" or itemType == "Pugnali" or itemType == "匕首" then
+			if itemType == sdLocale["daggers"] then
 				return true
 			end
 		end

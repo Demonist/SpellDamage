@@ -7,7 +7,7 @@ end)
 local EarthShock = MultiParser:create(SpellDamage, {1}, function(data, match)
 	data.damage = match[1]
 
-	local name, _, _, count = UnitBuff("player", "Щит молний")
+	local name, _, _, count = UnitBuff("player", sdLocale["lightning_shield"])
 	if IsSpellKnown(88766) == true and name and count > 1 then	--Сверкание
 		local damage = matchDigit(GetSpellDescription(324), 1)	--Щит молний
 		if damage then
