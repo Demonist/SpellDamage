@@ -22,9 +22,9 @@ local ZenSphere = MultiParser:create(SpellTimeDamageAndTimeHeal, {1, 2}, functio
 end)
 
 --Маначай:
-local ManaTea = MultiParser:create(SpellTimeHeal, {3}, function(data, match)
+local ManaTea = MultiParser:create(SpellTimeMana, {3}, function(data, match)
 	local spirit = UnitStat("player", 5)
-	data.timeHeal = match[3] * spirit
+	data.timeMana = match[3] * spirit
 end)
 
 --Танцующий журавль:
@@ -59,28 +59,33 @@ local HurricaneStrike = MultiParser:create(SpellTimeDamage, {2, 3}, function(dat
 end)
 
 --Взрыв ци:
-local ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4, 6}, function(data, match)
+local ChiExplosion1 = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
-	data.heal = match[3] + (chi * match[4])
-	if chi > 0 then 
+	if chi > 4 then chi = 4 end
+	data.damage = match[3] + (chi * match[4])
+
+	if chi >= 2 then 
 		data.type = SpellDamageAndTimeDamage
-		data.timeDamage = match[6]
+		data.timeDamage = data.damage * 0.5
 	end
 end)
 
 --Взрыв ци:
-local ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4, 6}, function(data, match)
+local ChiExplosion2 = MultiParser:create(SpellHeal, {3, 4}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
-	data.damage = match[3] + (chi * match[4])
-	if chi > 0 then 
+	if chi > 4 then chi = 4 end
+	data.heal = match[3] + (chi * match[4])
+
+	if chi >= 2 then 
 		data.type = SpellHealAndTimeHeal
-		data.timeHeal = match[6]
+		data.timeHeal = data.heal * 0.5
 	end
 end)
 
 --Взрыв ци:
 local ChiExplosion3 = MultiParser:create(SpellDamage, {3, 4}, function(data, match)
 	local chi = UnitPower("player", SPELL_POWER_LIGHT_FORCE)
+	if chi > 4 then chi = 4 end
 	data.damage = match[3] + (chi * match[4])
 end)
 
@@ -108,7 +113,7 @@ Monk.spells[116694] = SimpleHealParser 								--Благотворный тум
 Monk.spells[124682] = SimpleTimeHealParser2 						--Окутывающий туман
 Monk.spells[115181] = BreathOfFire 									--Пламенное дыхание
 Monk.spells[101545] = SimpleDamageParser2 							--Удар летящего змея
-Monk.spells[115151] = SimpleTimeHealParser2 						--Заживляющий туман
+Monk.spells[115151] = SimpleTimeHealParser 							--Заживляющий туман
 Monk.spells[115295] = SimpleParser:create(SpellAbsorb, 2) 			--Защита
 Monk.spells[115072] = ExpelHarm 									--Устранение вреда
 Monk.spells[115098] = DoubleParser:create(SpellDamageAndHeal, 1, 2)	--Волна ци

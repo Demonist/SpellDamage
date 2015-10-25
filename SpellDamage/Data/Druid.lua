@@ -25,7 +25,7 @@ local Regrowth = CustomParser:create(function(data, description)
 		local match = matchDigit(description, 1)
 		if match then
 			data.type = SpellHeal
-			data.heal = match
+			data.heal = match * 2
 		end
 	else
 		local match = matchDigits(description, {1, 2})
