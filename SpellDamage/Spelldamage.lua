@@ -73,13 +73,14 @@ local function createButtons()
 end
 
 local function checkRequirements()
-	if GetLocale() ~= "ruRU" then
+	local locale = GetLocale()
+	if locale ~= "ruRU" and locale ~= "enUS" and locale ~= "enGB" and locale ~= "deDE" and locale ~= "esES" and locale ~= "frFR" and locale ~= "itIT" and locale ~= "ptBR" and locale ~= "zhCN" then
 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in non russian locale! Addon disabled, sorry.", 1, 0, 0)
 		addonDisableReason = DisableReason_Language
 		DisableAddOn("SpellDamage")
 	elseif GetCVar("SpellTooltip_DisplayAvgValues") == "0" then
 		clearButtons(buttons)
-		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не может работать с НЕусредненными показателями. Зайдите в настройки интерфейса, изображение и установите галочку \"|cFFffff00Усредненные показатели|r\".", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["locale_error"], 1, 0, 0)
 		addonDisableReason = DisableReason_Average
 	end
 end
@@ -110,7 +111,7 @@ local function EventHandler(self, event, ...)
 		if addonDisableReason == DisableReason_Average and event == "CVAR_UPDATE" then
 			local variable = select(1, ...)
 			if variable == "SHOW_POINTS_AS_AVG" and GetCVar("SpellTooltip_DisplayAvgValues") == "1" then
-				DEFAULT_CHAT_FRAME:AddMessage("Отлично! Настройки изменены, аддон |cFFffff00SpellDamage|r вновь работает.", 0, 1, 0)
+				DEFAULT_CHAT_FRAME:AddMessage(sdLocale["locale_error_fixed"], 0, 1, 0)
 				addonDisableReason = DisableReason_Unknown
 				EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
 			end
@@ -276,50 +277,52 @@ EventFrame:SetScript("OnEvent", EventHandler)
 SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
 	if addonDisableReason == DisableReason_Language then
-		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r выключен из-за настроек языка.")
+		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["addon_off_language"])
 		return
 	elseif addonDisableReason == DisableReason_Average then
-		DEFAULT_CHAT_FRAME:AddMessage("Аддон |cFFffff00SpellDamage|r не работает из-за настройки усредненных показателей.")
+		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["addon_off_average"])
 		return
 	end
 
 	local itemsState = function() if showItems == true then return "Отображение на предметах |cFFc0ffc0включено|r" else return "Отображение на предметах |cFFffc0c0выключено|r" end end
- 	local debugState = function() if debuging == true then return "Отладка |cFFc0ffc0включена|r" else return "Отладка |cFFffc0c0выключена|r" end end
- 	local eventsState = function() if eventDebuging == true then return "Просмотр событий |cFFc0ffc0включен|r" else return "Просмотр событий |cFFffc0c0выключен|r" end end
  	local errorsState = function() if displayErrors == true then return "Отображение ошибок |cFFc0ffc0включено|r" else return "Отображение ошибок |cFFffc0c0выключено|r" end end
 
  	if msg == "debug" then
  		debuging = not debuging
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..debugState())
- 	elseif msg == "items" then
+ 		if debuging then
+ 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Debug |cFFc0ffc0enabled|r")
+ 		else
+ 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Debug |cFFffc0c0disabled|r")
+ 		end
+ 	elseif msg == "events" then
+ 		eventDebuging = not eventDebuging
+  		if eventDebuging then
+ 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Events display |cFFc0ffc0enabled|r")
+ 		else
+ 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Events display |cFFffc0c0disabled|r")
+ 		end
+  	elseif msg == "items" then
  		showItems = not showItems
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
  		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
- 	elseif msg == "events" then
- 		eventDebuging = not eventDebuging
-  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..eventsState())
  	elseif msg == "errors" then
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
  	elseif msg == "help" then
  		displayErrors = not displayErrors
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Для отображение данных на макросах, необходимо в код макроса добавить строчку |cFFffff00#sd <id>|r, где <id> - идентификатор умения, данные которого необходимо отобразить. Например, |cFFffff00#sd 56641|r отобразит 'Верный выстрел' у охотника.")
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_help"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r версия 0.8.5.9")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.0")
  	elseif msg == "status" then
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, текущие настройки:")
+ 		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_settings"])
  		DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..debugState())
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..eventsState())
  		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
  	else
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r, доступные команды:")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - отображает текущие настройки")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - включает или выключает показ значений на предметах")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd debug|r - включает или выключает отладку")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd events|r - включает или выключает просмотр событий")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - включает или выключает отображение ошибок")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - отображает помощь по использованию аддона с макросами")
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - отображает текущую версию аддона")
+ 		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_commands_list"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..sdLocale["chat_command_status"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - "..sdLocale["chat_command_items"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - "..sdLocale["chat_command_errors"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - "..sdLocale["chat_command_help"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - "..sdLocale["chat_command_version"])
  	end
 end
