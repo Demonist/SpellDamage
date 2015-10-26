@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 --Эльф крови, Волшебный поток:
 local ArcaneTorrent = MultiParser:create(SpellMana, {3}, function(data, match)
 	data.mana = match[3] * UnitManaMax("player") / 100

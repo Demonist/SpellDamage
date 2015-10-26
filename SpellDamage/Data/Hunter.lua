@@ -96,7 +96,7 @@ Hunter.spells[163485]	= SimpleDamageParser 		--Сосредоточенный в
 
 local locale = GetLocale()
 
-if local ~= "ruRU" then
+if locale ~= "ruRU" then
 	local GlaiveToss_notRu = MultiParser:create(SpellDamage, {1}, function(data, match)
 		data.damage = match[1] * 8
 	end)

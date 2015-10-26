@@ -1,5 +1,4 @@
-local L = []
-
+local L = {}
 local locale = GetLocale()
 
 L["daggers"] = "Daggers"
@@ -13,11 +12,15 @@ L["parsing_spell_error"] = "Error by parsing spell with"
 L["parsing_item_error"] = "Error by parsing item with"
 L["type_spell_error"] = "Error by detecting spell type with"
 L["type_item_error"] = "Error by detecting item type with"
-L["locale_error"] = "|cFFffff00SpellDamage|r addon can't work with NOT averaged values. Check 'Interface' settings, 'Display' tab, '|cFFffff00Average values|r' checkbox."
+L["locale_error"] = "|cFFffff00SpellDamage|r addon can't work with NOT averaged values. Check 'Interface' settings, 'Display' tab, '|cFFffff00Display Point as Average|r' checkbox."
 L["locale_error_fixed"] = "Excelent! Settings changed and |cFFffff00SpellDamage|r addon working again."
 L["addon_off_language"] = "|cFFffff00SpellDamage|r addon is disabled becouse unsupported locale."
 L["addon_off_average"] = "|cFFffff00SpellDamage|r addon is disabled becouse average values settings."
 
+L["chat_items_on"] = ""
+L["chat_items_off"] = ""
+L["chat_errors_on"] = ""
+L["chat_errors_off"] = ""
 L["chat_help"] = "For display on macros just add |cFFffff00#sd <id>|r line to macros code. <id> - spell id to be displayed. For example, |cFFffff00#sd 56641|r will display Hunter's 'Steady Shot'."
 L["chat_version"] = "version"
 L["chat_settings"] = "|cFFffff00SpellDamage|r settings:"
@@ -47,6 +50,10 @@ if locale == "ruRU" then
 	L["addon_off_language"] = "Аддон |cFFffff00SpellDamage|r выключен из-за настроек языка."
 	L["addon_off_average"] = "Аддон |cFFffff00SpellDamage|r не работает из-за настройки усредненных показателей."
 
+	L["chat_items_on"] = "Отображение на предметах |cFFc0ffc0включено|r"
+	L["chat_items_off"] = "Отображение на предметах |cFFffc0c0выключено|r"
+	L["chat_errors_on"] = "Отображение ошибок |cFFc0ffc0включено|r"
+	L["chat_errors_off"] = "Отображение ошибок |cFFffc0c0выключено|r"
 	L["chat_help"] = "Для отображение данных на макросах, необходимо в код макроса добавить строчку |cFFffff00#sd <id>|r, где <id> - идентификатор умения, данные которого необходимо отобразить. Например, |cFFffff00#sd 56641|r отобразит 'Верный выстрел' у охотника."
 	L["chat_version"] = "версия"
 	L["chat_settings"] = "|cFFffff00SpellDamage|r, текущие настройки:"

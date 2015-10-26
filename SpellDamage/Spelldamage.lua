@@ -20,6 +20,7 @@ local items = Items
 local debuging = false
 local eventDebuging = false
 local showItems = true
+local locale = nil
 
 local elvUi_needUpdate = false
 
@@ -129,6 +130,7 @@ local function EventHandler(self, event, ...)
 		logined = true
 		needCheckOnUpdate = true
 		needUpdateButtonsCache = true
+		locale = GetLocale()
 		local _, className = UnitClass("player")
 		currentClass = classes[className]
 		if currentClass == nil then currentClass = emptyClass end
@@ -161,11 +163,9 @@ local function EventHandler(self, event, ...)
 		updatingHistory[event] = currentTime
 	end
 
-	--Костыль для селфи камеры:
-	if evet == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR" then
+	if event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR" then
 		delayedUpdate = true
 		delayedUpdateTime = currentTime
-		return
 	end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_MACROS" 
@@ -247,7 +247,7 @@ local function EventHandler(self, event, ...)
 					if used == false then used = race:updateButton(button, id) end
 					
 					if used and needUpdateButtonsCache then table.insert(buttonsCache, button) end
-				elseif showItems == true and actionType == "item" and id then
+				elseif showItems == true and items and actionType == "item" and id then
 					if items:updateButton(button, id) == true and needUpdateButtonsCache then table.insert(buttonsCache, button) end
 				end
 			end
@@ -284,8 +284,8 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
 		return
 	end
 
-	local itemsState = function() if showItems == true then return "Отображение на предметах |cFFc0ffc0включено|r" else return "Отображение на предметах |cFFffc0c0выключено|r" end end
- 	local errorsState = function() if displayErrors == true then return "Отображение ошибок |cFFc0ffc0включено|r" else return "Отображение ошибок |cFFffc0c0выключено|r" end end
+	local itemsState = function() if showItems == true then return sdLocale["chat_items_on"] else return sdLocale["chat_items_off"] end end
+ 	local errorsState = function() if displayErrors == true then return sdLocale["chat_errors_on"] else return sdLocale["chat_errors_off"] end end
 
  	if msg == "debug" then
  		debuging = not debuging
@@ -301,7 +301,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		else
  			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Events display |cFFffc0c0disabled|r")
  		end
-  	elseif msg == "items" then
+  	elseif msg == "items" and items then
  		showItems = not showItems
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
  		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
@@ -312,15 +312,19 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_help"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.0")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.0 beta")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_settings"])
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
+ 		if items then
+ 			DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
+ 		end
  		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
  	else
  		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_commands_list"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..sdLocale["chat_command_status"])
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - "..sdLocale["chat_command_items"])
+ 		if items then
+ 			DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - "..sdLocale["chat_command_items"])
+ 		end
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - "..sdLocale["chat_command_errors"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - "..sdLocale["chat_command_help"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - "..sdLocale["chat_command_version"])
