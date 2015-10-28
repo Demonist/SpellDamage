@@ -63,6 +63,8 @@ local ChaosBolt = MultiParser:create(SpellDamage, {1}, function(data, match)
 	data.damage = match[1] * 2
 end)
 
+
+
 Warlock = Class:create(ClassSpells)
 Warlock.dependFromTarget = true
 Warlock.spells[172]		= TimeDamageHaunt 										--Порча
@@ -94,6 +96,12 @@ Warlock.spells[116858]	= ChaosBolt 											--Стрела Хаоса
 Warlock.spells[152108]	= SimpleDamageParser 	 								--Катаклизм
 Warlock.spells[157695]	= SimpleDamageParser 									--Демонический заряд
 
+Warlock.spells[603]	= SimpleTimeDamageParser 									--Рок
+Warlock.spells[103964]	= SimpleDamageParser 									--Касание Хаоса
+Warlock.spells[104025]	= SimpleTimeDamageParser 								--Жар преисподней
+Warlock.spells[104027]	= SoulFire 												--Ожог души
+Warlock.spells[124916]	= SimpleDamageParser2 									--Волна Хаоса
+
 -------------------------------------------------------------------------------
 
 local locale = GetLocale()
@@ -123,6 +131,9 @@ if locale == "deDE" then
 	Warlock.spells[103103]	= TimeDamageHaunt2 										--Похищение души
 	Warlock.spells[105174]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 4) 	--Рука Гул'дана
 	Warlock.spells[152108]	= SimpleDamageParser2 	 								--Катаклизм
+
+	Warlock.spells[603]	= SimpleTimeDamageParser2 									--Рок
+	Warlock.spells[104025]	= SimpleTimeDamageParser2 								--Жар преисподней
 	return
 end
 
@@ -138,6 +149,8 @@ end
 
 if locale == "itIT" then
 	Warlock.spells[108685]	= SimpleDamageParser 									--Поджигание
+
+	Warlock.spells[124916]	= SimpleDamageParser 									--Волна Хаоса
 	return
 end
 
@@ -165,5 +178,9 @@ if locale == "zhCN" then
 	Warlock.spells[30108]	= TimeDamageHaunt2 										--Нестабильное колдовство
 	Warlock.spells[103103]	= TimeDamageHaunt2 										--Похищение души
 	Warlock.spells[152108]	= SimpleDamageParser2 	 								--Катаклизм
+
+	Warlock.spells[603]	= SimpleTimeDamageParser2 									--Рок
+	Warlock.spells[104025]	= SimpleTimeDamageParser2 								--Жар преисподней
+	Warlock.spells[124916]	= SimpleDamageParser 									--Волна Хаоса
 	return
 end

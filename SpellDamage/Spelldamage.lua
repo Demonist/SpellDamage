@@ -312,7 +312,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_help"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.0 beta")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.1 beta")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_settings"])
  		if items then

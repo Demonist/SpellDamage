@@ -94,6 +94,12 @@ local BreathOfTheSerpent = MultiParser:create(SpellTimeHeal, {2}, function(data,
 	data.timeHeal = match[2] * 10
 end)
 
+--Смертельное касание:
+local TouchOfDeath = CustomParser:create(function(data, description)
+	data.type = SpellDamage
+	data.damage = UnitHealthMax("player")
+end)
+
 Monk = Class:create(ClassSpells)
 Monk.dependFromTarget = true
 Monk.dependFromPower = true
@@ -140,6 +146,7 @@ Monk.spells[157675] = ChiExplosion2 								--Взрыв ци
 Monk.spells[157676] = ChiExplosion3 								--Взрыв ци
 Monk.spells[152175] = HurricaneStrike 								--Ураганный удар
 Monk.spells[157535]	= BreathOfTheSerpent 							--Дыхание Змеи
+Monk.spells[115080]	= TouchOfDeath 									--Смертельное касание
 
 -------------------------------------------------------------------------------
 
