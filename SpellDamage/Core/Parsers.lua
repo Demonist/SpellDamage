@@ -41,10 +41,11 @@ SimpleManaParser, SimpleTimeManaParser = SimpleParser:create(SpellMana, 1), Simp
 SimpleAbsorbParser = SimpleParser:create(SpellAbsorb, 1)
 
 SimpleDamageParser2 = SimpleParser:create(SpellDamage, 2)
-SimpleTimeDamage2 = SimpleParser:create(SpellTimeDamage, 2)
+SimpleTimeDamageParser2 = SimpleParser:create(SpellTimeDamage, 2)
 SimpleHealParser2 = SimpleParser:create(SpellHeal, 2)
 SimpleTimeHealParser2 = SimpleParser:create(SpellTimeHeal, 2)
-
+SimpleManaParser2 = SimpleParser:create(SpellMana, 2)
+SimpleAbsorbParser2 = SimpleParser:create(SpellAbsorb, 2)
 --
 
 DoubleParser = SpellParser:create()

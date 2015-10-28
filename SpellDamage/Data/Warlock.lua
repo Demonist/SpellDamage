@@ -1,6 +1,6 @@
 local TimeDamageHauntHelper = function(index)
 	return MultiParser:create(SpellTimeDamage, {index}, function(data, match)
-		if UnitDebuff("target", "Блуждающий дух") then
+		if UnitExists("target") and UnitDebuff("target", sdLocale["haunt"]) then
 			data.timeDamage = match[index] * 1.35
 		else
 			data.timeDamage = match[index]
@@ -9,15 +9,11 @@ local TimeDamageHauntHelper = function(index)
 end
 local TimeDamageHaunt, TimeDamageHaunt2 = TimeDamageHauntHelper(1), TimeDamageHauntHelper(2)
 
+
 --Похищение жизни:
 local DrainLife = MultiParser:create(SpellDamageAndTimeHeal, {1, 2}, function(data, match)
 	data.damage = match[1]
 	data.timeHeal = match[2]
-end)
-
---Стрела Хаоса:
-local ChaosBolt = MultiParser:create(SpellDamage, {1}, function(data, match)
-	data.damage = match[1] * 2
 end)
 
 --Канал здоровья:
@@ -29,11 +25,6 @@ local HealthFunnel = CustomParser:create(function(data, description)
 	else
 		data.heal = UnitHealthMax("pet") * 0.36
 	end
-end)
-
---Углеотвод:
-local EmberTap = MultiParser:create(SpellHeal, {1}, function(data, match)
-	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
 --Жизнеотвод:
@@ -52,37 +43,144 @@ local LifeTap = CustomParser:create(function(data, description)
 	end
 end)
 
+--Ожог души:
+local SoulFire = MultiParser:create(SpellDamage, {1}, function(data, match)
+	data.damage = match[1] * 2
+end)
+
 --Лик тлена:
 local MortalCoil = MultiParser:create(SpellHeal, {1}, function(data, match)
 	data.heal = match[1] * UnitHealthMax("player") / 100
 end)
 
+--Углеотвод:
+local EmberTap = MultiParser:create(SpellHeal, {1}, function(data, match)
+	data.heal = match[1] * UnitHealthMax("player") / 100
+end)
+
+--Стрела Хаоса:
+local ChaosBolt = MultiParser:create(SpellDamage, {1}, function(data, match)
+	data.damage = match[1] * 2
+end)
+
+
+
 Warlock = Class:create(ClassSpells)
 Warlock.dependFromTarget = true
-Warlock.spells[686]		= SimpleDamageParser 									--Стрела Тьмы
 Warlock.spells[172]		= TimeDamageHaunt 										--Порча
-Warlock.spells[689]		= DrainLife 		 									--Похищение жизни
-Warlock.spells[114654]	= SimpleDamageParser 									--Испепеление
-Warlock.spells[29722]	= SimpleDamageParser 									--Испепеление
-Warlock.spells[116858]	= ChaosBolt 											--Стрела Хаоса
-Warlock.spells[30108]	= TimeDamageHaunt 										--Нестабильное колдовство
-Warlock.spells[17962]	= SimpleDamageParser 									--Поджигание
-Warlock.spells[108685]	= SimpleDamageParser2 									--Поджигание
-Warlock.spells[755]		= HealthFunnel 											--Канал здоровья
 Warlock.spells[348]		= DoubleDamageParser 									--Жертвенный огонь
 Warlock.spells[108686]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 3) 	--Жертвенный огонь
-Warlock.spells[6353]	= SimpleDamageParser 									--Ожог души
-Warlock.spells[114635]	= EmberTap 												--Углеотвод
+Warlock.spells[686]		= SimpleDamageParser 									--Стрела Тьмы
+Warlock.spells[689]		= DrainLife 		 									--Похищение жизни
+Warlock.spells[755]		= HealthFunnel 											--Канал здоровья
+Warlock.spells[980]		= TimeDamageHaunt 										--Агония
+Warlock.spells[1122]	= SimpleDamageParser 									--Призыв инфернала
 Warlock.spells[1454]	= LifeTap 												--Жизнеотвод
-Warlock.spells[105174]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 3) 	--Рука Гул'дана
+Warlock.spells[1949]	= TimeDamageHaunt2 										--Адское пламя
 Warlock.spells[5740]	= TimeDamageHaunt 										--Огненный ливень
 Warlock.spells[104232]	= TimeDamageHaunt 										--Огненный ливень
-Warlock.spells[27243]	= TimeDamageHaunt 										--Семя порчи
-Warlock.spells[1949]	= TimeDamageHaunt2 										--Адское пламя
-Warlock.spells[103103]	= TimeDamageHaunt 										--Похищение души
+Warlock.spells[6353]	= SoulFire 												--Ожог души
 Warlock.spells[6789]	= MortalCoil 											--Лик тлена
-Warlock.spells[980]		= TimeDamageHaunt 										--Агония
 Warlock.spells[17877]	= SimpleDamageParser 									--Ожог Тьмы
+Warlock.spells[17962]	= SimpleDamageParser 									--Поджигание
+Warlock.spells[108685]	= SimpleDamageParser2 									--Поджигание
+Warlock.spells[27243]	= TimeDamageHaunt 										--Семя порчи
+Warlock.spells[29722]	= SimpleDamageParser 									--Испепеление
+Warlock.spells[114654]	= SimpleDamageParser 									--Испепеление
+Warlock.spells[30108]	= TimeDamageHaunt 										--Нестабильное колдовство
 Warlock.spells[48181]	= SimpleDamageParser 									--Блуждающий дух
-Warlock.spells[157695]	= SimpleDamageParser 									--Демонический заряд
+Warlock.spells[103103]	= TimeDamageHaunt 										--Похищение души
+Warlock.spells[105174]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 3) 	--Рука Гул'дана
+Warlock.spells[114635]	= EmberTap 												--Углеотвод
+Warlock.spells[116858]	= ChaosBolt 											--Стрела Хаоса
 Warlock.spells[152108]	= SimpleDamageParser 	 								--Катаклизм
+Warlock.spells[157695]	= SimpleDamageParser 									--Демонический заряд
+
+Warlock.spells[603]	= SimpleTimeDamageParser 									--Рок
+Warlock.spells[103964]	= SimpleDamageParser 									--Касание Хаоса
+Warlock.spells[104025]	= SimpleTimeDamageParser 								--Жар преисподней
+Warlock.spells[104027]	= SoulFire 												--Ожог души
+Warlock.spells[124916]	= SimpleDamageParser2 									--Волна Хаоса
+
+-------------------------------------------------------------------------------
+
+local locale = GetLocale()
+
+if locale == "enGB" or locale == "enUS" then
+	Warlock.spells[108685]	= SimpleDamageParser 									--Поджигание
+	return
+end
+
+if locale == "deDE" then
+	--Похищение жизни:
+	local DrainLife_de = MultiParser:create(SpellDamageAndTimeHeal, {2, 3}, function(data, match)
+		data.damage = match[2]
+		data.timeHeal = match[3]
+	end)
+
+	Warlock.spells[172]		= TimeDamageHaunt2 										--Порча
+	Warlock.spells[348]		= DoubleParser:create(SpellDamageAndTimeDamage, 1, 3) 	--Жертвенный огонь
+	Warlock.spells[108686]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 4) 	--Жертвенный огонь
+	Warlock.spells[689]		= DrainLife_de 		 									--Похищение жизни
+	Warlock.spells[980]		= TimeDamageHaunt2 										--Агония
+	Warlock.spells[5740]	= TimeDamageHaunt2 										--Огненный ливень
+	Warlock.spells[104232]	= TimeDamageHaunt2 										--Огненный ливень
+	Warlock.spells[27243]	= TimeDamageHaunt2 										--Семя порчи
+	Warlock.spells[114654]	= SimpleDamageParser2 									--Испепеление
+	Warlock.spells[30108]	= TimeDamageHaunt2 										--Нестабильное колдовство
+	Warlock.spells[103103]	= TimeDamageHaunt2 										--Похищение души
+	Warlock.spells[105174]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 4) 	--Рука Гул'дана
+	Warlock.spells[152108]	= SimpleDamageParser2 	 								--Катаклизм
+
+	Warlock.spells[603]	= SimpleTimeDamageParser2 									--Рок
+	Warlock.spells[104025]	= SimpleTimeDamageParser2 								--Жар преисподней
+	return
+end
+
+if locale == "esES" then
+	Warlock.spells[108685]	= SimpleDamageParser 									--Поджигание
+	return
+end
+
+if locale == "frFR" then
+	Warlock.spells[108685]	= SimpleDamageParser 									--Поджигание
+	return
+end
+
+if locale == "itIT" then
+	Warlock.spells[108685]	= SimpleDamageParser 									--Поджигание
+
+	Warlock.spells[124916]	= SimpleDamageParser 									--Волна Хаоса
+	return
+end
+
+if locale == "ptBR" then
+	Warlock.spells[108685]	= SimpleDamageParser 									--Поджигание
+	return
+end
+
+if locale == "zhCN" then
+	--Похищение жизни:
+	local DrainLife_cn = MultiParser:create(SpellDamageAndTimeHeal, {2, 3}, function(data, match)
+		data.damage = match[2]
+		data.timeHeal = match[3]
+	end)
+
+	Warlock.spells[172]		= TimeDamageHaunt2 										--Порча
+	Warlock.spells[348]		= DoubleParser:create(SpellDamageAndTimeDamage, 1, 3) 	--Жертвенный огонь
+	Warlock.spells[108686]	= DoubleParser:create(SpellDamageAndTimeDamage, 2, 4) 	--Жертвенный огонь
+	Warlock.spells[689]		= DrainLife_cn 		 									--Похищение жизни
+	Warlock.spells[980]		= TimeDamageHaunt2 										--Агония
+	Warlock.spells[5740]	= TimeDamageHaunt2 										--Огненный ливень
+	Warlock.spells[104232]	= TimeDamageHaunt2 										--Огненный ливень
+	Warlock.spells[27243]	= TimeDamageHaunt2 										--Семя порчи
+	Warlock.spells[114654]	= SimpleDamageParser2 									--Испепеление
+	Warlock.spells[30108]	= TimeDamageHaunt2 										--Нестабильное колдовство
+	Warlock.spells[103103]	= TimeDamageHaunt2 										--Похищение души
+	Warlock.spells[152108]	= SimpleDamageParser2 	 								--Катаклизм
+
+	Warlock.spells[603]	= SimpleTimeDamageParser2 									--Рок
+	Warlock.spells[104025]	= SimpleTimeDamageParser2 								--Жар преисподней
+	Warlock.spells[124916]	= SimpleDamageParser 									--Волна Хаоса
+	return
+end

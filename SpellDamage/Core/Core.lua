@@ -1,5 +1,5 @@
 ﻿SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7, 8
-SpellDamageAndTimeDamage, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18
+SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 
 SpellData = {}
 function SpellData:create(type)
@@ -27,6 +27,7 @@ sdItemTooltop:SetOwner(WorldFrame, "ANCHOR_NONE")
 local tooltipInitTime = GetTime()
 
 local itemsCache = {}
+local L = sdLocale
 local function GetItemDescription(itemId)
 	if itemsCache[itemId] then return itemsCache[itemId] end
 	if #itemsCache >= 100 then itemsCache = {} end
@@ -37,7 +38,7 @@ local function GetItemDescription(itemId)
 		local str = _G["spellDamageItemTooltipTextLeft"..i]
 		if str then
 			local text = str:GetText()
-			if text and text:starts("Использование") then
+			if text and text:starts(L["item_use"]) then
 				itemsCache[itemId] = text
 				return text
 			end
@@ -104,9 +105,11 @@ function Class:updateButton(button, spellId)
 	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false end	--Костыль от начальных ошибок предметов
 
 	if data.type == SpellUnknown and displayErrors == true then
-		local slot = "умения"
-		if self.type == ClassItems then slot = "предмета" end
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка парсинга "..slot.." с id|r |cFFffffc0"..spellId.."|r.")
+		if self.type == ClassSpells then
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
+		else
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["parsing_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
+		end
 		return false 
 	end
 
@@ -179,8 +182,13 @@ function Class:updateButton(button, spellId)
 			button.centerText:SetTextColor(0, 1, 0, 1)
 			button.bottomText:SetText( shortNumber(data.mana) )
 			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
+		elseif data.type == SpellDamageAndMana then
+			button.centerText:SetText( shortNumber(data.damage) )
+			button.centerText:SetTextColor(1, 1, 0, 1)
+			button.bottomText:SetText( shortNumber(data.mana) )
+			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif displayErrors == true then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа умения с id|r |cFFffffc0"..spellId.."|r.")
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["type_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		end
 	else
 		if data.type == SpellHeal then
@@ -220,7 +228,7 @@ function Class:updateButton(button, spellId)
 			button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
 			button.bottomText:SetTextColor(1, 1, 0, 1)
 		elseif displayErrors == true then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0Ошибка определения типа предмета с id|r |cFFffffc0"..spellId.."|r.")
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["type_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		end
 	end
 	return true

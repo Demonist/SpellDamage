@@ -1,3 +1,5 @@
+if GetLocale() ~= "ruRU" then return end
+
 local SleepingPotion = DoubleParser:create(SpellHealAndMana, 2, 3)
 local HealAndMana = MultiParser:create(SpellHealAndMana, {1}, function(data, match)
 	data.heal = match[1]
