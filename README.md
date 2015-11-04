@@ -1,37 +1,50 @@
-# SpellDamage
-Аддон для World Of Warcraft, отображающий урон, лечение или поглощение умений на панели действий.
+#SpellDamage
+It is a World Of Warcraft's addon that displays spell's damage, heal and absorb on the action bar.
 
-**Актуален для версии 6.2.  
-Работает только при включенной опции "Усредненные показатели".**  
-Поддерживаемые языки: русский, английский, немецкий, испанский, французский, итальянский, португальский и китайский упрощенный.  
-В русской локали еще отображаются данные и с предметов. 
+#Restrictions
+Works only in WOW **6.2** version and only if **Display Point as Average** setting is **on**.  
+Works only in next locales:
+  
+* English (enUS, enGB),  
+* Russian (ruRU),
+* German (deDE),
+* Spanish (esES),
+* French (frFR),
+* Italian (itIT),
+* Brazilian Portuguese (ptBR),
+* Simplified Chinese (zhCN).
 
-#Установка
-Просто скопируйте каталог **SpellDamage** в папку **World of Warcraft\\Interface\\AddOns\\**
+This addon doesn't works in Korean (koKR), Latin American Spanish (esMX) and Traditional Chinese (zhTW) locales. Sorry.
 
-#Как это работает
-Данный аддон просто берет данные из описания умений и отображает их на панели.
+Is russian locale additionally displays items's (potions, food & drinks, bandages, ...) data on action bar.
 
-Описание:  
+#Installation
+Just copy **SpellDamage** folder to **World of Warcraft\\Interface\\AddOns\\** folder.
+
+
+#How does is works?!
+This addon just take some digits from spell's description and displays it.
+
+Description:  
 ![_изображение не найдено_](images/description.jpg)
 
 
-Отображение на панели умений:  
+Action bar display:  
 ![_изображение не найдено_](images/spell.jpg)
 
-#Доступные команды
->**/sd** или **/spelldamage** - отображает список команд  
->**/sd status** - отображает текущие настройки  
->**/sd items** - включает или выключает показ значений на предметах (не сохраняется при перезапуске, работает только в русской локали)  
->**/sd errors** - включает или выключает отображение ошибок. (не сохраняется при перезапуске)  
->**/sd help** -  отображает помощь по использованию аддона с макросами  
->**/sd version** - отображает текущую версию
+#Chat commands
+>**/sd** или **/spelldamage** - show commands list  
+>**/sd status** - show current settings  
+>**/sd items** - enable/disable displays data on items (works only in russian locale)  
+>**/sd errors** - enable/disable errors printing in chat  
+>**/sd help** -  show help for macros usage  
+>**/sd version** - show current addon version
 
-#Использование с макросами
-Аддон поддерживает отображение данных и на макросах, для этого необходимо в код макроса добавить строчку
+#Usage with macros
+This addon supports data displaying on a macros. For this just add next line to macros code
 >\#sd *id*
   
-где *id* - идентификатор умения, данные которого необходимо отобразить. Например, **\#sd 56641** отобразит умение "Верный выстрел" у охотника.
+where *id* - spell's id, which data you want to see. For example, **\#sd 56641** displays  data of "Steady Shot" spell on your macros on the action bar.
 
-#Есть вопросы?!  
-Обращайтесь - **demonist616@gmail.com**
+#Have a question?
+Write - **demonist616@gmail.com**
