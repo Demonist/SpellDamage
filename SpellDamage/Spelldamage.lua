@@ -76,7 +76,7 @@ end
 local function checkRequirements()
 	local locale = GetLocale()
 	if locale ~= "ruRU" and locale ~= "enUS" and locale ~= "enGB" and locale ~= "deDE" and locale ~= "esES" and locale ~= "frFR" and locale ~= "itIT" and locale ~= "ptBR" and locale ~= "zhCN" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in non russian locale! Addon disabled, sorry.", 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in your locale! Addon disabled, sorry.", 1, 0, 0)
 		addonDisableReason = DisableReason_Language
 		DisableAddOn("SpellDamage")
 	elseif GetCVar("SpellTooltip_DisplayAvgValues") == "0" then
@@ -274,7 +274,7 @@ end)
 
 EventFrame:SetScript("OnEvent", EventHandler)
 
-SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2 = "/sd", "/spelldamage"
+SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2, SLASH_SPELLDAMAGE3, SLASH_SPELLDAMAGE4 = "/sd", "/SD", "/spelldamage", "/SpellDamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
 	if addonDisableReason == DisableReason_Language then
 		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["addon_off_language"])
@@ -312,7 +312,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_help"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.1 beta")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.2 beta")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_settings"])
  		if items then

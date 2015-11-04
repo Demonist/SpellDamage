@@ -6,8 +6,8 @@ L["lightning_shield"] = "Lightning Shield"
 L["frost_bomb"] = "Frost Bomb"
 L["haunt"] = "Haunt"
 L["dizzying_haze"] = "Dizzying Haze"
-
 L["item_use"] = "Use"
+
 L["parsing_spell_error"] = "Error by parsing spell with"
 L["parsing_item_error"] = "Error by parsing item with"
 L["type_spell_error"] = "Error by detecting spell type with"
@@ -39,8 +39,8 @@ if locale == "ruRU" then
 	L["frost_bomb"] = "Ледяная бомба"
 	L["haunt"] = "Блуждающий дух"
 	L["dizzying_haze"] = "Хмельная дымка"
-
 	L["item_use"] = "Использование"
+
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
 	L["parsing_item_error"] = "Ошибка парсинга предмета с"
 	L["type_spell_error"] = "Ошибка определения типа умения с"
@@ -73,7 +73,6 @@ if locale == "deDE" then
 	L["frost_bomb"] = "Frostbombe"
 	L["haunt"] = "Heimsuchung"
 	L["dizzying_haze"] = "Benebelnde Dämpfe"
-
 	L["item_use"] = "Benutzen"
 end
 
@@ -85,7 +84,6 @@ if locale == "esES" then
 	L["frost_bomb"] = "Bomba de Escarcha"
 	L["haunt"] = "Poseer"
 	L["dizzying_haze"] = "Estupor mareante"
-
 	L["item_use"] = "Uso"
 end
 
@@ -97,7 +95,6 @@ if locale == "frFR" then
 	L["frost_bomb"] = "Bombe de givre"
 	L["haunt"] = "Hanter"
 	L["dizzying_haze"] = "Brume vertigineuse"
-
 	L["item_use"] = "Utilise"
 end
 
@@ -109,7 +106,6 @@ if locale == "itIT" then
 	L["frost_bomb"] = "Bomba del Gelo"
 	L["haunt"] = "Tormento"
 	L["dizzying_haze"] = "Ebbrezza"
-
 	L["item_use"] = "Usa"
 end
 
@@ -121,7 +117,6 @@ if locale == "ptBR" then
 	L["frost_bomb"] = "Bomba Gélida"
 	L["haunt"] = "Possessão"
 	L["dizzying_haze"] = "Névoa Estonteante"
-
 	L["item_use"] = "Uso"
 end
 
@@ -133,7 +128,6 @@ if locale == "zhCN" then
 	L["frost_bomb"] = "寒冰炸弹"
 	L["haunt"] = "鬼影缠身"
 	L["dizzying_haze"] = "迷醉酒雾"
-
 	L["item_use"] = "使用"
 end
 
