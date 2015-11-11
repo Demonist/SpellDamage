@@ -1,3 +1,12 @@
+local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
+local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
+local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
+local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
+local SpellParser, SimpleParser, SimpleDamageParser, SimpleTimeDamageParser, SimpleHealParser, SimpleTimeHealParser, SimpleManaParser, SimpleTimeManaParser, SimpleAbsorbParser, SimpleDamageParser2, SimpleTimeDamageParser2, SimpleHealParser2, SimpleTimeHealParser2, SimpleManaParser2, SimpleAbsorbParser2, DoubleParser, DoubleDamageParser, DoubleHealManaParser, MultiParser, AverageParser, SimpleAverageParser, CustomParser = SD.SpellParser, SD.SimpleParser, SD.SimpleDamageParser, SD.SimpleTimeDamageParser, SD.SimpleHealParser, SD.SimpleTimeHealParser, SD.SimpleManaParser, SD.SimpleTimeManaParser, SD.SimpleAbsorbParser, SD.SimpleDamageParser2, SD.SimpleTimeDamageParser2, SD.SimpleHealParser2, SD.SimpleTimeHealParser2, SD.SimpleManaParser2, SD.SimpleAbsorbParser2, SD.DoubleParser, SD.DoubleDamageParser, SD.DoubleHealManaParser, SD.MultiParser, SD.AverageParser, SD.SimpleAverageParser, SD.CustomParser
+local Glyphs = SD.Glyphs
+
+--
+
 --Тотем исцеляющего потока:
 local HealingStreamTotem = MultiParser:create(SpellTimeHeal, {3}, function(data, match)
 	data.timeHeal = match[3] * 7
@@ -7,7 +16,7 @@ end)
 local EarthShock = MultiParser:create(SpellDamage, {1}, function(data, match)
 	data.damage = match[1]
 
-	local name, _, _, count = UnitBuff("player", sdLocale["lightning_shield"])
+	local name, _, _, count = UnitBuff("player", L["lightning_shield"])
 	if IsSpellKnown(88766) == true and name and count > 1 then	--Сверкание
 		local damage = matchDigit(GetSpellDescription(324), 1)	--Щит молний
 		if damage then
@@ -36,7 +45,8 @@ local HealingTideTotem = MultiParser:create(SpellTimeHeal, {5}, function(data, m
 	data.timeHeal = match[5] * 5
 end)
 
-Shaman = Class:create(ClassSpells)
+local Shaman = Class:create(ClassSpells)
+SD.Shaman = Shaman
 Shaman.spells[324]		= SimpleTimeDamageParser 							--Щит молний
 Shaman.spells[403]		= SimpleDamageParser 								--Молния
 Shaman.spells[421]		= SimpleDamageParser 								--Цепная молния

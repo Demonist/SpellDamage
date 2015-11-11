@@ -1,21 +1,21 @@
-local classes = {}
-classes["DEATHKNIGHT"]	= DeathKnight
-classes["DRUID"]		= Druid
-classes["HUNTER"]		= Hunter
-classes["MAGE"]			= Mage
-classes["MONK"]			= Monk
-classes["PALADIN"]		= Paladin
-classes["PRIEST"]		= Priest
-classes["ROGUE"]		= Rogue
-classes["SHAMAN"]		= Shaman
-classes["WARLOCK"]		= Warlock
-classes["WARRIOR"]		= Warrior
+local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
+local Glyphs, Race, Items = SD.Glyphs, SD.Race, SD.Items
 
-local emptyClass = Class:create(ClassSpells)
+local classes = {}
+classes["DEATHKNIGHT"]	= SD.DeathKnight
+classes["DRUID"]		= SD.Druid
+classes["HUNTER"]		= SD.Hunter
+classes["MAGE"]			= SD.Mage
+classes["MONK"]			= SD.Monk
+classes["PALADIN"]		= SD.Paladin
+classes["PRIEST"]		= SD.Priest
+classes["ROGUE"]		= SD.Rogue
+classes["SHAMAN"]		= SD.Shaman
+classes["WARLOCK"]		= SD.Warlock
+classes["WARRIOR"]		= SD.Warrior
+
+local emptyClass = SD.Class:create(SD.ClassSpells)
 local currentClass = emptyClass
-local race = Race
-local glyphs = Glyphs
-local items = Items
 
 local debuging = false
 local eventDebuging = false
@@ -39,7 +39,7 @@ local buttons = {}
 local buttonsCache = {}
 
 local function clearButtons(buttons)
-	for _, button in pairs(buttons) do
+	for _, button in ipairs(buttons) do
 		button.centerText:SetText("")
 		button.bottomText:SetText("")
 	end
@@ -81,11 +81,12 @@ local function checkRequirements()
 		DisableAddOn("SpellDamage")
 	elseif GetCVar("SpellTooltip_DisplayAvgValues") == "0" then
 		clearButtons(buttons)
-		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["locale_error"], 1, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage(L["locale_error"], 1, 0, 0)
 		addonDisableReason = DisableReason_Average
 	end
 end
 
+local _variable, needCheckOnUpdate, needUpdateButtonsCache, currentTime, glyphsUpdated, used, slot, actionType, id, match, updateSpells, currentButtons
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:RegisterEvent("PLAYER_LOGOUT")
@@ -110,9 +111,9 @@ local logined = false
 local function EventHandler(self, event, ...)
 	if addonDisableReason ~= DisableReason_Unknown then
 		if addonDisableReason == DisableReason_Average and event == "CVAR_UPDATE" then
-			local variable = select(1, ...)
-			if variable == "SHOW_POINTS_AS_AVG" and GetCVar("SpellTooltip_DisplayAvgValues") == "1" then
-				DEFAULT_CHAT_FRAME:AddMessage(sdLocale["locale_error_fixed"], 0, 1, 0)
+			_variable = select(1, ...)
+			if _variable == "SHOW_POINTS_AS_AVG" and GetCVar("SpellTooltip_DisplayAvgValues") == "1" then
+				DEFAULT_CHAT_FRAME:AddMessage(L["locale_error_fixed"], 0, 1, 0)
 				addonDisableReason = DisableReason_Unknown
 				EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
 			end
@@ -123,8 +124,8 @@ local function EventHandler(self, event, ...)
 	if debuging == true then debugprofilestart() end
 	if eventDebuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r event |cFFffffc0"..event.."|r") end
 
-	local needCheckOnUpdate = false
-	local needUpdateButtonsCache = false
+	needCheckOnUpdate = false
+	needUpdateButtonsCache = false
 
 	if event == "PLAYER_LOGIN" then
 		logined = true
@@ -132,29 +133,43 @@ local function EventHandler(self, event, ...)
 		needUpdateButtonsCache = true
 		locale = GetLocale()
 		local _, className = UnitClass("player")
-		currentClass = classes[className]
-		if currentClass == nil then currentClass = emptyClass end
-		
+	
 		createButtons()
 		checkRequirements()
 		if addonDisableReason ~= DisableReason_Unknown then return end
-		glyphs:update()
+		Glyphs:update()
 
 		for k,v in pairs(classes) do
-			v:onLoad()
+			if k == className then
+				currentClass = v
+				v:onLoad()
+				if v ~= SD.DeathKnight then SD.DeathKnight = nil end
+				if v ~= SD.Druid then SD.Druid = nil end
+				if v ~= SD.Hunter then SD.Hunter = nil end
+				if v ~= SD.Mage then SD.Mage = nil end
+				if v ~= SD.Monk then SD.Monk = nil end
+				if v ~= SD.Paladin then SD.Paladin = nil end
+				if v ~= SD.Priest then SD.Priest = nil end
+				if v ~= SD.Rogue then SD.Rogue = nil end
+				if v ~= SD.Shaman then SD.Shaman = nil end
+				if v ~= SD.Warlock then SD.Warlock = nil end
+				if v ~= SD.Warrior then SD.Warrior = nil end
+			else
+				classes[k] = nil
+			end
 		end
 	end
 
 	if event == "CVAR_UPDATE" then
-		local variable = select(1, ...)
-		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
+		_variable = select(1, ...)
+		if _variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
 	end
 
 	if event == "PLAYER_LOGOUT" then logined = false end
 	if logined == false then return end
 
 	--Защита от слишком частого обновления:
-	local currentTime = GetTime()
+	currentTime = GetTime()
 	if updatingHistory[event] and currentTime - updatingHistory[event] < 0.1 then
 		delayedUpdate = true
 		delayedUpdateTime = currentTime
@@ -174,25 +189,28 @@ local function EventHandler(self, event, ...)
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
-		clearButtons(buttonsCache)
-
+		
 		needCheckOnUpdate = true
 		needUpdateButtonsCache = true
-		buttonsCache = {}
+
+		if #buttonsCache > 0 then
+			clearButtons(buttonsCache)
+			buttonsCache = {}
+		end
 	end
 
 	if UnitInVehicle("player") == true then return end
 
-	if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then
+	if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then	--Костыль для ElvUI
 		elvUi_needUpdate = true
 		return
 	end
 
-	local glyphsUpdated = false
+	glyphsUpdated = false
 	if event == "GLYPH_ADDED" or event == "GLYPH_UPDATED" or event == "GLYPH_REMOVED" or event == "GLYPH_ENABLED" or event == "GLYPH_DISABLED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
-		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r glyphs updated on |cFFffffc0"..event.."|r event") end
+		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Glyphs updated on |cFFffffc0"..event.."|r event") end
 		glyphsUpdated = true
-		glyphs:update()
+		Glyphs:update()
 	end
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_MACROS"
@@ -204,29 +222,33 @@ local function EventHandler(self, event, ...)
 		or (event == "PLAYER_TARGET_CHANGED" and currentClass.dependFromTarget == true)
 		or (event == "UNIT_AURA" and select(1, ...) == "target" and currentClass.dependFromTarget == true)
 		or glyphsUpdated == true then
-		
-		local updateSpells = {}
-		if needCheckOnUpdate == true then
-			onUpdateSpells = false
-			needCheckOnUpdate = false
-			for id,_ in pairs(currentClass.onUpdateSpells) do
-				updateSpells[id] = true
-				needCheckOnUpdate = true
+
+		if currentClass:hasOnUpdateSpells() then
+			updateSpells = {}
+			if needCheckOnUpdate == true then
+				onUpdateSpells = false
+				needCheckOnUpdate = false
+				for id,_ in pairs(currentClass.onUpdateSpells) do
+					updateSpells[id] = true
+					needCheckOnUpdate = true
+				end
 			end
+		else
+			needCheckOnUpdate = false
 		end
 
-		local currentButtons = buttonsCache
+		currentButtons = buttonsCache
 		if needUpdateButtonsCache == true then currentButtons = buttons end
 
-		for _, button in pairs(currentButtons) do
-			local slot = ActionButton_GetPagedID(button)
+		for _, button in ipairs(currentButtons) do
+			slot = ActionButton_GetPagedID(button)
 			if slot == 0 then slot = ActionButton_CalculateAction(button) end
 			if slot == 0 then slot = button:GetAttribute("action") end
 			if HasAction(slot) then
-				local actionType, id = GetActionInfo(slot)
+				actionType, id = GetActionInfo(slot)
 
 				if actionType == "macro" and id then
-					local match = string.match(GetMacroBody(id), "#%s*sd%s*%d+")
+					match = string.match(GetMacroBody(id), "#%s*sd%s*%d+")
 					if match then
 						actionType = "spell"
 						id = tonumber(string.match(match, "%d+"))
@@ -240,15 +262,14 @@ local function EventHandler(self, event, ...)
 					if needCheckOnUpdate == true and updateSpells[id] then
 						onUpdateSpells = true
 						needCheckOnUpdate = false
-						updateSpells = nil
 					end
 					
-					local used = currentClass:updateButton(button, id)
-					if used == false then used = race:updateButton(button, id) end
+					used = currentClass:updateButton(button, id)
+					if used == false then used = Race:updateButton(button, id) end
 					
 					if used and needUpdateButtonsCache then table.insert(buttonsCache, button) end
-				elseif showItems == true and items and actionType == "item" and id then
-					if items:updateButton(button, id) == true and needUpdateButtonsCache then table.insert(buttonsCache, button) end
+				elseif showItems == true and Items and actionType == "item" and id then
+					if Items:updateButton(button, id) == true and needUpdateButtonsCache then table.insert(buttonsCache, button) end
 				end
 			end
 		end
@@ -274,18 +295,17 @@ end)
 
 EventFrame:SetScript("OnEvent", EventHandler)
 
+local _itemsState = function() if showItems == true then return L["chat_items_on"] else return L["chat_items_off"] end end
+local _errorsState = function() if displayErrors == true then return L["chat_errors_on"] else return L["chat_errors_off"] end end
 SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2, SLASH_SPELLDAMAGE3, SLASH_SPELLDAMAGE4 = "/sd", "/SD", "/spelldamage", "/SpellDamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
 	if addonDisableReason == DisableReason_Language then
-		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["addon_off_language"])
+		DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_language"])
 		return
 	elseif addonDisableReason == DisableReason_Average then
-		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["addon_off_average"])
+		DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_average"])
 		return
 	end
-
-	local itemsState = function() if showItems == true then return sdLocale["chat_items_on"] else return sdLocale["chat_items_off"] end end
- 	local errorsState = function() if displayErrors == true then return sdLocale["chat_errors_on"] else return sdLocale["chat_errors_off"] end end
 
  	if msg == "debug" then
  		debuging = not debuging
@@ -301,32 +321,32 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		else
  			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Events display |cFFffc0c0disabled|r")
  		end
-  	elseif msg == "items" and items then
+  	elseif msg == "items" and Items then
  		showItems = not showItems
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r ".._itemsState())
  		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
  	elseif msg == "errors" then
  		displayErrors = not displayErrors
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r ".._errorsState())
  	elseif msg == "help" then
  		displayErrors = not displayErrors
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_help"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_help"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..sdLocale["chat_version"].." 0.9.0.2 beta")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.0")
  	elseif msg == "status" then
- 		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_settings"])
- 		if items then
- 			DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
+ 		if Items then
+ 			DEFAULT_CHAT_FRAME:AddMessage("   ".._itemsState())
  		end
- 		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   ".._errorsState())
  	else
- 		DEFAULT_CHAT_FRAME:AddMessage(sdLocale["chat_commands_list"])
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..sdLocale["chat_command_status"])
- 		if items then
- 			DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - "..sdLocale["chat_command_items"])
+ 		DEFAULT_CHAT_FRAME:AddMessage(L["chat_commands_list"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..L["chat_command_status"])
+ 		if Items then
+ 			DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - "..L["chat_command_items"])
  		end
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - "..sdLocale["chat_command_errors"])
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - "..sdLocale["chat_command_help"])
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - "..sdLocale["chat_command_version"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - "..L["chat_command_errors"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - "..L["chat_command_help"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - "..L["chat_command_version"])
  	end
 end

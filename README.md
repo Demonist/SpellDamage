@@ -1,5 +1,5 @@
 #SpellDamage
-It is a World Of Warcraft's addon that displays spell's damage, heal and absorb on the action bar.
+It is a World Of Warcraft addon that displays spell's damage, heal and absorb on the action bar.
 
 #Restrictions
 Works only in WOW **6.2** version and only if **Display Point as Average** setting is **on**.  
@@ -19,7 +19,7 @@ This addon doesn't works in Korean (koKR), Latin American Spanish (esMX) and Tra
 Is russian locale additionally displays items's (potions, food & drinks, bandages, ...) data on action bar.
 
 #Installation
-Just copy **SpellDamage** folder to **World of Warcraft\\Interface\\AddOns\\** folder.
+Just copy **SpellDamage** folder to **World of Warcraft\\Interface\\AddOns\\**.
 
 
 #How does is works?!

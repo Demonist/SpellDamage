@@ -1,15 +1,23 @@
-﻿SpellParser = {}
-function SpellParser:create()
+﻿local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
+local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
+local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
+local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
+
+--
+local data, match
+
+SD.SpellParser = {}
+function SD.SpellParser:create()
 	self.__index = self
 	return setmetatable({}, self)
 end
 
-function SpellParser:getData(description)
+function SD.SpellParser:getData(description)
 	return SpellData:create(SpellUnknown)
 end
 
-SimpleParser = SpellParser:create()
-function SimpleParser:create(type, index)
+SD.SimpleParser = SD.SpellParser:create()
+function SD.SimpleParser:create(type, index)
 	local parser = {}
 	parser.type = type
 	parser.index = index
@@ -17,39 +25,39 @@ function SimpleParser:create(type, index)
 	return setmetatable(parser, self)
 end
 
-function SimpleParser:getData(description)
-	local data = SpellData:create(SpellUnknown)
-	local value = matchDigit(description, self.index)
+function SD.SimpleParser:getData(description)
+	data = SD.SpellData:create(SpellUnknown)
+	match = matchDigit(description, self.index)
 
-	if value ~= nil then
+	if match ~= nil then
 		data.type = self.type
-		if self.type == SpellDamage then data.damage = value 
-		elseif self.type == SpellTimeDamage then data.timeDamage = value 
-		elseif self.type == SpellHeal then data.heal = value 
-		elseif self.type == SpellTimeHeal then data.timeHeal = value 
-		elseif self.type == SpellMana then data.mana = value
-		elseif self.type == SpellTimeMana then data.timeMana = value
-		elseif self.type == SpellAbsorb then data.absorb = value
+		if self.type == SpellDamage then data.damage = match 
+		elseif self.type == SpellTimeDamage then data.timeDamage = match 
+		elseif self.type == SpellHeal then data.heal = match 
+		elseif self.type == SpellTimeHeal then data.timeHeal = match 
+		elseif self.type == SpellMana then data.mana = match
+		elseif self.type == SpellTimeMana then data.timeMana = match
+		elseif self.type == SpellAbsorb then data.absorb = match
 		end
 	end
 	return data
 end
 
-SimpleDamageParser, SimpleTimeDamageParser = SimpleParser:create(SpellDamage, 1), SimpleParser:create(SpellTimeDamage, 1)
-SimpleHealParser, SimpleTimeHealParser = SimpleParser:create(SpellHeal, 1), SimpleParser:create(SpellTimeHeal, 1)
-SimpleManaParser, SimpleTimeManaParser = SimpleParser:create(SpellMana, 1), SimpleParser:create(SpellTimeMana, 1)
-SimpleAbsorbParser = SimpleParser:create(SpellAbsorb, 1)
+SD.SimpleDamageParser, SD.SimpleTimeDamageParser = SD.SimpleParser:create(SpellDamage, 1), SD.SimpleParser:create(SpellTimeDamage, 1)
+SD.SimpleHealParser, SD.SimpleTimeHealParser = SD.SimpleParser:create(SpellHeal, 1), SD.SimpleParser:create(SpellTimeHeal, 1)
+SD.SimpleManaParser, SD.SimpleTimeManaParser = SD.SimpleParser:create(SpellMana, 1), SD.SimpleParser:create(SpellTimeMana, 1)
+SD.SimpleAbsorbParser = SD.SimpleParser:create(SpellAbsorb, 1)
 
-SimpleDamageParser2 = SimpleParser:create(SpellDamage, 2)
-SimpleTimeDamageParser2 = SimpleParser:create(SpellTimeDamage, 2)
-SimpleHealParser2 = SimpleParser:create(SpellHeal, 2)
-SimpleTimeHealParser2 = SimpleParser:create(SpellTimeHeal, 2)
-SimpleManaParser2 = SimpleParser:create(SpellMana, 2)
-SimpleAbsorbParser2 = SimpleParser:create(SpellAbsorb, 2)
+SD.SimpleDamageParser2 = SD.SimpleParser:create(SpellDamage, 2)
+SD.SimpleTimeDamageParser2 = SD.SimpleParser:create(SpellTimeDamage, 2)
+SD.SimpleHealParser2 = SD.SimpleParser:create(SpellHeal, 2)
+SD.SimpleTimeHealParser2 = SD.SimpleParser:create(SpellTimeHeal, 2)
+SD.SimpleManaParser2 = SD.SimpleParser:create(SpellMana, 2)
+SD.SimpleAbsorbParser2 = SD.SimpleParser:create(SpellAbsorb, 2)
 --
 
-DoubleParser = SpellParser:create()
-function DoubleParser:create(type, directIndex, timeIndex)
+SD.DoubleParser = SD.SpellParser:create()
+function SD.DoubleParser:create(type, directIndex, timeIndex)
 	local parser = {}
 	parser.type = type
 	parser.directIndex = directIndex
@@ -58,9 +66,9 @@ function DoubleParser:create(type, directIndex, timeIndex)
 	return setmetatable(parser, self)
 end
 
-function DoubleParser:getData(description)
-	local data = SpellData:create(SpellUnknown)
-	local match = matchDigits(description, {self.directIndex, self.timeIndex})
+function SD.DoubleParser:getData(description)
+	data = SD.SpellData:create(SpellUnknown)
+	match = matchDigits(description, {self.directIndex, self.timeIndex})
 	if match ~= nil then
 		data.type = self.type
 		if self.type == SpellDamageAndTimeDamage then 
@@ -85,13 +93,13 @@ function DoubleParser:getData(description)
 	return data
 end
 
-DoubleDamageParser = DoubleParser:create(SpellDamageAndTimeDamage, 1, 2)
-DoubleHealManaParser = DoubleParser:create(SpellHealAndMana, 1, 2)
+SD.DoubleDamageParser = SD.DoubleParser:create(SpellDamageAndTimeDamage, 1, 2)
+SD.DoubleHealManaParser = SD.DoubleParser:create(SpellHealAndMana, 1, 2)
 
 --
 
-MultiParser = SpellParser:create()
-function MultiParser:create(type, indexTable, func)
+SD.MultiParser = SD.SpellParser:create()
+function SD.MultiParser:create(type, indexTable, func)
 	local parser = {}
 	parser.type = type
 	parser.indexTable = indexTable
@@ -100,9 +108,9 @@ function MultiParser:create(type, indexTable, func)
 	return setmetatable(parser, self)
 end
 
-function MultiParser:getData(description)
-	local data = SpellData:create(SpellUnknown)
-	local match = matchDigits(description, self.indexTable)
+function SD.MultiParser:getData(description)
+	data = SD.SpellData:create(SpellUnknown)
+	match = matchDigits(description, self.indexTable)
 	if match ~= nil then
 		data.type = self.type
 		self.computeFunc(data, match)
@@ -112,8 +120,8 @@ end
 
 --
 
-AverageParser = SpellParser:create()
-function AverageParser:create(firstIndex, secondIndex)
+SD.AverageParser = SD.SpellParser:create()
+function SD.AverageParser:create(firstIndex, secondIndex)
 	local parser = {}
 	parser.firstIndex = firstIndex
 	parser.secondIndex = secondIndex
@@ -121,9 +129,9 @@ function AverageParser:create(firstIndex, secondIndex)
 	return setmetatable(parser, self)
 end
 
-function AverageParser:getData(description)
-	local data = SpellData:create(SpellUnknown)
-	local match = matchDigits(description, {self.firstIndex, self.secondIndex})
+function SD.AverageParser:getData(description)
+	data = SD.SpellData:create(SpellUnknown)
+	match = matchDigits(description, {self.firstIndex, self.secondIndex})
 	if match ~= nil then
 		data.type = SpellDamage
 		data.damage = (match[self.firstIndex] + match[self.secondIndex]) / 2
@@ -131,20 +139,20 @@ function AverageParser:getData(description)
 	return data
 end
 
-SimpleAverageParser = AverageParser:create(1, 2)
+SD.SimpleAverageParser = SD.AverageParser:create(1, 2)
 
 --
 
-CustomParser = SpellParser:create()
-function CustomParser:create(func)
+SD.CustomParser = SD.SpellParser:create()
+function SD.CustomParser:create(func)
 	local parser = {}
 	parser.parse = func
 	self.__index = self
 	return setmetatable(parser, self)
 end
 
-function CustomParser:getData(description)
-	local data = SpellData:create(SpellUnknown)
+function SD.CustomParser:getData(description)
+	data = SD.SpellData:create(SpellUnknown)
 	self.parse(data, description)
 	return data
 end

@@ -131,4 +131,5 @@ if locale == "zhCN" then
 	L["item_use"] = "使用"
 end
 
-sdLocale = L
+SD = {}
+SD.L = L

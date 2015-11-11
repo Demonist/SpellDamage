@@ -1,44 +1,43 @@
-﻿SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7, 8
-SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+﻿local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
 
-SpellData = {}
-function SpellData:create(type)
-	local data = {}
-	data.damage = nil
-	data.heal = nil
-	data.mana = nil
-	data.timeDamage = nil
-	data.timeHeal = nil
-	data.timeMana = nil
-	data.absorb = nil
-	data.type = type
+--
 
-	self.__index = self
-	return setmetatable(data, self)
+SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb = 0, 1, 2, 3, 4, 5, 6, 7, 8
+SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal = 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+
+local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
+local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
+
+local _spellData = {}
+_spellData.type = SD.SpellUnknown
+SD.SpellData = {}
+function SD.SpellData:create(type)
+	_spellData.type = type
+	return _spellData
 end
 
-sdItemTooltop = CreateFrame("GameTooltip", "spellDamageItemTooltip")
-local leftString = sdItemTooltop:CreateFontString()
-local rightString = sdItemTooltop:CreateFontString()
+local sdItemTooltip = CreateFrame("GameTooltip", "spellDamageItemTooltip")
+local leftString = sdItemTooltip:CreateFontString()
+local rightString = sdItemTooltip:CreateFontString()
 leftString:SetFontObject(GameFontNormal)
 rightString:SetFontObject(GameFontNormal)
-sdItemTooltop:AddFontStrings(leftString, rightString)
-sdItemTooltop:SetOwner(WorldFrame, "ANCHOR_NONE")
+sdItemTooltip:AddFontStrings(leftString, rightString)
+sdItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
 local tooltipInitTime = GetTime()
 
 local itemsCache = {}
-local L = sdLocale
+local tooltipTextFrame
 local function GetItemDescription(itemId)
 	if itemsCache[itemId] then return itemsCache[itemId] end
 	if #itemsCache >= 100 then itemsCache = {} end
 
-	sdItemTooltop:ClearLines()
-	sdItemTooltop:SetHyperlink("item:"..itemId)
-	for i = 2, sdItemTooltop:NumLines() do
-		local str = _G["spellDamageItemTooltipTextLeft"..i]
-		if str then
-			local text = str:GetText()
-			if text and text:starts(L["item_use"]) then
+	sdItemTooltip:ClearLines()
+	sdItemTooltip:SetHyperlink("item:"..itemId)
+	for i = 2, sdItemTooltip:NumLines() do
+		tooltipTextFrame = _G["spellDamageItemTooltipTextLeft"..i]
+		if tooltipTextFrame then
+			local text = tooltipTextFrame:GetText()
+			if text and SD.strstarts(text, L["item_use"]) then
 				itemsCache[itemId] = text
 				return text
 			end
@@ -51,9 +50,9 @@ function sdDebugItem(itemId)
 	DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemId.."-"..GetItemDescription(itemId))
 	
 	local out = ""
-	sdItemTooltop:ClearLines()
-	sdItemTooltop:SetHyperlink("item:"..itemId)
-	for i = 2, sdItemTooltop:NumLines() do
+	sdItemTooltip:ClearLines()
+	sdItemTooltip:SetHyperlink("item:"..itemId)
+	for i = 2, sdItemTooltip:NumLines() do
 		local str = _G["spellDamageItemTooltipTextLeft"..i]
 		if str then
 			local text = str:GetText()
@@ -65,11 +64,12 @@ function sdDebugItem(itemId)
 	DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..out)
 end
 
-displayErrors = true
-ClassSpells, ClassItems = 1, 2
+SD.displayErrors = true
+SD.ClassSpells, SD.ClassItems = 1, 2
+local displayErrors, ClassSpells, ClassItems = SD.displayErrors, SD.ClassSpells, SD.ClassItems
 
-Class = {}
-function Class:create(classType)
+SD.Class = {}
+function SD.Class:create(classType)
 	local class = {}
 	class.spells = {}
 	class.dependFromPower = false
@@ -87,16 +87,28 @@ function Class:create(classType)
 	return setmetatable(class, self)
 end
 
-function Class:updateButton(button, spellId)
-	local spellParser = self.spells[spellId]
-	local updateParser = self.onUpdateSpells[spellId]
+function SD.Class:hasOnUpdateSpells()
+	if self.hasOnUpdateSpellsCache ~= nil then return self.hasOnUpdateSpellsCache end
+	self.hasOnUpdateSpellsCache = false
+	for _,_ in pairs(self.onUpdateSpells) do
+		self.hasOnUpdateSpellsCache = true
+		break
+	end
+	return self.hasOnUpdateSpellsCache
+end
+
+local spellParser, updateParser, text
+local data = SD.SpellData:create(SpellUnknown)
+function SD.Class:updateButton(button, spellId)
+	spellParser = self.spells[spellId]
+	updateParser = self.onUpdateSpells[spellId]
 
 	if spellParser == nil and updateParser == nil then return false end
 
-	local data = SpellData:create(SpellUnknown)
+	data.type = SpellUnknown
 
 	if spellParser then
-		local text = self.getSpellText(spellId)
+		text = self.getSpellText(spellId)
 		data = spellParser:getData(text)
 	elseif updateParser then
 		data = updateParser:getData(nil)
@@ -106,9 +118,9 @@ function Class:updateButton(button, spellId)
 
 	if data.type == SpellUnknown and displayErrors == true then
 		if self.type == ClassSpells then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		else
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["parsing_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		end
 		return false 
 	end
@@ -188,7 +200,7 @@ function Class:updateButton(button, spellId)
 			button.bottomText:SetText( shortNumber(data.mana) )
 			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif displayErrors == true then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["type_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["type_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		end
 	else
 		if data.type == SpellHeal then
@@ -228,7 +240,7 @@ function Class:updateButton(button, spellId)
 			button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
 			button.bottomText:SetTextColor(1, 1, 0, 1)
 		elseif displayErrors == true then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..sdLocale["type_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["type_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		end
 	end
 	return true

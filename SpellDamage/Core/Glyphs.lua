@@ -1,12 +1,12 @@
-﻿local _Glyphs = {}
-function _Glyphs:create()
+﻿local Glyphs = {}
+function Glyphs:create()
 	local glyphs = {}
 	glyphs.glyphs = {}
 	self.__index = self
 	return setmetatable(glyphs, self)
 end
 
-function _Glyphs:update()
+function Glyphs:update()
 	self.glyphs = {}
 	for i = 1, GetNumGlyphSockets() do
 		local enabled, _, _, id = GetGlyphSocketInfo(i, GetActiveSpecGroup())
@@ -14,8 +14,8 @@ function _Glyphs:update()
 	end
 end
 
-function _Glyphs:contains(glyphId)
+function Glyphs:contains(glyphId)
 	return self.glyphs[glyphId]
 end
 
-Glyphs = _Glyphs:create()
+SD.Glyphs = Glyphs:create()
