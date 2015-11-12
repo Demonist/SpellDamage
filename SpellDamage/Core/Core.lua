@@ -8,7 +8,7 @@ SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.Spel
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 
-local _spellData = {}
+local _spellData = {}	--cache for minimizing memory new/delete function calls
 _spellData.type = SD.SpellUnknown
 SD.SpellData = {}
 function SD.SpellData:create(type)
@@ -26,7 +26,6 @@ sdItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
 local tooltipInitTime = GetTime()
 
 local itemsCache = {}
-local tooltipTextFrame
 local function GetItemDescription(itemId)
 	if itemsCache[itemId] then return itemsCache[itemId] end
 	if #itemsCache >= 100 then itemsCache = {} end
@@ -34,7 +33,7 @@ local function GetItemDescription(itemId)
 	sdItemTooltip:ClearLines()
 	sdItemTooltip:SetHyperlink("item:"..itemId)
 	for i = 2, sdItemTooltip:NumLines() do
-		tooltipTextFrame = _G["spellDamageItemTooltipTextLeft"..i]
+		local tooltipTextFrame = _G["spellDamageItemTooltipTextLeft"..i]
 		if tooltipTextFrame then
 			local text = tooltipTextFrame:GetText()
 			if text and SD.strstarts(text, L["item_use"]) then
@@ -97,18 +96,16 @@ function SD.Class:hasOnUpdateSpells()
 	return self.hasOnUpdateSpellsCache
 end
 
-local spellParser, updateParser, text
-local data = SD.SpellData:create(SpellUnknown)
 function SD.Class:updateButton(button, spellId)
-	spellParser = self.spells[spellId]
-	updateParser = self.onUpdateSpells[spellId]
+	local spellParser = self.spells[spellId]
+	local updateParser = self.onUpdateSpells[spellId]
 
 	if spellParser == nil and updateParser == nil then return false end
 
-	data.type = SpellUnknown
+	local data = SD.SpellData:create(SpellUnknown)
 
 	if spellParser then
-		text = self.getSpellText(spellId)
+		local text = self.getSpellText(spellId)
 		data = spellParser:getData(text)
 	elseif updateParser then
 		data = updateParser:getData(nil)

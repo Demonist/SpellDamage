@@ -86,7 +86,6 @@ local function checkRequirements()
 	end
 end
 
-local _variable, needCheckOnUpdate, needUpdateButtonsCache, currentTime, glyphsUpdated, used, slot, actionType, id, match, updateSpells, currentButtons
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:RegisterEvent("PLAYER_LOGOUT")
@@ -107,12 +106,12 @@ EventFrame:RegisterEvent("GLYPH_DISABLED")
 EventFrame:RegisterEvent("GLYPH_ENABLED")
 EventFrame:RegisterEvent("GLYPH_REMOVED")
 EventFrame:RegisterEvent("GLYPH_UPDATED")
-local logined = false
+local logined, updateSpells = false, {}
 local function EventHandler(self, event, ...)
 	if addonDisableReason ~= DisableReason_Unknown then
 		if addonDisableReason == DisableReason_Average and event == "CVAR_UPDATE" then
-			_variable = select(1, ...)
-			if _variable == "SHOW_POINTS_AS_AVG" and GetCVar("SpellTooltip_DisplayAvgValues") == "1" then
+			local variable = select(1, ...)
+			if variable == "SHOW_POINTS_AS_AVG" and GetCVar("SpellTooltip_DisplayAvgValues") == "1" then
 				DEFAULT_CHAT_FRAME:AddMessage(L["locale_error_fixed"], 0, 1, 0)
 				addonDisableReason = DisableReason_Unknown
 				EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
@@ -124,8 +123,8 @@ local function EventHandler(self, event, ...)
 	if debuging == true then debugprofilestart() end
 	if eventDebuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r event |cFFffffc0"..event.."|r") end
 
-	needCheckOnUpdate = false
-	needUpdateButtonsCache = false
+	local needCheckOnUpdate = false
+	local needUpdateButtonsCache = false
 
 	if event == "PLAYER_LOGIN" then
 		logined = true
@@ -161,15 +160,15 @@ local function EventHandler(self, event, ...)
 	end
 
 	if event == "CVAR_UPDATE" then
-		_variable = select(1, ...)
-		if _variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
+		local variable = select(1, ...)
+		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements() end
 	end
 
 	if event == "PLAYER_LOGOUT" then logined = false end
 	if logined == false then return end
 
 	--Защита от слишком частого обновления:
-	currentTime = GetTime()
+	local currentTime = GetTime()
 	if updatingHistory[event] and currentTime - updatingHistory[event] < 0.1 then
 		delayedUpdate = true
 		delayedUpdateTime = currentTime
@@ -206,7 +205,7 @@ local function EventHandler(self, event, ...)
 		return
 	end
 
-	glyphsUpdated = false
+	local glyphsUpdated = false
 	if event == "GLYPH_ADDED" or event == "GLYPH_UPDATED" or event == "GLYPH_REMOVED" or event == "GLYPH_ENABLED" or event == "GLYPH_DISABLED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Glyphs updated on |cFFffffc0"..event.."|r event") end
 		glyphsUpdated = true
@@ -237,18 +236,18 @@ local function EventHandler(self, event, ...)
 			needCheckOnUpdate = false
 		end
 
-		currentButtons = buttonsCache
+		local currentButtons = buttonsCache
 		if needUpdateButtonsCache == true then currentButtons = buttons end
 
 		for _, button in ipairs(currentButtons) do
-			slot = ActionButton_GetPagedID(button)
+			local slot = ActionButton_GetPagedID(button)
 			if slot == 0 then slot = ActionButton_CalculateAction(button) end
 			if slot == 0 then slot = button:GetAttribute("action") end
 			if HasAction(slot) then
-				actionType, id = GetActionInfo(slot)
+				local actionType, id = GetActionInfo(slot)
 
 				if actionType == "macro" and id then
-					match = string.match(GetMacroBody(id), "#%s*sd%s*%d+")
+					local match = string.match(GetMacroBody(id), "#%s*sd%s*%d+")
 					if match then
 						actionType = "spell"
 						id = tonumber(string.match(match, "%d+"))
@@ -264,7 +263,7 @@ local function EventHandler(self, event, ...)
 						needCheckOnUpdate = false
 					end
 					
-					used = currentClass:updateButton(button, id)
+					local used = currentClass:updateButton(button, id)
 					if used == false then used = Race:updateButton(button, id) end
 					
 					if used and needUpdateButtonsCache then table.insert(buttonsCache, button) end
@@ -295,8 +294,6 @@ end)
 
 EventFrame:SetScript("OnEvent", EventHandler)
 
-local _itemsState = function() if showItems == true then return L["chat_items_on"] else return L["chat_items_off"] end end
-local _errorsState = function() if displayErrors == true then return L["chat_errors_on"] else return L["chat_errors_off"] end end
 SLASH_SPELLDAMAGE1, SLASH_SPELLDAMAGE2, SLASH_SPELLDAMAGE3, SLASH_SPELLDAMAGE4 = "/sd", "/SD", "/spelldamage", "/SpellDamage"
 function SlashCmdList.SPELLDAMAGE(msg, editbox)
 	if addonDisableReason == DisableReason_Language then
@@ -306,6 +303,9 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
 		DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_average"])
 		return
 	end
+
+	local itemsState = function() if showItems == true then return L["chat_items_on"] else return L["chat_items_off"] end end
+	local errorsState = function() if displayErrors == true then return L["chat_errors_on"] else return L["chat_errors_off"] end end
 
  	if msg == "debug" then
  		debuging = not debuging
@@ -323,22 +323,22 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		end
   	elseif msg == "items" and Items then
  		showItems = not showItems
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r ".._itemsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
  		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
  	elseif msg == "errors" then
  		displayErrors = not displayErrors
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r ".._errorsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
  	elseif msg == "help" then
  		displayErrors = not displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_help"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.0")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.1")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
- 			DEFAULT_CHAT_FRAME:AddMessage("   ".._itemsState())
+ 			DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
  		end
- 		DEFAULT_CHAT_FRAME:AddMessage("   ".._errorsState())
+ 		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
  	else
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_commands_list"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..L["chat_command_status"])

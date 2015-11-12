@@ -4,7 +4,6 @@ local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealA
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
 
 --
-local data, match
 
 SD.SpellParser = {}
 function SD.SpellParser:create()
@@ -26,8 +25,8 @@ function SD.SimpleParser:create(type, index)
 end
 
 function SD.SimpleParser:getData(description)
-	data = SD.SpellData:create(SpellUnknown)
-	match = matchDigit(description, self.index)
+	local data = SD.SpellData:create(SpellUnknown)
+	local match = matchDigit(description, self.index)
 
 	if match ~= nil then
 		data.type = self.type
@@ -54,6 +53,7 @@ SD.SimpleHealParser2 = SD.SimpleParser:create(SpellHeal, 2)
 SD.SimpleTimeHealParser2 = SD.SimpleParser:create(SpellTimeHeal, 2)
 SD.SimpleManaParser2 = SD.SimpleParser:create(SpellMana, 2)
 SD.SimpleAbsorbParser2 = SD.SimpleParser:create(SpellAbsorb, 2)
+
 --
 
 SD.DoubleParser = SD.SpellParser:create()
@@ -67,8 +67,8 @@ function SD.DoubleParser:create(type, directIndex, timeIndex)
 end
 
 function SD.DoubleParser:getData(description)
-	data = SD.SpellData:create(SpellUnknown)
-	match = matchDigits(description, {self.directIndex, self.timeIndex})
+	local data = SD.SpellData:create(SpellUnknown)
+	local match = matchDigits(description, {self.directIndex, self.timeIndex})
 	if match ~= nil then
 		data.type = self.type
 		if self.type == SpellDamageAndTimeDamage then 
@@ -109,8 +109,8 @@ function SD.MultiParser:create(type, indexTable, func)
 end
 
 function SD.MultiParser:getData(description)
-	data = SD.SpellData:create(SpellUnknown)
-	match = matchDigits(description, self.indexTable)
+	local data = SD.SpellData:create(SpellUnknown)
+	local match = matchDigits(description, self.indexTable)
 	if match ~= nil then
 		data.type = self.type
 		self.computeFunc(data, match)
@@ -130,8 +130,8 @@ function SD.AverageParser:create(firstIndex, secondIndex)
 end
 
 function SD.AverageParser:getData(description)
-	data = SD.SpellData:create(SpellUnknown)
-	match = matchDigits(description, {self.firstIndex, self.secondIndex})
+	local data = SD.SpellData:create(SpellUnknown)
+	local match = matchDigits(description, {self.firstIndex, self.secondIndex})
 	if match ~= nil then
 		data.type = SpellDamage
 		data.damage = (match[self.firstIndex] + match[self.secondIndex]) / 2
@@ -152,7 +152,7 @@ function SD.CustomParser:create(func)
 end
 
 function SD.CustomParser:getData(description)
-	data = SD.SpellData:create(SpellUnknown)
+	local data = SD.SpellData:create(SpellUnknown)
 	self.parse(data, description)
 	return data
 end
