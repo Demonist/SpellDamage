@@ -64,8 +64,22 @@ function sdDebugItem(itemId)
 end
 
 SD.displayErrors = true
+SD.autoOffDisplayErrors = true
+SD.errorsCount = 0
+
+local function incErrorsCount()
+	if SD.displayErrors and SD.autoOffDisplayErrors and GetTime() - tooltipInitTime > 10 then
+		SD.errorsCount = SD.errorsCount + 1
+		if SD.errorsCount >= 5 then
+			SD.displayErrors = false
+			SD.errorsCount = 0
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["too_many_errors"])
+		end
+	end
+end
+
 SD.ClassSpells, SD.ClassItems = 1, 2
-local displayErrors, ClassSpells, ClassItems = SD.displayErrors, SD.ClassSpells, SD.ClassItems
+local ClassSpells, ClassItems = SD.ClassSpells, SD.ClassItems
 
 SD.Class = {}
 function SD.Class:create(classType)
@@ -113,12 +127,13 @@ function SD.Class:updateButton(button, spellId)
 
 	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false end	--Костыль от начальных ошибок предметов
 
-	if data.type == SpellUnknown and displayErrors == true then
+	if data.type == SpellUnknown and SD.displayErrors == true then
 		if self.type == ClassSpells then
 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		else
 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		end
+		incErrorsCount()
 		return false 
 	end
 
@@ -196,8 +211,9 @@ function SD.Class:updateButton(button, spellId)
 			button.centerText:SetTextColor(1, 1, 0, 1)
 			button.bottomText:SetText( shortNumber(data.mana) )
 			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
-		elseif displayErrors == true then
+		elseif SD.displayErrors == true then
 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["type_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			incErrorsCount()
 		end
 	else
 		if data.type == SpellHeal then
@@ -236,8 +252,9 @@ function SD.Class:updateButton(button, spellId)
 			button.centerText:SetTextColor(1, 1, 0, 1)
 			button.bottomText:SetText("(".. shortNumber(data.timeDamage) ..")")
 			button.bottomText:SetTextColor(1, 1, 0, 1)
-		elseif displayErrors == true then
+		elseif SD.displayErrors == true then
 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["type_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			incErrorsCount()
 		end
 	end
 	return true

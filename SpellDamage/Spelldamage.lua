@@ -305,7 +305,8 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
 	end
 
 	local itemsState = function() if showItems == true then return L["chat_items_on"] else return L["chat_items_off"] end end
-	local errorsState = function() if displayErrors == true then return L["chat_errors_on"] else return L["chat_errors_off"] end end
+	local errorsState = function() if SD.displayErrors == true then return L["chat_errors_on"] else return L["chat_errors_off"] end end
+	local autoOffErrorsState = function() if SD.autoOffDisplayErrors == true then return L["chat_auto_errors_on"] else return L["chat_auto_errors_off"] end end
 
  	if msg == "debug" then
  		debuging = not debuging
@@ -326,13 +327,20 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
  		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
  	elseif msg == "errors" then
- 		displayErrors = not displayErrors
+ 		SD.displayErrors = not SD.displayErrors
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
- 	elseif msg == "help" then
- 		displayErrors = not displayErrors
- 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_help"])
+ 	elseif msg == "autoOffErrors" then
+ 		SD.autoOffDisplayErrors = not SD.autoOffDisplayErrors
+ 		if SD.autoOffDisplayErrors then
+ 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_auto_errors_on"])
+ 			SD.errorsCount = 0
+ 		else
+ 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_auto_errors_off"])
+ 		end
+ 	elseif msg == "macroshelp" then
+ 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.1")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.2")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
@@ -346,7 +354,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  			DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd items|r - "..L["chat_command_items"])
  		end
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - "..L["chat_command_errors"])
- 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd help|r - "..L["chat_command_help"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd macroshelp|r - "..L["chat_command_help"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - "..L["chat_command_version"])
  	end
 end

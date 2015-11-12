@@ -37,7 +37,7 @@ Action bar display:
 >**/sd status** - show current settings  
 >**/sd items** - enable/disable displays data on items (works only in russian locale)  
 >**/sd errors** - enable/disable errors printing in chat  
->**/sd help** -  show help for macros usage  
+>**/sd macroshelp** -  show help for macros usage  
 >**/sd version** - show current addon version
 
 #Usage with macros
