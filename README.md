@@ -3,7 +3,7 @@ It is a World Of Warcraft addon that displays spell's damage, heal or absorb on 
 
 #Restrictions
 Works only in WOW **6.2** version and only if **Display Point as Average** setting is **on**.   
-Supports user interfaces: standart, ElvUi.
+Supports user interfaces: standard, ElvUi.
 
 Works only in next locales:
 
@@ -32,9 +32,9 @@ _\*Actually, in some cases this addon calculate values if it needed. For example
 \**Actually, values may depends from the target. For example, 'Breath of Fire' makes also DOT damage if target has 'Dizzying Haze' debuff._
 
 #Chat commands
->**/sd** или **/spelldamage** - show commands list  
+>**/sd** or **/spelldamage** - show commands list  
 >**/sd status** - show current settings  
->**/sd items** - enable/disable displays data on items (works only in russian locale)  
+>**/sd items** - enable/disable displays data on items (works only in Russian locale)  
 >**/sd errors** - enable/disable errors printing in chat  
 >**/sd macroshelp** -  show help for macros usage  
 >**/sd version** - show current addon version
@@ -42,7 +42,7 @@ _\*Actually, in some cases this addon calculate values if it needed. For example
 #Usage with macros
 This addon supports data displaying on a macros. For this just add to macros code `\#sd *id*`, where *id* - spell's id, which data you want to see. For example, **\#sd 56641** displays  data of "Steady Shot" spell on your macros on the action bar.
 
-#Screenshoots
+#Screenshots
 ![_image not found_](screenshots/1.jpg)
 
 ![_image not found_](screenshots/2.jpg)
