@@ -11,6 +11,8 @@ local SPELL_POWER_LIGHT_FORCE = 12
 
 --Танцующий журавль:
 local SpinningCraneKick = CustomParser:create(function(data, description)
+	data.type = SpellEmpty
+	
 	local match = matchDigit(description, 1)
 	if match then
 		data.type = SpellTimeDamage

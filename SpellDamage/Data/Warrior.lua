@@ -14,6 +14,7 @@ end)
 
 --Вихрь:
 local Whirlwind = CustomParser:create(function(data, description)
+	data.type = SpellEmpty
 	local currentSpecNum = GetSpecialization()
 	if currentSpecNum then
 		local currentSpecId = GetSpecializationInfo(currentSpecNum)
