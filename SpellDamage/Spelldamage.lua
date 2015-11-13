@@ -264,7 +264,7 @@ local function EventHandler(self, event, ...)
 					end
 					
 					local used = currentClass:updateButton(button, id)
-					if used == false then used = Race:updateButton(button, id) end
+					if used == false and Race then used = Race:updateButton(button, id) end
 					
 					if used and needUpdateButtonsCache then table.insert(buttonsCache, button) end
 				elseif showItems == true and Items and actionType == "item" and id then
@@ -340,7 +340,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.3")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.4")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
