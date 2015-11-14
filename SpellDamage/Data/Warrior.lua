@@ -242,7 +242,7 @@ if locale == "ptBR" then
 end
 
 if locale == "zhCN" then
-	----Реванш:
+	--Реванш:
 	local Revenge_cn = MultiParser:create(SpellDamageAndMana, {3, 5}, function(data, match)
 		data.damage = match[3]
 		data.mana = match[5]

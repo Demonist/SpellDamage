@@ -22,7 +22,8 @@ local eventDebuging = false
 local showItems = true
 local locale = nil
 
-local elvUi_needUpdate = false
+local nonStandardUi = false
+local ui_needUpdate = false
 
 local onUpdateSpells = false
 local onUpdateLastTime = GetTime()
@@ -35,8 +36,10 @@ local updatingHistory = {}
 local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
 local addonDisableReason = DisableReason_Unknown
 
-local buttons = {}
+SD.buttons = {}
+local buttons = SD.buttons
 local buttonsCache = {}
+
 
 local function clearButtons(buttons)
 	for _, button in ipairs(buttons) do
@@ -52,15 +55,23 @@ local function createButtons()
 				table.insert(buttons, _G["ElvUI_Bar"..i.."Button"..j])
 			end
 		end
+		nonStandardUi = true
 	else
 		for i = 1, 6 do
 			for j = 1, 12 do
 				table.insert(buttons, _G[((select(i, "ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarRightButton", "MultiBarLeftButton", "BonusActionButton"))..j)])
 			end
 		end
+
+		if IsAddOnLoaded("Dominos") then
+			for i = 1, 60 do
+				table.insert(buttons, _G["DominosActionButton"..i])
+			end
+			nonStandardUi = true
+		end
 	end
 
-	for _, button in pairs(buttons) do   
+	for _, button in ipairs(buttons) do   
 		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
 		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 		button.centerText:SetPoint("CENTER", 0, 0)	
@@ -184,7 +195,7 @@ local function EventHandler(self, event, ...)
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_MACROS" 
 		or event == "UPDATE_BONUS_ACTIONBAR" or event == "UPDATE_VEHICLE_ACTIONBAR"
-		or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_ELVUIFIX"
+		or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_UI_UPDATE"
 		or (event == "ACTIONBAR_SLOT_CHANGED" and UnitInVehicle("player") == false) then
 
 		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r clear on |cFFffffc0"..event.."|r event") end
@@ -200,8 +211,8 @@ local function EventHandler(self, event, ...)
 
 	if UnitInVehicle("player") == true then return end
 
-	if event == "ACTIONBAR_PAGE_CHANGED" and IsAddOnLoaded("ElvUI") then	--Костыль для ElvUI
-		elvUi_needUpdate = true
+	if event == "ACTIONBAR_PAGE_CHANGED" and nonStandardUi then
+		ui_needUpdate = true
 		return
 	end
 
@@ -214,7 +225,7 @@ local function EventHandler(self, event, ...)
 
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_MACROS"
 		or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or evet == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR"
-		or event == "CUSTOM_ON_UPDATE_SPELLS" or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_ELVUIFIX"
+		or event == "CUSTOM_ON_UPDATE_SPELLS" or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_UI_UPDATE"
 		or (event == "UNIT_STATS" and select(1, ...) == "player")
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
@@ -280,9 +291,9 @@ end
 EventFrame:SetScript("OnUpdate", function(self, elapsed)
 	if addonDisableReason ~= DisableReason_Unknown then return end
 
-	if elvUi_needUpdate == true then
-		elvUi_needUpdate = false
-		EventHandler(self, "CUSTOM_ELVUIFIX")
+	if ui_needUpdate == true then
+		ui_needUpdate = false
+		EventHandler(self, "CUSTOM_UI_UPDATE")
 	elseif onUpdateSpells == true and GetTime() - onUpdateLastTime > 0.2 then
 		EventHandler(self, "CUSTOM_ON_UPDATE_SPELLS")
 		onUpdateLastTime = GetTime()
@@ -340,7 +351,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.4")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.5")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then

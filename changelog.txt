@@ -1,4 +1,7 @@
-﻿0.9.1.4
+﻿0.9.1.5
+Add Dominos action bar support.
+
+0.9.1.4
 Fixed Lua error in non russian locales.
 
 0.9.1.3

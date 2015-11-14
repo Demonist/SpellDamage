@@ -3,7 +3,7 @@ It is a World Of Warcraft addon that displays spell's damage, heal or absorb on 
 
 #Restrictions
 Works only in WOW **6.2** version and only if **Display Point as Average** setting is **on**.   
-Supports user interfaces: standard, ElvUi.
+Supports user interfaces: standard, ElvUi, Dominos.
 
 Works only in next locales:
 
