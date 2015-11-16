@@ -1,4 +1,7 @@
-﻿0.9.1.5
+﻿0.9.1.6
+Fixed Monk's "Flying Serpent Kick".
+
+0.9.1.5
 Add Dominos action bar support.
 
 0.9.1.4
