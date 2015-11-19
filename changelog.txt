@@ -1,4 +1,7 @@
-﻿0.9.1.6
+﻿0.9.1.7
+Fixed Monk's "Revival".
+
+0.9.1.6
 Fixed Monk's "Flying Serpent Kick".
 
 0.9.1.5
