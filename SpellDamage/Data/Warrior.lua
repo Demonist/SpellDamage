@@ -81,13 +81,13 @@ function Warrior:init()
 		if currentSpecNum then
 			local currentSpecId = GetSpecializationInfo(currentSpecNum)
 			if currentSpecId == 72 then		--Неистовство
-				local matchs = matchDigits(description, getLocaleIndex({['ru']=2,3}, ['de']={4,5}, ['cn']={3,4}, ['tw']={3,4}, ['ko']={4,5}}))
+				local matchs = matchDigits(description, getLocaleIndex({['ru']={2,3}, ['de']={4,5}, ['cn']={3,4}, ['tw']={3,4}, ['ko']={4,5}}))
 				if matchs then
 					data.type = SpellTimeDamage
 					data.timeDamage = (matchs[1] + matchs[2]) * 6
 				end
 			else 							--Оружее и Защита
-				local match = matchDigit(description, getLocaleIndex({['ru']=2, ['de']=4}, ['cn']=3, ['tw']=3, ['ko']=4))
+				local match = matchDigit(description, getLocaleIndex({['ru']=2, ['de']=4, ['cn']=3, ['tw']=3, ['ko']=4}))
 				if match then
 					data.type = SpellTimeDamage
 					data.timeDamage = match * 6

@@ -166,7 +166,7 @@ function SD.SimpleSpell:create(type, indexes, computeFunc)
 	local spell = {}
 	spell.type = type
 	spell.indexes = indexes
-	self.computeFunc = computeFunc
+	spell.computeFunc = computeFunc
 	self.__index = self
 	return setmetatable(spell, self)
 end
@@ -222,7 +222,7 @@ function SD.DoubleSpell:create(type, indexes, computeFunc)
 	local spell = {}
 	spell.type = type
 	spell.indexes = indexes
-	self.computeFunc = computeFunc
+	spell.computeFunc = computeFunc
 	self.__index = self
 	return setmetatable(spell, self)
 end

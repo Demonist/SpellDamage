@@ -36,8 +36,7 @@ local updatingHistory = {}
 local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
 local addonDisableReason = DisableReason_Unknown
 
-SD.buttons = {}
-local buttons = SD.buttons
+local buttons = {}
 local buttonsCache = {}
 
 
