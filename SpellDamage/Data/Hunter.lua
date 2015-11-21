@@ -2,7 +2,6 @@ local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, c
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
-local SpellParser, SimpleParser, SimpleDamageParser, SimpleTimeDamageParser, SimpleHealParser, SimpleTimeHealParser, SimpleManaParser, SimpleTimeManaParser, SimpleAbsorbParser, SimpleDamageParser2, SimpleTimeDamageParser2, SimpleHealParser2, SimpleTimeHealParser2, SimpleManaParser2, SimpleAbsorbParser2, DoubleParser, DoubleDamageParser, DoubleHealManaParser, MultiParser, AverageParser, SimpleAverageParser, CustomParser = SD.SpellParser, SD.SimpleParser, SD.SimpleDamageParser, SD.SimpleTimeDamageParser, SD.SimpleHealParser, SD.SimpleTimeHealParser, SD.SimpleManaParser, SD.SimpleTimeManaParser, SD.SimpleAbsorbParser, SD.SimpleDamageParser2, SD.SimpleTimeDamageParser2, SD.SimpleHealParser2, SD.SimpleTimeHealParser2, SD.SimpleManaParser2, SD.SimpleAbsorbParser2, SD.DoubleParser, SD.DoubleDamageParser, SD.DoubleHealManaParser, SD.MultiParser, SD.AverageParser, SD.SimpleAverageParser, SD.CustomParser
 local Damage, TimeDamage, Heal, TimeHeal, Mana, TimeMana, Absorb, CriticalDamage, DamageAndTimeDamage, HealAndTimeHeal, DamageAndHeal, DamageAndTimeHeal, HealAndMana, DamageAndDamage, DamageAndMana, Custom, getLocaleIndex = SD.Damage, SD.TimeDamage, SD.Heal, SD.TimeHeal, SD.Mana, SD.TimeMana, SD.Absorb, SD.CriticalDamage, SD.DamageAndTimeDamage, SD.HealAndTimeHeal, SD.DamageAndHeal, SD.DamageAndTimeHeal, SD.HealAndMana, SD.DamageAndDamage, SD.DamageAndMana, SD.Custom, SD.SimpleSpell.getLocaleIndex
 local Glyphs = SD.Glyphs
 
@@ -10,6 +9,7 @@ local Glyphs = SD.Glyphs
 
 local Hunter = Class:create(ClassSpells)
 SD.classes["HUNTER"] = Hunter
+
 function Hunter:init()
 	--Лечение питомца:
 	local MendPet = function(data)
@@ -35,11 +35,11 @@ function Hunter:init()
 	--Взрывная ловушка:
 	local ExplosiveTrap = function(data, description)
 		if not Glyphs:contains(119403) then		--Символ взрывной ловушки
-			local match = matchDigits(description, getLocaleIndex({['ru']={1, 3}, ['tw']={2, 4}}))
-			if match then
+			local matchs = matchDigits(description, getLocaleIndex({['ru']={1, 3}, ['tw']={2, 4}}))
+			if matchs then
 				data.type = SpellDamageAndTimeDamage
-				data.damage = match[1]
-				data.timeDamage = match[2]
+				data.damage = matchs[1]
+				data.timeDamage = matchs[2]
 			end
 		else
 			data.type = SpellEmpty
@@ -55,15 +55,15 @@ function Hunter:init()
 	end
 
 	--Разрывной выстрел:
-	local ExplosiveShot = function(data, match)
-		data.damage = match[1]
-		data.timeDamage = data.damage * match[2]
+	local ExplosiveShot = function(data, matchs)
+		data.damage = matchs[1]
+		data.timeDamage = data.damage * matchs[2]
 	end
 
 	--Убийственный выстрел:
-	local KillShot = function(data, match)
-		data.damage = match[1]
-		data.heal = match[2] * UnitHealthMax("player") / 100
+	local KillShot = function(data, matchs)
+		data.damage = matchs[1]
+		data.heal = matchs[2] * UnitHealthMax("player") / 100
 	end
 
 	--Живость:
