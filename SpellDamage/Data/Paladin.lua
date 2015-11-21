@@ -2,252 +2,124 @@ local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, c
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
-local SpellParser, SimpleParser, SimpleDamageParser, SimpleTimeDamageParser, SimpleHealParser, SimpleTimeHealParser, SimpleManaParser, SimpleTimeManaParser, SimpleAbsorbParser, SimpleDamageParser2, SimpleTimeDamageParser2, SimpleHealParser2, SimpleTimeHealParser2, SimpleManaParser2, SimpleAbsorbParser2, DoubleParser, DoubleDamageParser, DoubleHealManaParser, MultiParser, AverageParser, SimpleAverageParser, CustomParser = SD.SpellParser, SD.SimpleParser, SD.SimpleDamageParser, SD.SimpleTimeDamageParser, SD.SimpleHealParser, SD.SimpleTimeHealParser, SD.SimpleManaParser, SD.SimpleTimeManaParser, SD.SimpleAbsorbParser, SD.SimpleDamageParser2, SD.SimpleTimeDamageParser2, SD.SimpleHealParser2, SD.SimpleTimeHealParser2, SD.SimpleManaParser2, SD.SimpleAbsorbParser2, SD.DoubleParser, SD.DoubleDamageParser, SD.DoubleHealManaParser, SD.MultiParser, SD.AverageParser, SD.SimpleAverageParser, SD.CustomParser
+local Damage, TimeDamage, Heal, TimeHeal, Mana, TimeMana, Absorb, CriticalDamage, DamageAndTimeDamage, HealAndTimeHeal, DamageAndHeal, DamageAndTimeHeal, HealAndMana, DamageAndDamage, DamageAndMana, TimeDamageAndTimeHeal, Custom, getLocaleIndex = SD.Damage, SD.TimeDamage, SD.Heal, SD.TimeHeal, SD.Mana, SD.TimeMana, SD.Absorb, SD.CriticalDamage, SD.DamageAndTimeDamage, SD.HealAndTimeHeal, SD.DamageAndHeal, SD.DamageAndTimeHeal, SD.HealAndMana, SD.DamageAndDamage, SD.DamageAndMana, SD.TimeDamageAndTimeHeal, SD.Custom, SD.SimpleSpell.getLocaleIndex
 local Glyphs = SD.Glyphs
 
 --
 
---Возложение рук:
-local LayOnHands = MultiParser:create(SpellHeal, {1}, function(data, match)
-	data.heal = UnitHealthMax("player")
-end)
+local Paladin = Class:create(ClassSpells)
+Paladin.dependFromTarget = true
+SD.classes["PALADIN"] = Paladin
 
---Шок небес:
-local HolyShock = MultiParser:create(SpellDamage, {1, 2}, function(data, match)
-	data.damage = match[1]
-	if UnitExists("target") and UnitIsFriend("player", "target") then
+function Paladin:init()
+	--Возложение рук:
+	local LayOnHands = function(data)
 		data.type = SpellHeal
-		data.heal = match[2]
+		data.heal = UnitHealthMax("player")
+
+		if Glyphs:contains(54939) then 	--Символ божественности
+			data.type = SpellHealAndMana
+			data.mana = UnitManaMax("player") * 0.1
+		end
 	end
-end)
 
---Священный щит:
-local SacredShield = MultiParser:create(SpellAbsorb, {1, 2, 3}, function(data, match)
-	data.absorb = math.floor(match[1] / match[3]) * match[2]
-end)
+	--Шок небес:
+	local HolyShock = function(data, matchs)
+		data.damage = matchs[1]
+		if UnitExists("target") and UnitIsFriend("player", "target") then
+			data.type = SpellHeal
+			data.heal = matchs[2]
+		end
+	end
 
---Божественная буря:
-local DivineStorm = CustomParser:create(function(data, description)
-	local match = matchDigit(description, 1)
-	if match then
-		data.type = SpellDamage
-		data.damage = match
+	--Священный щит:
+	local SacredShield = function(data, match)
+		data.absorb = match * 5
+	end
 
+	--Божественная буря:
+	local DivineStorm = function(data)
 		if Glyphs:contains(63220) then		--Символ божественной бури
 			data.type = SpellDamageAndHeal
 			data.heal = UnitHealthMax("player") * 0.04
 		end
 	end
-end)
 
---Торжество:
-local WordOfGlory = CustomParser:create(function(data, description)
-	local match = matchDigit(description, 2)
-	if match then
-		data.type = SpellHeal
-		data.heal = match
-
+	--Торжество:
+	local WordOfGlory = function(data, match, description)
 		if Glyphs:contains(54938) and UnitExists("target") and UnitIsEnemy("player", "target") then		--Символ резких слов
-			data.type = SpellDamage
-			data.damage = data.heal
-		end
-	end
-end)
-
---Молот Света:
-local LightsHammer = MultiParser:create(SpellTimeDamageAndTimeHeal, {4, 8}, function(data, match)
-	data.timeDamage = match[4] * 7
-	data.timeHeal = match[8] * 7
-end)
-
---Вечное пламя:
-local EternalFlame = MultiParser:create(SpellHealAndTimeHeal, {2, 3}, function(data, match)
-	data.heal = match[2]
-	data.timeHeal = match[3] * 15
-end)
-
---Божественная призма:
-local HolyPrism = MultiParser:create(SpellDamageAndHeal, {1, 2, 5, 6}, function(data, match)
-	if UnitExists("target") then
-		if UnitIsEnemy("player", "target") then
-			data.damage = match[1]
-			data.heal = match[2]
-		end
-		if UnitIsFriend("player", "target") then
-			data.heal = match[5]
-			data.damage = match[6]
-		end
-	else
-		data.type = SpellEmpty
-	end
-end)
-
---Священный щит:
-local SacredShield = MultiParser:create(SpellAbsorb, {1, 2, 3}, function(data, match)
-	data.absorb = math.floor(match[1] / match[3]) * match[2]
-end)
-
---Гнев карателя:
-local AvengingWrath = CustomParser:create(function(data, description)
-	if Glyphs:contains(54927) then		--Символ гнева карателя
-		data.type = SpellTimeHeal
-		data.timeHeal = UnitHealthMax("player") * 0.01 * 5
-	else
-		data.type = SpellEmpty
-	end
-end)
-
-local Paladin = Class:create(ClassSpells)
-SD.Paladin = Paladin
-Paladin.dependFromTarget = true
-Paladin.spells[633] 	= LayOnHands 											--Возложение рук
-Paladin.spells[879]		= SimpleDamageParser 									--Экзорцизм
-Paladin.spells[2812]	= SimpleDamageParser 									--Обличение
-Paladin.spells[19750]	= SimpleHealParser 	 									--Вспышка Света
-Paladin.spells[20271]	= SimpleDamageParser 									--Правосудие
-Paladin.spells[20473]	= HolyShock												--Шок небес
-Paladin.spells[20925]	= SacredShield											--Священный щит
-Paladin.spells[24275]	= SimpleDamageParser 	 								--Молот гнева
-Paladin.spells[26573]	= SimpleTimeDamageParser 								--Освящение
-Paladin.spells[31935]	= SimpleDamageParser 									--Щит мстителя
-Paladin.spells[35395]	= SimpleDamageParser 									--Удар воина Света
-Paladin.spells[53385]	= DivineStorm 											--Божественная буря
-Paladin.spells[53595]	= SimpleDamageParser 									--Молот праведника
-Paladin.spells[53600]	= SimpleDamageParser 									--Щит праведника
-Paladin.spells[82326]	= SimpleHealParser 										--Свет небес
-Paladin.spells[82327]	= SimpleHealParser 										--Святое сияние
-Paladin.spells[85222]	= SimpleParser:create(SpellHeal, 4) 					--Свет зари
-Paladin.spells[85256]	= SimpleDamageParser 									--Вердикт храмовника
-Paladin.spells[85673]	= WordOfGlory 											--Торжество
-Paladin.spells[136494]	= WordOfGlory 											--Торжество
-Paladin.spells[114157]	= DoubleParser:create(SpellTimeDamageAndTimeHeal, 1, 3) --Смертный приговор
-Paladin.spells[114158]	= LightsHammer 											--Молот Света
-Paladin.spells[114163]	= EternalFlame 											--Вечное пламя
-Paladin.spells[114165]	= HolyPrism 											--Божественная призма
-Paladin.spells[119072]	= SimpleDamageParser 									--Гнев небес
-Paladin.spells[130552]	= SimpleHealParser2 									--Резкое слово
-Paladin.spells[148039]	= SacredShield 											--Священный щит
-Paladin.spells[157048]	= SimpleDamageParser 									--Окончательный приговор
-
-Paladin.spells[31884]	= AvengingWrath 										--Гнев карателя
-
--------------------------------------------------------------------------------
-
-local locale = GetLocale()
-
-if locale == "enGB" or locale == "enUS" then
-
-	return
-end
-
-if locale == "deDE" then
-	--Божественная буря:
-	local DivineStorm_de = CustomParser:create(function(data, description)
-		local match = matchDigit(description, 2)
-		if match then
-			data.type = SpellDamage
-			data.damage = match
-
-			if Glyphs:contains(63220) then		--Символ божественной бури
-				data.type = SpellDamageAndHeal
-				data.heal = UnitHealthMax("player") * 0.04
+			local damage = matchDigit(description, 3)
+			if damage then
+				data.type = SpellDamage
+				data.damage = damage
 			end
 		end
-	end)
+	end
+
+	--Молот Света:
+	local LightsHammer = function(data, matchs)
+		data.timeDamage = matchs[1] * 7
+		data.timeHeal = matchs[2] * 7
+	end
 
 	--Вечное пламя:
-	local EternalFlame_de = MultiParser:create(SpellHealAndTimeHeal, {2, 5}, function(data, match)
-		data.heal = match[2]
-		data.timeHeal = match[5] * 15
-	end)
+	local EternalFlame = function(data, matchs)
+		data.heal = matchs[1]
+		data.timeHeal = matchs[2] * 15
 
-	--Священный щит:
-	local SacredShield_de = MultiParser:create(SpellAbsorb, {1, 2, 3}, function(data, match)
-		data.absorb = math.floor(match[1] / match[2]) * match[3]
-	end)
-
-	Paladin.spells[26573]	= SimpleTimeDamageParser2 								--Освящение
-	Paladin.spells[53385]	= DivineStorm_de 										--Божественная буря
-	Paladin.spells[114157]	= DoubleParser:create(SpellTimeDamageAndTimeHeal, 2, 4) --Смертный приговор
-	Paladin.spells[114163]	= EternalFlame_de 										--Вечное пламя
-	Paladin.spells[119072]	= SimpleDamageParser2 									--Гнев небес
-	Paladin.spells[148039]	= SacredShield_de 										--Священный щит
-	return
-end
-
-if locale == "esES" then
-	Paladin.spells[85222]	= SimpleParser:create(SpellHeal, 2) 				--Свет зари
-	return
-end
-
-if locale == "frFR" then
-	--Молот Света:
-	local LightsHammer_fr = MultiParser:create(SpellTimeDamageAndTimeHeal, {4, 7}, function(data, match)
-		data.timeDamage = match[4] * 7
-		data.timeHeal = match[7] * 7
-	end)
-
-	Paladin.spells[85222]	= SimpleParser:create(SpellHeal, 2) 				--Свет зари
-	Paladin.spells[114158]	= LightsHammer_fr 									--Молот Света
-	return
-end
-
-if locale == "itIT" then
-	Paladin.spells[85222]	= SimpleParser:create(SpellHeal, 2) 				--Свет зари
-	return
-end
-
-if locale == "ptBR" then
-	Paladin.spells[85222]	= SimpleParser:create(SpellHeal, 2) 				--Свет зари
-	return
-end
-
-if locale == "zhCN" then
-	--Божественная буря:
-	local DivineStorm_cn = CustomParser:create(function(data, description)
-		local match = matchDigit(description, 2)
-		if match then
-			data.type = SpellDamage
-			data.damage = match
-
-			if Glyphs:contains(63220) then		--Символ божественной бури
-				data.type = SpellDamageAndHeal
-				data.heal = UnitHealthMax("player") * 0.04
-			end
+		if not UnitExists("target") or UnitIsPlayer("target") then
+			data.timeHeal = data.timeHeal * 1.5
 		end
-	end)
+	end
 
 	--Божественная призма:
-	local HolyPrism_cn = MultiParser:create(SpellDamageAndHeal, {1, 4, 5, 8}, function(data, match)
-		if UnitExists("target") then
-			if UnitIsEnemy("player", "target") then
-				data.damage = match[1]
-				data.heal = match[4]
-			end
-			if UnitIsFriend("player", "target") then
-				data.heal = match[5]
-				data.damage = match[8]
-			end
+	local HolyPrism = function(data, matchs)
+		if UnitExists("target") and UnitIsFriend("player", "target") then
+			data.heal = matchs[3]
+			data.damage = matchs[4]
+		else
+			data.damage = matchs[1]
+			data.heal = matchs[2]
+		end
+	end
+
+	--Гнев карателя:
+	local AvengingWrath = function(data)
+		if Glyphs:contains(54927) then		--Символ гнева карателя
+			data.type = SpellTimeHeal
+			data.timeHeal = UnitHealthMax("player") * 0.01 * 5
 		else
 			data.type = SpellEmpty
 		end
-	end)
+	end
 
-	--Вечное пламя:
-	local EternalFlame_cn = MultiParser:create(SpellHealAndTimeHeal, {2, 4}, function(data, match)
-		data.heal = match[2]
-		data.timeHeal = match[4] * 15
-	end)
-
-	--Священный щит:
-	local SacredShield_cn = MultiParser:create(SpellAbsorb, {1, 2, 3}, function(data, match)
-		data.absorb = math.floor(match[1] / match[2]) * match[3]
-	end)
-
-	Paladin.spells[53385]	= DivineStorm_cn 											--Божественная буря
-	Paladin.spells[114157]	= DoubleParser:create(SpellTimeDamageAndTimeHeal, 2, 4) 	--Смертный приговор
-	Paladin.spells[114163]	= EternalFlame_cn 											--Вечное пламя
-	Paladin.spells[114165]	= HolyPrism_cn 												--Божественная призма
-	Paladin.spells[148039]	= SacredShield_cn 											--Священный щит
-	return
+	self.spells[633] 	= Custom(LayOnHands) 														--Возложение рук
+	self.spells[879]	= Damage({['ru']=1}) 														--Экзорцизм
+	self.spells[2812]	= Damage({['ru']=1}) 														--Обличение
+	self.spells[19750]	= Heal({['ru']=1}) 	 														--Вспышка Света
+	self.spells[20271]	= Damage({['ru']=1}) 														--Правосудие
+	self.spells[20473]	= Damage({['ru']={1,2}}, HolyShock)											--Шок небес
+	self.spells[20925]	= Absorb({['ru']=2, ['de']=3, ['cn']=3, ['tw']=3, ['ko']=3}, SacredShield)	--Священный щит
+	self.spells[148039]	= self.spells[20925] 														--Священный щит
+	self.spells[24275]	= Damage({['ru']=1}) 	 													--Молот гнева
+	self.spells[26573]	= TimeDamage({['ru']=1}) 													--Освящение
+	self.spells[31935]	= Damage({['ru']=1}) 														--Щит мстителя
+	self.spells[35395]	= Damage({['ru']=1}) 														--Удар воина Света
+	self.spells[53385]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['ko']=2}, DivineStorm) 	--Божественная буря
+	self.spells[53595]	= Damage({['ru']=1})  														--Молот праведника
+	self.spells[53600]	= Damage({['ru']=1}) 														--Щит праведника
+	self.spells[82326]	= Heal({['ru']=1}) 															--Свет небес
+	self.spells[82327]	= Heal({['ru']=1}) 															--Святое сияние
+	self.spells[85222]	= Heal({['ru']=4, ['es']=2, ['fr']=2, ['it']=2, ['pt']=2}) 					--Свет зари
+	self.spells[85256]	= Damage({['ru']=1}) 														--Вердикт храмовника
+	self.spells[85673]	= Heal({['ru']=2}, WordOfGlory) 											--Торжество
+	self.spells[136494]	= self.spells[85673] 														--Торжество
+	self.spells[114157]	= TimeDamageAndTimeHeal({['ru']={1,3}, ['de']={2,4}, ['cn']={2,4}, ['tw']={2,4}, ['ko']={2,4}}) 			--Смертный приговор
+	self.spells[114158]	= TimeDamageAndTimeHeal({['ru']={4,8}, ['fr']={4,7}}, LightsHammer) 										--Молот Света
+	self.spells[114163]	= HealAndTimeHeal({['ru']={2,3}, ['de']={2,5}, ['cn']={2,4}, ['tw']={2,4}, ['ko']={2,5}}, EternalFlame) 	--Вечное пламя
+	self.spells[114165]	= DamageAndHeal({['ru']={1,2,5,6}, ['cn']={1,4,5,8}, ['tw']={1,4,5,8}, ['ko']={1,4,5,8}}, HolyPrism) 		--Божественная призма
+	self.spells[119072]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['ko']=2}) 				--Гнев небес
+	self.spells[130552]	= self.spells[85673] 														--Резкое слово
+	self.spells[157048]	= Damage({['ru']=1}) 														--Окончательный приговор
+	self.spells[31884]	= Custom(AvengingWrath) 													--Гнев карателя
 end

@@ -250,6 +250,9 @@ function SD.DoubleSpell:getData(description)
 		elseif self.type == SpellDamageAndMana then
 			data.damage = matchs[1]
 			data.mana = matchs[2]
+		elseif self.type == SpellTimeDamageAndTimeHeal then
+			data.timeDamage = matchs[1]
+			data.timeHeal = matchs[2]
 		else
 			data.type = SpellUnknown
 		end
@@ -266,6 +269,7 @@ function SD.DamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create
 function SD.HealAndMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellHealAndMana, indexes, computeFunc); end
 function SD.DamageAndDamage(indexes) return SD.DoubleSpell:create(SpellDamage, indexes, function(data, matchs) data.damage = matchs[1] + matchs[2]; end); end
 function SD.DamageAndMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndMana, indexes, computeFunc); end
+function SD.TimeDamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellTimeDamageAndTimeHeal, indexes, computeFunc); end
 
 --
 
