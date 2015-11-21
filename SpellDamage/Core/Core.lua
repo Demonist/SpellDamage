@@ -259,3 +259,7 @@ function SD.Class:updateButton(button, spellId)
 	end
 	return true
 end
+
+--
+
+SD.classes = {}

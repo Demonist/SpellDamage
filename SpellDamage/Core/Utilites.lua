@@ -36,17 +36,16 @@ end
 function SD.matchDigits(str, indexTable)
 	local ret = {}
 	local keys = {}
-	for _, key in pairs(indexTable) do keys[key] = true end
-	local i, matched = 1, 0
+	for _, key in ipairs(indexTable) do keys[key] = true end
+	local i = 1
 	for match in str:gmatch("%d+[%.,]?%d*") do
 		if keys[i] ~= nil then
 			local m = match:gsub(",", ".")
-			ret[i] = tonumber(m)
-			matched = matched + 1
+			table.insert(ret, tonumber(m))
 		end
 		i = i + 1
 	end
-	if matched == #indexTable then return ret end
+	if #ret == #indexTable then return ret; end
 	return nil
 end
 

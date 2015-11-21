@@ -142,7 +142,7 @@ Monk.spells[115181] = BreathOfFire 									--Пламенное дыхание
 Monk.spells[115288] = SimpleTimeManaParser							--Будоражащий отвар
 Monk.spells[115294]	= ManaTea 										--Маначай
 Monk.spells[115295] = SimpleAbsorbParser2 							--Защита
-Monk.spells[115310]	= SimpleHealParser2 							--Восстановление сил
+Monk.spells[15310]	= SimpleHealParser2 							--Восстановление сил
 Monk.spells[116670] = SimpleHealParser 								--Духовный подъем
 Monk.spells[116694] = SimpleHealParser 								--Благотворный туман
 Monk.spells[116847] = SimpleTimeDamageParser 						--Порыв нефритового ветра
@@ -232,7 +232,7 @@ if locale == "deDE" then
 		data.timeHeal = match[3] * 10
 	end)
 
-	Monk.spells[101545] = SimpleParser:create(SpellDamage, 3) 		--Удар летящего змея
+	Monk.spells[101545] = DoubleParser:create(SpellDamage, 3) 		--Удар летящего змея
 	Monk.spells[101546] = SpinningCraneKick_de 						--Танцующий журавль
 	Monk.spells[113656] = SimpleTimeDamageParser2 					--Неистовые кулаки
 	Monk.spells[115151] = SimpleTimeHealParser2 					--Заживляющий туман
@@ -432,7 +432,7 @@ if locale == "zhCN" then
 		data.timeHeal = match[3] * 10
 	end)
 
-	Monk.spells[101545] = SimpleParser:create(SpellDamage, 3) 		--Удар летящего змея
+	Monk.spells[101545] = DoubleParser:create(SpellDamage, 3) 		--Удар летящего змея
 	Monk.spells[101546] = SpinningCraneKick_cn 						--Танцующий журавль
 	Monk.spells[113656] = SimpleTimeDamageParser2 					--Неистовые кулаки
 	Monk.spells[115151] = SimpleTimeHealParser2 					--Заживляющий туман

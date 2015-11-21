@@ -1,19 +1,6 @@
 local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
 local Glyphs, Race, Items = SD.Glyphs, SD.Race, SD.Items
 
-local classes = {}
-classes["DEATHKNIGHT"]	= SD.DeathKnight
-classes["DRUID"]		= SD.Druid
-classes["HUNTER"]		= SD.Hunter
-classes["MAGE"]			= SD.Mage
-classes["MONK"]			= SD.Monk
-classes["PALADIN"]		= SD.Paladin
-classes["PRIEST"]		= SD.Priest
-classes["ROGUE"]		= SD.Rogue
-classes["SHAMAN"]		= SD.Shaman
-classes["WARLOCK"]		= SD.Warlock
-classes["WARRIOR"]		= SD.Warrior
-
 local emptyClass = SD.Class:create(SD.ClassSpells)
 local currentClass = emptyClass
 
@@ -149,25 +136,9 @@ local function EventHandler(self, event, ...)
 		if addonDisableReason ~= DisableReason_Unknown then return end
 		Glyphs:update()
 
-		for k,v in pairs(classes) do
-			if k == className then
-				currentClass = v
-				v:onLoad()
-				if v ~= SD.DeathKnight then SD.DeathKnight = nil end
-				if v ~= SD.Druid then SD.Druid = nil end
-				if v ~= SD.Hunter then SD.Hunter = nil end
-				if v ~= SD.Mage then SD.Mage = nil end
-				if v ~= SD.Monk then SD.Monk = nil end
-				if v ~= SD.Paladin then SD.Paladin = nil end
-				if v ~= SD.Priest then SD.Priest = nil end
-				if v ~= SD.Rogue then SD.Rogue = nil end
-				if v ~= SD.Shaman then SD.Shaman = nil end
-				if v ~= SD.Warlock then SD.Warlock = nil end
-				if v ~= SD.Warrior then SD.Warrior = nil end
-			else
-				classes[k] = nil
-			end
-		end
+		currentClass = SD.classes[className]
+		if currentClass then currentClass:init() end
+		SD.classes = nil
 	end
 
 	if event == "CVAR_UPDATE" then
@@ -351,7 +322,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.1.7")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.0")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
