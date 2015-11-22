@@ -65,12 +65,6 @@ function SD.comboMatch(list)
 	end
 	return nil
 end
-function SD.comboHelper(type, field, indexTable)
-	return SD.MultiParser:create(type, indexTable, function(data, match)
-		local index = SD.comboMatch(indexTable)
-		if index ~= nil then data[field] = match[index] end
-	end)
-end
 
 function SD.strstarts(String, Start)
 	return string.sub(String, 1, string.len(Start)) == Start
