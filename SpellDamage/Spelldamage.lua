@@ -151,6 +151,7 @@ local function EventHandler(self, event, ...)
 		currentClass = SD.classes[className]
 		if currentClass then currentClass:init() end
 		SD.classes = nil
+		SD.class = currentClass
 	end
 
 	if event == "CVAR_UPDATE" then
