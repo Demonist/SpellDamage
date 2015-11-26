@@ -99,13 +99,13 @@ function Paladin:init()
 	self.spells[19750]	= Heal({['ru']=1}) 	 														--Вспышка Света
 	self.spells[20271]	= Damage({['ru']=1}) 														--Правосудие
 	self.spells[20473]	= Damage({['ru']={1,2}}, HolyShock)											--Шок небес
-	self.spells[20925]	= Absorb({['ru']=2, ['de']=3, ['cn']=3, ['tw']=3, ['ko']=3}, SacredShield)	--Священный щит
+	self.spells[20925]	= Absorb({['ru']=2, ['de']=3, ['cn']=3, ['tw']=3, ['kr']=3}, SacredShield)	--Священный щит
 	self.spells[148039]	= self.spells[20925] 														--Священный щит
 	self.spells[24275]	= Damage({['ru']=1}) 	 													--Молот гнева
 	self.spells[26573]	= TimeDamage({['ru']=1}) 													--Освящение
 	self.spells[31935]	= Damage({['ru']=1}) 														--Щит мстителя
 	self.spells[35395]	= Damage({['ru']=1}) 														--Удар воина Света
-	self.spells[53385]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['ko']=2}, DivineStorm) 	--Божественная буря
+	self.spells[53385]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}, DivineStorm) 	--Божественная буря
 	self.spells[53595]	= Damage({['ru']=1})  														--Молот праведника
 	self.spells[53600]	= Damage({['ru']=1}) 														--Щит праведника
 	self.spells[82326]	= Heal({['ru']=1}) 															--Свет небес
@@ -114,11 +114,11 @@ function Paladin:init()
 	self.spells[85256]	= Damage({['ru']=1}) 														--Вердикт храмовника
 	self.spells[85673]	= Heal({['ru']=2}, WordOfGlory) 											--Торжество
 	self.spells[136494]	= self.spells[85673] 														--Торжество
-	self.spells[114157]	= TimeDamageAndTimeHeal({['ru']={1,3}, ['de']={2,4}, ['cn']={2,4}, ['tw']={2,4}, ['ko']={2,4}}) 			--Смертный приговор
+	self.spells[114157]	= TimeDamageAndTimeHeal({['ru']={1,3}, ['de']={2,4}, ['cn']={2,4}, ['tw']={2,4}, ['kr']={2,4}}) 			--Смертный приговор
 	self.spells[114158]	= TimeDamageAndTimeHeal({['ru']={4,8}, ['fr']={4,7}}, LightsHammer) 										--Молот Света
-	self.spells[114163]	= HealAndTimeHeal({['ru']={2,3}, ['de']={2,5}, ['cn']={2,4}, ['tw']={2,4}, ['ko']={2,5}}, EternalFlame) 	--Вечное пламя
-	self.spells[114165]	= DamageAndHeal({['ru']={1,2,5,6}, ['cn']={1,4,5,8}, ['tw']={1,4,5,8}, ['ko']={1,4,5,8}}, HolyPrism) 		--Божественная призма
-	self.spells[119072]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['ko']=2}) 				--Гнев небес
+	self.spells[114163]	= HealAndTimeHeal({['ru']={2,3}, ['de']={2,5}, ['cn']={2,4}, ['tw']={2,4}, ['kr']={2,5}}, EternalFlame) 	--Вечное пламя
+	self.spells[114165]	= DamageAndHeal({['ru']={1,2,5,6}, ['cn']={1,4,5,8}, ['tw']={1,4,5,8}, ['kr']={1,4,5,8}}, HolyPrism) 		--Божественная призма
+	self.spells[119072]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}) 				--Гнев небес
 	self.spells[130552]	= self.spells[85673] 														--Резкое слово
 	self.spells[157048]	= Damage({['ru']=1}) 														--Окончательный приговор
 	self.spells[31884]	= Custom(AvengingWrath) 													--Гнев карателя

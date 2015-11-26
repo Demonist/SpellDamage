@@ -7,6 +7,8 @@ L["frost_bomb"] = "Frost Bomb"
 L["haunt"] = "Haunt"
 L["dizzying_haze"] = "Dizzying Haze"
 L["item_use"] = "Use"
+L["holy_fire"] = "Holy Fire"
+L["power_word_solace"] = "Power Word: Solace"
 
 L["parsing_spell_error"] = "Error by parsing spell with"
 L["parsing_item_error"] = "Error by parsing item with"
@@ -34,7 +36,7 @@ L["chat_command_errors"] = "on/off display errors in chat"
 L["chat_command_help"] = "show addon macros help"
 L["chat_command_version"] = "show addon version"
 
---------------------------------   ruRU   -------------------------------------
+--------------------------------   ruRU:   -------------------------------------
 
 if locale == "ruRU" then
 	L["daggers"] = "Кинжалы"
@@ -43,6 +45,8 @@ if locale == "ruRU" then
 	L["haunt"] = "Блуждающий дух"
 	L["dizzying_haze"] = "Хмельная дымка"
 	L["item_use"] = "Использование"
+	L["holy_fire"] = "Священный огонь"
+	L["power_word_solace"] = "Слово силы: Утешение"
 
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
 	L["parsing_item_error"] = "Ошибка парсинга предмета с"
@@ -71,7 +75,7 @@ if locale == "ruRU" then
 	L["chat_command_version"] = "отображает текущую версию аддона"
 end
 
---------------------------------   deDE   -------------------------------------
+--------------------------------   deDE:   -------------------------------------
 
 if locale == "deDE" then
 	L["daggers"] = "Dolche"
@@ -80,9 +84,11 @@ if locale == "deDE" then
 	L["haunt"] = "Heimsuchung"
 	L["dizzying_haze"] = "Benebelnde Dämpfe"
 	L["item_use"] = "Benutzen"
+	L["holy_fire"] = "Heiliges Feuer"
+	L["power_word_solace"] = "Machtwort: Trost"
 end
 
---------------------------------   esES   -------------------------------------
+--------------------------------   esES:   -------------------------------------
 
 if locale == "esES" then
 	L["daggers"] = "Dagas"
@@ -91,9 +97,11 @@ if locale == "esES" then
 	L["haunt"] = "Poseer"
 	L["dizzying_haze"] = "Estupor mareante"
 	L["item_use"] = "Uso"
+	L["holy_fire"] = "Fuego Sagrado"
+	L["power_word_solace"] = "Palabra de poder: consuelo"
 end
 
---------------------------------   frFR   -------------------------------------
+--------------------------------   frFR:   -------------------------------------
 
 if locale == "frFR" then
 	L["daggers"] = "Dagues"
@@ -102,9 +110,11 @@ if locale == "frFR" then
 	L["haunt"] = "Hanter"
 	L["dizzying_haze"] = "Brume vertigineuse"
 	L["item_use"] = "Utilise"
+	L["holy_fire"] = "Flammes sacrées"
+	L["power_word_solace"] = "Mot de pouvoir : Réconfort"
 end
 
---------------------------------   itIT   -------------------------------------
+--------------------------------   itIT:   -------------------------------------
 
 if locale == "itIT" then
 	L["daggers"] = "Pugnali"
@@ -113,9 +123,11 @@ if locale == "itIT" then
 	L["haunt"] = "Tormento"
 	L["dizzying_haze"] = "Ebbrezza"
 	L["item_use"] = "Usa"
+	L["holy_fire"] = "Fuoco Sacro"
+	L["power_word_solace"] = "Parola del Potere: Conforto"
 end
 
---------------------------------   ptBR   -------------------------------------
+--------------------------------   ptBR:   -------------------------------------
 
 if locale == "ptBR" then
 	L["daggers"] = "Daggers"
@@ -124,9 +136,11 @@ if locale == "ptBR" then
 	L["haunt"] = "Possessão"
 	L["dizzying_haze"] = "Névoa Estonteante"
 	L["item_use"] = "Uso"
+	L["holy_fire"] = "Fogo Sagrado"
+	L["power_word_solace"] = "Palavra de Poder: Consolo"
 end
 
---------------------------------   zhCN   -------------------------------------
+--------------------------------   zhCN:   -------------------------------------
 
 if locale == "zhCN" then
 	L["daggers"] = "匕首"
@@ -135,6 +149,34 @@ if locale == "zhCN" then
 	L["haunt"] = "鬼影缠身"
 	L["dizzying_haze"] = "迷醉酒雾"
 	L["item_use"] = "使用"
+	L["holy_fire"] = "神圣之火"
+	L["power_word_solace"] = "真言术：慰"
+end
+
+--------------------------------   zhTW:   -------------------------------------
+
+if locale == "zhTW" then
+	L["daggers"] = "匕首"
+	L["lightning_shield"] = "閃電之盾"
+	L["frost_bomb"] = "冰霜炸彈"
+	L["haunt"] = "蝕魂術"
+	L["dizzying_haze"] = "微醺酒氣"
+	L["item_use"] = "使用"
+	L["holy_fire"] = "神聖之火"
+	L["power_word_solace"] = "真言術:慰"
+end
+
+--------------------------------   koKR:   -------------------------------------
+
+if locale == "koKR" then
+	L["daggers"] = ""
+	L["lightning_shield"] = ""
+	L["frost_bomb"] = ""
+	L["haunt"] = ""
+	L["dizzying_haze"] = ""
+	L["item_use"] = ""
+	L["holy_fire"] = "신성한 불꽃"
+	L["power_word_solace"] = "신의 권능: 위안"
 end
 
 SD = {}

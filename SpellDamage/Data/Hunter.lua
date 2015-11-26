@@ -76,24 +76,24 @@ function Hunter:init()
 		data.damage = match * 8
 	end
 
-	self.spells[136]	= TimeHeal({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['ko']=2}, MendPet)	--Лечение питомца
+	self.spells[136]	= TimeHeal({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}, MendPet)	--Лечение питомца
 	self.spells[781]	= Custom(Disengage) 													--Отрыв
 	self.spells[2643]	= Damage({['ru']=2, ['fr']=1})											--Залп
 	self.spells[3044]	= Damage({['ru']=1})													--Чародейский выстрел
-	self.spells[3674]	= TimeDamage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['ko']=2})		--Черная стрела
+	self.spells[3674]	= TimeDamage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2})		--Черная стрела
 	self.spells[6991]	= Heal({['ru']=1}, FeedPet)												--Кормление питомца
 	self.spells[13813]	= Custom(ExplosiveTrap)													--Взрывная ловушка
 	self.spells[82939]	= self.spells[13813]													--Взрывная ловушка (в режиме метания)
 	self.spells[19434]	= Damage({['ru']=1})													--Прицельный выстрел
 	self.spells[34026]	= Damage({['ru']=1})													--Команда 'Взять!'
 	self.spells[53209]	= Damage({['ru']=1}, ChimaeraShot)										--Выстрел химеры
-	self.spells[53301]	= DamageAndTimeDamage({['ru']={1, 2}, ['ko']={3, 1}}, ExplosiveShot)	--Разрывной выстрел
+	self.spells[53301]	= DamageAndTimeDamage({['ru']={1, 2}, ['kr']={3, 1}}, ExplosiveShot)	--Разрывной выстрел
 	self.spells[157708]	= DamageAndHeal({['ru']={1, 3}}, KillShot) 								--Убийственный выстрел
 	self.spells[56641]	= DamageAndMana({['ru']={1, 2}})										--Верный выстрел
 	self.spells[77767]	= DamageAndMana({['ru']={1, 2}})										--Выстрел кобры
 	self.spells[109259]	= Damage({['ru']=1})													--Мощный выстрел
 	self.spells[109304]	= Heal({['ru']=1}, Exhilaration)										--Живость
-	self.spells[117050]	= Damage({['ru']=3, ['en']=1, ['de']=1, ['es']=1, ['fr']=1, ['it']=1, ['pt']=1, ['cn']=1, ['tw']=1, ['ko']=1}, GlaiveToss)	--Бросок глеф
+	self.spells[117050]	= Damage({['ru']=3, ['en']=1, ['de']=1, ['es']=1, ['fr']=1, ['it']=1, ['pt']=1, ['cn']=1, ['tw']=1, ['kr']=1}, GlaiveToss)	--Бросок глеф
 	self.spells[120360]	= TimeDamage({['ru']=2})												--Шквал
 	self.spells[152245]	= DamageAndMana({['ru']={1, 2}})										--Сосредоточенный выстрел
 	self.spells[163485]	= self.spells[152245]													--Сосредоточенный выстрел
