@@ -8,7 +8,7 @@ local Glyphs = SD.Glyphs
 --
 
 local Priest = Class:create(ClassSpells)
-SD.Priest = Priest
+SD.classes["PRIEST"] = Priest
 Priest.dependFromTarget = true
 
 function Priest:init()
