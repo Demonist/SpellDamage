@@ -84,9 +84,9 @@ function DeathKnight:init()
 	self.spells[55090]	= DamageAndDamage({['ru']={1,2}}) 									--Удар Плети
 	self.spells[85948]	= Damage({['ru']=1}) 												--Удар разложения
 	self.spells[108196]	= DamageAndHeal({['ru']={1,2}}, DeathSiphon)						--Смертельное поглощение
-	self.spells[114866]	= Damage({['ru']=1}) 												--Жнец душ
-	self.spells[130735]	= Damage({['ru']=1}) 												--Жнец душ
-	self.spells[130736]	= Damage({['ru']=1}) 												--Жнец душ
+	self.spells[114866]	= DamageAndTimeDamage({['ru']={1,5}}) 								--Жнец душ
+	self.spells[130735]	= DamageAndTimeDamage({['ru']={1,4}}) 								--Жнец душ
+	self.spells[130736]	= DamageAndTimeDamage({['ru']={1,4}}) 								--Жнец душ
 	self.spells[119975]	= Custom(Conversion) 												--Преобразование
 	self.spells[152279]	= TimeHeal({['ru']=1}, BreathOfSindragosa) 							--Дыхание Синдрагосы
 	self.spells[152280]	= TimeDamage({['ru']=2}) 											--Осквернение
