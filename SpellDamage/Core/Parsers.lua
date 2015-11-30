@@ -125,7 +125,8 @@ function SD.DoubleSpell:getData(description)
 	return nil
 end
 
-function SD.DamageAndTimeDamage(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndTimeHeal, indexes, computeFunc); end
+function SD.DamageAndTimeDamage(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndTimeDamage, indexes, computeFunc); end
+function SD.TimeDamageAndTimeDamage(indexes) return SD.DoubleSpell:create(SpellTimeDamage, indexes, function(data, matchs) data.type = SpellTimeDamage; data.timeDamage = match[1] + match[2]; end); end
 function SD.HealAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellHealAndTimeHeal, indexes, computeFunc); end
 function SD.DamageAndHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndHeal, indexes, computeFunc); end
 function SD.DamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndTimeHeal, indexes, computeFunc); end
@@ -133,6 +134,7 @@ function SD.HealAndMana(indexes, computeFunc) return SD.DoubleSpell:create(Spell
 function SD.DamageAndDamage(indexes) return SD.DoubleSpell:create(SpellDamage, indexes, function(data, matchs) data.type = SpellDamage; data.damage = matchs[1] + matchs[2]; end); end
 function SD.DamageAndMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndMana, indexes, computeFunc); end
 function SD.TimeDamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellTimeDamageAndTimeHeal, indexes, computeFunc); end
+function SD.ManaAndTimeMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellManaAndTimeMana, indexes, computeFunc); end
 
 --
 
