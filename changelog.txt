@@ -1,5 +1,5 @@
 ﻿0.9.2.0
-Refactoring. Added zhTW and koKR locales support.
+Refactoring. Added zhTW and koKR locales support. Added some items.
 
 0.9.1.7
 Fixed Monk's "Revival".
