@@ -50,9 +50,9 @@ function SD.SimpleSpell:create(type, indexes, computeFunc)
 end
 
 function SD.SimpleSpell:getData(description)
+	local data = SD.SpellData:create(SpellUnknown)
 	local match = matchDigit(description, self.indexes)
 	if match then
-		local data = SD.SpellData:create(SpellUnknown)
 		data.type = self.type
 		if self.type == SpellDamage then data.damage = match 
 		elseif self.type == SpellTimeDamage then data.timeDamage = match 
@@ -64,9 +64,8 @@ function SD.SimpleSpell:getData(description)
 		else data.type = SpellUnknown
 		end
 		if self.computeFunc then self.computeFunc(data, match, description); end
-		return data
 	end
-	return nil
+	return data
 end
 
 function SD.Damage(indexes, computeFunc)
@@ -104,9 +103,9 @@ function SD.DoubleSpell:create(type, indexes, computeFunc)
 end
 
 function SD.DoubleSpell:getData(description)
+	local data = SD.SpellData:create(SpellUnknown)
 	local matchs = matchDigits(description, self.indexes)
 	if matchs then
-		local data = SD.SpellData:create(SpellUnknown)
 		data.type = self.type
 		if self.type == SpellDamageAndTimeDamage then 
 			data.damage = matchs[1]
@@ -133,9 +132,8 @@ function SD.DoubleSpell:getData(description)
 			data.type = SpellUnknown
 		end
 		if self.computeFunc then self.computeFunc(data, matchs, description); end
-		return data
 	end
-	return nil
+	return data
 end
 
 function SD.DamageAndTimeDamage(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndTimeDamage, indexes, computeFunc); end
@@ -179,20 +177,18 @@ function SD.Combo.getComboPoints()
 end
 
 function SD.Combo:getData(description)
+	local data = SD.SpellData:create(SpellUnknown)
 	local matchs = matchDigits(description, self.indexes)
 	if matchs then
-		local value = matchs[SD.Combo.getComboPoints()]
-
-		local data = SD.SpellData:create(SpellUnknown)
 		data.type = self.type
+		local value = matchs[SD.Combo.getComboPoints()]
 		if self.type == SpellDamage then data.damage = value;
 		elseif self.type == SpellTimeDamage then data.timeDamage = value;
 		else data.type = SpellUnknown
 		end
 		if self.computeFunc then self.computeFunc(data, value, computeFunc); end
-		return data
 	end
-	return nil
+	return data
 end
 
 function SD.ComboDamage(startsAndSteps, computeFunc) return SD.Combo:create(SpellDamage, startsAndSteps, computeFunc); end

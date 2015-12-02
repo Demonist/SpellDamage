@@ -125,9 +125,9 @@ function SD.Class:updateButton(button, spellId)
 		data = updateParser:getData(nil)
 	end
 
-	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false; end	--Костыль от начальных ошибок предметов
+	if (not data or data.type == SpellUnknown) and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false; end	--Костыль от начальных ошибок предметов
 
-	if data.type == SpellUnknown and SD.displayErrors == true then
+	if (not data or data.type == SpellUnknown) and SD.displayErrors == true then
 		if self.type == ClassSpells then
 			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
 		else

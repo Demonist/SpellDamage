@@ -47,7 +47,7 @@ function Monk:init()
 
 	--Устранение вреда:
 	local ExpelHarm = function(data, matchs)
-		data.heal = (match[1] + match[2]) / 2
+		data.heal = (matchs[1] + matchs[2]) / 2
 		data.damage = data.heal * 0.33
 	end
 

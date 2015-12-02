@@ -40,7 +40,7 @@ function Priest:init()
 
 	--Кара:
 	local Smite = function(data)
-		if UnitIsExists("target")
+		if UnitExists("target")
 			and UnitIsEnemy("player", "target")
 			and Glyphs:contains(55692) 	--Символ кары
 			and (UnitDebuff("target", L["holy_fire"]) or UnitDebuff("target", L["power_word_solace"])) then 	--'Священный огонь' или 'Слово силы: Утешение'
@@ -55,7 +55,7 @@ function Priest:init()
 
 	--Исповедь:
 	local Penance = function(data, description)
-		if UnitIsExists("target") and UnitIsFriend("player", "target") then
+		if UnitExists("target") and UnitIsFriend("player", "target") then
 			local match = matchDigit(description, getLocaleIndex({ru=2, de=3, cn=3, tw=3, kr=3}))
 			if match then
 				data.type = SpellTimeHeal

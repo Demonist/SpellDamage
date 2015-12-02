@@ -34,19 +34,21 @@ function SD.matchDigit(str, index)
 end
 
 --TODO: переписать чтобы работала с произвольным порядком индексов
-function SD.matchDigits(str, indexTable)
+function SD.matchDigits(str, indexes)
 	local ret = {}
-	local keys = {}
-	for _, key in ipairs(indexTable) do keys[key] = true end
-	local i = 1
+
+	local numbers = {}
 	for match in str:gmatch("%d+[%.,]?%d*") do
-		if keys[i] ~= nil then
-			local m = match:gsub(",", ".")
-			table.insert(ret, tonumber(m))
-		end
-		i = i + 1
+		local m = match:gsub(",", ".")
+		table.insert(numbers, tonumber(m))
 	end
-	if #ret == #indexTable then return ret; end
+
+	for k,index in ipairs(indexes) do
+		if #numbers >= index then table.insert(ret, numbers[index]);
+		else return nil; end
+	end
+
+	if #ret == #indexes then return ret; end
 	return nil
 end
 
