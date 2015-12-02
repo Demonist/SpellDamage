@@ -33,20 +33,20 @@ function SD.matchDigit(str, index)
 	return nil
 end
 
+--TODO: переписать чтобы работала с произвольным порядком индексов
 function SD.matchDigits(str, indexTable)
 	local ret = {}
 	local keys = {}
-	for _, key in pairs(indexTable) do keys[key] = true end
-	local i, matched = 1, 0
+	for _, key in ipairs(indexTable) do keys[key] = true end
+	local i = 1
 	for match in str:gmatch("%d+[%.,]?%d*") do
 		if keys[i] ~= nil then
 			local m = match:gsub(",", ".")
-			ret[i] = tonumber(m)
-			matched = matched + 1
+			table.insert(ret, tonumber(m))
 		end
 		i = i + 1
 	end
-	if matched == #indexTable then return ret end
+	if #ret == #indexTable then return ret; end
 	return nil
 end
 
@@ -64,12 +64,6 @@ function SD.comboMatch(list)
 		if i == combo then return index end
 	end
 	return nil
-end
-function SD.comboHelper(type, field, indexTable)
-	return SD.MultiParser:create(type, indexTable, function(data, match)
-		local index = SD.comboMatch(indexTable)
-		if index ~= nil then data[field] = match[index] end
-	end)
 end
 
 function SD.strstarts(String, Start)

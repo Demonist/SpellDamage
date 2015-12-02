@@ -1,4 +1,4 @@
-﻿local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
+﻿local L, shortNumber, matchDigit, matchDigits, printTable, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts
 
 --
 
@@ -27,8 +27,8 @@ local tooltipInitTime = GetTime()
 
 local itemsCache = {}
 local function GetItemDescription(itemId)
-	if itemsCache[itemId] then return itemsCache[itemId] end
-	if #itemsCache >= 100 then itemsCache = {} end
+	if itemsCache[itemId] then return itemsCache[itemId]; end
+	if #itemsCache >= 100 then itemsCache = {}; end
 
 	sdItemTooltip:ClearLines()
 	sdItemTooltip:SetHyperlink("item:"..itemId)
@@ -101,7 +101,7 @@ function SD.Class:create(classType)
 end
 
 function SD.Class:hasOnUpdateSpells()
-	if self.hasOnUpdateSpellsCache ~= nil then return self.hasOnUpdateSpellsCache end
+	if self.hasOnUpdateSpellsCache ~= nil then return self.hasOnUpdateSpellsCache; end
 	self.hasOnUpdateSpellsCache = false
 	for _,_ in pairs(self.onUpdateSpells) do
 		self.hasOnUpdateSpellsCache = true
@@ -114,7 +114,7 @@ function SD.Class:updateButton(button, spellId)
 	local spellParser = self.spells[spellId]
 	local updateParser = self.onUpdateSpells[spellId]
 
-	if spellParser == nil and updateParser == nil then return false end
+	if spellParser == nil and updateParser == nil then return false; end
 
 	local data = SD.SpellData:create(SpellUnknown)
 
@@ -125,7 +125,7 @@ function SD.Class:updateButton(button, spellId)
 		data = updateParser:getData(nil)
 	end
 
-	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false end	--Костыль от начальных ошибок предметов
+	if data.type == SpellUnknown and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false; end	--Костыль от начальных ошибок предметов
 
 	if data.type == SpellUnknown and SD.displayErrors == true then
 		if self.type == ClassSpells then
@@ -137,7 +137,7 @@ function SD.Class:updateButton(button, spellId)
 		return false 
 	end
 
-	if data.type == SpellEmpty then return true end
+	if data.type == SpellEmpty then return true; end
 
 	if self.type == ClassSpells then
 		if data.type == SpellDamage then
@@ -259,3 +259,7 @@ function SD.Class:updateButton(button, spellId)
 	end
 	return true
 end
+
+--
+
+SD.classes = {}
