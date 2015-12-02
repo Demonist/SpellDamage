@@ -148,7 +148,7 @@ function SD.DamageAndDamage(indexes) return SD.DoubleSpell:create(SpellDamage, i
 function SD.DamageAndMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndMana, indexes, computeFunc); end
 function SD.TimeDamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellTimeDamageAndTimeHeal, indexes, computeFunc); end
 function SD.ManaAndTimeMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellManaAndTimeMana, indexes, computeFunc); end
-function SD.AverageDamage(indexes) return SD.DoubleSpell:create(SpellDamage, indexes, function(data, matchs) data.type = SpellDamage; data.damage = (matchs[1] + matchs[2]) / 2; end) end
+function SD.AverageDamage(indexes) return SD.DoubleSpell:create(SpellDamage, indexes, function(data, matchs) data.type = SpellDamage; data.damage = (matchs[1] + matchs[2]) / 2; end); end
 
 --
 
