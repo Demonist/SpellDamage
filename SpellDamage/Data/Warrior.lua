@@ -2,7 +2,7 @@ local L, shortNumber, matchDigit, matchDigits, printTable, strstarts = SD.L, SD.
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
-local Damage, TimeDamage, Heal, TimeHeal, Mana, TimeMana, Absorb, CriticalDamage, DamageAndTimeDamage, HealAndTimeHeal, DamageAndHeal, DamageAndTimeHeal, HealAndMana, DamageAndDamage, DamageAndMana, TimeDamageAndTimeHeal, Custom, getLocaleIndex = SD.Damage, SD.TimeDamage, SD.Heal, SD.TimeHeal, SD.Mana, SD.TimeMana, SD.Absorb, SD.CriticalDamage, SD.DamageAndTimeDamage, SD.HealAndTimeHeal, SD.DamageAndHeal, SD.DamageAndTimeHeal, SD.HealAndMana, SD.DamageAndDamage, SD.DamageAndMana, SD.TimeDamageAndTimeHeal, SD.Custom, SD.SimpleSpell.getLocaleIndex
+local Damage, TimeDamage, Heal, TimeHeal, Mana, TimeMana, Absorb, CriticalDamage, DamageAndTimeDamage, HealAndTimeHeal, DamageAndHeal, DamageAndTimeHeal, HealAndMana, DamageAndDamage, DamageAndMana, TimeDamageAndTimeHeal, Custom, getLocaleIndex, TimeDamageAndTimeDamage = SD.Damage, SD.TimeDamage, SD.Heal, SD.TimeHeal, SD.Mana, SD.TimeMana, SD.Absorb, SD.CriticalDamage, SD.DamageAndTimeDamage, SD.HealAndTimeHeal, SD.DamageAndHeal, SD.DamageAndTimeHeal, SD.HealAndMana, SD.DamageAndDamage, SD.DamageAndMana, SD.TimeDamageAndTimeHeal, SD.Custom, SD.SimpleSpell.getLocaleIndex, SD.TimeDamageAndTimeDamage
 local Glyphs = SD.Glyphs
 
 --
@@ -112,7 +112,7 @@ function Warrior:init()
 
 	self.spells[78]		= Damage({ru=1}) 																	--Удар героя
 	self.spells[100]	= Mana({ru=1}, Charge)																--Рывок
-	self.spells[772]	= TimeDamage({ru={1,3}, de={2,3}, cn={2,3}, tw={2,3}, kr={2,3}}, Rend) 				--Кровопускание
+	self.spells[772]	= TimeDamageAndTimeDamage({ru={1,3}, de={2,3}, cn={2,3}, tw={2,3}, kr={2,3}}, Rend) --Кровопускание
 	self.spells[1464]	= Damage({ru=1}) 																	--Мощный удар
 	self.spells[1680]	= Custom(Whirlwind) 																--Вихрь
 	self.spells[1715]	= Damage({ru=1}) 																	--Подрезать сухожилия
@@ -146,3 +146,4 @@ function Warrior:init()
 	self.spells[176318]	= self.spells[176289]																--Стенолом – левая рука
 	self.spells[163558]	= self.spells[5308] 																--Внезапная казнь
 end
+--фури: вихрь, вихрь клинков, Опустошитель, Безудержное восстановление, Еазнь 5308, Удар громовержца, сокрушительный бросок, 

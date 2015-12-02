@@ -61,6 +61,7 @@ function DeathKnight:init()
 
 	--Преобразование:
 	local Conversion = function(data)
+		data.type = SpellHeal
 		data.heal = UnitHealthMax("player") * 0.02 * UnitMana("player") / 5
 	end
 
@@ -73,7 +74,7 @@ function DeathKnight:init()
 	self.spells[45462]	= Damage({ru=1}) 								--Удар чумы
 	self.spells[45477]	= Damage({ru=1}) 								--Ледяное прикосновение
 	self.spells[45524]	= Custom(ChainsOfIce) 							--Ледяные оковы
-	self.spells[47541]	= DamageAndHeal({ru={1,2},}, DeathCoil) 		--Лик смерти
+	self.spells[47541]	= DamageAndHeal({ru={1,2}}, DeathCoil) 			--Лик смерти
 	self.spells[47568]	= Mana({ru=1}, EmpowerRuneWeapon) 				--Усиление рунического оружия
 	self.spells[48743]	= Heal({ru=1}, DeathPact) 						--Смертельный союз
 	self.spells[49020]	= Damage({ru=1}) 								--Уничтожение
@@ -88,7 +89,7 @@ function DeathKnight:init()
 	self.spells[130735]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
 	self.spells[130736]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
 	self.spells[119975]	= Custom(Conversion) 							--Преобразование
-	self.spells[152279]	= TimeHeal({ru=1}, BreathOfSindragosa) 			--Дыхание Синдрагосы
+	self.spells[152279]	= TimeDamage({ru=1}, BreathOfSindragosa) 		--Дыхание Синдрагосы
 	self.spells[152280]	= TimeDamage({ru=2}) 							--Осквернение
 	self.spells[53717]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 	--Взрыв трупа
 

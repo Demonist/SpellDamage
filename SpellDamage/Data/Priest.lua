@@ -21,7 +21,7 @@ function Priest:init()
 	end
 
 	--Обновление:
-	local Renew = function(data, match, description)
+	local Renew = function(data, description)
 		if UnitLevel("player") >= 64 then
 			local matchs = matchDigits(description, getLocaleIndex({ru={1,2}, de={1,3}, tw={1,3}, kr={1,3}}))
 			if matchs then
@@ -81,7 +81,7 @@ function Priest:init()
 		data.timeHeal = match * 15
 	end
 
-	self.spells[17]		= Absorb({ru=1, }, PowerWordShield) 													--Слово силы: Щит
+	self.spells[17]		= Absorb({ru=1}, PowerWordShield) 													--Слово силы: Щит
 	self.spells[139]	= Custom(Renew) 																		--Обновление
 	self.spells[585]	= Damage({ru=1}, Smite) 																--Кара
 	self.spells[589]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 				--Слово Тьмы: Боль
@@ -110,7 +110,7 @@ function Priest:init()
 	self.spells[120644]	= Damage({ru=2}) 																		--Сияние
 	self.spells[121135]	= Heal({ru=1}) 																			--Каскад
 	self.spells[127632]	= Damage({ru=1}) 																		--Каскад
-	self.spells[126135]	= TimeHeal({ru=3, de=4, es=4, fr=2, it=2, pt=2, cn=4, tw=4, kr=4})						--Колодец Света
+	self.spells[126135]	= TimeHeal({ru=1, en=3, de=4, es=4, fr=2, it=2, pt=2, cn=4, tw=4, kr=4})				--Колодец Света
 	self.spells[129250]	= DamageAndTimeDamage({ru={1,3}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 				--Слово силы: Утешение
 	self.spells[132157]	= DamageAndHeal({ru={1,3}, en={1,5}, de={2,5}, it={1,5}, cn={2,5}, tw={2,5}, kr={2,5}}) --Кольцо света
 	self.spells[152116]	= Heal({ru=1}) 																			--Спасительная сила
@@ -124,3 +124,4 @@ function Priest:init()
 end
 
 -- Подчиняющий разум ?
+--слово света святилище, обновление, щит, гим, колодец, связующее обновление.

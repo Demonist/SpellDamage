@@ -120,7 +120,12 @@ function SD.Class:updateButton(button, spellId)
 
 	if spellParser then
 		local text = self.getSpellText(spellId)
-		data = spellParser:getData(text)
+		if text then data = spellParser:getData(text);
+		elseif SD.displayErrors then
+			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["description_error"].." id|r |cFFffffc0"..spellId.."|r.")
+			incErrorsCount()
+			return false
+		end
 	elseif updateParser then
 		data = updateParser:getData(nil)
 	end
@@ -263,3 +268,24 @@ end
 --
 
 SD.classes = {}
+function SD.checkSpells()
+	local str = ""
+	for className, class in pairs(SD.classes) do
+		class:init()
+		local s = ""
+		for id, parser in pairs(class.spells) do
+			local description = GetSpellDescription(id)
+			if not description then
+				s = s.."no descr for "..id..", "
+			elseif description == "" then
+				DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r check spells - |cFFffc0c0"..L["description_error"].." id|r |cFFffffc0"..id.."|r.");
+			else
+				local data = parser:getData(description)
+				if not data or data.type == SD.SpellUnknown then s = s..id..", "; end
+			end
+		end
+		if s ~= "" then str = str..className.."("..s.."), "; end
+		class.spells = {}
+	end
+	if str ~= "" then error("SpellDamage check spells error: "..str); end
+end

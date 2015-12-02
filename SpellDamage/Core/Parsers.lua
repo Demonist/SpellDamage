@@ -26,6 +26,8 @@ function SD.Custom(computeFunc) return SD.CustomParser:create(computeFunc); end
 SD.SimpleSpell = {}
 
 function SD.SimpleSpell.getLocaleIndex(indexes)
+	if type(indexes) ~= "table" then error("Wrong type '"..type(indexes).."' of 'indexes' in 'SD.SimpleSpell.getLocaleIndex' function"); end
+
 	if not SD.SimpleSpell.locale then
 		local locale = string.lower(GetLocale())
 		SD.SimpleSpell.locale = string.sub(locale, 3, 4)
@@ -40,10 +42,13 @@ function SD.SimpleSpell.getLocaleIndex(indexes)
 	end
 end
 
-function SD.SimpleSpell:create(type, indexes, computeFunc)
+function SD.SimpleSpell:create(spellType, indexes, computeFunc)
+	if type(indexes) ~= "table" then error("Wrong type '"..type(indexes).."' of 'indexes' in 'SD.SimpleSpell:create' function"); end
+
 	local spell = {}
-	spell.type = type
-	spell.indexes = SD.SimpleSpell.getLocaleIndex(indexes)
+	spell.type = spellType
+	spell.index = SD.SimpleSpell.getLocaleIndex(indexes)
+	if type(spell.index) ~= "number" then error("Wrong type '"..type(spell.index).."' of 'spell.index' in 'SD.SimpleSpell:create' function"); end
 	spell.computeFunc = computeFunc
 	self.__index = self
 	return setmetatable(spell, self)
@@ -51,52 +56,55 @@ end
 
 function SD.SimpleSpell:getData(description)
 	local data = SD.SpellData:create(SpellUnknown)
-	local match = matchDigit(description, self.indexes)
+	local match = matchDigit(description, self.index)
 	if match then
 		data.type = self.type
-		if self.type == SpellDamage then data.damage = match 
-		elseif self.type == SpellTimeDamage then data.timeDamage = match 
-		elseif self.type == SpellHeal then data.heal = match 
-		elseif self.type == SpellTimeHeal then data.timeHeal = match 
-		elseif self.type == SpellMana then data.mana = match
-		elseif self.type == SpellTimeMana then data.timeMana = match
-		elseif self.type == SpellAbsorb then data.absorb = match
-		else data.type = SpellUnknown
+		if self.type == SpellDamage then data.damage = match; 
+		elseif self.type == SpellTimeDamage then data.timeDamage = match; 
+		elseif self.type == SpellHeal then data.heal = match; 
+		elseif self.type == SpellTimeHeal then data.timeHeal = match; 
+		elseif self.type == SpellMana then data.mana = match;
+		elseif self.type == SpellTimeMana then data.timeMana = match;
+		elseif self.type == SpellAbsorb then data.absorb = match;
+		else data.type = SpellUnknown;
 		end
 		if self.computeFunc then self.computeFunc(data, match, description); end
 	end
 	return data
 end
 
-function SD.Damage(indexes, computeFunc)
-	if indexes == {ru=1} and not computeFunc then
-		if not SD.DamageCache then SD.DamageCache = SD.SimpleSpell:create(SpellDamage, indexes, nil); end
+function SD.Damage(index, computeFunc)
+	if index == {ru=1} and not computeFunc then
+		if not SD.DamageCache then SD.DamageCache = SD.SimpleSpell:create(SpellDamage, index, nil); end
 		return SD.DamageCache
 	end
-	return SD.SimpleSpell:create(SpellDamage, indexes, computeFunc)
+	return SD.SimpleSpell:create(SpellDamage, index, computeFunc)
 end
-function SD.Heal(indexes, computeFunc)
-	if indexes == {ru=1} and not computeFunc then
-		if not SD.HealCache then SD.HealCache = SD.SimpleSpell:create(SpellHeal, indexes, nil); end
+function SD.Heal(index, computeFunc)
+	if index == {ru=1} and not computeFunc then
+		if not SD.HealCache then SD.HealCache = SD.SimpleSpell:create(SpellHeal, index, nil); end
 		return SD.HealCache
 	end
-	return SD.SimpleSpell:create(SpellHeal, indexes, computeFunc)
+	return SD.SimpleSpell:create(SpellHeal, index, computeFunc)
 end
 
-function SD.TimeDamage(indexes, computeFunc) return SD.SimpleSpell:create(SpellTimeDamage, indexes, computeFunc); end
-function SD.TimeHeal(indexes, computeFunc) return SD.SimpleSpell:create(SpellTimeHeal, indexes, computeFunc); end
-function SD.Mana(indexes, computeFunc) return SD.SimpleSpell:create(SpellMana, indexes, computeFunc); end
-function SD.TimeMana(indexes, computeFunc) return SD.SimpleSpell:create(SpellTimeMana, indexes, computeFunc); end
-function SD.Absorb(indexes, computeFunc) return SD.SimpleSpell:create(SpellAbsorb, indexes, computeFunc); end
-function SD.CriticalDamage(indexes) return SD.SimpleSpell:create(SpellDamage, indexes, function(data) data.damage = data.damage * 2; end); end
+function SD.TimeDamage(index, computeFunc) return SD.SimpleSpell:create(SpellTimeDamage, index, computeFunc); end
+function SD.TimeHeal(index, computeFunc) return SD.SimpleSpell:create(SpellTimeHeal, index, computeFunc); end
+function SD.Mana(index, computeFunc) return SD.SimpleSpell:create(SpellMana, index, computeFunc); end
+function SD.TimeMana(index, computeFunc) return SD.SimpleSpell:create(SpellTimeMana, index, computeFunc); end
+function SD.Absorb(index, computeFunc) return SD.SimpleSpell:create(SpellAbsorb, index, computeFunc); end
+function SD.CriticalDamage(index) return SD.SimpleSpell:create(SpellDamage, index, function(data) data.damage = data.damage * 2; end); end
 
 --
 
 SD.DoubleSpell = {}
-function SD.DoubleSpell:create(type, indexes, computeFunc)
+function SD.DoubleSpell:create(spellType, indexes, computeFunc)
+	if type(indexes) ~= "table" then error("Wrong type '"..type(indexes).."' of 'indexes' in 'SD.DoubleSpell:create' function"); end
+
 	local spell = {}
-	spell.type = type
+	spell.type = spellType
 	spell.indexes = SD.SimpleSpell.getLocaleIndex(indexes)
+	if type(spell.indexes) ~= "table" then error("Wrong type '"..type(spell.indexes).."' of 'spell.indexes' in 'SD.DoubleSpell:create' function"); end
 	spell.computeFunc = computeFunc
 	self.__index = self
 	return setmetatable(spell, self)
@@ -128,6 +136,9 @@ function SD.DoubleSpell:getData(description)
 		elseif self.type == SpellTimeDamageAndTimeHeal then
 			data.timeDamage = matchs[1]
 			data.timeHeal = matchs[2]
+		elseif self.type == SpellManaAndTimeMana then
+			data.mana = matchs[1]
+			data.timeMana = matchs[2]
 		else
 			data.type = SpellUnknown
 		end
@@ -137,7 +148,7 @@ function SD.DoubleSpell:getData(description)
 end
 
 function SD.DamageAndTimeDamage(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndTimeDamage, indexes, computeFunc); end
-function SD.TimeDamageAndTimeDamage(indexes) return SD.DoubleSpell:create(SpellTimeDamage, indexes, function(data, matchs) data.type = SpellTimeDamage; data.timeDamage = match[1] + match[2]; end); end
+function SD.TimeDamageAndTimeDamage(indexes) return SD.DoubleSpell:create(SpellTimeDamage, indexes, function(data, matchs) data.type = SpellTimeDamage; data.timeDamage = matchs[1] + matchs[2]; end); end
 function SD.HealAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellHealAndTimeHeal, indexes, computeFunc); end
 function SD.DamageAndHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndHeal, indexes, computeFunc); end
 function SD.DamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndTimeHeal, indexes, computeFunc); end
@@ -151,13 +162,16 @@ function SD.AverageDamage(indexes) return SD.DoubleSpell:create(SpellDamage, ind
 --
 
 SD.Combo = {}
-function SD.Combo:create(type, startsAndSteps, computeFunc)
+function SD.Combo:create(spellType, startsAndSteps, computeFunc)
+	if type(startsAndSteps) ~= "table" then error("Wrong type '"..type(startsAndSteps).."' of 'startsAndSteps' in 'SD.Combo:create' function"); end
+
 	local combo = {}
-	combo.type = type
+	combo.type = spellType
 	combo.indexes = {}
 	combo.computeFunc = computeFunc
 
 	local startAndStep = SD.SimpleSpell.getLocaleIndex(startsAndSteps)
+	if #startAndStep ~= 2 then error("Wrong data in 'startAndStep' in 'SD.Combo:create' function"); end
 	local start, step = startAndStep[1], startAndStep[2]
 
 	for i = 0,4 do

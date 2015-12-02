@@ -109,7 +109,7 @@ function Druid:init()
 	self.spells[8936]	= Custom(Regrowth)  																--Восстановление
 	self.spells[18562]	= Heal({ru=1}) 																		--Быстрое восстановление
 	self.spells[22568]	= Custom(FerociousBite) 															--Свирепый укус
-	self.spells[22570]	= ComboTimeDamage({ru={2, 5, 8, 11, 14}})											--Калечение
+	self.spells[22570]	= ComboTimeDamage({ru={2,3}})														--Калечение
 	self.spells[22842]	= Heal({ru=2}) 																		--Неистовое восстановление
 	self.spells[33745]	= DamageAndTimeDamage({ru={1,2}, tw={1,3}, kr={1,3}}) 								--Растерзать
 	self.spells[33763]	= HealAndTimeHeal({ru={1,3}, de={2,3}, cn={2,3}, tw={2,3}, kr={2,3}}, Lifebloom) 	--Жизнецвет

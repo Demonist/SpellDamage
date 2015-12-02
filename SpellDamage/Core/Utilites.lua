@@ -33,7 +33,6 @@ function SD.matchDigit(str, index)
 	return nil
 end
 
---TODO: переписать чтобы работала с произвольным порядком индексов
 function SD.matchDigits(str, indexes)
 	local ret = {}
 

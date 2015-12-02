@@ -10,6 +10,7 @@ L["item_use"] = "Use"
 L["holy_fire"] = "Holy Fire"
 L["power_word_solace"] = "Power Word: Solace"
 
+L["description_error"] = "Error by getting spell's description with"
 L["parsing_spell_error"] = "Error by parsing spell with"
 L["parsing_item_error"] = "Error by parsing item with"
 L["type_spell_error"] = "Error by detecting spell type with"
@@ -48,6 +49,7 @@ if locale == "ruRU" then
 	L["holy_fire"] = "Священный огонь"
 	L["power_word_solace"] = "Слово силы: Утешение"
 
+	L["description_error"] = "Ошибка получения описания умения с"
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
 	L["parsing_item_error"] = "Ошибка парсинга предмета с"
 	L["type_spell_error"] = "Ошибка определения типа умения с"

@@ -135,6 +135,8 @@ local function EventHandler(self, event, ...)
 		if addonDisableReason ~= DisableReason_Unknown then return; end
 		Glyphs:update()
 
+		-- SD.checkSpells()
+
 		currentClass = SD.classes[className]
 		if currentClass then currentClass:init(); end
 		SD.classes = nil
@@ -320,7 +322,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.1")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.2")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then

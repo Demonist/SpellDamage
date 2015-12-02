@@ -56,36 +56,37 @@ function Rogue:init()
 	--Смерть с небес:
 	local DeathFromAbove = function(data)
 		if IsPlayerSpell(32645) then 	--Отравление
-			local localData = Rogue.spells[32645].getData(GetSpellDescription(32645))
+			local localData = Rogue.spells[32645]:getData(GetSpellDescription(32645))
 			if localData then
 				data.type = SpellDamageAndTimeDamage
 				data.timeDamage = localData.timeDamage * 1.5
 			end
 		else
-			local localData = Rogue.spells[2098].getData(GetSpellDescription(2098))	--Потрошение
+			local descr = GetSpellDescription(2098)
+			local localData = Rogue.spells[2098]:getData(descr)	--Потрошение
 			if localData then
 				data.damage = data.damage + localData.timeDamage * 1.5
 			end
 		end
 	end
 
-	self.spells[53]		= Damage({ru=1}) 																														--Удар в спину
-	self.spells[703]	= Damage({ru=1, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=3, tw=3, kr=3}) 																	--Гаррота
-	self.spells[1329]	= DamageAndDamage({ru={1,2}}) 																											--Расправа
-	self.spells[1752]	= Damage({ru=1}) 																														--Коварный удар
-	self.spells[1943]	= ComboTimeDamage({ru={2,3}, cn={3,3}, tw={3,3}, kr={3,3}}) 																			--Рваная рана
-	self.spells[2098]	= ComboDamage({ru={2,2}}) 																												--Потрошение
-	self.spells[5938]	= Damage({ru=1})																														--Отравляющий укол
-	self.spells[8676]	= Damage({ru=1}, Ambush) 																												--Внезапный удар
-	self.spells[16511]	= DamageAndTimeDamage({ru={1,3}, de={1,4}, cn={1,4}, tw={1,4}, kr={1,4}}, Hemorrhage) 													--Кровоизлияние
-	self.spells[26679]	= ComboDamage({ru={4,2}})																												--Смертельный бросок
-	self.spells[32645]	= ComboTimeDamage({ru={3,3}}) 																											--Отравление
+	self.spells[53]		= Damage({ru=1}) 																		--Удар в спину
+	self.spells[703]	= Damage({ru=1, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=3, tw=3, kr=3}) 					--Гаррота
+	self.spells[1329]	= DamageAndDamage({ru={1,2}}) 															--Расправа
+	self.spells[1752]	= Damage({ru=1}) 																		--Коварный удар
+	self.spells[1943]	= ComboTimeDamage({ru={2,3}, cn={3,3}, tw={3,3}, kr={3,3}}) 							--Рваная рана
+	self.spells[2098]	= ComboDamage({ru={2,2}}) 																--Потрошение
+	self.spells[5938]	= Damage({ru=1})																		--Отравляющий укол
+	self.spells[8676]	= Damage({ru=1}, Ambush) 																--Внезапный удар
+	self.spells[16511]	= DamageAndTimeDamage({ru={1,3}, de={1,4}, cn={1,4}, tw={1,4}, kr={1,4}}, Hemorrhage) 	--Кровоизлияние
+	self.spells[26679]	= ComboDamage({ru={4,2}})																--Смертельный бросок
+	self.spells[32645]	= ComboTimeDamage({ru={3,3}}) 															--Отравление
 	self.spells[51690]	= DamageAndDamage({ru={3,4}, en={4,5}, de={4,5}, es={4,5}, fr={4,5}, it={4,5}, pt={4,5}, cn={4,5}, tw={4,5}, kr={4,5}}, KillingSpree) 	--Череда убийств
-	self.spells[51723]	= Damage({ru=2}) 																														--Веер клинков
-	self.spells[73651]	= TimeHeal({ru=1, de=2, cn=2, tw=2, kr=2}, Recuperate) 																					--Заживление ран
-	self.spells[84617]	= Damage({ru=1}) 																														--Пробивающий удар
-	self.spells[111240]	= Damage({ru=2}) 																														--Устранение
-	self.spells[114014]	= Damage({ru=1}) 																														--Бросок сюрикена
-	self.spells[121411]	= ComboDamage({ru={5,2}}, CrimsonTempest)																								--Кровавый вихрь
-	self.spells[152150]	= Damage({ru=1, de=2, cn=2, tw=2, kr=3}, DeathFromAbove) 																				--Смерть с небес
+	self.spells[51723]	= Damage({ru=2}) 																		--Веер клинков
+	self.spells[73651]	= TimeHeal({ru=1, de=2, cn=2, tw=2, kr=2}, Recuperate) 									--Заживление ран
+	self.spells[84617]	= Damage({ru=1}) 																		--Пробивающий удар
+	self.spells[111240]	= Damage({ru=2}) 																		--Устранение
+	self.spells[114014]	= Damage({ru=1}) 																		--Бросок сюрикена
+	self.spells[121411]	= ComboDamage({ru={5,2}}, CrimsonTempest)												--Кровавый вихрь
+	self.spells[152150]	= Damage({ru=1, de=2, cn=2, tw=2, kr=3}, DeathFromAbove) 								--Смерть с небес
 end
