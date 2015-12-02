@@ -1,19 +1,6 @@
 local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
 local Glyphs, Race, Items = SD.Glyphs, SD.Race, SD.Items
 
-local classes = {}
-classes["DEATHKNIGHT"]	= SD.DeathKnight
-classes["DRUID"]		= SD.Druid
-classes["HUNTER"]		= SD.Hunter
-classes["MAGE"]			= SD.Mage
-classes["MONK"]			= SD.Monk
-classes["PALADIN"]		= SD.Paladin
-classes["PRIEST"]		= SD.Priest
-classes["ROGUE"]		= SD.Rogue
-classes["SHAMAN"]		= SD.Shaman
-classes["WARLOCK"]		= SD.Warlock
-classes["WARRIOR"]		= SD.Warrior
-
 local emptyClass = SD.Class:create(SD.ClassSpells)
 local currentClass = emptyClass
 
