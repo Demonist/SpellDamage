@@ -69,28 +69,28 @@ function DeathKnight:init()
 		data.timeDamage = match * UnitMana("player") / 15
 	end
 
-	self.spells[43265]	= TimeDamage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}) 	--Смерть и разложение
-	self.spells[45462]	= Damage({['ru']=1}) 												--Удар чумы
-	self.spells[45477]	= Damage({['ru']=1}) 												--Ледяное прикосновение
-	self.spells[45524]	= Custom(ChainsOfIce) 												--Ледяные оковы
-	self.spells[47541]	= DamageAndHeal({['ru']={1,2},}, DeathCoil) 						--Лик смерти
-	self.spells[47568]	= Mana({['ru']=1}, EmpowerRuneWeapon) 								--Усиление рунического оружия
-	self.spells[48743]	= Heal({['ru']=1}, DeathPact) 										--Смертельный союз
-	self.spells[49020]	= Damage({['ru']=1}) 												--Уничтожение
-	self.spells[49143]	= Damage({['ru']=1}) 												--Ледяной удар
-	self.spells[49184]	= Damage({['ru']=1}) 												--Воющий ветер
-	self.spells[49998]	= DamageAndHeal({['ru']={1,2}})										--Удар смерти
-	self.spells[50842]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}) 		--Вскипание крови
-	self.spells[55090]	= DamageAndDamage({['ru']={1,2}}) 									--Удар Плети
-	self.spells[85948]	= Damage({['ru']=1}) 												--Удар разложения
-	self.spells[108196]	= DamageAndHeal({['ru']={1,2}}, DeathSiphon)						--Смертельное поглощение
-	self.spells[114866]	= DamageAndTimeDamage({['ru']={1,5}}) 								--Жнец душ
-	self.spells[130735]	= DamageAndTimeDamage({['ru']={1,4}}) 								--Жнец душ
-	self.spells[130736]	= DamageAndTimeDamage({['ru']={1,4}}) 								--Жнец душ
-	self.spells[119975]	= Custom(Conversion) 												--Преобразование
-	self.spells[152279]	= TimeHeal({['ru']=1}, BreathOfSindragosa) 							--Дыхание Синдрагосы
-	self.spells[152280]	= TimeDamage({['ru']=2}) 											--Осквернение
-	self.spells[53717]	= Damage({['ru']=2, ['en']=1, ['es']=1, ['fr']=1, ['it']=1, ['pt']=1}) 	--Взрыв трупа
+	self.spells[43265]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 	--Смерть и разложение
+	self.spells[45462]	= Damage({ru=1}) 								--Удар чумы
+	self.spells[45477]	= Damage({ru=1}) 								--Ледяное прикосновение
+	self.spells[45524]	= Custom(ChainsOfIce) 							--Ледяные оковы
+	self.spells[47541]	= DamageAndHeal({ru={1,2},}, DeathCoil) 		--Лик смерти
+	self.spells[47568]	= Mana({ru=1}, EmpowerRuneWeapon) 				--Усиление рунического оружия
+	self.spells[48743]	= Heal({ru=1}, DeathPact) 						--Смертельный союз
+	self.spells[49020]	= Damage({ru=1}) 								--Уничтожение
+	self.spells[49143]	= Damage({ru=1}) 								--Ледяной удар
+	self.spells[49184]	= Damage({ru=1}) 								--Воющий ветер
+	self.spells[49998]	= DamageAndHeal({ru={1,2}})						--Удар смерти
+	self.spells[50842]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}) 		--Вскипание крови
+	self.spells[55090]	= DamageAndDamage({ru={1,2}}) 					--Удар Плети
+	self.spells[85948]	= Damage({ru=1}) 								--Удар разложения
+	self.spells[108196]	= DamageAndHeal({ru={1,2}}, DeathSiphon)		--Смертельное поглощение
+	self.spells[114866]	= DamageAndTimeDamage({ru={1,5}}) 				--Жнец душ
+	self.spells[130735]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
+	self.spells[130736]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
+	self.spells[119975]	= Custom(Conversion) 							--Преобразование
+	self.spells[152279]	= TimeHeal({ru=1}, BreathOfSindragosa) 			--Дыхание Синдрагосы
+	self.spells[152280]	= TimeDamage({ru=2}) 							--Осквернение
+	self.spells[53717]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 	--Взрыв трупа
 
 	-- Антимагический панцирь ?
 end

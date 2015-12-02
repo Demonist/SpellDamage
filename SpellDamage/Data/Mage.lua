@@ -37,7 +37,7 @@ function Mage:init()
 		if UnitExists("target") and UnitBuff("target", L["frost_bomb"]) then
 			local description = GetSpellDescription(112948)	--Ледяная бомба
 			if description then
-				local match = matchDigit(description, getLocaleIndex({['ru']=3, ['cn']=2, ['kr']=2}))
+				local match = matchDigit(description, getLocaleIndex({ru=3, cn=2, kr=2}))
 				if match then
 					data.damage = data.damage + match
 				end
@@ -48,7 +48,7 @@ function Mage:init()
 	--Ледяная глыба:
 	local IceBlock = function(data, description)
 		if Glyphs:contains(159486) then		--Символ возрождающего льда
-			local match = matchDigit(description, getLocaleIndex({['ru']=1}))
+			local match = matchDigit(description, getLocaleIndex({ru=1}))
 			if match then
 				data.type = SpellTimeHeal
 				data.timeHeal = UnitHealthMax("player") * 0.04 * match
@@ -60,7 +60,7 @@ function Mage:init()
 
 	--Метеор:
 	local Meteor = function(data, description)
-		local matchs = matchDigits(description, getLocaleIndex({['ru']={2,4}}))
+		local matchs = matchDigits(description, getLocaleIndex({ru={2,4}}))
 		if matchs then
 			data.type = SpellTimeDamage
 			data.timeDamage = matchs[1] + matchs[2] * 8
@@ -79,35 +79,35 @@ function Mage:init()
 		end
 	end
 
-	self.spells[10]		= TimeDamage({['ru']=1}) 																				--Снежная буря
-	self.spells[116]	= TimeDamage({['ru']=1}) 																				--Ледяная стрела
-	self.spells[120]	= Damage({['ru']=1})																					--Конус холода
-	self.spells[122]	= Damage({['ru']=2})																					--Кольцо льда
-	self.spells[133]	= Damage({['ru']=1})																					--Огненный шар
-	self.spells[1449]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}) 											--Чародейский взрыв
-	self.spells[2120]	= DamageAndTimeDamage({['ru']={1,2}, ['de']={1,3}, ['cn']={1,3}, ['tw']={1,3}, ['kr']={1,3}})			--Огненный столб
-	self.spells[2136]	= Damage({['ru']=1})																					--Огненный взрыв
-	self.spells[2948]	= Damage({['ru']=1}) 																					--Ожог
-	self.spells[5143]	= Damage({['ru']=3, ['en']=2, ['de']=2, ['es']=2, ['fr']=2, ['it']=2, ['pt']=2, ['cn']=2, ['tw']=2}, ArcaneMissiles) 	--Чародейские стрелы
-	self.spells[11366]	= DamageAndTimeDamage({['ru']={1,2}, ['de']={1,3}, ['cn']={1,3}, ['tw']={1,3}, ['kr']={1,3}})			--Огненная глыба
-	self.spells[11426]	= Absorb({['ru']=1, ['en']=2, ['de']=2, ['es']=2, ['fr']=2, ['it']=2, ['cn']=2, ['tw']=2, ['kr']=2}) 	--Ледяная преграда
-	self.spells[12051]	= ManaAndTimeMana({['ru']={1,2}, ['de']={1,3}, ['cn']={1,3}, ['tw']={1,3}, ['kr']={1,3}}, Evocation) 	--Прилив сил
-	self.spells[30451]	= Damage({['ru']=1})																					--Чародейская вспышка
-	self.spells[30455]	= Damage({['ru']=1}, IceLance) 																			--Ледяное копье
-	self.spells[31661]	= Damage({['ru']=1}) 																					--Дыхание дракона
-	self.spells[44425]	= Damage({['ru']=1})																					--Чародейский обстрел
-	self.spells[44457]	= TimeDamageAndTimeDamage({['ru']={1,4}, ['en']={1,3}, ['de']={2,4}, ['es']={1,3}, ['fr']={1,3}, ['it']={1,3}, ['pt']={1,3}, ['cn']={2,4}, ['tw']={2,4}, ['kr']={2,4}}) 				--Живая бомба
-	self.spells[44614]	= Damage({['ru']=1})																					--Стрела ледяного огня
-	self.spells[45438]	= Custom(IceBlock) 																						--Ледяная глыба
-	self.spells[84714]	= TimeDamage({['ru']=1, ['de']=2, ['kr']=2}) 															--Ледяной шар
-	self.spells[108853]	= CriticalDamage({['ru']=1}) 																			--Пламенный взрыв
-	self.spells[114923]	=  TimeDamage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2}) 												--Буря Пустоты
-	self.spells[153561]	= Custom(Meteor)																						--Метеор
-	self.spells[153595]	= Damage({['ru']=1, ['kr']=2}, CometStorm)																--Буря комет
-	self.spells[153626]	= TimeDamage({['ru']=2})																				--Чародейский шар
-	self.spells[157980]	= Damage({['ru']=1, ['de']=2, ['cn']=2, ['tw']=2, ['kr']=2}, Supernova) 								--Сверхновая
-	self.spells[157981]	= self.spells[157980] 																					--Взрывная волна
-	self.spells[157997]	= self.spells[157980] 																					--Кольцо обледенения
+	self.spells[10]		= TimeDamage({ru=1}) 																												--Снежная буря
+	self.spells[116]	= TimeDamage({ru=1}) 																												--Ледяная стрела
+	self.spells[120]	= Damage({ru=1})																													--Конус холода
+	self.spells[122]	= Damage({ru=2})																													--Кольцо льда
+	self.spells[133]	= Damage({ru=1})																													--Огненный шар
+	self.spells[1449]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}) 																							--Чародейский взрыв
+	self.spells[2120]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}})															--Огненный столб
+	self.spells[2136]	= Damage({ru=1})																													--Огненный взрыв
+	self.spells[2948]	= Damage({ru=1}) 																													--Ожог
+	self.spells[5143]	= Damage({ru=3, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, tw=2}, ArcaneMissiles) 													--Чародейские стрелы
+	self.spells[11366]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}})															--Огненная глыба
+	self.spells[11426]	= Absorb({ru=1, en=2, de=2, es=2, fr=2, it=2, cn=2, tw=2, kr=2}) 																	--Ледяная преграда
+	self.spells[12051]	= ManaAndTimeMana({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}, Evocation) 													--Прилив сил
+	self.spells[30451]	= Damage({ru=1})																													--Чародейская вспышка
+	self.spells[30455]	= Damage({ru=1}, IceLance) 																											--Ледяное копье
+	self.spells[31661]	= Damage({ru=1}) 																													--Дыхание дракона
+	self.spells[44425]	= Damage({ru=1})																													--Чародейский обстрел
+	self.spells[44457]	= TimeDamageAndTimeDamage({ru={1,4}, en={1,3}, de={2,4}, es={1,3}, fr={1,3}, it={1,3}, pt={1,3}, cn={2,4}, tw={2,4}, kr={2,4}}) 	--Живая бомба
+	self.spells[44614]	= Damage({ru=1})																													--Стрела ледяного огня
+	self.spells[45438]	= Custom(IceBlock) 																													--Ледяная глыба
+	self.spells[84714]	= TimeDamage({ru=1, de=2, kr=2}) 																									--Ледяной шар
+	self.spells[108853]	= CriticalDamage({ru=1}) 																											--Пламенный взрыв
+	self.spells[114923]	=  TimeDamage({ru=1, de=2, cn=2, tw=2}) 																							--Буря Пустоты
+	self.spells[153561]	= Custom(Meteor)																													--Метеор
+	self.spells[153595]	= Damage({ru=1, kr=2}, CometStorm)																									--Буря комет
+	self.spells[153626]	= TimeDamage({ru=2})																												--Чародейский шар
+	self.spells[157980]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}, Supernova) 																				--Сверхновая
+	self.spells[157981]	= self.spells[157980] 																												--Взрывная волна
+	self.spells[157997]	= self.spells[157980] 																												--Кольцо обледенения
 end
 
 -------------------------------------------------------------------------------

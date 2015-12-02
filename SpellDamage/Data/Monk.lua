@@ -118,47 +118,47 @@ function Monk:init()
 		data.damage = UnitHealthMax("player")
 	end
 
-	self.spells[100780] = AverageDamage({ru={1,2}}) 										--Дзуки
-	self.spells[108557] = self.spells[100780] 												--Дзуки
-	self.spells[108967] = self.spells[100780] 												--Дзуки
-	self.spells[109079] = self.spells[100780] 												--Дзуки
-	self.spells[115687] = self.spells[100780] 												--Дзуки
-	self.spells[115693] = self.spells[100780] 												--Дзуки
-	self.spells[115695] = self.spells[100780] 												--Дзуки
-	self.spells[115698] = self.spells[100780] 												--Дзуки
-	self.spells[125661] = self.spells[100780] 												--Дзуки
-	self.spells[128678] = self.spells[100780] 												--Дзуки
-	self.spells[130257] = self.spells[100780] 												--Дзуки
-	self.spells[100784] = AverageDamage({ru={1,2}}) 										--Нокаутирующий удар
-	self.spells[100787] = AverageDamage({ru={1,2}}) 										--Лапа тигра
-	self.spells[101545] = Damage({ru=2, de=3, cn=3, tw=3, kr=3}) 							--Удар летящего змея
-	self.spells[101546] = Custom(SpinningCraneKick) 										--Танцующий журавль
-	self.spells[107428] = AverageDamage({ru={1,2}}) 										--Удар восходящего солнца
-	self.spells[113656] = TimeDamage({ru=1, de=4, cn=2, tw=2, kr=2}) 						--Неистовые кулаки
-	self.spells[115008] = DamageAndHeal({ru={1,2}}) 										--Ци-полет
-	self.spells[115072] = DamageAndHeal({ru={1,2}}, ExpelHarm) 								--Устранение вреда
-	self.spells[115098] = DamageAndHeal({ru={1,2}})											--Волна ци
-	self.spells[115151] = TimeHeal({ru=1, de=2, cn=2, tw=2, kr=2}) 							--Заживляющий туман
-	self.spells[115175] = TimeHeal({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 					--Успокаивающий туман
-	self.spells[115181] = DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1.3}, kr={1,3}}, BreathOfFire) 	--Пламенное дыхание
-	self.spells[115288] = TimeMana({ru=1, de=4, cn=2, tw=2, kr=2})							--Будоражащий отвар
-	self.spells[115294]	= Custom(ManaTea) 													--Маначай
-	self.spells[115295] = Absorb({ru=2, en=1, de=1, es=1, fr=1, it=1, pt=1, tw=1, kr=1}) 	--Защита
-	self.spells[15310]	= Heal({ru=2, es=1, fr=1, pt=1}) 									--Восстановление сил
-	self.spells[116670] = Heal({ru=1}) 														--Духовный подъем
-	self.spells[116694] = Heal({ru=1}) 														--Благотворный туман
-	self.spells[116847] = TimeDamage({ru=1, de=3, cn=3, tw=3, kr=3}) 						--Порыв нефритового ветра
-	self.spells[116849] = Absorb({ru=1}) 													--Исцеляющий кокон
-	self.spells[117952] = TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 						--Сверкающая нефритовая молния
-	self.spells[121253] = AverageDamage({ru={1,2}, de={2,3}, cn={2,3}, tw={2,3},kr={2,3}}) 	--Удар бочонком
-	self.spells[123904] = TimeDamage({ru=4, en=5, de=5, es=5, fr=5, it=5, pt=5, cn=5, tw=5, kr=5}, InvokeXuenTheWhiteTiger) 	--Призыв Сюэня, Белого Тигра
-	self.spells[123986] = DamageAndHeal({ru=2,3}) 											--Выброс ци
+	self.spells[100780] = AverageDamage({ru={1,2}}) 																																						--Дзуки
+	self.spells[108557] = self.spells[100780] 																																								--Дзуки
+	self.spells[108967] = self.spells[100780] 																																								--Дзуки
+	self.spells[109079] = self.spells[100780] 																																								--Дзуки
+	self.spells[115687] = self.spells[100780] 																																								--Дзуки
+	self.spells[115693] = self.spells[100780] 																																								--Дзуки
+	self.spells[115695] = self.spells[100780] 																																								--Дзуки
+	self.spells[115698] = self.spells[100780] 																																								--Дзуки
+	self.spells[125661] = self.spells[100780] 																																								--Дзуки
+	self.spells[128678] = self.spells[100780] 																																								--Дзуки
+	self.spells[130257] = self.spells[100780] 																																								--Дзуки
+	self.spells[100784] = AverageDamage({ru={1,2}}) 																																						--Нокаутирующий удар
+	self.spells[100787] = AverageDamage({ru={1,2}}) 																																						--Лапа тигра
+	self.spells[101545] = Damage({ru=2, de=3, cn=3, tw=3, kr=3}) 																																			--Удар летящего змея
+	self.spells[101546] = Custom(SpinningCraneKick) 																																						--Танцующий журавль
+	self.spells[107428] = AverageDamage({ru={1,2}}) 																																						--Удар восходящего солнца
+	self.spells[113656] = TimeDamage({ru=1, de=4, cn=2, tw=2, kr=2}) 																																		--Неистовые кулаки
+	self.spells[115008] = DamageAndHeal({ru={1,2}}) 																																						--Ци-полет
+	self.spells[115072] = DamageAndHeal({ru={1,2}}, ExpelHarm) 																																				--Устранение вреда
+	self.spells[115098] = DamageAndHeal({ru={1,2}})																																							--Волна ци
+	self.spells[115151] = TimeHeal({ru=1, de=2, cn=2, tw=2, kr=2}) 																																			--Заживляющий туман
+	self.spells[115175] = TimeHeal({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 																																	--Успокаивающий туман
+	self.spells[115181] = DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1.3}, kr={1,3}}, BreathOfFire) 																							--Пламенное дыхание
+	self.spells[115288] = TimeMana({ru=1, de=4, cn=2, tw=2, kr=2})																																			--Будоражащий отвар
+	self.spells[115294]	= Custom(ManaTea) 																																									--Маначай
+	self.spells[115295] = Absorb({ru=2, en=1, de=1, es=1, fr=1, it=1, pt=1, tw=1, kr=1}) 																													--Защита
+	self.spells[15310]	= Heal({ru=2, es=1, fr=1, pt=1}) 																																					--Восстановление сил
+	self.spells[116670] = Heal({ru=1}) 																																										--Духовный подъем
+	self.spells[116694] = Heal({ru=1}) 																																										--Благотворный туман
+	self.spells[116847] = TimeDamage({ru=1, de=3, cn=3, tw=3, kr=3}) 																																		--Порыв нефритового ветра
+	self.spells[116849] = Absorb({ru=1}) 																																									--Исцеляющий кокон
+	self.spells[117952] = TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 																																		--Сверкающая нефритовая молния
+	self.spells[121253] = AverageDamage({ru={1,2}, de={2,3}, cn={2,3}, tw={2,3},kr={2,3}}) 																													--Удар бочонком
+	self.spells[123904] = TimeDamage({ru=4, en=5, de=5, es=5, fr=5, it=5, pt=5, cn=5, tw=5, kr=5}, InvokeXuenTheWhiteTiger) 																				--Призыв Сюэня, Белого Тигра
+	self.spells[123986] = DamageAndHeal({ru=2,3}) 																																							--Выброс ци
 	self.spells[124081]	= TimeDamageAndTimeHeal({ru={1,2,7,8}, en={1,2,6,7}, de={2,4,7,8}, es={1,2,6,7}, fr={1,2,6,7}, it={1,2,6,7}, pt={1,2,6,7}, cn={2,4,7,8}, tw={2,4,7,8}, kr={2,4,7,8}}, ZenSphere) 	--Сфера дзен
-	self.spells[124682] = TimeHeal({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 					--Окутывающий туман
-	self.spells[152174] = DamageAndTimeDamage({ru={3,4}}, ChiExplosion1) 					--Взрыв ци
-	self.spells[157675] = HealAndTimeHeal({ru={3,4}}, ChiExplosion2) 						--Взрыв ци
-	self.spells[157676] = Damage({ru={3,4}}, ChiExplosion3) 								--Взрыв ци
-	self.spells[152175] = AverageDamage({ru={2,3}, de={3,4}, cn={3,4}, tw={3,4}, kr={3,4}}) --Ураганный удар
-	self.spells[157535]	= TimeHeal({ru=2, de=3, cn=3, tw=3}, BreathOfTheSerpent) 			--Дыхание Змеи
-	self.spells[115080]	= Custom(TouchOfDeath) 												--Смертельное касание
+	self.spells[124682] = TimeHeal({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 																																	--Окутывающий туман
+	self.spells[152174] = DamageAndTimeDamage({ru={3,4}}, ChiExplosion1) 																																	--Взрыв ци
+	self.spells[157675] = HealAndTimeHeal({ru={3,4}}, ChiExplosion2) 																																		--Взрыв ци
+	self.spells[157676] = Damage({ru={3,4}}, ChiExplosion3) 																																				--Взрыв ци
+	self.spells[152175] = AverageDamage({ru={2,3}, de={3,4}, cn={3,4}, tw={3,4}, kr={3,4}}) 																												--Ураганный удар
+	self.spells[157535]	= TimeHeal({ru=2, de=3, cn=3, tw=3}, BreathOfTheSerpent) 																															--Дыхание Змеи
+	self.spells[115080]	= Custom(TouchOfDeath) 																																								--Смертельное касание
 end

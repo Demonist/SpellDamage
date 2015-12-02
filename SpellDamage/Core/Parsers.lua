@@ -69,9 +69,22 @@ function SD.SimpleSpell:getData(description)
 	return nil
 end
 
-function SD.Damage(indexes, computeFunc) return SD.SimpleSpell:create(SpellDamage, indexes, computeFunc); end
+function SD.Damage(indexes, computeFunc)
+	if indexes == {ru=1} and not computeFunc then
+		if not SD.DamageCache then SD.DamageCache = SD.SimpleSpell:create(SpellDamage, indexes, nil); end
+		return SD.DamageCache
+	end
+	return SD.SimpleSpell:create(SpellDamage, indexes, computeFunc)
+end
+function SD.Heal(indexes, computeFunc)
+	if indexes == {ru=1} and not computeFunc then
+		if not SD.HealCache then SD.HealCache = SD.SimpleSpell:create(SpellHeal, indexes, nil); end
+		return SD.HealCache
+	end
+	return SD.SimpleSpell:create(SpellHeal, indexes, computeFunc)
+end
+
 function SD.TimeDamage(indexes, computeFunc) return SD.SimpleSpell:create(SpellTimeDamage, indexes, computeFunc); end
-function SD.Heal(indexes, computeFunc) return SD.SimpleSpell:create(SpellHeal, indexes, computeFunc); end
 function SD.TimeHeal(indexes, computeFunc) return SD.SimpleSpell:create(SpellTimeHeal, indexes, computeFunc); end
 function SD.Mana(indexes, computeFunc) return SD.SimpleSpell:create(SpellMana, indexes, computeFunc); end
 function SD.TimeMana(indexes, computeFunc) return SD.SimpleSpell:create(SpellTimeMana, indexes, computeFunc); end
