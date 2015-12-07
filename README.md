@@ -37,5 +37,12 @@ This addon supports data displaying on a macros. For this just add to macros cod
 
 More in [screenshots folder](https://github.com/Demonist/SpellDamage/tree/master/screenshots/).
 
+#Dev mode
+Since 0.9.2.3 version was added *dev mode* option.  
+It may useful only for developers and testers. This mode is activated by command **/sd dev**.  
+In this mode after reloading the UI, this addon check all spells for all classes. If has a error - it will be showed like Lua error. So *dev mode* require *Show Lua errors* option is enable.
+
+Also strongly recommend to use the [BugSack](http://www.curse.com/addons/wow/bugsack) addon in *dev mode*.
+
 #Have a question?
 Write - **demonist616@gmail.com**

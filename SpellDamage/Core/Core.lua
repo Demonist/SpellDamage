@@ -152,20 +152,20 @@ function SD.Class:updateButton(button, spellId)
 			button.centerText:SetText("(".. shortNumber(data.timeDamage) ..")")
 			button.centerText:SetTextColor(1, 1, 0, 1)
 		elseif data.type == SpellHeal then
-			button.bottomText:SetText( shortNumber(data.heal) )
-			button.bottomText:SetTextColor(0, 1, 0, 1)
+			button.centerText:SetText( shortNumber(data.heal) )
+			button.centerText:SetTextColor(0, 1, 0, 1)
 		elseif data.type == SpellTimeHeal then
-			button.bottomText:SetText("(".. shortNumber(data.timeHeal) ..")")
-			button.bottomText:SetTextColor(0, 1, 0, 1)
+			button.centerText:SetText("(".. shortNumber(data.timeHeal) ..")")
+			button.centerText:SetTextColor(0, 1, 0, 1)
 		elseif data.type == SpellMana then
-			button.bottomText:SetText( shortNumber(data.mana) )
-			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
+			button.centerText:SetText( shortNumber(data.mana) )
+			button.centerText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif data.type == SpellTimeMana then
-			button.bottomText:SetText("(".. shortNumber(data.timeMana) ..")")
-			button.bottomText:SetTextColor(0.5, 0.5, 1, 1)
+			button.centerText:SetText("(".. shortNumber(data.timeMana) ..")")
+			button.centerText:SetTextColor(0.5, 0.5, 1, 1)
 		elseif data.type == SpellAbsorb then
-			button.bottomText:SetText( shortNumber(data.absorb) )
-			button.bottomText:SetTextColor(1, 0.5, 1, 1)
+			button.centerText:SetText( shortNumber(data.absorb) )
+			button.centerText:SetTextColor(1, 0.5, 1, 1)
 		elseif data.type == SpellDamageAndTimeDamage then
 			button.centerText:SetText( shortNumber(data.damage) )
 			button.centerText:SetTextColor(1, 1, 0, 1)
@@ -268,6 +268,29 @@ end
 --
 
 SD.classes = {}
+
+--
+
+function SD.toogleDevMode()
+	if not SpellDamageStorage then
+		SpellDamageStorage = {}
+		SpellDamageStorage["dev"] = true
+	elseif not SpellDamageStorage["dev"] then
+		SpellDamageStorage["dev"] = true
+	else
+		SpellDamageStorage["dev"] = not SpellDamageStorage["dev"]
+	end
+
+ 	if GetCVar("scriptErrors") ~= "1" then
+ 		local str = "|cFFffff00SpellDamage:|r |cFFff5555Error!|r To use dev mode you must enabled |cFFccccccShow Lua errors|r option."
+ 		if not IsAddOnLoaded("BugSack") then str = str + " Also strongly recommend to install |cFFccccccBugSack|r addon."; end
+ 		SpellDamageStorage["dev"] = false
+		DEFAULT_CHAT_FRAME:AddMessage(str)
+	elseif not IsAddOnLoaded("BugSack") then
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Strongly recommend to install |cFFccccccBugSack|r addon.")
+	end
+end
+
 function SD.checkSpells()
 	local str = ""
 	for className, class in pairs(SD.classes) do

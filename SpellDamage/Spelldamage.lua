@@ -135,7 +135,7 @@ local function EventHandler(self, event, ...)
 		if addonDisableReason ~= DisableReason_Unknown then return; end
 		Glyphs:update()
 
-		-- SD.checkSpells()
+		if SpellDamageStorage and SpellDamageStorage["dev"] then SD.checkSpells(); end
 
 		currentClass = SD.classes[className]
 		if currentClass then currentClass:init(); end
@@ -145,6 +145,7 @@ local function EventHandler(self, event, ...)
 
 	if event == "CVAR_UPDATE" then
 		local variable = select(1, ...)
+		print(variable)
 		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements(); end
 	end
 
@@ -322,13 +323,18 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.2")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.3 beta")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
  			DEFAULT_CHAT_FRAME:AddMessage("   "..itemsState())
  		end
  		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
+ 		if SpellDamageStorage and SpellDamageStorage["dev"] then DEFAULT_CHAT_FRAME:AddMessage("   Dev mode |cFFc0ffc0enabled|r"); end
+ 	elseif msg == "dev" then
+ 		SD.toogleDevMode()
+ 		if SpellDamageStorage["dev"] then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Dev mode |cFFc0ffc0enabled|r");
+ 		else DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Dev mode |cFFffc0c0disabled|r"); end
  	else
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_commands_list"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..L["chat_command_status"])

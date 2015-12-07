@@ -128,3 +128,5 @@ function Paladin:init()
 	self.spells[157048]	= Damage({ru=1}) 											--Окончательный приговор
 	self.spells[31884]	= Custom(AvengingWrath) 									--Гнев карателя
 end
+
+--Молот гнева

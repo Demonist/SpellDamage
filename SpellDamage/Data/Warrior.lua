@@ -34,10 +34,10 @@ function Warrior:init()
 					data.damage = match
 				end
 			elseif currentSpecId == 72 then		--Неистовство
-				local matchs = matchDigits(description, {2, 3})
+				local matchs = matchDigits(description, {2,3})
 				if matchDigits then
 					data.type = SpellDamage
-					data.damage = matchs[2] + matchs[3]
+					data.damage = matchs[1] + matchs[2]
 				end
 			else
 				data.type = SpellEmpty			--Защита"
@@ -46,8 +46,7 @@ function Warrior:init()
 	end
 
 	--Казнь:
-	local Execute = function(data)
-		data.mana = 30
+	local Execute = function(data, match, description)
 		local currentSpecNum = GetSpecialization()
 		if currentSpecNum then
 			local currentSpecId = GetSpecializationInfo(currentSpecNum)
@@ -57,6 +56,11 @@ function Warrior:init()
 					data.damage = data.damage + match
 				end
 			end
+		end
+
+		if Glyphs:contains(146971) then 	--Символ палача
+			data.type = SpellDamageAndMana
+			data.mana = 30
 		end
 	end
 
@@ -116,7 +120,7 @@ function Warrior:init()
 	self.spells[1464]	= Damage({ru=1}) 																	--Мощный удар
 	self.spells[1680]	= Custom(Whirlwind) 																--Вихрь
 	self.spells[1715]	= Damage({ru=1}) 																	--Подрезать сухожилия
-	self.spells[5308]	= DamageAndMana({ru={1,2}}, Execute) 												--Казнь
+	self.spells[5308]	= Damage({ru=1}, Execute) 															--Казнь
 	self.spells[163201]	= self.spells[5308]																	--Казнь
 	self.spells[6343]	= Damage({ru=2})																	--Удар грома
 	self.spells[6544]	= Damage({ru=2, en=1, es=1, fr=1, it=1}) 											--Героический прыжок
@@ -128,7 +132,7 @@ function Warrior:init()
 	self.spells[34428]	= DamageAndHeal({ru={1,2}}, VictoryRush) 											--Победный раж
 	self.spells[46924]	= Custom(Bladestorm) 																--Вихрь клинков
 	self.spells[46968]	= Damage({ru=1, de=2, kr=2})														--Ударная волна
-	self.spells[55694]	= HealAndTimeHeal({ru={1, 2}, cn={1,3}, tw={1,3}, kr={1,3}}, EnragedRegeneration) 	--Безудержное восстановление
+	self.spells[55694]	= HealAndTimeHeal({ru={1,2}, cn={1,3}, tw={1,3}, kr={1,3}}, EnragedRegeneration) 	--Безудержное восстановление
 	self.spells[57755]	= Damage({ru=1})																	--Героический бросок
 	self.spells[64382]	= Damage({ru=1})																	--Сокрушительный бросок
 	self.spells[85288]	= DamageAndDamage({ru={1,2}}) 														--Яростный выпад
@@ -146,4 +150,3 @@ function Warrior:init()
 	self.spells[176318]	= self.spells[176289]																--Стенолом – левая рука
 	self.spells[163558]	= self.spells[5308] 																--Внезапная казнь
 end
---фури: вихрь, вихрь клинков, Опустошитель, Безудержное восстановление, Еазнь 5308, Удар громовержца, сокрушительный бросок, 

@@ -103,14 +103,12 @@ function Mage:init()
 	self.spells[108853]	= CriticalDamage({ru=1}) 															--Пламенный взрыв
 	self.spells[114923]	= TimeDamage({ru=1, de=2, cn=2, tw=2}) 												--Буря Пустоты
 	self.spells[153561]	= Custom(Meteor)																	--Метеор
-	self.spells[153595]	= Damage({ru=1, kr=2}, CometStorm)													--Буря комет
+	self.spells[153595]	= Damage({ru=2, kr=3}, CometStorm)													--Буря комет
 	self.spells[153626]	= TimeDamage({ru=2})																--Чародейский шар
 	self.spells[157980]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}, Supernova) 								--Сверхновая
 	self.spells[157981]	= self.spells[157980] 																--Взрывная волна
 	self.spells[157997]	= self.spells[157980] 																--Кольцо обледенения
 end
-
---сверх нова, ледяная преграда,
 
 -------------------------------------------------------------------------------
 

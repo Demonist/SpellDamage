@@ -81,7 +81,7 @@ function Priest:init()
 		data.timeHeal = match * 15
 	end
 
-	self.spells[17]		= Absorb({ru=1}, PowerWordShield) 													--Слово силы: Щит
+	self.spells[17]		= Absorb({ru=1}, PowerWordShield) 														--Слово силы: Щит
 	self.spells[139]	= Custom(Renew) 																		--Обновление
 	self.spells[585]	= Damage({ru=1}, Smite) 																--Кара
 	self.spells[589]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 				--Слово Тьмы: Боль
@@ -110,7 +110,7 @@ function Priest:init()
 	self.spells[120644]	= Damage({ru=2}) 																		--Сияние
 	self.spells[121135]	= Heal({ru=1}) 																			--Каскад
 	self.spells[127632]	= Damage({ru=1}) 																		--Каскад
-	self.spells[126135]	= TimeHeal({ru=1, en=3, de=4, es=4, fr=2, it=2, pt=2, cn=4, tw=4, kr=4})				--Колодец Света
+	self.spells[126135]	= TimeHeal({ru=3, de=4, es=2, fr=2, it=2, pt=2, cn=4, tw=4, kr=4})						--Колодец Света
 	self.spells[129250]	= DamageAndTimeDamage({ru={1,3}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 				--Слово силы: Утешение
 	self.spells[132157]	= DamageAndHeal({ru={1,3}, en={1,5}, de={2,5}, it={1,5}, cn={2,5}, tw={2,5}, kr={2,5}}) --Кольцо света
 	self.spells[152116]	= Heal({ru=1}) 																			--Спасительная сила
@@ -120,8 +120,7 @@ function Priest:init()
 	self.spells[129197]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 											--Безумие
 	self.spells[179338]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 													--Полное безумие
 	self.spells[108945]	= Custom(AngelicBulwark) 																--Божественный оплот
-	self.spells[88685]	= TimeHeal({ru=1, de=4, cn=3, tw=3, kr=3}, HolyWordSanctuary) 							--Слово Света: Святилище
+	self.spells[88685]	= TimeHeal({ru=2, de=4, es=1, cn=3, pt=1, tw=3, kr=3}, HolyWordSanctuary) 				--Слово Света: Святилище
 end
 
 -- Подчиняющий разум ?
---слово света святилище, обновление, щит, гим, колодец, связующее обновление.

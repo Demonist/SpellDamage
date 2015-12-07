@@ -21,8 +21,8 @@ L["locale_error_fixed"] = "Excelent! Settings changed and |cFFffff00SpellDamage|
 L["addon_off_language"] = "|cFFffff00SpellDamage|r addon is disabled becouse unsupported locale."
 L["addon_off_average"] = "|cFFffff00SpellDamage|r addon is disabled becouse average values settings."
 
-L["chat_items_on"] = ""
-L["chat_items_off"] = ""
+L["chat_items_on"] = "Display item's data |cFFc0ffc0enabled|r"
+L["chat_items_off"] = "Display item's data |cFFffc0c0disabled|r"
 L["chat_errors_on"] = "Errors display |cFFc0ffc0enabled|r"
 L["chat_errors_off"] = "Errors display |cFFffc0c0disabled|r"
 L["chat_auto_errors_on"] = "Auto off errors display |cFFc0ffc0enabled|r"

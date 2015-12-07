@@ -1,4 +1,7 @@
-﻿0.9.2.2
+﻿0.9.2.3
+MORE bugfixes. Added 'dev mode'.
+
+0.9.2.2
 More bugfixes.
 
 0.9.2.1
