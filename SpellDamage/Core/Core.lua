@@ -179,7 +179,7 @@ function SD.Class:updateButton(button, spellId)
 		elseif data.type == SpellDamageAndHeal then
 			button.centerText:SetText( shortNumber(data.damage) )
 			button.centerText:SetTextColor(1, 1, 0, 1)
-			button.bottomText:SetText("(".. shortNumber(data.heal) ..")")
+			button.bottomText:SetText(shortNumber(data.heal))
 			button.bottomText:SetTextColor(0, 1, 0, 1)
 		elseif data.type == SpellTimeDamageAndTimeHeal then
 			button.centerText:SetText("(".. shortNumber(data.timeDamage) ..")")

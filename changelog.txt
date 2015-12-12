@@ -1,4 +1,7 @@
-﻿0.9.2.3
+﻿0.9.2.4
+Fixed DamageAndHeal spells display.
+
+0.9.2.3
 MORE bugfixes. Added 'dev mode'.
 
 0.9.2.2
