@@ -145,7 +145,6 @@ local function EventHandler(self, event, ...)
 
 	if event == "CVAR_UPDATE" then
 		local variable = select(1, ...)
-		print(variable)
 		if variable == "SHOW_POINTS_AS_AVG" then checkRequirements(); end
 	end
 
@@ -323,7 +322,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.4 beta")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.2.5")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
