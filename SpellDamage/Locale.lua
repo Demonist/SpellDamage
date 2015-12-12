@@ -171,12 +171,12 @@ end
 --------------------------------   koKR:   -------------------------------------
 
 if locale == "koKR" then
-	L["daggers"] = ""
-	L["lightning_shield"] = ""
-	L["frost_bomb"] = ""
-	L["haunt"] = ""
-	L["dizzying_haze"] = ""
-	L["item_use"] = ""
+	L["daggers"] = "단검"
+	L["lightning_shield"] = "번개 보호막"
+	L["frost_bomb"] = "냉기폭탄"
+	L["haunt"] = "유령 출몰"
+	L["dizzying_haze"] = "술안개"
+	L["item_use"] = "사용 효과"
 	L["holy_fire"] = "신성한 불꽃"
 	L["power_word_solace"] = "신의 권능: 위안"
 end

@@ -1,4 +1,7 @@
-﻿0.9.2.5
+﻿0.9.3.0
+Added delimiters remove. Fixed koKR locale bug.
+
+0.9.2.5
 Remove some debug print. Release version.
 
 0.9.2.4

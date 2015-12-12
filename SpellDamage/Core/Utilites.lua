@@ -21,12 +21,25 @@
 	return string.format("%d", number)
 end
 
+local d1, d2
+local function removeDelimiters(str)
+	d1, d2 = str:match("(%d+)%.(%d%d%d)")
+	while d1 and d2 do
+		str = str:gsub(d1.."."..d2, d1..d2)
+		d1, d2 = str:match("(%d+)%.(%d%d%d)")
+	end
+	return str
+end
+
 function SD.matchDigit(str, index)
 	local i = 1
-	for match in str:gmatch("%d+[%.,]?%d*") do
+	for match in str:gmatch("%d+[%.,]?%d*[%.,]?%d*[%.,]?%d*") do
 		if i == index then
 			local m = match:gsub(",", ".")
+			m = removeDelimiters(m)
 			return tonumber(m)
+		elseif i > index then
+			return nil
 		end
 		i = i + 1
 	end
@@ -37,12 +50,13 @@ function SD.matchDigits(str, indexes)
 	local ret = {}
 
 	local numbers = {}
-	for match in str:gmatch("%d+[%.,]?%d*") do
+	for match in str:gmatch("%d+[%.,]?%d*[%.,]?%d*[%.,]?%d*") do
 		local m = match:gsub(",", ".")
+		m = removeDelimiters(m)
 		table.insert(numbers, tonumber(m))
 	end
 
-	for k,index in ipairs(indexes) do
+	for _,index in ipairs(indexes) do
 		if #numbers >= index then table.insert(ret, numbers[index]);
 		else return nil; end
 	end
