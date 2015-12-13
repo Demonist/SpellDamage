@@ -1,4 +1,7 @@
-﻿0.9.3.1
+﻿0.9.3.2
+Added Paladin's "Consecration" and Shaman's "Unleash Life".
+
+0.9.3.1
 Fixed Death Knight's "Breath of Sindragosa" and "Defile".
 Fixed Priest's "Power Word: Solace".
 

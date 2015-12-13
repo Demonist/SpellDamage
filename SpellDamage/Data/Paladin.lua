@@ -127,6 +127,7 @@ function Paladin:init()
 	self.spells[130552]	= self.spells[85673] 										--Резкое слово
 	self.spells[157048]	= Damage({ru=1}) 											--Окончательный приговор
 	self.spells[31884]	= Custom(AvengingWrath) 									--Гнев карателя
+	self.spells[159556]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 				--Освящение
 end
 
 --Молот гнева
