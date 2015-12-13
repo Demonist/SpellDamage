@@ -28,6 +28,8 @@ function Priest:init()
 				data.type = SpellHealAndTimeHeal
 				data.heal = matchs[1]
 				data.timeHeal = matchs[2]
+			else
+				data.type = SpellEmpty
 			end
 		else
 			local match = matchDigit(description, getLocaleIndex({ru=1, de=2, tw=2, kr=2}))
@@ -111,7 +113,7 @@ function Priest:init()
 	self.spells[121135]	= Heal({ru=1}) 																			--Каскад
 	self.spells[127632]	= Damage({ru=1}) 																		--Каскад
 	self.spells[126135]	= TimeHeal({ru=3, de=4, es=2, fr=2, it=2, pt=2, cn=4, tw=4, kr=4})						--Колодец Света
-	self.spells[129250]	= DamageAndTimeDamage({ru={1,3}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 				--Слово силы: Утешение
+	self.spells[129250]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 				--Слово силы: Утешение
 	self.spells[132157]	= DamageAndHeal({ru={1,3}, en={1,5}, de={2,5}, it={1,5}, cn={2,5}, tw={2,5}, kr={2,5}}) --Кольцо света
 	self.spells[152116]	= Heal({ru=1}) 																			--Спасительная сила
 	self.spells[152118]	= Absorb({ru=1, de=2, cn=2, tw=2, kr=2}) 												--Ясность воли

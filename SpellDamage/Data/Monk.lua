@@ -130,8 +130,6 @@ function Monk:init()
 	self.spells[115693] = self.spells[100780] 																					--Дзуки
 	self.spells[115695] = self.spells[100780] 																					--Дзуки
 	self.spells[115698] = self.spells[100780] 																					--Дзуки
-	self.spells[125661] = self.spells[100780] 																					--Дзуки
-	self.spells[128678] = self.spells[100780] 																					--Дзуки
 	self.spells[130257] = Damage({ru=1}) 																						--Дзуки
 	self.spells[100784] = AverageDamage({ru={1,2}}) 																			--Нокаутирующий удар
 	self.spells[100787] = AverageDamage({ru={1,2}}) 																			--Лапа тигра

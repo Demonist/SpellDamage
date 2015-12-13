@@ -65,9 +65,9 @@ function DeathKnight:init()
 		data.heal = UnitHealthMax("player") * 0.02 * UnitMana("player") / 5
 	end
 
-	--Дыхание Синдрагосы:
-	local BreathOfSindragosa = function(data, match)
-		data.timeDamage = match * UnitMana("player") / 15
+	--Осквернение:
+	local Defile = function(data)
+		data.timeDamage = data.timeDamage * 10
 	end
 
 	self.spells[43265]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 	--Смерть и разложение
@@ -89,8 +89,8 @@ function DeathKnight:init()
 	self.spells[130735]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
 	self.spells[130736]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
 	self.spells[119975]	= Custom(Conversion) 							--Преобразование
-	self.spells[152279]	= TimeDamage({ru=1}, BreathOfSindragosa) 		--Дыхание Синдрагосы
-	self.spells[152280]	= TimeDamage({ru=2}) 							--Осквернение
+	self.spells[152279]	= TimeDamage({ru=1}) 							--Дыхание Синдрагосы
+	self.spells[152280]	= TimeDamage({ru=2}, Defile) 					--Осквернение
 	self.spells[53717]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 	--Взрыв трупа
 
 	-- Антимагический панцирь ?
