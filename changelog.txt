@@ -1,4 +1,10 @@
-﻿0.9.3.2
+﻿0.9.3.3
+Fixed Monk's "Spinning Crane Kick" in zhCN and zhTW.
+Fixed Priest's "Mind Sear" in deDe, zhTW and koKR.
+Fixed Priest's "Binding Heal".
+Possible fixed Druid's "Ferocious Bite".
+
+0.9.3.2
 Added Paladin's "Consecration" and Shaman's "Unleash Life".
 
 0.9.3.1

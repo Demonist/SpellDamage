@@ -55,6 +55,16 @@ function Priest:init()
 		data.heal = data.heal * 2
 	end
 
+	--Связующее исцеление
+	local BindingHeal = function(data, match, description)
+		if Glyphs:contains(63248) then 	--Символ связующего исцеления
+			local value = matchDigit(description, getLocaleIndex({ru=2, es=1, fr=1, pt=1}))
+			if value then
+				data.heal = value
+			end
+		end
+	end
+
 	--Исповедь:
 	local Penance = function(data, description)
 		if UnitExists("target") and UnitIsFriend("player", "target") then
@@ -96,12 +106,12 @@ function Priest:init()
 	self.spells[15407]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 											--Пытка разума
 	self.spells[19236]	= Heal({ru=1}) 																			--Молитва отчаяния
 	self.spells[32379]	= Damage({ru=1}) 																		--Слово Тьмы: Смерть
-	self.spells[32546]	= Heal({ru=1}) 																			--Связующее исцеление
+	self.spells[32546]	= Heal({ru=1}, BindingHeal) 															--Связующее исцеление
 	self.spells[33076]	= TimeHeal({ru=1}) 																		--Молитва восстановления
 	self.spells[34861]	= Heal({ru=3, es=1, fr=1, it=1}) 														--Круг исцеления
 	self.spells[34914]	= TimeDamage({ru=1}) 																	--Прикосновение вампира
 	self.spells[47540]	= Custom(Penance) 																		--Исповедь
-	self.spells[48045]	= TimeDamage({ru=1, de=2, cn=2, kr=2})  							 					--Иссушение разума
+	self.spells[48045]	= TimeDamage({ru=1, de=3, cn=2, tw=3, kr=3})  							 				--Иссушение разума
 	self.spells[64843]	= TimeHeal({ru=2, de=3, es=1, fr=1, pt=1, tw=3, kr=3}) 				 					--Божественный гимн
 	self.spells[73510]	= Damage({ru=1}) 																		--Пронзание разума
 	self.spells[88625]	= Damage({ru=1}) 																		--Слово Света: Воздаяние

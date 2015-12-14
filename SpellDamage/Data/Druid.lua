@@ -42,6 +42,8 @@ function Druid:init()
 		local list = {4, 6, 8, 10, 12}
 		if Glyphs:contains(67598) then	--Символ свирепого укуса
 			list = {6, 8, 10, 12, 14}
+		elseif IsSpellKnown(1079) then 	--Разорвать
+			list = {5, 7, 9, 11, 13}
 		end
 		
 		local match = matchDigit(description, list[getComboPoints()])

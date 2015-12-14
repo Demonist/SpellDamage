@@ -38,7 +38,7 @@ function Monk:init()
 			end
 		end
 
-		local match = matchDigit(description, getLocaleIndex({ru=1, de=3, cn=2, tw=2, kr=2}))
+		local match = matchDigit(description, getLocaleIndex({ru=1, de=3, cn=3, tw=3, kr=2}))
 		if match then
 			data.type = SpellTimeDamage
 			data.timeDamage = match
