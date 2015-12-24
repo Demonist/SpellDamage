@@ -1,4 +1,7 @@
-﻿0.9.3.3
+﻿0.9.3.4
+Added power dependence in Warrior's "Execute" and Druids' "Ferocious Bite".
+
+0.9.3.3
 Fixed Monk's "Spinning Crane Kick" in zhCN and zhTW.
 Fixed Priest's "Mind Sear" in deDe, zhTW and koKR.
 Fixed Priest's "Binding Heal".

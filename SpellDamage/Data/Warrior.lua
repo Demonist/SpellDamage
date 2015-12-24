@@ -8,6 +8,8 @@ local Glyphs = SD.Glyphs
 --
 
 local Warrior = Class:create(ClassSpells)
+Warrior.dependFromPower = true
+Warrior.dependPowerTypes["RAGE"] = true
 SD.classes["WARRIOR"] = Warrior
 
 function Warrior:init()
@@ -46,7 +48,7 @@ function Warrior:init()
 	end
 
 	--Казнь:
-	local Execute = function(data, match, description)
+	local Execute1 = function(data, match, description)
 		local currentSpecNum = GetSpecialization()
 		if currentSpecNum then
 			local currentSpecId = GetSpecializationInfo(currentSpecNum)
@@ -55,6 +57,24 @@ function Warrior:init()
 				if match then
 					data.damage = data.damage + match
 				end
+			end
+		end
+
+		if Glyphs:contains(146971) then 	--Символ палача
+			data.type = SpellDamageAndMana
+			data.mana = 30
+		end
+	end
+
+	--Казнь:
+	local Execute2 = function(data, match, description)
+		local rage = UnitPower("player")
+		if rage > 10 then
+			rage = rage - 10
+			if rage > 30 then rage = 30; end
+			local match = matchDigit(description, 3)
+			if match then
+				data.damage = data.damage + (match * rage / 30)
 			end
 		end
 
@@ -120,8 +140,8 @@ function Warrior:init()
 	self.spells[1464]	= Damage({ru=1}) 																	--Мощный удар
 	self.spells[1680]	= Custom(Whirlwind) 																--Вихрь
 	self.spells[1715]	= Damage({ru=1}) 																	--Подрезать сухожилия
-	self.spells[5308]	= Damage({ru=1}, Execute) 															--Казнь
-	self.spells[163201]	= self.spells[5308]																	--Казнь
+	self.spells[5308]	= Damage({ru=1}, Execute1) 															--Казнь
+	self.spells[163201]	= Damage({ru=1}, Execute2)															--Казнь
 	self.spells[6343]	= Damage({ru=2})																	--Удар грома
 	self.spells[6544]	= Damage({ru=2, en=1, es=1, fr=1, it=1}) 											--Героический прыжок
 	self.spells[6572]	= DamageAndMana({ru={1, 3}, cn={1, 5}}) 											--Реванш

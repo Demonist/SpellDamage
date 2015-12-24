@@ -11,6 +11,7 @@ local Glyphs = SD.Glyphs
 local Druid = Class:create(ClassSpells)
 Druid.dependFromPower = true
 Druid.dependPowerTypes["COMBO_POINTS"] = true
+Druid.dependPowerTypes["ENERGY"] = true
 SD.classes["DRUID"] = Druid
 
 function Druid:init()
@@ -50,6 +51,13 @@ function Druid:init()
 		if match then
 			data.type = SpellDamage
 			data.damage = match
+
+			local energy = UnitPower("player")
+			if energy > 25 then
+				energy = energy - 25
+				if energy > 25 then energy = 25; end
+				data.damage = data.damage + data.damage * energy / 25
+			end
 		end
 	end
 
