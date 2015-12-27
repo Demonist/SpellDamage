@@ -66,7 +66,7 @@ local function createButtons()
 		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
 		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 		button.bottomText:SetPoint("BOTTOM", 0, 0)	
-		button.bottomText:SetPoint("LEFT", 0, 0)	
+		button.bottomText:SetPoint("LEFT", 0, 0)
 	end
 end
 
@@ -322,7 +322,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.3.4")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.3.5")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then

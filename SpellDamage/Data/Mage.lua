@@ -80,7 +80,7 @@ function Mage:init()
 	end
 
 	self.spells[10]		= TimeDamage({ru=1}) 																--Снежная буря
-	self.spells[116]	= TimeDamage({ru=1}) 																--Ледяная стрела
+	self.spells[116]	= Damage({ru=1}) 																--Ледяная стрела
 	self.spells[120]	= Damage({ru=1})																	--Конус холода
 	self.spells[122]	= Damage({ru=2})																	--Кольцо льда
 	self.spells[133]	= Damage({ru=1})																	--Огненный шар

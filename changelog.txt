@@ -1,4 +1,7 @@
-﻿0.9.3.4
+﻿0.9.3.5
+Fixed Mage's "Frostbolt".
+
+0.9.3.4
 Added power dependence in Warrior's "Execute" and Druids' "Ferocious Bite".
 
 0.9.3.3
