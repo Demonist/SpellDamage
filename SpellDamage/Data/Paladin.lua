@@ -107,6 +107,7 @@ function Paladin:init()
 	self.spells[20925]	= Absorb({ru=2, de=3, cn=3, tw=3, kr=3}, SacredShield)		--Священный щит
 	self.spells[148039]	= self.spells[20925] 										--Священный щит
 	self.spells[24275]	= Damage({ru=1}) 	 										--Молот гнева
+	self.spells[158392]	= self.spells[24275] 										--Молот гнева
 	self.spells[26573]	= TimeDamage({ru=1}) 										--Освящение
 	self.spells[31935]	= Damage({ru=1}) 											--Щит мстителя
 	self.spells[35395]	= Damage({ru=1}) 											--Удар воина Света
@@ -129,5 +130,3 @@ function Paladin:init()
 	self.spells[31884]	= Custom(AvengingWrath) 									--Гнев карателя
 	self.spells[159556]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 				--Освящение
 end
-
---Молот гнева

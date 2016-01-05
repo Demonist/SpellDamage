@@ -1,4 +1,8 @@
-﻿0.9.3.5
+﻿0.9.3.6
+Added one more Paladin's "Hammer of Wrath".
+Added "Healthstone" item.
+
+0.9.3.5
 Fixed Mage's "Frostbolt".
 
 0.9.3.4
