@@ -1,4 +1,7 @@
-﻿0.9.3.6
+﻿0.9.3.7
+Added Warlock's "Chaos Bolt".
+
+0.9.3.6
 Added one more Paladin's "Hammer of Wrath".
 Added "Healthstone" item.
 

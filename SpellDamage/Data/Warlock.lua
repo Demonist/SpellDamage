@@ -81,6 +81,7 @@ function Warlock:init()
 	self.spells[105174]	= DamageAndTimeDamage({ru={2,3}, de={2,4}, tw={2,4}, kr={2,4}}) 			--Рука Гул'дана
 	self.spells[114635]	= Heal({ru=1}, EmberTap) 													--Углеотвод
 	self.spells[116858]	= CriticalDamage({ru=1}) 													--Стрела Хаоса
+	self.spells[157701]	= CriticalDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 							--Стрела Хаоса
 	self.spells[152108]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}) 	 								--Катаклизм
 	self.spells[157695]	= Damage({ru=1}) 															--Демонический заряд
 	self.spells[603]	= TimeDamage({ru=1}) 														--Рок
