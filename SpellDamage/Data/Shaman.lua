@@ -78,4 +78,6 @@ function Shaman:init()
 	self.spells[108280]	= TimeHeal({ru=5, es=4, fr=4, it=4}, HealingTideTotem) 								--Тотем целительного прилива
 	self.spells[117014]	= Damage({ru=1}) 	 																--Удар духов стихии
 	self.spells[73685]	= Heal({ru=1}) 																		--Высвободить чары жизни
+	self.spells[114074]	= Damage({ru=1}) 																	--Поток лавы
+	self.spells[115356]	= DamageAndDamage({ru={1,2}}) 														--Удар ветра
 end

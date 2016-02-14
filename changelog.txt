@@ -1,4 +1,7 @@
-﻿0.9.3.7
+﻿0.9.3.8
+Added Shaman's "Lava Beam" and "Windstrike".
+
+0.9.3.7
 Added Warlock's "Chaos Bolt".
 
 0.9.3.6
