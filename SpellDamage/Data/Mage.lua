@@ -80,7 +80,7 @@ function Mage:init()
 	end
 
 	self.spells[10]		= TimeDamage({ru=1}) 																--Снежная буря
-	self.spells[116]	= Damage({ru=1}) 																--Ледяная стрела
+	self.spells[116]	= Damage({ru=1}) 																	--Ледяная стрела
 	self.spells[120]	= Damage({ru=1})																	--Конус холода
 	self.spells[122]	= Damage({ru=2})																	--Кольцо льда
 	self.spells[133]	= Damage({ru=1})																	--Огненный шар
@@ -88,7 +88,7 @@ function Mage:init()
 	self.spells[2120]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}})			--Огненный столб
 	self.spells[2136]	= Damage({ru=1})																	--Огненный взрыв
 	self.spells[2948]	= Damage({ru=1}) 																	--Ожог
-	self.spells[5143]	= Damage({ru=3, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, tw=2}, ArcaneMissiles) 	--Чародейские стрелы
+	self.spells[5143]	= TimeDamage({ru=3, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, tw=2}, ArcaneMissiles) --Чародейские стрелы
 	self.spells[11366]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}})			--Огненная глыба
 	self.spells[11426]	= Absorb({ru=1, en=2, de=2, es=2, fr=2, it=2, cn=2, tw=2, kr=2}) 					--Ледяная преграда
 	self.spells[12051]	= ManaAndTimeMana({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}, Evocation) 	--Прилив сил

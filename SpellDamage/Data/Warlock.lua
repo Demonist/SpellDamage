@@ -54,6 +54,11 @@ function Warlock:init()
 		data.heal = match * UnitHealthMax("player") / 100
 	end
 
+	--Стрела Хаоса:
+	local ChaosBolt = function(data)
+		data.damage = data.damage * 2 * (100 + GetRangedCritChance()) / 100
+	end
+
 	self.spells[172]	= TimeDamageHaunt({ru=1, de=2, cn=2, tw=2, kr=2}) 							--Порча
 	self.spells[348]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, tw={1,3}, kr={1,3}}) 	--Жертвенный огонь
 	self.spells[108686]	= DamageAndTimeDamage({ru={2,3}, de={2,4}, cn={2,4}, tw={2,4}, kr={2,4}}) 	--Жертвенный огонь
@@ -80,8 +85,8 @@ function Warlock:init()
 	self.spells[103103]	= TimeDamageHaunt({ru=1, cn=2, kr=2}) 										--Похищение души
 	self.spells[105174]	= DamageAndTimeDamage({ru={2,3}, de={2,4}, tw={2,4}, kr={2,4}}) 			--Рука Гул'дана
 	self.spells[114635]	= Heal({ru=1}, EmberTap) 													--Углеотвод
-	self.spells[116858]	= CriticalDamage({ru=1}) 													--Стрела Хаоса
-	self.spells[157701]	= CriticalDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 							--Стрела Хаоса
+	self.spells[116858]	= Damage({ru=1}, ChaosBolt) 												--Стрела Хаоса
+	self.spells[157701]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}, ChaosBolt) 						--Стрела Хаоса
 	self.spells[152108]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}) 	 								--Катаклизм
 	self.spells[157695]	= Damage({ru=1}) 															--Демонический заряд
 	self.spells[603]	= TimeDamage({ru=1}) 														--Рок

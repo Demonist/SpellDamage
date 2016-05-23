@@ -1,4 +1,8 @@
-﻿0.9.3.8
+﻿0.9.3.9
+Fixed Warlock's "Chaos Bolt".
+Changed Mage's "Arcane Missiles" type to DOT.
+
+0.9.3.8
 Added Shaman's "Lava Beam" and "Windstrike".
 
 0.9.3.7
