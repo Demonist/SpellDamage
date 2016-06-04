@@ -62,16 +62,28 @@ local function createButtons()
 		end
 	end
 
+	local fontName = "Fonts\\FRIZQT__.TTF"
+	local cx, cy = 0, 0
+	local bx, by = 0, 0
+	if SpellDamageStorage and SpellDamageStorage["font"] then
+		fontName = "Fonts\\"..SpellDamageStorage["font"]
+		if SpellDamageStorage["font"] == "ARIALN.TTF" then
+			cx = 2
+			cy = 3
+			bx = 2
+			by = 1
+		end
+	end
 	for _, button in ipairs(buttons) do   
 		button.centerText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
-		button.centerText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		button.centerText:SetPoint("CENTER", 0, 0)	
-		button.centerText:SetPoint("LEFT", 0, 0)
+		button.centerText:SetFont(fontName, 10, "OUTLINE")
+		button.centerText:SetPoint("CENTER", 0, cy)
+		button.centerText:SetPoint("LEFT", cx, 0)
 		
 		button.bottomText = button:CreateFontString(nil, nil, "GameFontNormalLeft")
-		button.bottomText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-		button.bottomText:SetPoint("BOTTOM", 0, 0)	
-		button.bottomText:SetPoint("LEFT", 0, 0)
+		button.bottomText:SetFont(fontName, 10, "OUTLINE")
+		button.bottomText:SetPoint("BOTTOM", 0, by)
+		button.bottomText:SetPoint("LEFT", bx, 0)
 	end
 end
 
@@ -140,7 +152,14 @@ local function EventHandler(self, event, ...)
 		if addonDisableReason ~= DisableReason_Unknown then return; end
 		Glyphs:update()
 
-		if SpellDamageStorage and SpellDamageStorage["dev"] then SD.checkSpells(); end
+		if SpellDamageStorage then
+			if SpellDamageStorage["dev"] ~= nil then SD.checkSpells(); end
+			if SpellDamageStorage["showItems"] ~= nil then showItems = SpellDamageStorage["showItems"]; end
+			if SpellDamageStorage["displayErrors"] ~= nil then SD.displayErrors = SpellDamageStorage["displayErrors"]; end
+		else
+			SpellDamageStorage = {}
+		end
+
 
 		currentClass = SD.classes[className]
 		if currentClass then currentClass:init(); end
@@ -302,6 +321,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		else
  			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Debug |cFFffc0c0disabled|r")
  		end
+
  	elseif msg == "events" then
  		eventDebuging = not eventDebuging
   		if eventDebuging then
@@ -309,13 +329,18 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		else
  			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Events display |cFFffc0c0disabled|r")
  		end
+
   	elseif msg == "items" and Items then
  		showItems = not showItems
+ 		if SpellDamageStorage then SpellDamageStorage["showItems"] = showItems; end
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..itemsState())
  		EventHandler(self, "ACTIONBAR_PAGE_CHANGED")
+
  	elseif msg == "errors" then
  		SD.displayErrors = not SD.displayErrors
+ 		if SpellDamageStorage then SpellDamageStorage["displayErrors"] = SD.displayErrors; end
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..errorsState())
+
  	elseif msg == "autoOffErrors" then
  		SD.autoOffDisplayErrors = not SD.autoOffDisplayErrors
  		if SD.autoOffDisplayErrors then
@@ -324,10 +349,23 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		else
  			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_auto_errors_off"])
  		end
+
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
+ 	
+ 	elseif msg == "font friz" then
+ 		if not SpellDamageStorage then SpellDamageStorage = {}; end
+ 		SpellDamageStorage["font"] = "FRIZQT__.TTF"
+ 		ReloadUI()
+
+ 	elseif msg == "font arial" then
+ 		if not SpellDamageStorage then SpellDamageStorage = {}; end
+ 		SpellDamageStorage["font"] = "ARIALN.TTF"
+ 		ReloadUI()
+	
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.4.0")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.5.0")
+ 	
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
@@ -335,10 +373,12 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		end
  		DEFAULT_CHAT_FRAME:AddMessage("   "..errorsState())
  		if SpellDamageStorage and SpellDamageStorage["dev"] then DEFAULT_CHAT_FRAME:AddMessage("   Dev mode |cFFc0ffc0enabled|r"); end
+ 	
  	elseif msg == "dev" then
  		SD.toogleDevMode()
  		if SpellDamageStorage["dev"] then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Dev mode |cFFc0ffc0enabled|r");
  		else DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Dev mode |cFFffc0c0disabled|r"); end
+ 	
  	else
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_commands_list"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd status|r - "..L["chat_command_status"])
@@ -347,6 +387,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		end
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd errors|r - "..L["chat_command_errors"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd macroshelp|r - "..L["chat_command_help"])
+ 		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd font (friz|arial)|r - "..L["chat_command_font"])
  		DEFAULT_CHAT_FRAME:AddMessage("   |cFFffff00/sd version|r - "..L["chat_command_version"])
  	end
 end

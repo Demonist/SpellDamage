@@ -22,9 +22,11 @@ _\*Actually, in some cases this addon calculate values if it needed. For example
 #Slash commands
 >**/sd** or **/spelldamage** - show commands list  
 >**/sd status** - show current settings  
->**/sd items** - enable/disable displays data on items 
+>**/sd items** - enable/disable displays data on items  
 >**/sd errors** - enable/disable errors printing in chat  
 >**/sd macroshelp** -  show help for macros usage  
+>**/sd font friz** -  set the _Friz Quadrata_ font on the action bars  
+>**/sd font arial** -  set the _Arial Narrow_ font on the action bars  
 >**/sd version** - show current addon version
 
 #Usage with macros

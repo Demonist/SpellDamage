@@ -1,4 +1,8 @@
-﻿0.9.4.0
+﻿0.9.5.0
+Added font change command.
+Fixed storage of "/sd errors" and "/sd items" commands.
+
+0.9.4.0
 Added Bartender4 addon support.
 
 0.9.3.10

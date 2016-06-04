@@ -35,6 +35,7 @@ L["chat_command_status"] = "show current addon settings"
 L["chat_command_items"] = "on/off display on items"
 L["chat_command_errors"] = "on/off display errors in chat"
 L["chat_command_help"] = "show addon macros help"
+L["chat_command_font"] = "change the action bar font (UI will be automatically reloaded)"
 L["chat_command_version"] = "show addon version"
 
 --------------------------------   ruRU:   -------------------------------------
@@ -74,6 +75,7 @@ if locale == "ruRU" then
 	L["chat_command_items"] = "включает или выключает показ значений на предметах"
 	L["chat_command_errors"] = "включает или выключает отображение ошибок"
 	L["chat_command_help"] = "отображает помощь по использованию аддона с макросами"
+	L["chat_command_font"] = "меняет шрифт на панели умений (интерфейс будет автоматически перезагружен)"
 	L["chat_command_version"] = "отображает текущую версию аддона"
 end
 
