@@ -4,7 +4,7 @@ Also displays some potions.
 
 #Restrictions
 Works only in WOW **6.2** version and only if **Display Point as Average** setting is **on**.   
-Supports user interfaces: standard, ElvUi, Dominos.
+Supports user interfaces: standard, ElvUi, Dominos, Bartender4.
 
 This addon doesn't works in Latin American Spanish (esMX) locale. Sorry.
 

@@ -1,4 +1,7 @@
-﻿0.9.3.10
+﻿0.9.4.0
+Added Bartender4 addon support.
+
+0.9.3.10
 Added Druid's "Sunfire".
 
 0.9.3.9

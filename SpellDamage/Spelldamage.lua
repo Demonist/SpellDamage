@@ -42,6 +42,11 @@ local function createButtons()
 			end
 		end
 		nonStandardUi = true
+	elseif IsAddOnLoaded("Bartender4") then
+		for i = 1, 160 do
+			table.insert(buttons, _G["BT4Button"..i])
+		end
+		nonStandardUi = true
 	else
 		for i = 1, 6 do
 			for j = 1, 12 do
@@ -322,7 +327,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  	elseif msg == "macroshelp" then
  		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["macroshelp"])
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.3.10")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.4.0")
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
  		if Items then
