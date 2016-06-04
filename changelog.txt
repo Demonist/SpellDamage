@@ -1,4 +1,7 @@
-﻿0.9.3.9
+﻿0.9.3.10
+Added Druid's "Sunfire".
+
+0.9.3.9
 Fixed Warlock's "Chaos Bolt".
 Changed Mage's "Arcane Missiles" type to DOT.
 

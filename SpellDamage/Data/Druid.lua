@@ -116,6 +116,7 @@ function Druid:init()
 	self.spells[6807]	= Damage({ru=1}) 																	--Трепка
 	self.spells[8921]	= DamageAndTimeDamage({ru={1,2}, cn={1,3}, tw={1,3}, kr={1,3}}) 					--Лунный огонь
 	self.spells[164812]	= self.spells[8921] 																--Лунный огонь
+	self.spells[93402]	= self.spells[8921] 																--Солнечный огонь
 	self.spells[8936]	= Custom(Regrowth)  																--Восстановление
 	self.spells[18562]	= Heal({ru=1}) 																		--Быстрое восстановление
 	self.spells[22568]	= Custom(FerociousBite) 															--Свирепый укус
