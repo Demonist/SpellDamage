@@ -41,14 +41,14 @@ L["chat_command_version"] = "show addon version"
 --------------------------------   ruRU:   -------------------------------------
 
 if locale == "ruRU" then
-	L["daggers"] = "Кинжалы"
-	L["lightning_shield"] = "Щит молний"
-	L["frost_bomb"] = "Ледяная бомба"
-	L["haunt"] = "Блуждающий дух"
-	L["dizzying_haze"] = "Хмельная дымка"
-	L["item_use"] = "Использование"
-	L["holy_fire"] = "Священный огонь"
-	L["power_word_solace"] = "Слово силы: Утешение"
+	-- L["daggers"] = "Кинжалы"
+	-- L["lightning_shield"] = "Щит молний"
+	-- L["frost_bomb"] = "Ледяная бомба"
+	-- L["haunt"] = "Блуждающий дух"
+	-- L["dizzying_haze"] = "Хмельная дымка"
+	-- L["item_use"] = "Использование"
+	-- L["holy_fire"] = "Священный огонь"
+	-- L["power_word_solace"] = "Слово силы: Утешение"
 
 	L["description_error"] = "Ошибка получения описания умения с"
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
