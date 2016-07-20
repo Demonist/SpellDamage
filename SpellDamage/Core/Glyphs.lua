@@ -8,9 +8,11 @@ end
 
 function Glyphs:update()
 	self.glyphs = {}
-	for i = 1, GetNumGlyphSockets() do
-		local enabled, _, _, id = GetGlyphSocketInfo(i, GetActiveSpecGroup())
-		if enabled == true and id then self.glyphs[id] = true end
+	if GetNumGlyphSockets and GetGlyphSocketInfo then
+		for i = 1, GetNumGlyphSockets() do
+			local enabled, _, _, id = GetGlyphSocketInfo(i, GetActiveSpecGroup())
+			if enabled == true and id then self.glyphs[id] = true end
+		end
 	end
 end
 
