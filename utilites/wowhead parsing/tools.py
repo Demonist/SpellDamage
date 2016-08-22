@@ -32,16 +32,18 @@ def clearReprint():
 		sys.stdout.flush()
 
 
-def find(string, startPattern, endPattern, start = 0):
+def find(string, startPattern, endPattern, start = 0, dumpFindError = True):
 	s = string.find(startPattern, start)
 	if s == -1:
-		dumpError('tools.find() can not find startPattern "%s" from start position %d in\n\n%s' % (startPattern, start, string))
+		if dumpFindError:
+			dumpError('tools.find() can not find startPattern "%s" from start position %d in\n\n%s' % (startPattern, start, string))
 		return None
 	s += len(startPattern)
 	
 	e = string.find(endPattern, s)
 	if e == -1:
-		dumpError('tools.find() can not find endPattern "%s" from position %d in\n\n%s' % (endPattern, s, string))
+		if dumpFindError:
+			dumpError('tools.find() can not find endPattern "%s" from position %d in\n\n%s' % (endPattern, s, string))
 		return None
 	return string[s:e]
 
