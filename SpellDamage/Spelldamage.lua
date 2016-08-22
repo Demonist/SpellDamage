@@ -20,7 +20,7 @@ local delayedUpdateTime = GetTime()
 
 local updatingHistory = {}
 
-local DisableReason_Unknown, DisableReason_Language, DisableReason_Average = 0, 1, 2
+local DisableReason_Unknown, DisableReason_Language, DisableReason_Average, DisableReason_Version = 0, 1, 2, 3
 local addonDisableReason = DisableReason_Unknown
 
 local buttons = {}
@@ -136,6 +136,15 @@ local function EventHandler(self, event, ...)
 	local needUpdateButtonsCache = false
 
 	if event == "PLAYER_LOGIN" then
+		--version check:
+		local version = tonumber(string.sub(GetBuildInfo(), 1, 1))
+		if version ~= 6 then
+			addonDisableReason = DisableReason_Version
+			DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_version"], 1, 0, 0)
+			DisableAddOn("SpellDamage")
+			return
+		end
+
 		logined = true
 		needCheckOnUpdate = true
 		needUpdateButtonsCache = true
@@ -292,6 +301,9 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
 		return
 	elseif addonDisableReason == DisableReason_Average then
 		DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_average"])
+		return
+	elseif addonDisableReason == DisableReason_Version then
+		DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_version"])
 		return
 	end
 

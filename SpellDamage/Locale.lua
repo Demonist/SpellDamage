@@ -20,6 +20,7 @@ L["locale_error"] = "|cFFffff00SpellDamage|r addon can't work with NOT averaged 
 L["locale_error_fixed"] = "Excelent! Settings changed and |cFFffff00SpellDamage|r addon working again."
 L["addon_off_language"] = "|cFFffff00SpellDamage|r addon is disabled becouse unsupported locale."
 L["addon_off_average"] = "|cFFffff00SpellDamage|r addon is disabled becouse average values settings."
+L["addon_off_version"] = "|cFFffff00SpellDamage|r addon is disabled becouse it's not compatible with this WOW version."
 
 L["chat_items_on"] = "Display item's data |cFFc0ffc0enabled|r"
 L["chat_items_off"] = "Display item's data |cFFffc0c0disabled|r"
@@ -60,6 +61,7 @@ if locale == "ruRU" then
 	L["locale_error_fixed"] = "Отлично! Настройки изменены, аддон |cFFffff00SpellDamage|r вновь работает."
 	L["addon_off_language"] = "Аддон |cFFffff00SpellDamage|r выключен из-за настроек языка."
 	L["addon_off_average"] = "Аддон |cFFffff00SpellDamage|r не работает из-за настройки усредненных показателей."
+	L["addon_off_version"] = "|cFFffff00SpellDamage|r не работает из-за несовместимости с данной версией WOW."
 
 	L["chat_items_on"] = "Отображение на предметах |cFFc0ffc0включено|r"
 	L["chat_items_off"] = "Отображение на предметах |cFFffc0c0выключено|r"

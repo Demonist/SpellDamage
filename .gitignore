@@ -1,0 +1,5 @@
+utilites_old/
+*.zip
+utilites/**/*.txt
+utilites/**/*.bak
+*.pyc

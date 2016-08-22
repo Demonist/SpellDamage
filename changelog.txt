@@ -1,4 +1,7 @@
-﻿0.9.5.0
+﻿0.9.5.1
+Added version check.
+
+0.9.5.0
 Added font change command.
 Fixed storage of "/sd errors" and "/sd items" commands.
 
