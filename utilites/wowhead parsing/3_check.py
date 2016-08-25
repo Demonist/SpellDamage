@@ -45,7 +45,7 @@ def main():
 			fout.write('\n\n+++ %d | %s | %s' % (spellId, spellRuName, spellEnName))
 
 			ruMatch = re.findall('\\d+\\.\\d+%?|\\d+%?', spellDescriptions[0])
-			fout.write('\n%s:   %s' % (string.join(ruMatch, ', '), spellDescriptions[0]))
+			fout.write('\n%s   %s: %s' % (languages[0], string.join(ruMatch, ', '), spellDescriptions[0]))
 			
 			for i in range(1, len(languages)):
 				match = re.findall('\\d+\\.\\d+%?|\\d+%?', spellDescriptions[i])
