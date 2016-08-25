@@ -138,7 +138,7 @@ local function EventHandler(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		--version check:
 		local version = tonumber(string.sub(GetBuildInfo(), 1, 1))
-		if version ~= 6 then
+		if version ~= 7 then
 			addonDisableReason = DisableReason_Version
 			DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_version"], 1, 0, 0)
 			DisableAddOn("SpellDamage")
@@ -361,7 +361,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		ReloadUI()
 	
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.6.0")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 2.0.0.0-beta")
  	
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
