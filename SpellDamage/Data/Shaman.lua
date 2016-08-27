@@ -24,7 +24,7 @@ function Shaman:init()
 	--Выброс лавы:
 	local LavaBurst = function(data)
 		if UnitExists("target") and UnitDebuff("target", L["flame_shock"]) then
-			if IsSpellKnown(60188) then 	--Неистовство стихий
+			if IsPlayerSpell(60188) then 	--Неистовство стихий
 				data.damage = data.damage * 2.5
 			else
 				data.damage = data.damage * 2

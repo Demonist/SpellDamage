@@ -16,7 +16,7 @@ SD.classes["WARRIOR"] = Warrior
 function Warrior:init()
 	--Боевой крик:
 	local BattleCry = function(data)
-		if IsSpellKnown(202751) then 	--Безудержная энергия
+		if IsPlayerSpell(202751) then 	--Безудержная энергия
 			data.type = SpellMana
 			data.mana = 100
 		else
@@ -26,7 +26,7 @@ function Warrior:init()
 
 	--Деморализующий крик:
 	local DemoralizingShout = function(data)
-		if IsSpellKnown(202743) then 	--Луженая глотка
+		if IsPlayerSpell(202743) then 	--Луженая глотка
 			data.type = SpellMana
 			data.mana = 50
 		else
@@ -42,7 +42,7 @@ function Warrior:init()
 
 	--Вихрь:
 	local Whirlwind = function(data)
-		if IsSpellKnown(215537) then 	--Травма
+		if IsPlayerSpell(215537) or IsPlayerSpell(215538) then 	--Травма
 			data.type = SpellDamageAndTimeDamage
 			data.timeDamage = data.damage * 0.2
 		end
@@ -59,7 +59,7 @@ function Warrior:init()
 	local Bloodthirst = function(data)
 		local factor = 0.04
 		data.type = SpellDamageAndHeal
-		if IsSpellKnown(200859) then 	--Кровавое безумие
+		if IsPlayerSpell(200859) then 	--Кровавое безумие
 			factor = 0.05
 		end
 		data.heal = UnitHealthMax("player") * factor
@@ -73,7 +73,7 @@ function Warrior:init()
 
 	--Смертельный удар:
 	local MortalStrike = function(data)
-		if IsSpellKnown(215550) and UnitExists("target") and (UnitHealth("target") / UnitHealthMax("target")) < 0.2 then 	--Добивание
+		if IsPlayerSpell(215550) and UnitExists("target") and (UnitHealth("target") / UnitHealthMax("target")) < 0.2 then 	--Добивание
 			data.type = SpellDamageAndMana
 			data.mana = 20
 		end
@@ -81,7 +81,7 @@ function Warrior:init()
 
 	--Сокрушение:
 	local Devastate = function(data)
-		if IsSpellKnown(115767) then 	--Глубокие раны
+		if IsPlayerSpell(115767) then 	--Глубокие раны
 			local deepWoundsDescr = GetSpellDescription(115767)
 			if deepWoundsDescr then
 				local match = matchDigit(description, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
@@ -95,7 +95,7 @@ function Warrior:init()
 
 	--Рывок:
 	local Charge = function(data)
-		if IsSpellKnown(200856) then 	--Неуправляемая ярость
+		if IsPlayerSpell(200856) then 	--Неуправляемая ярость
 			data.mana = data.mana + 5
 		end
 	end
