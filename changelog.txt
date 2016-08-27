@@ -1,4 +1,7 @@
-﻿2.0.1.0
+﻿2.0.2.0
+Added Hunter.
+
+2.0.1.0
 Added Shaman.
 
 2.0.0.0

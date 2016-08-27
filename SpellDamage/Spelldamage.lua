@@ -89,7 +89,7 @@ end
 
 local function checkRequirements()
 	local locale = GetLocale()
-	if locale ~= "ruRU" and locale ~= "enUS" and locale ~= "enGB" and locale ~= "deDE" and locale ~= "esES" and locale ~= "frFR" and locale ~= "itIT" and locale ~= "ptBR" and locale ~= "zhCN" and locale ~= "zhTW" and locale ~= "koKR" then
+	if locale ~= "ruRU" and locale ~= "enUS" and locale ~= "enGB" and locale ~= "deDE" and locale ~= "esES" and locale ~= "frFR" and locale ~= "itIT" and locale ~= "ptBR" and locale ~= "zhCN" and locale ~= "koKR" then
 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in your locale! Addon disabled, sorry.", 1, 0, 0)
 		addonDisableReason = DisableReason_Language
 		DisableAddOn("SpellDamage")
@@ -361,7 +361,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		ReloadUI()
 	
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 2.0.1.0-beta")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 2.0.2.0-beta")
  	
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])

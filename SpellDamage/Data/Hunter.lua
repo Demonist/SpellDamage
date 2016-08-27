@@ -8,93 +8,100 @@ local Glyphs = SD.Glyphs
 --
 
 local Hunter = Class:create(ClassSpells)
+Hunter.dependFromTarget = true
 SD.classes["HUNTER"] = Hunter
 
 function Hunter:init()
-	-- --Лечение питомца:
-	-- local MendPet = function(data)
-	-- 	data.type = SpellTimeHeal
-	-- 	data.timeHeal = 0.25 * UnitHealthMax("pet")
-	-- end
+	--Пронзающий выстрел:
+	local PiercingShot = function(data)
+		local power = UnitPower("player", SPELL_POWER_FOCUS)
+		if power < 20 then
+			data.type = SpellEmpty
+		else
+			data.damage = power * data.damage / 100
+		end
+	end
 
-	-- --Отрыв:
-	-- local Disengage = function(data)
-	-- 	if Glyphs:contains(132106) then		--Символ освобождения
-	-- 		data.type = SpellHeal
-	-- 		data.heal = UnitHealthMax("player") * 0.04
-	-- 	else
-	-- 		data.type = SpellEmpty
-	-- 	end
-	-- end
+	--Камуфляж:
+	local Camouflage = function(data)
+		data.type = SpellTimeHeal
+		data.timeHeal = UnitHealthMax("player") * 0.02 * 60
+	end
 
-	-- --Кормление питомца:
-	-- local FeedPet = function(data, match)
-	-- 	data.heal = UnitHealthMax("pet") * match / 100
-	-- end
+	--Шипы:
+	local Caltrops = function(data)
+		data.timeDamage = data.timeDamage * 15
+	end
 
-	-- --Взрывная ловушка:
-	-- local ExplosiveTrap = function(data, description)
-	-- 	if not Glyphs:contains(119403) then		--Символ взрывной ловушки
-	-- 		local matchs = matchDigits(description, getLocaleIndex({ru={1, 3}, tw={2, 4}}))
-	-- 		if matchs then
-	-- 			data.type = SpellDamageAndTimeDamage
-	-- 			data.damage = matchs[1]
-	-- 			data.timeDamage = matchs[2]
-	-- 		end
-	-- 	else
-	-- 		data.type = SpellEmpty
-	-- 	end
-	-- end
+	--Метательные топоры:
+	local ThrowingAxes = function(data)
+		data.damage = data.damage * 3
+	end
 
-	-- --Выстрел химеры:
-	-- local ChimaeraShot = function(data)
-	-- 	if Glyphs:contains(119447) then		--Символ выстрела химеры
-	-- 		data.type = SpellDamageAndHeal
-	-- 		data.heal = UnitHealthMax("player") * 0.02
-	-- 	end
-	-- end
+	--Живость
+	local Exhilaration1 = function(data)
+		data.type = SpellHeal
+		data.heal = 0.3 * UnitHealthMax("player")
+	end
 
-	-- --Разрывной выстрел:
-	-- local ExplosiveShot = function(data, matchs)
-	-- 	data.damage = matchs[1]
-	-- 	data.timeDamage = data.damage * matchs[2]
-	-- end
+	--Живость
+	local Exhilaration2 = function(data)
+		data.type = SpellHeal
+		data.heal = 0.5 * UnitHealthMax("player")
+	end
 
-	-- --Убийственный выстрел:
-	-- local KillShot = function(data, matchs)
-	-- 	data.damage = matchs[1]
-	-- 	data.heal = matchs[2] * UnitHealthMax("player") / 100
-	-- end
+	--Обходной удар:
+	local FlankingStrike = function(data, match)
+		if UnitExists("target-target") then
+			if UnitIsUnit("target-target", "player") then
+				data.damage = match[1] + match[2] * 2
+			elseif UnitIsUnit("target-target", "pet") then
+				data.damage = match[1] * 2 + match[2]
+			end
+		end
+	end
 
-	-- --Живость:
-	-- local Exhilaration = function(data, match)
-	-- 	data.heal = UnitHealthMax("player") * match / 100
-	-- end
+	--Гром титанов:
+	local TitansThunder = function(data)
+		data.timeDamage = data.timeDamage * 8
+	end
 
-	-- --Бросок глеф:
-	-- local GlaiveToss = function(data, match)
-	-- 	data.damage = match * 8
-	-- end
 
-	-- self.spells[136]	= TimeHeal({ru=1, de=2, cn=2, tw=2, kr=2}, MendPet)									--Лечение питомца
-	-- self.spells[781]	= Custom(Disengage) 																--Отрыв
-	-- self.spells[2643]	= Damage({ru=2, fr=1})																--Залп
-	-- self.spells[3044]	= Damage({ru=1})																	--Чародейский выстрел
-	-- self.spells[3674]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2})										--Черная стрела
-	-- self.spells[6991]	= Heal({ru=1}, FeedPet)																--Кормление питомца
-	-- self.spells[13813]	= Custom(ExplosiveTrap)																--Взрывная ловушка
-	-- self.spells[82939]	= self.spells[13813]																--Взрывная ловушка (в режиме метания)
-	-- self.spells[19434]	= Damage({ru=1})																	--Прицельный выстрел
-	-- self.spells[34026]	= Damage({ru=1})																	--Команда 'Взять!'
-	-- self.spells[53209]	= Damage({ru=1}, ChimaeraShot)														--Выстрел химеры
-	-- self.spells[53301]	= DamageAndTimeDamage({ru={1, 2}, kr={3, 1}}, ExplosiveShot)						--Разрывной выстрел
-	-- self.spells[157708]	= DamageAndHeal({ru={1, 3}}, KillShot) 												--Убийственный выстрел
-	-- self.spells[56641]	= DamageAndMana({ru={1, 2}})														--Верный выстрел
-	-- self.spells[77767]	= DamageAndMana({ru={1, 2}})														--Выстрел кобры
-	-- self.spells[109259]	= Damage({ru=1})																	--Мощный выстрел
-	-- self.spells[109304]	= Heal({ru=1}, Exhilaration)														--Живость
-	-- self.spells[117050]	= Damage({ru=3, en=1, de=1, es=1, fr=1, it=1, pt=1, cn=1, tw=1, kr=1}, GlaiveToss)	--Бросок глеф
-	-- self.spells[120360]	= TimeDamage({ru=2})																--Шквал
-	-- self.spells[152245]	= DamageAndMana({ru={1, 2}})														--Сосредоточенный выстрел
-	-- self.spells[163485]	= self.spells[152245]																--Сосредоточенный выстрел
+	self.spells[198670]	= Damage({ru=1}, PiercingShot) 	--Пронзающий выстрел
+	self.spells[214579]	= DamageAndMana({ru={1,2}}) 	--Рогатые гремучие змеи
+	self.spells[194855]	= TimeDamage({ru=1, cn=2, kr=2}) 	--Граната пламени дракона
+	self.spells[212436]	= Damage({ru=1}) 	--Свежевание туш
+	self.spells[131894]	= TimeDamage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 	--Стая воронов
+	self.spells[120360]	= Damage({ru=2}) 	--Шквал
+	self.spells[199483]	= Custom(Camouflage) 	--Камуфляж
+	self.spells[162488]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 	--Капкан
+	self.spells[212431]	= Damage({ru=1, de=2, cn=2, kr=2}) 	--Разрывной выстрел
+	self.spells[194277]	= Damage({ru=2, de=3, cn=3, kr=4}, Caltrops) 	--Шипы
+	self.spells[53209]	= Damage({ru=1}) 	--Выстрел химеры
+	self.spells[199530]	= Damage({ru=1}) 	--Топот
+	self.spells[194599]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 	--Черная стрела
+	self.spells[200163]	= Damage({ru=2}, ThrowingAxes) 	--Метательные топоры
+	self.spells[193265]	= Damage({ru=1}) 	--Бросок топорика
+	self.spells[191433]	= DamageAndTimeDamage({ru={1,3}, de={1,4}, it={1,2}, cn={1,4}, kr={2,4}}) 	--Взрывная ловушка
+	self.spells[186387]	= Damage({ru=2, it=1}) 	--Взрывной выстрел
+	self.spells[193455]	= Damage({ru=1}) 	--Выстрел кобры
+	self.spells[109304]	= Custom(Exhilaration1) 	--Живость
+	self.spells[194291]	= Custom(Exhilaration2) 	--Живость
+	self.spells[2643]	= Damage({ru=2}) 	--Залп
+	self.spells[34026]	= Damage({ru=1}) 	--Команда "Взять!"
+	self.spells[202800]	= DamageAndDamage({ru={1,2}}, FlankingStrike) 	--Обходной удар
+	self.spells[19434]	= Damage({ru=1}) 	--Прицельный выстрел
+	self.spells[185901]	= Damage({ru=1}) 	--Прицельный залп
+	self.spells[187708]	= Damage({ru=1}) 	--Разделка туши
+	self.spells[185855]	= TimeDamage({ru=1}) 	--Режущий удар
+	self.spells[186270]	= Damage({ru=1}) 	--Удар ящера
+	self.spells[190928]	= Damage({ru=1}) 	--Укус мангуста
+	self.spells[185358]	= DamageAndMana({ru={1,2}}) 	--Чародейский выстрел
+	self.spells[207068]	= TimeDamage({ru=1, de=3, cn=2, kr=3}, TitansThunder) 	--Гром титанов
+	self.spells[207097]	= TimeDamage({ru=1, de=3, cn=2, kr=3}, TitansThunder) 	--Гром титанов
+	self.spells[212621]	= Damage({ru=1}) 	--Прицельный залп
+	self.spells[204147]	= Damage({ru=1}) 	--Шквальный ветер
+	self.spells[203413]	= Damage({ru=1}) 	--Ярость орла
+	self.spells[203415]	= Damage({ru=1}) 	--Ярость орла
+	
 end
