@@ -543,7 +543,7 @@ def main():
 	]
 
 	spellIds[12] = [	# Custom:
-		6343 	#Удар грома
+		
 	]
 
 
