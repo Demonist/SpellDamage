@@ -116,6 +116,14 @@ function Paladin:init()
 		data.timeHeal = data.timeHeal * 10
 	end
 
+	--Правосудие:
+	local Judgment = function(data, description)
+		local d1 = matchDigit(description, 1) or 0
+		local d2 = matchDigit(description, 2) or 0
+		data.type = SpellDamage
+		data.damage = math.max(d1,d2)
+	end
+
 	--Возложение рук:
 	local LayOnHands = function(data)
 		data.type = SpellHeal
@@ -166,7 +174,7 @@ function Paladin:init()
 	self.spells[200654]	=self.spells[200652] 																--Избавление Тира
 	self.spells[205273]	= Damage({ru=1, de=2, cn=2, kr=2}) 													--Испепеляющий след
 	self.spells[209202]	= Damage({ru=1}) 																	--Око Тира
-	self.spells[20271]	= Damage({ru=1}) 																	--Правосудие
+	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
 	self.spells[35395]	= Damage({ru=1}) 																	--Удар воина Света
 	self.spells[633]	= Custom(LayOnHands) 																--Возложение рук
 	self.spells[20066]	= Custom(Repentance) 																--Покаяние
