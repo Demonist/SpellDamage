@@ -14,79 +14,93 @@ Rogue.dependPowerTypes["COMBO_POINTS"] = true
 SD.classes["ROGUE"] = Rogue
 
 function Rogue:init()
-	-- function IsUseDaggers()
-	-- 	local slotId = GetInventorySlotInfo("MainHandSlot")
-	-- 	if slotId then
-	-- 		local mainHandLink = GetInventoryItemLink("player", slotId)
-	-- 		if mainHandLink then
-	-- 			local _, _, _, _, _, _, itemType = GetItemInfo(mainHandLink)
-	-- 			if itemType == L["daggers"] then return true;  end
-	-- 		end
-	-- 	end
-	-- 	return false
-	-- end
+	--Смерть с небес:
+	local DeathFromAbove = function(data)
+		if IsPlayerSpell(32645) then 	--Отравление
+			local localData = Rogue.spells[32645]:getData(GetSpellDescription(32645))
+			if localData then
+				data.type = SpellDamageAndTimeDamage
+				data.timeDamage = localData.timeDamage * 1.5
+			end
+		elseif IsPlayerSpell(2098) then 	--Круговая атака
+			local localData = Rogue.spells[2098]:getData(GetSpellDescription(2098))
+			if localData then
+				data.damage = data.damage + localData.damage * 1.5
+			end
+		else
+			local localData = Rogue.spells[196819]:getData(GetSpellDescription(196819))	--Потрошение
+			if localData then
+				data.damage = data.damage + localData.damage * 1.5
+			end
+		end
+	end
 
-	-- --Внезапный удар:
-	-- local Ambush = function(data)
-	-- 	if IsUseDaggers() then data.damage = data.damage * 1.4; end
-	-- end
+	--Череда убийств:
+	local KillingSpree = function(data)
+		data.damage = data.damage * 7
+	end
 
-	-- --Кровоизлияние:
-	-- local Hemorrhage = function(data)
-	-- 	if IsUseDaggers() then data.damage = data.damage * 1.4; end
-	-- end
+	--Вендетта:
+	local Vendetta = function(data)
+		if IsPlayerSpell(192428) then 	--Из тени
+			local fromTheShadowsDescr = GetSpellDescription(192428)
+			if fromTheShadowsDescr then
+				local match = matchDigit(fromTheShadowsDescr, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
+				if match then
+					data.type = SpellTimeDamage
+					data.timeDamage = match
+				end
+			end
+		else
+			data.type = SpellEmpty
+		end
+	end
 
-	-- --Череда убийств:
-	-- local KillingSpree = function(data)
-	-- 	data.damage = data.damage * 7
-	-- end
+	--Удар по почкам:
+	local KidneyShot = function(data)
+		if IsPlayerSpell(154904) then 	--Внутреннее кровотечение
+			local internalBleedingDescr = GetSpellDescription(154904)
+			if internalBleedingDescr then
+				local match = matchDigit(internalBleedingDescr, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
+				local combo = UnitPower("player", SD.SPELL_COMBO_POINTS)
+				if match then
+					if combo == 0 then combo = 1; end
+					if combo > 5 then combo = 5; end
+					data.type = SpellDamage
+					data.damage = match * combo
+				end
+			end
+		else
+			data.type = SpellEmpty
+		end
+	end
 
-	-- --Заживление ран:
-	-- local Recuperate = function(data, match)
-	-- 	local heal = match * UnitHealthMax("player") / 100
-	-- 	data.timeHeal = getComboPoints() * 2 * heal
-	-- end
 
-	-- --Кровавый вихрь:
-	-- local CrimsonTempest = function(data)
-	-- 	data.type = SpellDamageAndTimeDamage
-	-- 	data.timeDamage = data.damage * 2.4
-	-- end
-
-	-- --Смерть с небес:
-	-- local DeathFromAbove = function(data)
-	-- 	if IsPlayerSpell(32645) then 	--Отравление
-	-- 		local localData = Rogue.spells[32645]:getData(GetSpellDescription(32645))
-	-- 		if localData then
-	-- 			data.type = SpellDamageAndTimeDamage
-	-- 			data.timeDamage = localData.timeDamage * 1.5
-	-- 		end
-	-- 	else
-	-- 		local descr = GetSpellDescription(2098)
-	-- 		local localData = Rogue.spells[2098]:getData(descr)	--Потрошение
-	-- 		if localData then
-	-- 			data.damage = data.damage + localData.timeDamage * 1.5
-	-- 		end
-	-- 	end
-	-- end
-
-	-- self.spells[53]		= Damage({ru=1}) 																		--Удар в спину
-	-- self.spells[703]	= Damage({ru=1, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=3, tw=3, kr=3}) 					--Гаррота
-	-- self.spells[1329]	= DamageAndDamage({ru={1,2}}) 															--Расправа
-	-- self.spells[1752]	= Damage({ru=1}) 																		--Коварный удар
-	-- self.spells[1943]	= ComboTimeDamage({ru={2,3}, cn={3,3}, tw={3,3}, kr={3,3}}) 							--Рваная рана
-	-- self.spells[2098]	= ComboDamage({ru={2,2}}) 																--Потрошение
-	-- self.spells[5938]	= Damage({ru=1})																		--Отравляющий укол
-	-- self.spells[8676]	= Damage({ru=1}, Ambush) 																--Внезапный удар
-	-- self.spells[16511]	= DamageAndTimeDamage({ru={1,3}, de={1,4}, cn={1,4}, tw={1,4}, kr={1,4}}, Hemorrhage) 	--Кровоизлияние
-	-- self.spells[26679]	= ComboDamage({ru={4,2}})																--Смертельный бросок
-	-- self.spells[32645]	= ComboTimeDamage({ru={3,3}}) 															--Отравление
-	-- self.spells[51690]	= DamageAndDamage({ru={3,4}, en={4,5}, de={4,5}, es={4,5}, fr={4,5}, it={4,5}, pt={4,5}, cn={4,5}, tw={4,5}, kr={4,5}}, KillingSpree) 	--Череда убийств
-	-- self.spells[51723]	= Damage({ru=2}) 																		--Веер клинков
-	-- self.spells[73651]	= TimeHeal({ru=1, de=2, cn=2, tw=2, kr=2}, Recuperate) 									--Заживление ран
-	-- self.spells[84617]	= Damage({ru=1}) 																		--Пробивающий удар
-	-- self.spells[111240]	= Damage({ru=2}) 																		--Устранение
-	-- self.spells[114014]	= Damage({ru=1}) 																		--Бросок сюрикена
-	-- self.spells[121411]	= ComboDamage({ru={5,2}}, CrimsonTempest)												--Кровавый вихрь
-	-- self.spells[152150]	= Damage({ru=1, de=2, cn=2, tw=2, kr=3}, DeathFromAbove) 								--Смерть с небес
+	self.spells[152150]	= Damage({ru=1, de=2, fr=2, cn=2, kr=3}, DeathFromAbove) 		--Смерть с небес
+	self.spells[185767]	= Damage({ru=1, cn=2, kr=2}) 									--Обстрел ядрами
+	self.spells[51690]	= DamageAndDamage({ru={3,4}, en={4,5}, de={4,5}, es={4,5}, fr={4,5}, it={4,5}, pt={4,5}, cn={4,5}, kr={4,5}}, KillingSpree) 	--Череда убийств
+	self.spells[200758]	= Damage({ru=1}) 												--Клинок мрака
+	self.spells[16511]	= Damage({ru=1}) 												--Кровоизлияние
+	self.spells[196937]	= Damage({ru=1}) 												--Призрачный удар
+	self.spells[703]	= Damage({ru=1, de=2, cn=2, kr=2}) 								--Гаррота
+	self.spells[32645]	= ComboTimeDamage({ru={3,3}}) 									--Отравление
+	self.spells[1943]	= ComboTimeDamage({ru={2,3}, cn={3,3}, tw={3,3}, kr={3,3}}) 	--Рваная рана
+	self.spells[114014]	= Damage({ru=1}) 												--Бросок сюрикэна
+	self.spells[51723]	= Damage({ru=2}) 												--Веер клинков
+	self.spells[8676]	= Damage({ru=1}) 												--Внезапный удар
+	self.spells[185763]	= Damage({ru=1}) 												--Выстрел из пистоли
+	self.spells[2098]	= ComboDamage({ru={2,2}}) 										--Круговая атака
+	self.spells[195452]	= ComboTimeDamage({ru={4,3}, cn={5,3}, kr={5,3}}) 				--Ночной клинок
+	self.spells[185565]	= Damage({ru=1}) 												--Отравленный нож
+	self.spells[196819]	= ComboDamage({ru={2,2}}) 										--Потрошение
+	self.spells[199804]	= ComboDamage({ru={2,3}}) 										--Промеж глаз
+	self.spells[1329]	= Damage({ru=1}) 												--Расправа
+	self.spells[53]		= Damage({ru=1}) 												--Удар в спину
+	self.spells[193315]	= Damage({ru=1}) 												--Удар саблей
+	self.spells[185438]	= Damage({ru=1}) 												--Удар Тьмы
+	self.spells[197835]	= Damage({ru=2}) 												--Шквал сюрикэнов
+	self.spells[192759]	= DamageAndTimeDamage({ru={1,2}, cn={1,3}, kr={1,3}}) 			--Погибель королей
+	self.spells[209782]	= Damage({ru=1}) 												--Укус Кровавой Пасти
+	self.spells[79140]	= Custom(Vendetta) 												--Вендетта
+	self.spells[408]	= Custom(KidneyShot) 											--Удар по почкам
 end
