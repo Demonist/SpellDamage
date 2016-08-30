@@ -361,7 +361,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		ReloadUI()
 	
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 2.0.6.1-beta")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 2.0.7.0-beta")
  	
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])
