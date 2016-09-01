@@ -76,7 +76,7 @@ function Priest:init()
 	self.spells[88625]	= Damage({ru=1}) 													--Слово Света: Наказание
 	self.spells[194509]	= Heal({ru=2, fr=1, pt=1}) 											--Слово силы: Сияние
 	self.spells[32379]	= Damage({ru=1}) 													--Слово Тьмы: Смерть
-	self.spells[228266]	= Damage({ru=1}) 													--Стрела Бездны
+	self.spells[205448]	= Damage({ru=1}) 													--Стрела Бездны
 	self.spells[186263]	= Heal({ru=1}) 														--Темное восстановление
 	self.spells[585]	= Damage({ru=1}) 													--Кара
 	self.spells[205065]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Поток Бездны
@@ -97,5 +97,6 @@ function Priest:init()
 	self.spells[34861]	= Heal({ru=1, en=3, de=3, it=3, cn=3, kr=3}) 						--Слово Света: Освящение
 	self.spells[19236]	= Custom(DesperatePrayer) 											--Молитва отчаяния
 	self.spells[8092]	= Damage({ru=1}) 													--Взрыв разума
-	self.spells[205351]	= Damage({ru=1}) 	--Слово Тьмы: Бездна
+	self.spells[205351]	= Damage({ru=1}) 													--Слово Тьмы: Бездна
+	self.spells[15407]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Пытка разума
 end

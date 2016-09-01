@@ -1,4 +1,10 @@
-﻿2.0.7.0
+﻿2.0.8.0
+Bugfixes.
+Fixed status change bug (dev mode, items, errors).
+Added Mage's "Ice Block" and "Flamestrike".
+Fixed Paladin's "Wake of Ashes" and "Mind Flay" and "Void Bolt".
+
+2.0.7.0
 Added Priest.
 
 2.0.6.1

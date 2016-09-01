@@ -61,6 +61,29 @@ function Mage:init()
 		end
 	end
 
+	--Ледяная глыба:
+	local IceBlock = function(data)
+		data.type = SpellEmpty
+		if IsPlayerSpell(11958) then 	--Холодная хватка
+			data.type = SpellTimeHeal
+			data.timeHeal = UnitHealthMax("player") * 0.03 * 10
+		end
+	end
+
+	--Огненный столб:
+	local Flamestrike = function(data)
+		if IsPlayerSpell(205037) then 	--Огненный след
+			local flamePatchDescr = GetSpellDescription(205037)
+			if flamePatchDescr then
+				local match = matchDigit(flamePatchDescr, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
+				if match then
+					data.type = SpellDamageAndTimeDamage
+					data.timeDamage = match
+				end
+			end
+		end
+	end
+
 
 	self.spells[153595]	= Damage({ru=2, de =3, cn=3, kr=3}, CometStorm) 					--Буря комет
 	self.spells[198929]	= Damage({ru=2}, Cinderstorm) 										--Вихрь углей
@@ -70,7 +93,6 @@ function Mage:init()
 	self.spells[114923]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Буря Пустоты
 	self.spells[44457]	= TimeDamageAndTimeDamage({ru={1,4}, en={1,3}, de={2.4}, es={1,3}, fr={1,3}, it={1,3}, pt={1,3}, cn={2,4}, kr={2,4}}) 	--Живая бомба
 	self.spells[112948]	= TimeDamage({ru=2, en=3, de=3, es=3, fr=3, pt=3}) 					--Ледяная бомба ?
-	self.spells[205037]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Огненный след
 	self.spells[157981]	= Damage({ru=1, de=2, cn=2, kr=2}, BlastWave) 						--Взрывная волна
 	self.spells[157997]	= Damage({ru=1, de=2, cn=2, kr=2}, IceNova) 						--Кольцо обледенения
 	self.spells[157980]	= Damage({ru=1, de=2, cn=2, kr=2}, Supernova) 						--Сверхновая
@@ -100,6 +122,6 @@ function Mage:init()
 	self.spells[194466]	= CriticalDamage({ru=1}) 											--Пламя феникса
 	self.spells[214634]	= Damage({ru=1}) 													--Полярная стрела
 	self.spells[135029]	= Damage({ru=1, en=2, kr=2}) 										--Сильная струя воды
-	self.spells[2120]	= Damage({ru=1}) 													--Огненный столб
-	
+	self.spells[2120]	= Damage({ru=1}, Flamestrike) 										--Огненный столб
+	self.spells[45438]	= Custom(IceBlock) 													--Ледяная глыба
 end

@@ -171,8 +171,8 @@ function Paladin:init()
 	self.spells[184662]	= Absorb({ru=1, de=2, kr=2}) 														--Щит мстителя
 	self.spells[53600]	= Damage({ru=1}) 																	--Щит праведника
 	self.spells[200652]	= TimeHeal({ru=2, en=3, de=4, fr=3, it=3, pt=3, cn=3, kr=4}, TyrDeliverance) 		--Избавление Тира
-	self.spells[200654]	=self.spells[200652] 																--Избавление Тира
-	self.spells[205273]	= Damage({ru=1, de=2, cn=2, kr=2}) 													--Испепеляющий след
+	self.spells[200654]	= self.spells[200652] 																--Избавление Тира
+	self.spells[205273]	= Damage({ru=2, de=3, cn=3, kr=3}) 													--Испепеляющий след
 	self.spells[209202]	= Damage({ru=1}) 																	--Око Тира
 	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
 	self.spells[35395]	= Damage({ru=1}) 																	--Удар воина Света
