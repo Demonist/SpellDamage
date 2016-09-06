@@ -8,90 +8,83 @@ local Glyphs = SD.Glyphs
 --
 
 local DeathKnight = Class:create(ClassSpells)
+DeathKnight.dependFromPower = true
+DeathKnight.dependPowerTypes["SPELL_POWER_RUNIC_POWER"] = true
 SD.classes["DEATHKNIGHT"] = DeathKnight
 
 function DeathKnight:init()
-	-- --Ледяные оковы:
-	-- local ChainsOfIce = function(data, description)
-	-- 	if Glyphs:contains(58620) then	--Символ ледяных оков
-	-- 		local match = matchDigit(description, 1)
-	-- 		if match then
-	-- 			data.type = SpellDamage
-	-- 			data.damage = match
-	-- 		end
-	-- 	else
-	-- 		data.type = SpellEmpty
-	-- 	end
-	-- end
+	--Буря костей:
+	local Bonestorm = function(data)
+		data.type = SpellTimeDamageAndTimeHeal
+		local power = UnitPower("player", SPELL_POWER_RUNIC_POWER)
+		if power > 10 then
+			if power > 100 then power = 100; end
+			local ticks = math.floor(power / 10)
+			data.timeDamage = data.timeDamage * ticks
+			data.timeHeal = UnitHealthMax("player") * 0.01 * ticks
+		else
+			data.timeHeal = UnitHealthMax("player") * 0.01
+		end
+	end
 
-	-- --Лик смерти:
-	-- local DeathCoil = function(data, matchs)
-	-- 	data.type = SpellDamage
-	-- 	data.damage = matchs[1]
+	--Дыхание Синдрагосы:
+	local BreathOfSindragosa = function(data)
+		data.timeDamage = data.timeDamage * (UnitPower("player", SPELL_POWER_RUNIC_POWER) / 13 + 1)
+	end
 
-	-- 	if UnitExists("target") and UnitIsFriend("player", "target") and UnitRace("target") == "Scourge" then
-	-- 		data.type = SpellHeal
-	-- 		data.heal = matchs[2]
+	--Осквернение:
+	local Defile = function(data)
+		data.timeDamage = data.timeDamage * 10
+	end
 
-	-- 		if Glyphs:contans(58677) then 	--Символ объятий смерти
-	-- 			data.type = SpellHealAndMana
-	-- 			data.mana = 20
-	-- 		end
-	-- 	end
-	-- end
+	--Кровопийца:
+	local Blooddrinker = function(data)
+		data.type = SpellTimeDamageAndTimeHeal
+		data.timeHeal = data.timeDamage
+	end
 
-	-- --Усиление рунического оружия:
-	-- local EmpowerRuneWeapon = function(data, match)
-	-- 	if Glyphs:contains(159421) then	--Символ усиления
-	-- 		data.type = SpellHealAndMana
-	-- 		data.heal = UnitHealthMax("player") * 0.3
-	-- 	end
-	-- end
+	--Увядание:
+	local Consumption = function(data)
+		data.type = SpellDamageAndHeal
+		data.heal = data.damage
+	end
 
-	-- --Смертельный союз:
-	-- local DeathPact = function(data, match)
-	-- 	data.heal = match * UnitHealthMax("player") / 100
-	-- end
+	--Удар смерти:
+	local DeathStrike = function(data)
+		data.type = SpellDamageAndHeal
+		data.heal = UnitHealthMax("player") * 0.1
+	end
 
-	-- --Смертельное поглощение:
-	-- local DeathSiphon = function(data, matchs)
-	-- 	data.damage = matchs[1]
-	-- 	data.heal = data.damage * matchs[2] / 100
-	-- end
 
-	-- --Преобразование:
-	-- local Conversion = function(data)
-	-- 	data.type = SpellHeal
-	-- 	data.heal = UnitHealthMax("player") * 0.02 * UnitMana("player") / 5
-	-- end
-
-	-- --Осквернение:
-	-- local Defile = function(data)
-	-- 	data.timeDamage = data.timeDamage * 10
-	-- end
-
-	-- self.spells[43265]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 	--Смерть и разложение
-	-- self.spells[45462]	= Damage({ru=1}) 								--Удар чумы
-	-- self.spells[45477]	= Damage({ru=1}) 								--Ледяное прикосновение
-	-- self.spells[45524]	= Custom(ChainsOfIce) 							--Ледяные оковы
-	-- self.spells[47541]	= DamageAndHeal({ru={1,2}}, DeathCoil) 			--Лик смерти
-	-- self.spells[47568]	= Mana({ru=1}, EmpowerRuneWeapon) 				--Усиление рунического оружия
-	-- self.spells[48743]	= Heal({ru=1}, DeathPact) 						--Смертельный союз
-	-- self.spells[49020]	= Damage({ru=1}) 								--Уничтожение
-	-- self.spells[49143]	= Damage({ru=1}) 								--Ледяной удар
-	-- self.spells[49184]	= Damage({ru=1}) 								--Воющий ветер
-	-- self.spells[49998]	= DamageAndHeal({ru={1,2}})						--Удар смерти
-	-- self.spells[50842]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}) 		--Вскипание крови
-	-- self.spells[55090]	= DamageAndDamage({ru={1,2}}) 					--Удар Плети
-	-- self.spells[85948]	= Damage({ru=1}) 								--Удар разложения
-	-- self.spells[108196]	= DamageAndHeal({ru={1,2}}, DeathSiphon)		--Смертельное поглощение
-	-- self.spells[114866]	= DamageAndTimeDamage({ru={1,5}}) 				--Жнец душ
-	-- self.spells[130735]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
-	-- self.spells[130736]	= DamageAndTimeDamage({ru={1,4}}) 				--Жнец душ
-	-- self.spells[119975]	= Custom(Conversion) 							--Преобразование
-	-- self.spells[152279]	= TimeDamage({ru=1}) 							--Дыхание Синдрагосы
-	-- self.spells[152280]	= TimeDamage({ru=2}, Defile) 					--Осквернение
-	-- self.spells[53717]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 	--Взрыв трупа
-
-	-- 
+	self.spells[194844]	= TimeDamage({ru=1, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, kr=3}, Bonestorm) 		--Буря костей
+	self.spells[152279]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, BreathOfSindragosa) 								--Дыхание Синдрагосы
+	self.spells[130736]	= Damage({ru=1}) 																		--Жнец душ
+	self.spells[194913]	= Damage({ru=1}) 																		--Ледяной натиск
+	self.spells[152280]	= TimeDamage({ru=3}, Defile) 															--Осквернение
+	self.spells[207230]	= Damage({ru=1}) 																		--Ледяная коса
+	self.spells[207311]	= Damage({ru=1}) 																		--Стискивающие тени
+	self.spells[212744]	= Damage({ru=2}) 																		--Пожирание душ
+	self.spells[207317]	= Damage({ru=2}) 																		--Эпидемия
+	self.spells[206931]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Blooddrinker) 									--Кровопийца
+	self.spells[43265]	= TimeDamage({ru=1, de=2, cn=2}) 														--Смерть и разложение
+	self.spells[196770]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 													--Беспощадность зимы
+	self.spells[49184]	= Damage({ru=1}) 																		--Воющий ветер
+	self.spells[50842]	= Damage({ru=1}) 																		--Вскипание крови
+	self.spells[77575]	= Damage({ru=1}) 																		--Вспышка болезни
+	self.spells[195182]	= Damage({ru=1}) 																		--Дробление хребта
+	self.spells[49143]	= Damage({ru=1}) 																		--Ледяной удар
+	self.spells[47541]	= Damage({ru=1}) 																		--Лик смерти
+	self.spells[195292]	= Damage({ru=1}) 																		--Прикосновение смерти
+	self.spells[206930]	= Damage({ru=1, en=2, fr=2, it=2, pt=2, cn=2}) 											--Удар в сердце
+	self.spells[55090]	= DamageAndDamage({ru={1,2}}) 															--Удар Плети
+	self.spells[85948]	= Damage({ru=1}) 																		--Удар разложения
+	self.spells[49020]	= Damage({ru=1}) 																		--Уничтожение
+	self.spells[48707]	= Absorb({ru=2}) 																		--Антимагический панцирь
+	self.spells[220143]	= Damage({ru=1}) 																		--Апокалипсис
+	self.spells[190780]	= Damage({ru=1}) 																		--Ледяное дыхание
+	self.spells[55095]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 													--Озноб
+	self.spells[205223]	= Damage({ru=1}, Consumption) 															--Увядание
+	self.spells[205224]	= self.spells[205223] 																	--Увядание
+	self.spells[49998]	= Damage({ru=1}, DeathStrike) 															--Удар смерти
+	self.spells[190778]	= Damage({ru=2, es=1}) 																	--Ярость Синдрагосы
 end
