@@ -5,6 +5,7 @@ L["flame_shock"] = "Flame Shock"
 L["lightning_rod"] = "Lightning Rod"
 L["conflagration"] = "Conflagration"
 L["fingers_of_frost"] = "Fingers of Frost"
+L["keg_smash"] = "Keg Smash"
 
 L["description_error"] = "Error by getting spell's description with"
 L["parsing_spell_error"] = "Error by parsing spell with"
@@ -42,6 +43,7 @@ if locale == "ruRU" then
 	L["lightning_rod"] = "Грозовой разрядник"
 	L["conflagration"] = "Воспламенение"
 	L["fingers_of_frost"] = "Ледяные пальцы"
+	L["keg_smash"] = "Удар бочонком"
 
 	L["description_error"] = "Ошибка получения описания умения с"
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
@@ -80,6 +82,7 @@ if locale == "deDE" then
 	L["lightning_rod"] = "Blitzableiter"
 	L["conflagration"] = "Großbrand"
 	L["fingers_of_frost"] = "Eisige Finger"
+	L["keg_smash"] = "Fasshieb"
 end
 
 --------------------------------   esES:   -------------------------------------
@@ -89,6 +92,7 @@ if locale == "esES" then
 	L["lightning_rod"] = "Pararrayos"
 	L["conflagration"] = "Conflagración"
 	L["fingers_of_frost"] = "Dedos de Escarcha"
+	L["keg_smash"] = "Embate con barril"
 end
 
 --------------------------------   frFR:   -------------------------------------
@@ -98,6 +102,7 @@ if locale == "frFR" then
 	L["lightning_rod"] = "Paratonnerre"
 	L["conflagration"] = "Déflagration"
 	L["fingers_of_frost"] = "Doigts de givre"
+	L["keg_smash"] = "Fracasse-tonneau"
 end
 
 --------------------------------   itIT:   -------------------------------------
@@ -107,6 +112,7 @@ if locale == "itIT" then
 	L["lightning_rod"] = "Parafulmine"
 	L["conflagration"] = "Pirocombustione"
 	L["fingers_of_frost"] = "Dita di Gelo"
+	L["keg_smash"] = "Lancio del Barile"
 end
 
 --------------------------------   ptBR:   -------------------------------------
@@ -116,6 +122,7 @@ if locale == "ptBR" then
 	L["lightning_rod"] = "Para-raios"
 	L["conflagration"] = "Conflagração"
 	L["fingers_of_frost"] = "Dedos Glaciais"
+	L["keg_smash"] = "Pancada de Barril"
 end
 
 --------------------------------   zhCN:   -------------------------------------
@@ -125,6 +132,7 @@ if locale == "zhCN" then
 	L["lightning_rod"] = "引雷针"
 	L["conflagration"] = "洪荒烈火"
 	L["fingers_of_frost"] = "寒冰指"
+	L["keg_smash"] = "醉酿投"
 end
 
 --------------------------------   koKR:   -------------------------------------
@@ -134,6 +142,7 @@ if locale == "koKR" then
 	L["lightning_rod"] = "피뢰침"
 	L["conflagration"] = "거대한 불길"
 	L["fingers_of_frost"] = "서리의 손가락"
+	L["keg_smash"] = "맥주통 휘두르기"
 end
 
 SD = {}

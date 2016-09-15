@@ -1,7 +1,7 @@
 ﻿## Interface: 70004
 ## Title: SpellDamage
 ## Author: Demonist, Ell, Nels
-## Version: 2.0.10.0-beta
+## Version: 2.0.11.0-beta
 ## SavedVariables: SpellDamageStorage
 ## Notes: Displays spell's |cFFffff00damage|r, |cFF00ff00heal|r or |cFFff7fffabsorb|r on action bar
 ## Notes-ruRU: Отображает |cFFffff00урон|r, |cFF00ff00лечение|r или |cFFff7fffпоглощение|r умений и зелий на панели
