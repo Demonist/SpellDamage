@@ -1,4 +1,7 @@
-﻿2.0.11.0
+﻿2.0.12.0
+Added Demon Hunter.
+
+2.0.11.0
 Added Monk.
 
 2.0.10.0
