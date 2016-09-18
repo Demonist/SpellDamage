@@ -156,9 +156,9 @@ local function EventHandler(self, event, ...)
 		if addonDisableReason ~= DisableReason_Unknown then return; end
 
 		if SpellDamageStorage then
-			if SpellDamageStorage["dev"] == true then SD.checkSpells(); end
-			if SpellDamageStorage["showItems"] == true then showItems = SpellDamageStorage["showItems"]; end
-			if SpellDamageStorage["displayErrors"] == true then SD.displayErrors = SpellDamageStorage["displayErrors"]; end
+			if SpellDamageStorage["dev"] ~= nil then SD.checkSpells(); end
+			if SpellDamageStorage["showItems"] ~= nil then showItems = SpellDamageStorage["showItems"]; end
+			if SpellDamageStorage["displayErrors"] ~= nil then SD.displayErrors = SpellDamageStorage["displayErrors"]; end
 		else
 			SpellDamageStorage = {}
 		end

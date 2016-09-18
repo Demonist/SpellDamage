@@ -1,6 +1,7 @@
 local L = {}
 local locale = GetLocale()
 
+L["item_use"] = "Use"
 L["flame_shock"] = "Flame Shock"
 L["lightning_rod"] = "Lightning Rod"
 L["conflagration"] = "Conflagration"
@@ -39,6 +40,7 @@ L["chat_command_version"] = "show addon version"
 --------------------------------   ruRU:   -------------------------------------
 
 if locale == "ruRU" then
+	L["item_use"] = "Использование"
 	L["flame_shock"] = "Огненный шок"
 	L["lightning_rod"] = "Грозовой разрядник"
 	L["conflagration"] = "Воспламенение"
@@ -78,6 +80,7 @@ end
 --------------------------------   deDE:   -------------------------------------
 
 if locale == "deDE" then
+	L["item_use"] = "Benutzen"
 	L["flame_shock"] = "Flammenschock"
 	L["lightning_rod"] = "Blitzableiter"
 	L["conflagration"] = "Großbrand"
@@ -88,6 +91,7 @@ end
 --------------------------------   esES:   -------------------------------------
 
 if locale == "esES" then
+	L["item_use"] = "Uso"
 	L["flame_shock"] = "Choque de llamas"
 	L["lightning_rod"] = "Pararrayos"
 	L["conflagration"] = "Conflagración"
@@ -98,6 +102,7 @@ end
 --------------------------------   frFR:   -------------------------------------
 
 if locale == "frFR" then
+	L["item_use"] = "Utilise"
 	L["flame_shock"] = "Horion de flammes"
 	L["lightning_rod"] = "Paratonnerre"
 	L["conflagration"] = "Déflagration"
@@ -108,6 +113,7 @@ end
 --------------------------------   itIT:   -------------------------------------
 
 if locale == "itIT" then
+	L["item_use"] = "Usa"
 	L["flame_shock"] = "Folgore del Fuoco"
 	L["lightning_rod"] = "Parafulmine"
 	L["conflagration"] = "Pirocombustione"
@@ -118,6 +124,7 @@ end
 --------------------------------   ptBR:   -------------------------------------
 
 if locale == "ptBR" then
+	L["item_use"] = "Uso"
 	L["flame_shock"] = "Choque Flamejante"
 	L["lightning_rod"] = "Para-raios"
 	L["conflagration"] = "Conflagração"
@@ -128,6 +135,7 @@ end
 --------------------------------   zhCN:   -------------------------------------
 
 if locale == "zhCN" then
+	L["item_use"] = "使用"
 	L["flame_shock"] = "烈焰震击"
 	L["lightning_rod"] = "引雷针"
 	L["conflagration"] = "洪荒烈火"
@@ -138,6 +146,7 @@ end
 --------------------------------   koKR:   -------------------------------------
 
 if locale == "koKR" then
+	L["item_use"] = "사용 효과"
 	L["flame_shock"] = "화염 충격"
 	L["lightning_rod"] = "피뢰침"
 	L["conflagration"] = "거대한 불길"
