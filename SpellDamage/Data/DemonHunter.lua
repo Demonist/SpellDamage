@@ -70,7 +70,7 @@ function DemonHunter:init()
 	self.spells[162794]	= Damage({ru=1}) 														--Удар Хаоса
 	self.spells[197125]	= self.spells[162794] 													--Удар Хаоса
 	self.spells[162243]	= Damage({ru=1}) 														--Укус демона
-	self.spells[201467]	= TimeDamage({ru=2, de=4, cn=4, kr=4}) 									--Ярость иллидари
+	self.spells[201467]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 									--Ярость иллидари
 	self.spells[201628]	= self.spells[201467] 													--Ярость иллидари
 	self.spells[201789]	= self.spells[201467] 													--Ярость иллидари
 	self.spells[198793]	= Damage({ru=1}) 														--Коварное отступление

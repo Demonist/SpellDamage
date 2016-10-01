@@ -1,4 +1,7 @@
-﻿2.0.14.0
+﻿2.0.15.0
+Fixed Druid's "Ferocious Bite".
+
+2.0.14.0
 Bugfixes.
 
 2.0.13.0

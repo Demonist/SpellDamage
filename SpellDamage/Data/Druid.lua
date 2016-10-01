@@ -34,7 +34,18 @@ function Druid:init()
 	end
 
 	--Свирепый укус:
-	local FerociousBite = function(data)
+	local FerociousBite = function(data, description)
+		data.type = SpellDamage
+
+		local match = matchDigits(description, {4,6,8,10,12})
+		if match and match[1] == 1 then
+			match = matchDigits(description, {5,7,9,11,13})
+		end
+
+		local combo = getComboPoints()
+		if combo == 0 then combo = 1; end
+		data.damage = match[combo]
+
 		local energy = UnitPower("player")
 		if energy > 25 then energy = 25; end
 		data.damage = data.damage + (data.damage * energy / 25)
@@ -61,7 +72,7 @@ function Druid:init()
 	self.spells[194153]	= Damage({ru=1}) 																--Лунный удар
 	self.spells[5221]	= Damage({ru=1}) 																--Полоснуть
 	self.spells[1079]	= ComboTimeDamage({ru={3,2}}) 													--Разорвать
-	self.spells[22568]	= ComboDamage({ru={4,2}}, FerociousBite) 										--Свирепый укус
+	self.spells[22568]	= Custom(FerociousBite) 														--Свирепый укус
 	self.spells[190984]	= Damage({ru=1}) 																--Солнечный гнев
 	self.spells[93402]	= DamageAndTimeDamage({ru={1,2}, de={1,4}, cn={1,4}, kr={1,4}}) 				--Солнечный огонь
 	self.spells[740]	= TimeHeal({ru=1, en=2, de=3, cn=3, kr=3}) 										--Спокойствие
