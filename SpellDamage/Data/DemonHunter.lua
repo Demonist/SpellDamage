@@ -28,7 +28,7 @@ function DemonHunter:init()
 				local match = matchDigit(bloodletDescr, getLocaleIndex({ru=1, de=2, cn=2}))
 				if match then
 					data.type = SpellDamageAndTimeDamage
-					data.timeDamage = match
+					data.timeDamage = match / 100 * data.damage
 				end
 			end
 		end
@@ -36,6 +36,8 @@ function DemonHunter:init()
 
 
 	self.spells[211053]	= Damage({ru=1}) 														--Обстрел Скверны
+	self.spells[210152] 	= Damage({ru=1})														--Смертоносный взмах
+	self.spells[201427] 	= Damage({ru=1})														--Аннигиляция
 	self.spells[227225]	= Absorb({ru=1, en=2, de=2, es=2, fr=2, it=2, pt=2, kr=2}) 				--Призрачный барьер
 	self.spells[218679]	= Damage({ru=1}) 														--Взрывная душа
 	self.spells[212084]	= TimeDamageAndTimeHeal({ru={1,3}, de={2,3}, cn={2,3}, kr={2,3}}) 		--Опустошение Скверны
@@ -59,7 +61,7 @@ function DemonHunter:init()
 	self.spells[162794]	= Damage({ru=1}) 														--Удар Хаоса
 	self.spells[197125]	= self.spells[162794] 													--Удар Хаоса
 	self.spells[162243]	= Damage({ru=1}) 														--Укус демона
-	self.spells[201467]	= TimeDamage({ru=1, de=3, cn=3, kr=3}) 									--Ярость иллидари
+	self.spells[201467]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 									--Ярость иллидари
 	self.spells[201628]	= self.spells[201467] 													--Ярость иллидари
 	self.spells[201789]	= self.spells[201467] 													--Ярость иллидари
 	self.spells[198793]	= Damage({ru=1}) 														--Коварное отступление
