@@ -81,7 +81,7 @@ function Priest:init()
 	self.spells[585]	= Damage({ru=1}) 													--Кара
 	self.spells[205065]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Поток Бездны
 	self.spells[208065]	= Heal({ru=1}) 														--Свет Т'ууре
-	self.spells[207946]	= Damage({ru=2}) 														--Ярость Света
+	self.spells[207946]	= Damage({ru=2}) 													--Ярость Света
 	self.spells[207948]	= self.spells[207946] 												--Ярость Света
 	self.spells[47540]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Penance) 					--Исповедь
 	self.spells[200829]	= Heal({ru=1}) 														--Мольба

@@ -41,7 +41,6 @@ function Druid:init()
 	end
 
 
-	self.spells[106785] 	= Damage({ru=1})																--Размах
 	self.spells[202028]	= Damage({ru=1}) 																--Жестокий удар когтями
 	self.spells[204066]	= DamageAndTimeHeal({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 					--Лунный луч
 	self.spells[80313]	= Damage({ru=2}) 																--Раздавить
@@ -54,17 +53,15 @@ function Druid:init()
 	self.spells[1822]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Глубокая рана
 	self.spells[33763]	= HealAndTimeHeal({ru={1,2}}, Lifebloom) 										--Жизнецвет
 	self.spells[78674]	= Damage({ru=1}) 																--Звездный поток
-	self.spells[197626] 	= Damage({ru=1})																--Звездный поток
 	self.spells[774]	= TimeHeal({ru=1}) 																--Омоложение
 	self.spells[5176]	= Damage({ru=1}) 																--Солнечный гнев
 	self.spells[18562]	= Heal({ru=1}) 																	--Быстрое восстановление
 	self.spells[191034]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Звездопад
 	self.spells[22570]	= ComboDamage({ru={2,3}}) 														--Калечение
 	self.spells[194153]	= Damage({ru=1}) 																--Лунный удар
-	self.spells[197628] 	= Damage({ru=1})																--Лунный удар
 	self.spells[5221]	= Damage({ru=1}) 																--Полоснуть
 	self.spells[1079]	= ComboTimeDamage({ru={3,2}}) 													--Разорвать
-	self.spells[22568]	= ComboDamage({ru={3,2}}, FerociousBite) 										--Свирепый укус
+	self.spells[22568]	= ComboDamage({ru={4,2}}, FerociousBite) 										--Свирепый укус
 	self.spells[190984]	= Damage({ru=1}) 																--Солнечный гнев
 	self.spells[93402]	= DamageAndTimeDamage({ru={1,2}, de={1,4}, cn={1,4}, kr={1,4}}) 				--Солнечный огонь
 	self.spells[740]	= TimeHeal({ru=1, en=2, de=3, cn=3, kr=3}) 										--Спокойствие
@@ -76,10 +73,13 @@ function Druid:init()
 	self.spells[77758]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Взбучка
 	self.spells[106830]	= self.spells[77758] 															--Взбучка
 	self.spells[8921]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Лунный огонь
-	self.spells[155625] 	= self.spells[8921]																--Лунный огонь
+	self.spells[155625]	= self.spells[8921] 															--Лунный огонь
 	self.spells[202767]	= Damage({ru=1}) 																--Новолуние
 	self.spells[202771]	= Damage({ru=1}) 																--Полная луна
 	self.spells[202768]	= Damage({ru=1}) 																--Полумесяц
 	self.spells[164815]	= DamageAndTimeDamage({ru={1,2}, de={1,4}, cn={1,4}, kr={1,4}}) 				--Солнечный огонь
 	self.spells[200851]	= Damage({ru=1}) 																--Ярость Спящего
+	self.spells[197628]	= Damage({ru=1}) 																--Лунный удар
+	self.spells[197626]	= Damage({ru=1}) 																--Звездный поток
+	self.spells[106785]	= Damage({ru=1}) 																--Размах
 end
