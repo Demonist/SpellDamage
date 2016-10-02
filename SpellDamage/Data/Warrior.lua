@@ -68,6 +68,20 @@ function Warrior:init()
 		data.heal = UnitHealthMax("player") * factor
 	end
 
+	--Перехват:
+	local Intercept = function(data)
+		if IsPlayerSpell(103828) then 	--Вестник войны
+			local warbringerDescr = GetSpellDescription(103828)
+			if warbringerDescr then
+				local match = matchDigit(warbringerDescr, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
+				if match then
+					data.type = SpellDamageAndMana
+					data.damage  = match
+				end
+			end
+		end
+	end
+
 	--Победный раж:
 	local VictoryRush = function(data)
 		data.type = SpellDamageAndHeal
@@ -126,7 +140,7 @@ function Warrior:init()
 	self.spells[163201]	= DamageAndDamage({ru={1,3}}, Execute) 								--Казнь
 	self.spells[23881]	= Damage({ru=1}, Bloodthirst) 										--Кровожадность
 	self.spells[100130]	= Damage({ru=1}) 													--Неистовый удар сплеча
-	self.spells[198304]	= Mana({ru=5, de=4}) 												--Перехват
+	self.spells[198304]	= Mana({ru=5, de=4}, Intercept) 									--Перехват
 	self.spells[34428]	= Damage({ru=1}, VictoryRush) 										--Победный раж
 	self.spells[1715]	= Damage({ru=1}) 													--Подрезать сухожилия
 	self.spells[845]	= Damage({ru=1}) 													--Рассекающий удар
