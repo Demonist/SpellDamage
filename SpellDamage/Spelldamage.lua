@@ -1,5 +1,5 @@
 local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
-local Glyphs, Items = SD.Glyphs, SD.Items
+local Items = SD.Items
 
 local emptyClass = SD.Class:create(SD.ClassSpells)
 local currentClass = emptyClass
@@ -89,7 +89,7 @@ end
 
 local function checkRequirements()
 	local locale = GetLocale()
-	if locale ~= "ruRU" and locale ~= "enUS" and locale ~= "enGB" and locale ~= "deDE" and locale ~= "esES" and locale ~= "frFR" and locale ~= "itIT" and locale ~= "ptBR" and locale ~= "zhCN" and locale ~= "zhTW" and locale ~= "koKR" then
+	if locale ~= "ruRU" and locale ~= "enUS" and locale ~= "enGB" and locale ~= "deDE" and locale ~= "esES" and locale ~= "frFR" and locale ~= "itIT" and locale ~= "ptBR" and locale ~= "zhCN" and locale ~= "koKR" then
 		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage|r addon can't work in your locale! Addon disabled, sorry.", 1, 0, 0)
 		addonDisableReason = DisableReason_Language
 		DisableAddOn("SpellDamage")
@@ -115,11 +115,6 @@ EventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
 EventFrame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 EventFrame:RegisterEvent("UPDATE_EXTRA_ACTIONBAR")
 EventFrame:RegisterEvent("UPDATE_OVERRIDE_ACTIONBAR")
-EventFrame:RegisterEvent("GLYPH_ADDED")
-EventFrame:RegisterEvent("GLYPH_DISABLED")
-EventFrame:RegisterEvent("GLYPH_ENABLED")
-EventFrame:RegisterEvent("GLYPH_REMOVED")
-EventFrame:RegisterEvent("GLYPH_UPDATED")
 local logined, updateSpells = false, {}
 local function EventHandler(self, event, ...)
 	if addonDisableReason ~= DisableReason_Unknown then
@@ -143,7 +138,7 @@ local function EventHandler(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		--version check:
 		local version = tonumber(string.sub(GetBuildInfo(), 1, 1))
-		if version ~= 6 then
+		if version ~= 7 then
 			addonDisableReason = DisableReason_Version
 			DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_version"], 1, 0, 0)
 			DisableAddOn("SpellDamage")
@@ -159,7 +154,6 @@ local function EventHandler(self, event, ...)
 		createButtons()
 		checkRequirements()
 		if addonDisableReason ~= DisableReason_Unknown then return; end
-		Glyphs:update()
 
 		if SpellDamageStorage then
 			if SpellDamageStorage["dev"] ~= nil then SD.checkSpells(); end
@@ -222,13 +216,6 @@ local function EventHandler(self, event, ...)
 		return
 	end
 
-	local glyphsUpdated = false
-	if event == "GLYPH_ADDED" or event == "GLYPH_UPDATED" or event == "GLYPH_REMOVED" or event == "GLYPH_ENABLED" or event == "GLYPH_DISABLED" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
-		if debuging == true then DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r Glyphs updated on |cFFffffc0"..event.."|r event"); end
-		glyphsUpdated = true
-		Glyphs:update()
-	end
-
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" or event == "PLAYER_LOGIN" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_MACROS"
 		or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "UPDATE_VEHICLE_ACTIONBAR" or evet == "UPDATE_EXTRA_ACTIONBAR" or event == "UPDATE_OVERRIDE_ACTIONBAR"
 		or event == "CUSTOM_ON_UPDATE_SPELLS" or event == "CUSTOM_DELAYED_UPDATE" or event == "CUSTOM_UI_UPDATE"
@@ -236,9 +223,7 @@ local function EventHandler(self, event, ...)
 		or (event == "UNIT_AURA" and select(1, ...) == "player")
 		or (event == "UNIT_POWER" and currentClass.dependFromPower == true and select(1, ...) == "player" and currentClass.dependPowerTypes[select(2, ...)] ~= nil)
 		or (event == "PLAYER_TARGET_CHANGED" and currentClass.dependFromTarget == true)
-		or (event == "UNIT_AURA" and select(1, ...) == "target" and currentClass.dependFromTarget == true)
-		or glyphsUpdated == true then
-
+		or (event == "UNIT_AURA" and select(1, ...) == "target" and currentClass.dependFromTarget == true) then
 		if currentClass:hasOnUpdateSpells() then
 			updateSpells = {}
 			if needCheckOnUpdate == true then
@@ -376,7 +361,7 @@ function SlashCmdList.SPELLDAMAGE(msg, editbox)
  		ReloadUI()
 	
 	elseif msg == "version" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." 0.9.5.1")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..L["chat_version"].." "..GetAddOnMetadata("SpellDamage", "Version"))
  	
  	elseif msg == "status" then
  		DEFAULT_CHAT_FRAME:AddMessage(L["chat_settings"])

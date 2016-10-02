@@ -1,14 +1,13 @@
 local L = {}
 local locale = GetLocale()
 
-L["daggers"] = "Daggers"
-L["lightning_shield"] = "Lightning Shield"
-L["frost_bomb"] = "Frost Bomb"
-L["haunt"] = "Haunt"
-L["dizzying_haze"] = "Dizzying Haze"
 L["item_use"] = "Use"
-L["holy_fire"] = "Holy Fire"
-L["power_word_solace"] = "Power Word: Solace"
+L["flame_shock"] = "Flame Shock"
+L["lightning_rod"] = "Lightning Rod"
+L["conflagration"] = "Conflagration"
+L["fingers_of_frost"] = "Fingers of Frost"
+L["keg_smash"] = "Keg Smash"
+L["soul_fragments"] = "Soul Fragments"
 
 L["description_error"] = "Error by getting spell's description with"
 L["parsing_spell_error"] = "Error by parsing spell with"
@@ -42,14 +41,13 @@ L["chat_command_version"] = "show addon version"
 --------------------------------   ruRU:   -------------------------------------
 
 if locale == "ruRU" then
-	L["daggers"] = "Кинжалы"
-	L["lightning_shield"] = "Щит молний"
-	L["frost_bomb"] = "Ледяная бомба"
-	L["haunt"] = "Блуждающий дух"
-	L["dizzying_haze"] = "Хмельная дымка"
 	L["item_use"] = "Использование"
-	L["holy_fire"] = "Священный огонь"
-	L["power_word_solace"] = "Слово силы: Утешение"
+	L["flame_shock"] = "Огненный шок"
+	L["lightning_rod"] = "Грозовой разрядник"
+	L["conflagration"] = "Воспламенение"
+	L["fingers_of_frost"] = "Ледяные пальцы"
+	L["keg_smash"] = "Удар бочонком"
+	L["soul_fragments"] = "Фрагменты души"
 
 	L["description_error"] = "Ошибка получения описания умения с"
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
@@ -84,105 +82,85 @@ end
 --------------------------------   deDE:   -------------------------------------
 
 if locale == "deDE" then
-	L["daggers"] = "Dolche"
-	L["lightning_shield"] = "Blitzschlagschild"
-	L["frost_bomb"] = "Frostbombe"
-	L["haunt"] = "Heimsuchung"
-	L["dizzying_haze"] = "Benebelnde Dämpfe"
 	L["item_use"] = "Benutzen"
-	L["holy_fire"] = "Heiliges Feuer"
-	L["power_word_solace"] = "Machtwort: Trost"
+	L["flame_shock"] = "Flammenschock"
+	L["lightning_rod"] = "Blitzableiter"
+	L["conflagration"] = "Großbrand"
+	L["fingers_of_frost"] = "Eisige Finger"
+	L["keg_smash"] = "Fasshieb"
+	L["soul_fragments"] = "Seelenfragmente"
 end
 
 --------------------------------   esES:   -------------------------------------
 
 if locale == "esES" then
-	L["daggers"] = "Dagas"
-	L["lightning_shield"] = "Escudo de relámpagos"
-	L["frost_bomb"] = "Bomba de Escarcha"
-	L["haunt"] = "Poseer"
-	L["dizzying_haze"] = "Estupor mareante"
 	L["item_use"] = "Uso"
-	L["holy_fire"] = "Fuego Sagrado"
-	L["power_word_solace"] = "Palabra de poder: consuelo"
+	L["flame_shock"] = "Choque de llamas"
+	L["lightning_rod"] = "Pararrayos"
+	L["conflagration"] = "Conflagración"
+	L["fingers_of_frost"] = "Dedos de Escarcha"
+	L["keg_smash"] = "Embate con barril"
+	L["soul_fragments"] = "Trozos de alma"
 end
 
 --------------------------------   frFR:   -------------------------------------
 
 if locale == "frFR" then
-	L["daggers"] = "Dagues"
-	L["lightning_shield"] = "Bouclier de foudre"
-	L["frost_bomb"] = "Bombe de givre"
-	L["haunt"] = "Hanter"
-	L["dizzying_haze"] = "Brume vertigineuse"
 	L["item_use"] = "Utilise"
-	L["holy_fire"] = "Flammes sacrées"
-	L["power_word_solace"] = "Mot de pouvoir : Réconfort"
+	L["flame_shock"] = "Horion de flammes"
+	L["lightning_rod"] = "Paratonnerre"
+	L["conflagration"] = "Déflagration"
+	L["fingers_of_frost"] = "Doigts de givre"
+	L["keg_smash"] = "Fracasse-tonneau"
+	L["soul_fragments"] = "Fragments d’âme"
 end
 
 --------------------------------   itIT:   -------------------------------------
 
 if locale == "itIT" then
-	L["daggers"] = "Pugnali"
-	L["lightning_shield"] = "Scudo di Fulmini"
-	L["frost_bomb"] = "Bomba del Gelo"
-	L["haunt"] = "Tormento"
-	L["dizzying_haze"] = "Ebbrezza"
 	L["item_use"] = "Usa"
-	L["holy_fire"] = "Fuoco Sacro"
-	L["power_word_solace"] = "Parola del Potere: Conforto"
+	L["flame_shock"] = "Folgore del Fuoco"
+	L["lightning_rod"] = "Parafulmine"
+	L["conflagration"] = "Pirocombustione"
+	L["fingers_of_frost"] = "Dita di Gelo"
+	L["keg_smash"] = "Lancio del Barile"
+	L["soul_fragments"] = "Frammenti dell'Anima"
 end
 
 --------------------------------   ptBR:   -------------------------------------
 
 if locale == "ptBR" then
-	L["daggers"] = "Daggers"
-	L["lightning_shield"] = "Escudo de Raios"
-	L["frost_bomb"] = "Bomba Gélida"
-	L["haunt"] = "Possessão"
-	L["dizzying_haze"] = "Névoa Estonteante"
 	L["item_use"] = "Uso"
-	L["holy_fire"] = "Fogo Sagrado"
-	L["power_word_solace"] = "Palavra de Poder: Consolo"
+	L["flame_shock"] = "Choque Flamejante"
+	L["lightning_rod"] = "Para-raios"
+	L["conflagration"] = "Conflagração"
+	L["fingers_of_frost"] = "Dedos Glaciais"
+	L["keg_smash"] = "Pancada de Barril"
+	L["soul_fragments"] = "Fragmentos de Alma"
 end
 
 --------------------------------   zhCN:   -------------------------------------
 
 if locale == "zhCN" then
-	L["daggers"] = "匕首"
-	L["lightning_shield"] = "闪电之盾"
-	L["frost_bomb"] = "寒冰炸弹"
-	L["haunt"] = "鬼影缠身"
-	L["dizzying_haze"] = "迷醉酒雾"
 	L["item_use"] = "使用"
-	L["holy_fire"] = "神圣之火"
-	L["power_word_solace"] = "真言术：慰"
-end
-
---------------------------------   zhTW:   -------------------------------------
-
-if locale == "zhTW" then
-	L["daggers"] = "匕首"
-	L["lightning_shield"] = "閃電之盾"
-	L["frost_bomb"] = "冰霜炸彈"
-	L["haunt"] = "蝕魂術"
-	L["dizzying_haze"] = "微醺酒氣"
-	L["item_use"] = "使用"
-	L["holy_fire"] = "神聖之火"
-	L["power_word_solace"] = "真言術:慰"
+	L["flame_shock"] = "烈焰震击"
+	L["lightning_rod"] = "引雷针"
+	L["conflagration"] = "洪荒烈火"
+	L["fingers_of_frost"] = "寒冰指"
+	L["keg_smash"] = "醉酿投"
+	L["soul_fragments"] = "灵魂残片"
 end
 
 --------------------------------   koKR:   -------------------------------------
 
 if locale == "koKR" then
-	L["daggers"] = "단검"
-	L["lightning_shield"] = "번개 보호막"
-	L["frost_bomb"] = "냉기폭탄"
-	L["haunt"] = "유령 출몰"
-	L["dizzying_haze"] = "술안개"
 	L["item_use"] = "사용 효과"
-	L["holy_fire"] = "신성한 불꽃"
-	L["power_word_solace"] = "신의 권능: 위안"
+	L["flame_shock"] = "화염 충격"
+	L["lightning_rod"] = "피뢰침"
+	L["conflagration"] = "거대한 불길"
+	L["fingers_of_frost"] = "서리의 손가락"
+	L["keg_smash"] = "맥주통 휘두르기"
+	L["soul_fragments"] = "영혼 파편"
 end
 
 SD = {}

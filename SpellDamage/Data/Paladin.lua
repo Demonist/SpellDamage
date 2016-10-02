@@ -12,69 +12,10 @@ Paladin.dependFromTarget = true
 SD.classes["PALADIN"] = Paladin
 
 function Paladin:init()
-	--Возложение рук:
-	local LayOnHands = function(data)
-		data.type = SpellHeal
-		data.heal = UnitHealthMax("player")
-
-		if Glyphs:contains(54939) then 	--Символ божественности
-			data.type = SpellHealAndMana
-			data.mana = UnitManaMax("player") * 0.1
-		end
-	end
-
-	--Шок небес:
-	local HolyShock = function(data, description)
-		local matchs = matchDigits(description, {1,2})
-		if matchs then
-			if UnitExists("target") and UnitIsFriend("player", "target") then
-				data.type = SpellHeal
-				data.heal = matchs[2]
-			else
-				data.type = SpellDamage
-				data.damage = matchs[1]
-			end
-		end
-	end
-
-	--Священный щит:
-	local SacredShield = function(data, match)
-		data.absorb = match * 5
-	end
-
-	--Божественная буря:
-	local DivineStorm = function(data)
-		if Glyphs:contains(63220) then		--Символ божественной бури
-			data.type = SpellDamageAndHeal
-			data.heal = UnitHealthMax("player") * 0.04
-		end
-	end
-
-	--Торжество:
-	local WordOfGlory = function(data, match, description)
-		if Glyphs:contains(54938) and UnitExists("target") and UnitIsEnemy("player", "target") then		--Символ резких слов
-			local damage = matchDigit(description, 3)
-			if damage then
-				data.type = SpellDamage
-				data.damage = damage
-			end
-		end
-	end
-
-	--Молот Света:
-	local LightsHammer = function(data, matchs)
-		data.timeDamage = matchs[1] * 7
-		data.timeHeal = matchs[2] * 7
-	end
-
-	--Вечное пламя:
-	local EternalFlame = function(data, matchs)
-		data.heal = matchs[1]
-		data.timeHeal = matchs[2] * 15
-
-		if not UnitExists("target") or UnitIsPlayer("target") then
-			data.timeHeal = data.timeHeal * 1.5
-		end
+	--Гнев небес:
+	local HolyWrath = function(data)
+		data.type = SpellDamage
+		data.damage = (UnitHealthMax("player") - UnitHealth("player")) * 2
 	end
 
 	--Божественная призма:
@@ -88,45 +29,153 @@ function Paladin:init()
 		end
 	end
 
-	--Гнев карателя:
-	local AvengingWrath = function(data)
-		if Glyphs:contains(54927) then		--Символ гнева карателя
-			data.type = SpellTimeHeal
-			data.timeHeal = UnitHealthMax("player") * 0.01 * 5
+	--Длань защитника:
+	local HandOfTheProtector = function(data)
+		if UnitExists("target") and UnitIsFriend("player", "target") then
+			data.type = SpellHeal
+			data.heal = (UnitHealthMax("target") - UnitHealth("target")) * 0.25
 		else
 			data.type = SpellEmpty
 		end
 	end
 
-	self.spells[633] 	= Custom(LayOnHands) 										--Возложение рук
-	self.spells[879]	= Damage({ru=1}) 											--Экзорцизм
-	self.spells[2812]	= Damage({ru=1}) 											--Обличение
-	self.spells[19750]	= Heal({ru=1}) 	 											--Вспышка Света
-	self.spells[20271]	= Damage({ru=1}) 											--Правосудие
-	self.spells[20473]	= Custom(HolyShock)											--Шок небес
-	self.spells[20925]	= Absorb({ru=2, de=3, cn=3, tw=3, kr=3}, SacredShield)		--Священный щит
-	self.spells[148039]	= self.spells[20925] 										--Священный щит
-	self.spells[24275]	= Damage({ru=1}) 	 										--Молот гнева
-	self.spells[158392]	= self.spells[24275] 										--Молот гнева
-	self.spells[26573]	= TimeDamage({ru=1}) 										--Освящение
-	self.spells[31935]	= Damage({ru=1}) 											--Щит мстителя
-	self.spells[35395]	= Damage({ru=1}) 											--Удар воина Света
-	self.spells[53385]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}, DivineStorm) 		--Божественная буря
-	self.spells[53595]	= Damage({ru=1})  											--Молот праведника
-	self.spells[53600]	= Damage({ru=1}) 											--Щит праведника
-	self.spells[82326]	= Heal({ru=1}) 												--Свет небес
-	self.spells[82327]	= Heal({ru=1}) 												--Святое сияние
-	self.spells[85222]	= Heal({ru=4, es=2, fr=2, it=2, pt=2}) 						--Свет зари
-	self.spells[85256]	= Damage({ru=1}) 											--Вердикт храмовника
-	self.spells[85673]	= Heal({ru=2}, WordOfGlory) 								--Торжество
-	self.spells[136494]	= self.spells[85673] 										--Торжество
-	self.spells[114157]	= TimeDamageAndTimeHeal({ru={1,3}, de={2,4}, cn={2,4}, tw={2,4}, kr={2,4}}) 			--Смертный приговор
-	self.spells[114158]	= TimeDamageAndTimeHeal({ru={4,8}, fr={4,7}}, LightsHammer) 							--Молот Света
-	self.spells[114163]	= HealAndTimeHeal({ru={2,3}, de={2,5}, cn={2,4}, tw={2,4}, kr={2,5}}, EternalFlame) 	--Вечное пламя
-	self.spells[114165]	= DamageAndHeal({ru={1,2,5,6}, cn={1,4,5,8}, tw={1,4,5,8}, kr={1,4,5,8}}, HolyPrism) 	--Божественная призма
-	self.spells[119072]	= Damage({ru=1, de=2, cn=2, tw=2, kr=2}) 					--Гнев небес
-	self.spells[130552]	= self.spells[85673] 										--Резкое слово
-	self.spells[157048]	= Damage({ru=1}) 											--Окончательный приговор
-	self.spells[31884]	= Custom(AvengingWrath) 									--Гнев карателя
-	self.spells[159556]	= TimeDamage({ru=1, de=2, cn=2, tw=2, kr=2}) 				--Освящение
+	--Отмщение вершителя правосудия:
+	local JusticarsVengeance = function(data)
+		data.type = SpellDamageAndHeal
+		data.heal = data.damage
+	end
+
+	--Божественный молот:
+	local DivineHammer = function(data)
+		data.type = SpellDamageAndTimeDamage
+		data.timeDamage = data.damage * 6
+	end
+
+	--Молот Света:
+	local LightsHammer = function(data)
+		data.timeDamage = data.timeDamage * 7
+		data.timeHeal = data.timeHeal * 7
+	end
+
+	--Освящение:
+	local Consecration = function(data)
+		if IsPlayerSpell(204054) then 	--Освященная земля
+			local consecratedGroundDescr = GetSpellDescription(204054)
+			if consecratedGroundDescr then
+				local match = matchDigit(consecratedGroundDescr, getLocaleIndex({ru=2, de=3, fr=1, cn=3, kr=3}))
+				if match then
+					data.type = SpellTimeDamageAndTimeHeal
+					data.timeHeal = match * 12
+				end
+			end
+		end
+	end
+
+	--Божественная буря:
+	local DivineStorm = function(data)
+		if IsPlayerSpell(193058) then 	--Исцеляющая буря
+			local consecratedGroundDescr = GetSpellDescription(193058)
+			if consecratedGroundDescr then
+				local match = matchDigit(consecratedGroundDescr, getLocaleIndex({ru=1, en=2, de=2, fr=2, it=2, pt=2, cn=2, kr=2}))
+				if match then
+					data.type = SpellDamageAndHeal
+					data.heal = match
+				end
+			end
+		end
+	end
+
+	--Свет защитника:
+	local LightOfTheProtector = function(data)
+		data.type = SpellHeal
+		data.heal = (UnitHealthMax("player") - UnitHealth("player")) * 0.25
+
+		if IsPlayerSpell(209539) then 	--Свет титанов
+			local consecratedGroundDescr = GetSpellDescription(209539)
+			if consecratedGroundDescr then
+				local match = matchDigit(consecratedGroundDescr, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
+				if match then
+					data.type = SpellHealAndTimeHeal
+					data.timeHeal = match
+				end
+			end
+		end
+	end
+
+	--Шок небес:
+	local HolyShock = function(data)
+		if UnitExists("target") and UnitIsFriend("player", "target") then
+			data.type = SpellHeal
+		else
+			data.type = SpellDamage
+		end
+	end
+
+	--Избавление Тира:
+	local TyrDeliverance = function(data)
+		data.timeHeal = data.timeHeal * 10
+	end
+
+	--Правосудие:
+	local Judgment = function(data, description)
+		local d1 = matchDigit(description, 1) or 0
+		local d2 = matchDigit(description, 2) or 0
+		data.type = SpellDamage
+		data.damage = math.max(d1,d2)
+	end
+
+	--Возложение рук:
+	local LayOnHands = function(data)
+		data.type = SpellHeal
+		data.heal = UnitHealthMax("player")
+	end
+
+	--Покаяние:
+	local Repentance = function(data)
+		if UnitExists("target") and not UnitIsFriend("player", "target") then
+			data.type = SpellTimeDamage
+			data.timeDamage = UnitHealthMax("target") * 0.25
+		else
+			data.type = SpellEmpty
+		end
+	end
+
+
+	self.spells[210220]	= Custom(HolyWrath) 																--Гнев небес
+	self.spells[114165]	= DamageAndHeal({ru={1,2,5,6}, cn={1,4,5,8}, kr={1,4,5,8}}, HolyPrism) 				--Божественная призма
+	self.spells[213652]	= Custom(HandOfTheProtector) 														--Длань защитника
+	self.spells[215661]	= Damage({ru=1}, JusticarsVengeance) 												--Отмщение вершителя правосудия
+	self.spells[210191]	= Heal({ru=1, en=3, de=3, it=3, cn=3, kr=3}) 										--Торжество
+	self.spells[198034]	= Damage({ru=2, de=4, pt=1}, DivineHammer) 											--Божественный молот
+	self.spells[202270]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 					--Клинок гнева
+	self.spells[115750]	= Damage({ru=2}) 																	--Слепящий свет
+	self.spells[204019]	= Damage({ru=1}) 																	--Благословенный молот
+	self.spells[217020]	= Damage({ru=1}) 																	--Фанатизм
+	self.spells[223306]	= TimeHeal({ru=2}) 																	--Дарование веры
+	self.spells[114158]	= TimeDamageAndTimeHeal({ru={4,6}, es={4,5}, fr={4,5}, pt={4,5}}, LightsHammer) 	--Молот Света
+	self.spells[205228]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Consecration) 								--Освящение
+	self.spells[213757]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 												--Смертный приговор
+	self.spells[85222]	= Heal({ru=1, en=3, de=3, fr=3, pt=3, cn=3, kr=3}) 									--Свет зари
+	self.spells[53385]	= Damage({ru=1}, DivineStorm) 														--Божественная буря
+	self.spells[203538]	= Absorb({ru=1}) 																	--Великое благословение королей
+	self.spells[85256]	= Damage({ru=1}) 																	--Вердикт храмовника
+	self.spells[19750]	= Heal({ru=1}) 																		--Вспышка Света
+	self.spells[184575]	= Damage({ru=1}) 																	--Клинок Справедливости
+	self.spells[53595]	= Damage({ru=1}) 																	--Молот праведника
+	self.spells[26573]	= TimeDamage({ru=1}, Consecration) 													--Освящение
+	self.spells[184092]	= Custom(LightOfTheProtector) 														--Свет защитника
+	self.spells[183998]	= Heal({ru=1}) 																		--Свет мученика
+	self.spells[82326]	= Heal({ru=1}) 																		--Свет небес
+	self.spells[20473]	= DamageAndHeal({ru={1,2}}, HolyShock) 												--Шок небес
+	self.spells[31935]	= Damage({ru=1}) 																	--Щит мстителя
+	self.spells[184662]	= Absorb({ru=1, de=2, kr=2}) 														--Щит мстителя
+	self.spells[53600]	= Damage({ru=1}) 																	--Щит праведника
+	self.spells[200652]	= TimeHeal({ru=2, en=3, de=4, fr=3, it=3, pt=3, cn=3, kr=4}, TyrDeliverance) 		--Избавление Тира
+	self.spells[200654]	= self.spells[200652] 																--Избавление Тира
+	self.spells[205273]	= Damage({ru=2, de=3, cn=3, kr=3}) 													--Испепеляющий след
+	self.spells[209202]	= Damage({ru=1}) 																	--Око Тира
+	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
+	self.spells[35395]	= Damage({ru=1}) 																	--Удар воина Света
+	self.spells[633]	= Custom(LayOnHands) 																--Возложение рук
+	self.spells[20066]	= Custom(Repentance) 																--Покаяние
 end

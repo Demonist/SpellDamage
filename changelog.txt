@@ -1,4 +1,62 @@
-﻿0.9.5.1
+﻿2.0.15.0
+Fixed Druid's "Ferocious Bite".
+
+2.0.14.0
+Bugfixes.
+
+2.0.13.0
+Added roughing Druid and Items.
+Fixed wrong early fix of status change bug (dev mode, items, errors).
+
+2.0.12.0
+Added Demon Hunter.
+
+2.0.11.0
+Added Monk.
+
+2.0.10.0
+Added Warlock.
+
+2.0.9.0
+Added Death Knight.
+
+2.0.8.0
+Bugfixes.
+Fixed status change bug (dev mode, items, errors).
+Added Mage's "Ice Block" and "Flamestrike".
+Fixed Paladin's "Wake of Ashes" and "Mind Flay" and "Void Bolt".
+
+2.0.7.0
+Added Priest.
+
+2.0.6.1
+Fixed Paladin's "Judgment".
+
+2.0.6.0
+Added Rogue.
+
+2.0.5.0
+Added Paladin.
+
+2.0.4.1
+Little fix.
+
+2.0.4.0
+Added Warrior.
+
+2.0.3.0
+Added Mage.
+
+2.0.2.0
+Added Hunter.
+
+2.0.1.0
+Added Shaman.
+
+2.0.0.0
+Legion empty version.
+
+0.9.5.1
 Added version check.
 
 0.9.5.0
