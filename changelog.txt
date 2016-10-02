@@ -1,4 +1,7 @@
-﻿2.0.15.0
+﻿2.1.0.0
+The Legion release version.
+
+2.0.15.0
 Fixed Druid's "Ferocious Bite".
 
 2.0.14.0
