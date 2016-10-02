@@ -1,4 +1,7 @@
-﻿2.1.0.1
+﻿2.1.0.2
+Added Shaman's "Unleash Life".
+
+2.1.0.1
 Added Warlock's "Mortal Coil".
 
 2.1.0.0
