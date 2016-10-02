@@ -75,6 +75,11 @@ function Rogue:init()
 		end
 	end
 
+	--Алый фиал:
+	local CrimsonVial = function(data)
+		data.timeHeal = data.timeHeal * UnitHealthMax("player") / 100
+	end
+
 
 	self.spells[152150]	= Damage({ru=1, de=2, fr=2, cn=2, kr=3}, DeathFromAbove) 		--Смерть с небес
 	self.spells[185767]	= Damage({ru=1, cn=2, kr=2}) 									--Обстрел ядрами
@@ -103,4 +108,5 @@ function Rogue:init()
 	self.spells[209782]	= Damage({ru=1}) 												--Укус Кровавой Пасти
 	self.spells[79140]	= Custom(Vendetta) 												--Вендетта
 	self.spells[408]	= Custom(KidneyShot) 											--Удар по почкам
+	self.spells[185311]	= TimeHeal({ru=1}, CrimsonVial) 								--Алый фиал
 end
