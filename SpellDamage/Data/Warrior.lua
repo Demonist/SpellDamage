@@ -62,6 +62,9 @@ function Warrior:init()
 		if IsPlayerSpell(200859) then 	--Кровавое безумие
 			factor = 0.05
 		end
+		if UnitBuff("player", L["enraged_regeneration"]) then
+			factor = factor + 0.2
+		end
 		data.heal = UnitHealthMax("player") * factor
 	end
 

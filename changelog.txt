@@ -1,4 +1,7 @@
-﻿2.1.0.2
+﻿2.1.0.3
+Fixed Shaman's "Earth Shock".
+
+2.1.0.2
 Added Shaman's "Unleash Life".
 
 2.1.0.1

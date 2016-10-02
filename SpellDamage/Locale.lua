@@ -8,6 +8,7 @@ L["conflagration"] = "Conflagration"
 L["fingers_of_frost"] = "Fingers of Frost"
 L["keg_smash"] = "Keg Smash"
 L["soul_fragments"] = "Soul Fragments"
+L["enraged_regeneration"] = "Enraged Regeneration"
 
 L["description_error"] = "Error by getting spell's description with"
 L["parsing_spell_error"] = "Error by parsing spell with"
@@ -48,6 +49,7 @@ if locale == "ruRU" then
 	L["fingers_of_frost"] = "Ледяные пальцы"
 	L["keg_smash"] = "Удар бочонком"
 	L["soul_fragments"] = "Фрагменты души"
+	L["enraged_regeneration"] = "Безудержное восстановление"
 
 	L["description_error"] = "Ошибка получения описания умения с"
 	L["parsing_spell_error"] = "Ошибка парсинга умения с"
@@ -89,6 +91,7 @@ if locale == "deDE" then
 	L["fingers_of_frost"] = "Eisige Finger"
 	L["keg_smash"] = "Fasshieb"
 	L["soul_fragments"] = "Seelenfragmente"
+	L["enraged_regeneration"] = "Wütende Regeneration"
 end
 
 --------------------------------   esES:   -------------------------------------
@@ -101,6 +104,7 @@ if locale == "esES" then
 	L["fingers_of_frost"] = "Dedos de Escarcha"
 	L["keg_smash"] = "Embate con barril"
 	L["soul_fragments"] = "Trozos de alma"
+	L["enraged_regeneration"] = "Regeneración enfurecida"
 end
 
 --------------------------------   frFR:   -------------------------------------
@@ -113,6 +117,7 @@ if locale == "frFR" then
 	L["fingers_of_frost"] = "Doigts de givre"
 	L["keg_smash"] = "Fracasse-tonneau"
 	L["soul_fragments"] = "Fragments d’âme"
+	L["enraged_regeneration"] = "Régénération enragée"
 end
 
 --------------------------------   itIT:   -------------------------------------
@@ -125,6 +130,7 @@ if locale == "itIT" then
 	L["fingers_of_frost"] = "Dita di Gelo"
 	L["keg_smash"] = "Lancio del Barile"
 	L["soul_fragments"] = "Frammenti dell'Anima"
+	L["enraged_regeneration"] = "Rigenerazione Furente"
 end
 
 --------------------------------   ptBR:   -------------------------------------
@@ -137,6 +143,7 @@ if locale == "ptBR" then
 	L["fingers_of_frost"] = "Dedos Glaciais"
 	L["keg_smash"] = "Pancada de Barril"
 	L["soul_fragments"] = "Fragmentos de Alma"
+	L["enraged_regeneration"] = "Regeneração Enfurecida"
 end
 
 --------------------------------   zhCN:   -------------------------------------
@@ -149,6 +156,7 @@ if locale == "zhCN" then
 	L["fingers_of_frost"] = "寒冰指"
 	L["keg_smash"] = "醉酿投"
 	L["soul_fragments"] = "灵魂残片"
+	L["enraged_regeneration"] = "狂怒回复"
 end
 
 --------------------------------   koKR:   -------------------------------------
@@ -161,6 +169,7 @@ if locale == "koKR" then
 	L["fingers_of_frost"] = "서리의 손가락"
 	L["keg_smash"] = "맥주통 휘두르기"
 	L["soul_fragments"] = "영혼 파편"
+	L["enraged_regeneration"] = "격노의 재생력"
 end
 
 SD = {}

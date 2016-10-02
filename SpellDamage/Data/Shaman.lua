@@ -50,10 +50,11 @@ function Shaman:init()
 
 	--Земной шок:
 	local EarthShock = function(data)
-		local power = UnitPower("player", SPELL_POWER_DARK_FORCE)
-		if power < 10 then
+		if GetShapeshiftForm() ~= 0 then
 			data.type = SpellEmpty
 		else
+			local power = UnitPower("player", SPELL_POWER_DARK_FORCE)
+			if power < 10 then power = 10; end
 			data.damage = power * data.damage / 100
 		end
 	end
