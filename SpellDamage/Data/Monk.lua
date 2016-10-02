@@ -52,6 +52,7 @@ function Monk:init()
 		data.heal = UnitHealthMax("player") * 0.15
 	end
 
+
 	self.spells[196743]	= TimeDamage({ru=2}) 															--Сгусток ци
 	self.spells[152175]	= Damage({ru=1}) 																--Удар крутящегося дракона
 	self.spells[196725]	= TimeHeal({ru=1, de=4, cn=4, kr=4}) 											--Освежающий нефритовый ветер

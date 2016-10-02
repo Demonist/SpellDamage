@@ -103,5 +103,4 @@ function Hunter:init()
 	self.spells[204147]	= Damage({ru=1}) 										--Шквальный ветер
 	self.spells[203413]	= Damage({ru=1}) 										--Ярость орла
 	self.spells[203415]	= Damage({ru=1}) 										--Ярость орла
-	
 end

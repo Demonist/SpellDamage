@@ -1,4 +1,7 @@
-﻿2.1.0.0
+﻿2.1.0.1
+Added Warlock's "Mortal Coil".
+
+2.1.0.0
 The Legion release version.
 
 2.0.15.0

@@ -118,5 +118,4 @@ function Shaman:init()
 	self.spells[1064]	= Heal({ru=1}) 																	--Цепное исцеление
 	self.spells[193796]	= Damage({ru=1}) 																--Язык пламени
 	self.spells[207778]	= Heal({ru=3, en=2, es=1, pt=1}) 												--Дар королевы
-	
 end

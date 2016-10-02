@@ -44,6 +44,11 @@ function Warlock:init()
 		data.timeHeal = data.timeDamage * match[2] / 100
 	end
 
+	--Лик тлена:
+	local MortalCoil = function(data, match)
+		data.heal = match * UnitHealthMax("player") / 100
+	end
+
 
 	self.spells[157695]	= Damage({ru=1}) 																--Демонический заряд
 	self.spells[196447]	= TimeDamage({ru=4}, ChannelDemonfire) 											--Направленный демонический огонь
@@ -76,4 +81,5 @@ function Warlock:init()
 	self.spells[63106]	= TimeDamageAndTimeHeal({ru={1,3}, de={2,3}, cn={2,3}, kr={2,3}}, SiphonLife) 	--Вытягивание жизни
 	self.spells[603]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Рок
 	self.spells[105174]	= Damage({ru=2, de=3, cn=3, kr=3}) 												--Рука Гул'дана
+	self.spells[6789]	= Heal({ru=2}, MortalCoil) 														--Лик тлена
 end
