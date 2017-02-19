@@ -1,4 +1,11 @@
-﻿2.1.0.5
+2.1.0.6
+Deactivated Items.
+Added spell: Prismatic Barrier, Blazing Barrier.
+Fixed spell: Swipe, Rushing Jade Wind, Healing Rain, Drain Soul, Drain
+Life, Intercept, Revenge, Odyn's Fury, Shield Slam, Thunder Clap.
+Added spell type AbsorbAndDamage.
+
+2.1.0.5
 Added Rogue's "Crimson Vial".
 
 2.1.0.4
