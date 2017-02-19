@@ -1,3 +1,5 @@
+2.1.0.7
+
 2.1.0.6
 Deactivated Items.
 Added spell: Prismatic Barrier, Blazing Barrier.
