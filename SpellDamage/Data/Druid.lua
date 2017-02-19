@@ -93,4 +93,5 @@ function Druid:init()
 	self.spells[197628]	= Damage({ru=1}) 																--Лунный удар
 	self.spells[197626]	= Damage({ru=1}) 																--Звездный поток
 	self.spells[106785]	= Damage({ru=1}) 																--Размах
+	self.spells[213771]	= Damage({ru=1}) 																--Размах
 end

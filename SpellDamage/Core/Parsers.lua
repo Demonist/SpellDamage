@@ -1,6 +1,6 @@
 ﻿local L, shortNumber, matchDigit, matchDigits, printTable, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
-local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
+local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal, SpellAbsorbAndDamage = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal, SD.SpellAbsorbAndDamage
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
 
 --
@@ -146,6 +146,9 @@ function SD.DoubleSpell:getData(description)
 		elseif self.type == SpellManaAndTimeMana then
 			data.mana = matchs[1]
 			data.timeMana = matchs[2]
+		elseif self.type == SpellAbsorbAndDamage then
+			data.absorb = matchs[1]
+			data.damage = matchs[2]
 		else
 			data.type = SpellUnknown
 		end
@@ -165,6 +168,7 @@ function SD.DamageAndDamage(indexes) return SD.DoubleSpell:create(SpellDamage, i
 function SD.DamageAndMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellDamageAndMana, indexes, computeFunc); end
 function SD.TimeDamageAndTimeHeal(indexes, computeFunc) return SD.DoubleSpell:create(SpellTimeDamageAndTimeHeal, indexes, computeFunc); end
 function SD.ManaAndTimeMana(indexes, computeFunc) return SD.DoubleSpell:create(SpellManaAndTimeMana, indexes, computeFunc); end
+function SD.AbsorbAndDamage(indexes, computeFunc) return SD.DoubleSpell:create(SpellAbsorbAndDamage, indexes, computeFunc); end
 function SD.AverageDamage(indexes) return SD.DoubleSpell:create(SpellDamage, indexes, function(data, matchs) data.type = SpellDamage; data.damage = (matchs[1] + matchs[2]) / 2; end); end
 
 --

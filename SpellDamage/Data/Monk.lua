@@ -56,7 +56,7 @@ function Monk:init()
 	self.spells[196743]	= TimeDamage({ru=2}) 															--Сгусток ци
 	self.spells[152175]	= Damage({ru=1}) 																--Удар крутящегося дракона
 	self.spells[196725]	= TimeHeal({ru=1, de=4, cn=4, kr=4}) 											--Освежающий нефритовый ветер
-	self.spells[116847]	= TimeDamage({ru=1, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
+	self.spells[116847]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
 	self.spells[123904]	= TimeDamage({ru=1}, InvokeXuenTheWhiteTiger) 									--Призыв Сюэня, Белого Тигра
 	self.spells[198664]	= TimeHeal({ru=2}) 																--Призыв Чи-Цзи, Красного Журавля
 	self.spells[115098]	= DamageAndHeal({ru={1,2}}) 													--Волна ци

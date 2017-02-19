@@ -89,7 +89,8 @@ function Shaman:init()
 	self.spells[210714]	= DamageAndMana({ru={1,4}}) 													--Ледяная ярость
 	self.spells[198838]	= Absorb({ru=1, it=2, kr=2}) 													--Тотем земного щита
 	self.spells[117014]	= Damage({ru=1}) 																--Удар духов стихии
-	self.spells[215864]	= TimeHeal({ru=1, de=3, cn=3, kr=3}) 											--Ливень
+	self.spells[215864]	= TimeHeal({ru=1, de=3, cn=3, kr=3}) 											--Ливень 73920
+	self.spells[73920]	= TimeHeal({ru=1, de=3, cn=2, kr=3}) 											--Целительный Ливень
 	self.spells[196884]	= Damage({ru=1}) 																--Свирепый выпад
 	self.spells[201898]	= Damage({ru=1}) 																--Песнь ветра
 	self.spells[201897]	= Damage({ru=1}) 																--Тяжелый кулак

@@ -140,11 +140,11 @@ function Warrior:init()
 	self.spells[163201]	= DamageAndDamage({ru={1,3}}, Execute) 								--Казнь
 	self.spells[23881]	= Damage({ru=1}, Bloodthirst) 										--Кровожадность
 	self.spells[100130]	= Damage({ru=1}) 													--Неистовый удар сплеча
-	self.spells[198304]	= Mana({ru=5, de=4}, Intercept) 									--Перехват
+	self.spells[198304]	= Mana({ru=6}, Intercept) 											--Перехват
 	self.spells[34428]	= Damage({ru=1}, VictoryRush) 										--Победный раж
 	self.spells[1715]	= Damage({ru=1}) 													--Подрезать сухожилия
 	self.spells[845]	= Damage({ru=1}) 													--Рассекающий удар
-	self.spells[6572]	= DamageAndMana({ru={1,3}}) 										--Реванш
+	self.spells[6572]	= Damage({ru=1}) 													--Реванш
 	self.spells[206572]	= Damage({ru=1}) 													--Рывок дракона
 	self.spells[12294]	= Damage({ru=1}, MortalStrike) 										--Смертельный удар
 	self.spells[20243]	= Damage({ru=1}, Devastate) 										--Сокрушение
@@ -157,10 +157,10 @@ function Warrior:init()
 	self.spells[100]	= Mana({ru=2, de=1}, Charge) 										--Рывок
 	self.spells[203524]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Ярость Нелтариона
 	self.spells[203526]	= self.spells[203524] 												--Ярость Нелтариона
-	self.spells[205545]	= DamageAndTimeDamage({ru={1,2}, de={2,4}, cn={2,4}, kr={2,4}}) 	--Ярость Одина
+	self.spells[205545]	= DamageAndTimeDamage({ru={2,3}, de={3,5}, cn={3,5}, kr={3,5}}) 	--Ярость Одина
 	self.spells[205546]	= self.spells[205545] 												--Ярость Одина
 	self.spells[205547]	= self.spells[205545] 												--Ярость Одина
-	self.spells[23922]	= DamageAndMana({ru={1,2}}) 										--Мощный удар щитом
+	self.spells[23922]	= DamageAndMana({ru={1,3}}) 										--Мощный удар щитом
 	self.spells[1464]	= Damage({ru=1}, Slam) 												--Мощный удар
-	self.spells[6343]	= Damage({ru=2}) 													--Удар грома
+	self.spells[6343]	= DamageAndMana({ru={2,5}}) 										--Удар грома
 end

@@ -59,7 +59,7 @@ function Warlock:init()
 	self.spells[48181]	= Damage({ru=1}) 																--Блуждающий дух
 	self.spells[17877]	= Damage({ru=1}) 																--Ожог Тьмы
 	self.spells[205181]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Пламя Тьмы
-	self.spells[198590]	= TimeDamageAndTimeHeal({ru={2,3}, fr={1,2}}, DrainSoul) 						--Похищение души
+	self.spells[198590]	= TimeDamageAndTimeHeal({ru={1,3}, fr={1,2}}, DrainSoul) 						--Похищение души
 	self.spells[980]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Агония
 	self.spells[348]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Жертвенный огонь
 	self.spells[29722]	= Damage({ru=1}) 																--Испепеление
@@ -75,6 +75,7 @@ function Warlock:init()
 	self.spells[27243]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 											--Семя порчи
 	self.spells[187394]	= Damage({ru=1}) 																--Залп Хаоса
 	self.spells[689]	= TimeDamageAndTimeHeal({ru={1,3}}, DrainLife) 									--Похищение жизни
+	self.spells[234153]	= TimeDamageAndTimeHeal({ru={1,3}}, DrainLife)									--Похищение жизни
 	self.spells[1122]	= Damage({ru=1, it=2}) 															--Призыв инфернала
 	self.spells[196657]	= Damage({ru=1}) 																--Стрела Тьмы
 	self.spells[215279]	= CriticalDamage({ru=1}) 														--Стрела Хаоса

@@ -1,12 +1,12 @@
 local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
-local Items = SD.Items
+--local Items = SD.Items
 
 local emptyClass = SD.Class:create(SD.ClassSpells)
 local currentClass = emptyClass
 
 local debuging = false
 local eventDebuging = false
-local showItems = true
+local showItems = false
 local locale = nil
 
 local nonStandardUi = false
