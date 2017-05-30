@@ -160,7 +160,7 @@ function Warrior:init()
 	self.spells[205545]	= DamageAndTimeDamage({ru={2,3}, de={3,5}, cn={3,5}, kr={3,5}}) 	--Ярость Одина
 	self.spells[205546]	= self.spells[205545] 												--Ярость Одина
 	self.spells[205547]	= self.spells[205545] 												--Ярость Одина
-	self.spells[23922]	= DamageAndMana({ru={1,3}}) 										--Мощный удар щитом
+	self.spells[23922]	= Damage({ru=1}) 													--Мощный удар щитом
 	self.spells[1464]	= Damage({ru=1}, Slam) 												--Мощный удар
 	self.spells[6343]	= DamageAndMana({ru={2,5}}) 										--Удар грома
 end

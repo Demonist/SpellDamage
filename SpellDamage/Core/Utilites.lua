@@ -33,9 +33,10 @@ end
 
 function SD.matchDigit(str, index)
 	local i = 1
-	for match in str:gmatch("%d+[%.,]?%d*[%.,]?%d*[%.,]?%d*") do
+	for match in str:gmatch("%d+[%., ]?%d*[%., ]?%d*[%., ]?%d*") do
 		if i == index then
 			local m = match:gsub(",", ".")
+			m = m:gsub(" ", "")
 			m = removeDelimiters(m)
 			return tonumber(m)
 		elseif i > index then
@@ -50,8 +51,10 @@ function SD.matchDigits(str, indexes)
 	local ret = {}
 
 	local numbers = {}
-	for match in str:gmatch("%d+[%.,]?%d*[%.,]?%d*[%.,]?%d*") do
+	for match in str:gmatch("%d+[%., ]?%d*[%., ]?%d*[%., ]?%d*") do
 		local m = match:gsub(",", ".")
+		m = m:gsub(" ", "")
+		--print(m)
 		m = removeDelimiters(m)
 		table.insert(numbers, tonumber(m))
 	end

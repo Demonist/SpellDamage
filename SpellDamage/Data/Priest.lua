@@ -68,7 +68,7 @@ function Priest:init()
 	self.spells[129250]	= Damage({ru=1}, PowerWordSolace) 									--Слово силы: Утешение
 	self.spells[214121]	= TimeHeal({ru=1, de=2, cn=2, kr=3}, BodyAndMind) 					--Тело и разум
 	self.spells[228260]	= Damage({ru=1}) 													--Извержение Бездны
-	self.spells[48045]	= TimeDamage({ru=1, de=3, cn=2, kr=3}) 								--Иссушение разума
+	--self.spells[48045]	= TimeDamage({ru=1, de=3, cn=2, kr=3}) 								--Иссушение разума
 	self.spells[132157]	= Damage({ru=1, de=2, cn=2, kr=2}) 									--Кольцо света
 	self.spells[596]	= Heal({ru=1, en=3, de=3, fr=3, pt=3, cn=3, kr=3}) 					--Молитва исцеления
 	self.spells[34914]	= Damage({ru=1, de=2, cn=2, kr=2}, VampiricTouch) 					--Прикосновение вампира

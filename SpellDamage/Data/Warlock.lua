@@ -74,7 +74,7 @@ function Warlock:init()
 	self.spells[17962]	= Damage({ru=1}) 																--Поджигание
 	self.spells[27243]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 											--Семя порчи
 	self.spells[187394]	= Damage({ru=1}) 																--Залп Хаоса
-	self.spells[689]	= TimeDamageAndTimeHeal({ru={1,3}}, DrainLife) 									--Похищение жизни
+	--self.spells[689]	= TimeDamageAndTimeHeal({ru={1,3}}, DrainLife) 									--Похищение жизни
 	self.spells[234153]	= TimeDamageAndTimeHeal({ru={1,3}}, DrainLife)									--Похищение жизни
 	self.spells[1122]	= Damage({ru=1, it=2}) 															--Призыв инфернала
 	self.spells[196657]	= Damage({ru=1}) 																--Стрела Тьмы

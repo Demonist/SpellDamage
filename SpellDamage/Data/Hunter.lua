@@ -86,7 +86,7 @@ function Hunter:init()
 	self.spells[186387]	= Damage({ru=2, it=1}) 									--Взрывной выстрел
 	self.spells[193455]	= Damage({ru=1}) 										--Выстрел кобры
 	self.spells[109304]	= Custom(Exhilaration1) 								--Живость
-	self.spells[194291]	= Custom(Exhilaration2) 								--Живость
+	--self.spells[194291]	= Custom(Exhilaration2) 								--Живость
 	self.spells[2643]	= Damage({ru=2}) 										--Залп
 	self.spells[34026]	= Damage({ru=1}) 										--Команда "Взять!"
 	self.spells[202800]	= DamageAndDamage({ru={1,2}}, FlankingStrike) 			--Обходной удар

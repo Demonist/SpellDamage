@@ -179,6 +179,8 @@ local function EventHandler(self, event, ...)
 	if logined == false then return; end
 
 	--Защита от слишком частого обновления:
+	--if true == true then return; end
+	---????
 	local currentTime = GetTime()
 	if updatingHistory[event] and currentTime - updatingHistory[event] < 0.1 then
 		delayedUpdate = true

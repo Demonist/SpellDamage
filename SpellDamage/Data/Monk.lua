@@ -52,6 +52,20 @@ function Monk:init()
 		data.heal = UnitHealthMax("player") * 0.15
 	end
 
+	local EssenceFont = function(data, description)
+		local match = matchDigits(description, getLocaleIndex({ru={5,6}, de={5,7}, cn={5,7}, kr={5,7}}))
+		if match then
+			data.type = SpellHealAndTimeHeal
+			data.heal = match[1]
+			data.timeHeal = match[2]
+		else
+			match = matchDigit(description, getLocaleIndex({ru=5, de=5, cn=5, kr=5}))
+			if match then
+				data.type = SpellHeal
+				data.heal = match
+			end
+		end		
+	end
 
 	self.spells[196743]	= TimeDamage({ru=2}) 															--Сгусток ци
 	self.spells[152175]	= Damage({ru=1}) 																--Удар крутящегося дракона
@@ -66,7 +80,9 @@ function Monk:init()
 	self.spells[101546]	= TimeDamage({ru=1, de=2, cn=3, kr=3}) 											--Танцующий журавль
 	self.spells[115151]	= TimeHeal({ru=1, de=2, cn=2, kr=2}) 											--Заживляющий туман
 	self.spells[116849]	= Absorb({ru=2}) 																--Исцеляющий кокон
-	self.spells[191837]	= HealAndTimeHeal({ru={5,6}, de={5,7}, cn={5,7}, kr={5,7}}) 					--Купель сущности
+--	self.spells[191837]	= HealAndTimeHeal({ru={5,6}, de={5,7}, cn={5,7}, kr={5,7}}) 					--Купель сущности
+--	self.spells[191837]	= Heal({ru=5, de=5, cn=5, kr=5}) 												--Купель сущности фикс
+	self.spells[191837] = Custom(EssenceFont)
 	self.spells[205523]	= Damage({ru=1}) 																--Нокаутирующая атака
 	self.spells[116670]	= Heal({ru=1, en=2}) 															--Оживить
 	self.spells[124682]	= TimeHeal({ru=1}) 																--Окутывающий туман

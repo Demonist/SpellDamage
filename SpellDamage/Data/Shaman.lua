@@ -110,7 +110,7 @@ function Shaman:init()
 	self.spells[196834]	= Damage({ru=1}) 																--Ледяное клеймо
 	self.spells[196840]	= Damage({ru=1}, FrostShock) 													--Ледяной шок
 	self.spells[187837]	= Damage({ru=1}) 																--Молния
-	self.spells[188196]	= DamageAndMana({ru={1,2}}, LightningBolt) 										--Молния
+	self.spells[188196]	= Damage({ru=1}, LightningBolt) 												--Молния
 	self.spells[188389]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Огненный шок
 	self.spells[188838]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Огненный шок
 	self.spells[187874]	= Damage({ru=1}) 																--Сокрушающая молния
