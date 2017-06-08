@@ -1,4 +1,4 @@
-﻿## Interface: 70004
+﻿## Interface: 70200
 ## Title: SpellDamage
 ## Author: Demonist, Ell, Nels
 ## Version: 2.1.0.8
