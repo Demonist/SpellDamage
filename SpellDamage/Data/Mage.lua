@@ -84,6 +84,12 @@ function Mage:init()
 		end
 	end
 
+		--Дыхание дракона:
+	local DragonsBreath = function(data)
+		if IsPlayerSpell(235870) then 	--Ярость Алекстразы
+			data.damage = data.damage * 2
+		end
+	end
 
 	self.spells[153595]	= Damage({ru=2, de =3, cn=3, kr=3}, CometStorm) 					--Буря комет
 	self.spells[198929]	= Damage({ru=2}, Cinderstorm) 										--Вихрь углей
@@ -104,7 +110,8 @@ function Mage:init()
 	self.spells[12051]	= Custom(Evocation) 												--Прилив сил
 	self.spells[30451]	= Damage({ru=1}) 													--Чародейская вспышка
 	self.spells[44614]	= Damage({ru=2}) 													--Шквал
-	self.spells[31661]	= Damage({ru=1}) 													--Дыхание дракона
+--	self.spells[31661]	= Damage({ru=1}) 													--Дыхание дракона
+	self.spells[31661]	= Damage({ru=1}, DragonsBreath)													--Дыхание дракона
 	self.spells[224968]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, MarkOfAluneth) 				--Знак Алунета
 	self.spells[120]	= Damage({ru=1}) 													--Конус холода
 	self.spells[30455]	= Damage({ru=1}, IceLance) 											--Ледяное копье

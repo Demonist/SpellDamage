@@ -21,20 +21,15 @@ function DeathKnight:init()
 			if power > 100 then power = 100; end
 			local ticks = math.floor(power / 10)
 			data.timeDamage = data.timeDamage * ticks
-			data.timeHeal = UnitHealthMax("player") * 0.01 * ticks
+			data.timeHeal = UnitHealthMax("player") * 0.02 * ticks
 		else
-			data.timeHeal = UnitHealthMax("player") * 0.01
+			data.timeHeal = UnitHealthMax("player") * 0.02
 		end
 	end
 
 	--Дыхание Синдрагосы:
 	local BreathOfSindragosa = function(data)
 		data.timeDamage = data.timeDamage * (UnitPower("player", SPELL_POWER_RUNIC_POWER) / 13 + 1)
-	end
-
-	--Осквернение:
-	local Defile = function(data)
-		data.timeDamage = data.timeDamage * 10
 	end
 
 	--Кровопийца:
@@ -49,6 +44,12 @@ function DeathKnight:init()
 		data.heal = data.damage
 	end
 
+	--Алчущее руническое оружие:
+	local HungeringRuneWeapon = function(data)
+		data.type = SpellTimeMana
+		data.timeMana = data.mana * 10
+	end
+	
 	--Удар смерти:
 	local DeathStrike = function(data)
 		data.type = SpellDamageAndHeal
@@ -56,11 +57,11 @@ function DeathKnight:init()
 	end
 
 
-	self.spells[194844]	= TimeDamage({ru=1, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, kr=3}, Bonestorm) 		--Буря костей
+	self.spells[194844]	= TimeDamage({ru=2, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=2, kr=3}, Bonestorm) 		--Буря костей
 	self.spells[152279]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, BreathOfSindragosa) 								--Дыхание Синдрагосы
 	self.spells[130736]	= Damage({ru=1}) 																		--Жнец душ
 	self.spells[194913]	= Damage({ru=1}) 																		--Ледяной натиск
-	self.spells[152280]	= TimeDamage({ru=3}, Defile) 															--Осквернение
+	self.spells[152280]	= TimeDamage({ru=2, en=1, de=2, es=1, fr=1, it=1, pt=1, cn=2, kr=2}) 					--Осквернение
 	self.spells[207230]	= Damage({ru=1}) 																		--Ледяная коса
 	self.spells[207311]	= Damage({ru=1}) 																		--Стискивающие тени
 	self.spells[212744]	= Damage({ru=2}) 																		--Пожирание душ
@@ -87,4 +88,7 @@ function DeathKnight:init()
 	self.spells[205224]	= self.spells[205223] 																	--Увядание
 	self.spells[49998]	= Damage({ru=1}, DeathStrike) 															--Удар смерти
 	self.spells[190778]	= Damage({ru=2, es=1}) 																	--Ярость Синдрагосы
+	self.spells[57330]	= Mana({ru=2})		 																	--Зимний горн
+	self.spells[47568]	= Mana({ru=1})		 																	--Усиление рунического оружия
+	self.spells[207127]	= Mana({ru=2, en=2, de=4, es=2, fr=2, it=2, pt=2, cn=2, kr=4}, HungeringRuneWeapon)		--Алчущее руническое оружие
 end

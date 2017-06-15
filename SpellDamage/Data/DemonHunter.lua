@@ -30,7 +30,17 @@ function DemonHunter:init()
 			end
 		end
 	end
-
+	
+	--Взрывная душа
+	local SpiritBomb = function(data)
+		local name, _, _, count = UnitBuff("player", L["soul_fragments"])
+		if name and count and count > 0 then
+			data.type = SpellDamageAndHeal
+			data.damage = data.damage * count
+			data.heal = data.damage * 0.2
+		end
+	end	
+		
 	--Бросок боевого клинка:
 	local ThrowGlaive = function(data)
 		if IsPlayerSpell(206473) then 	--Кровопускание
@@ -77,4 +87,6 @@ function DemonHunter:init()
 	self.spells[204596]	= DamageAndTimeDamage({ru={2,3}, cn={2,4}, kr={2,4}}) 					--Печать огня
 	self.spells[210152]	= Damage({ru=1}) 														--Смертоносный взмах
 	self.spells[201427]	= Damage({ru=1}) 														--Аннигиляция
+	self.spells[232893]	= Damage({ru=1}) 														--Клинок Скверны
+	self.spells[247454]	= Damage({ru=3}, SpiritBomb)											--Взрывная душа
 end

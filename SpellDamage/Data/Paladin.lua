@@ -147,8 +147,6 @@ function Paladin:init()
 	self.spells[215661]	= Damage({ru=1}, JusticarsVengeance) 												--Отмщение вершителя правосудия
 	self.spells[210191]	= Heal({ru=1, en=3, de=3, it=3, cn=3, kr=3}) 										--Торжество
 	self.spells[198034]	= Damage({ru=2, de=4, pt=1}, DivineHammer) 											--Божественный молот
-	--self.spells[202270]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 					--Клинок гнева
-	self.spells[115750]	= Damage({ru=2}) 																	--Слепящий свет
 	self.spells[204019]	= Damage({ru=1}) 																	--Благословенный молот
 	self.spells[217020]	= Damage({ru=1}) 																	--Фанатизм
 	self.spells[223306]	= TimeHeal({ru=2}) 																	--Дарование веры

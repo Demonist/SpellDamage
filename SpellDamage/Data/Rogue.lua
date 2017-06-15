@@ -109,4 +109,5 @@ function Rogue:init()
 	self.spells[79140]	= Custom(Vendetta) 												--Вендетта
 	self.spells[408]	= Custom(KidneyShot) 											--Удар по почкам
 	self.spells[185311]	= TimeHeal({ru=1}, CrimsonVial) 								--Алый фиал
+	self.spells[245388]	= Damage({ru=1})												--Ядовитый клинок
 end

@@ -74,7 +74,9 @@ function Druid:init()
 	self.spells[1079]	= ComboTimeDamage({ru={3,2}}) 													--Разорвать
 	self.spells[22568]	= Custom(FerociousBite) 														--Свирепый укус
 	self.spells[190984]	= Damage({ru=1}) 																--Солнечный гнев
+	self.spells[197629]	= Damage({ru=1})					 											--Солнечный гнев
 	self.spells[93402]	= DamageAndTimeDamage({ru={1,2}, de={1,4}, cn={1,4}, kr={1,4}}) 				--Солнечный огонь
+	self.spells[197630]	= DamageAndTimeDamage({ru={1,2}, de={1,4}, cn={1,4}, kr={1,4}}) 				--Солнечный огонь
 	self.spells[740]	= TimeHeal({ru=1, en=2, de=3, cn=3, kr=3}) 										--Спокойствие
 	self.spells[6807]	= Damage({ru=1}) 																--Трепка
 	self.spells[33917]	= Damage({ru=1}) 																--Увечье
@@ -94,4 +96,5 @@ function Druid:init()
 	self.spells[197626]	= Damage({ru=1}) 																--Звездный поток
 	self.spells[106785]	= Damage({ru=1}) 																--Размах
 	self.spells[213771]	= Damage({ru=1}) 																--Размах
+	self.spells[145205]	= TimeHeal({ru=2, de=5, cn=4, kr=5}) 											--Период цветения
 end

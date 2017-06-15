@@ -93,7 +93,6 @@ function Shaman:init()
 	self.spells[73920]	= TimeHeal({ru=1, de=3, cn=2, kr=3}) 											--Целительный Ливень
 	self.spells[196884]	= Damage({ru=1}) 																--Свирепый выпад
 	self.spells[201898]	= Damage({ru=1}) 																--Песнь ветра
-	self.spells[201897]	= Damage({ru=1}) 																--Тяжелый кулак
 	self.spells[61295]	= HealAndTimeHeal({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 					--Быстрина
 	self.spells[51505]	= Damage({ru=1}, LavaBurst) 													--Выброс лавы
 	self.spells[8004]	= Heal({ru=1}) 																	--Исцеляющий всплеск
@@ -121,4 +120,6 @@ function Shaman:init()
 	self.spells[193796]	= Damage({ru=1}) 																--Язык пламени
 	self.spells[207778]	= Heal({ru=3, en=2, es=1, pt=1}) 												--Дар королевы
 	self.spells[73685]	= Heal({ru=1}) 																	--Высвободить чары жизни
+	self.spells[192106]	= Damage({ru=2})																--Щит молний
+	self.spells[114074]	= Damage({ru=1})																--Поток лавы
 end
