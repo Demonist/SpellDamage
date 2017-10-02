@@ -1,4 +1,13 @@
-﻿function SD.shortNumber(number)
+﻿function SD.strstarts(String, Start)
+	return string.sub(String, 1, string.len(Start)) == Start
+end
+
+function SD.strends(String, End)
+	local len = string.len(End)
+	return string.sub(String, 1 + string.len(String) - len) == End
+end
+
+function SD.shortNumber(number)
 	if number == nil then
 		return ""
 	end
@@ -32,11 +41,17 @@ local function removeDelimiters(str)
 end
 
 function SD.matchDigit(str, index)
+	local strends = SD.strends
+	local suffix = " млн"	--only russia. Sorry.
 	local i = 1
 	for match in str:gmatch("%d+[%., ]?%d*[%., ]?%d*[%., ]?%d*") do
 		if i == index then
 			local m = match:gsub(",", ".")
 			m = m:gsub(" ", "")
+			if str:find(m..suffix) then
+				m = removeDelimiters(m)
+				return tonumber(m) * 1000000
+			end
 			m = removeDelimiters(m)
 			return tonumber(m)
 		elseif i > index then
@@ -82,8 +97,4 @@ function SD.comboMatch(list)
 		if i == combo then return index end
 	end
 	return nil
-end
-
-function SD.strstarts(String, Start)
-	return string.sub(String, 1, string.len(Start)) == Start
 end

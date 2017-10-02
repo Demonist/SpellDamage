@@ -74,7 +74,7 @@ function Priest:init()
 	self.spells[34914]	= Damage({ru=1, de=2, cn=2, kr=2}, VampiricTouch) 					--Прикосновение вампира
 	self.spells[14914]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 	--Священный огонь
 	self.spells[88625]	= Damage({ru=1}) 													--Слово Света: Наказание
-	self.spells[194509]	= Heal({ru=2, fr=1, pt=1}) 											--Слово силы: Сияние
+	self.spells[194509]	= Heal({ru=3, fr=3, pt=1}) 											--Слово силы: Сияние
 	self.spells[32379]	= Damage({ru=1}) 													--Слово Тьмы: Смерть
 	self.spells[205448]	= Damage({ru=1}) 													--Стрела Бездны
 	self.spells[186263]	= Heal({ru=1}) 														--Темное восстановление
