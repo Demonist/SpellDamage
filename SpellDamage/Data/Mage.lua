@@ -50,8 +50,9 @@ function Mage:init()
 	end
 
 	--Знак Алунета:
-	local MarkOfAluneth = function(data)
-		data.timeDamage = data.timeDamage + UnitManaMax("player") * 0.15
+	local MarkOfAluneth = function(data, matchs)
+		data.damage = matchs[1]
+		data.timeDamage = math.floor((UnitManaMax("player") / 100) * matchs[2])
 	end
 
 	--Ледяное копье:
@@ -112,7 +113,8 @@ function Mage:init()
 	self.spells[44614]	= Damage({ru=2}) 													--Шквал
 --	self.spells[31661]	= Damage({ru=1}) 													--Дыхание дракона
 	self.spells[31661]	= Damage({ru=1}, DragonsBreath)													--Дыхание дракона
-	self.spells[224968]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, MarkOfAluneth) 				--Знак Алунета
+	self.spells[224968] = DamageAndTimeDamage({ru={2,4}, de={3,4}, cn={3,4}, kr={3,4}}, MarkOfAluneth) 
+	--self.spells[224968]	= TimeDamage({ru={1,4}, de={3,4}, cn={3,4}, kr={3,4}}, MarkOfAluneth) 				--Знак Алунета
 	self.spells[120]	= Damage({ru=1}) 													--Конус холода
 	self.spells[30455]	= Damage({ru=1}, IceLance) 											--Ледяное копье
 	self.spells[84714]	= Damage({ru=2}) 													--Ледяной шар
@@ -121,7 +123,7 @@ function Mage:init()
 	self.spells[5143]	= Damage({ru=3, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, kr=3}) 	--Чародейские стрелы
 	self.spells[1449]	= Damage({ru=1, de=2, cn=2, kr=2}) 									--Чародейский взрыв
 	self.spells[44425]	= Damage({ru=1}) 													--Чародейский обстрел
-	self.spells[210726]	= TimeDamage({ru=2, de=3, cn=3, kr=3}, MarkOfAluneth) 				--Знак Алунета
+	self.spells[210726]	= self.spells[224968] 												--Знак Алунета
 	self.spells[211076]	= Damage({ru=1, de=2, cn=2, kr=2}) 									--Знак Алунета
 	self.spells[211088]	= Damage({ru=1}) 													--Знак Алунета
 	self.spells[122]	= Damage({ru=2}) 													--Кольцо льда

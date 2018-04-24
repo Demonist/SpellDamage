@@ -64,14 +64,21 @@ end
 
 function SD.matchDigits(str, indexes)
 	local ret = {}
-
+	local suffix = " млн"	--only russia. Sorry.
 	local numbers = {}
 	for match in str:gmatch("%d+[%., ]?%d*[%., ]?%d*[%., ]?%d*") do
 		local m = match:gsub(",", ".")
 		m = m:gsub(" ", "")
-		--print(m)
-		m = removeDelimiters(m)
-		table.insert(numbers, tonumber(m))
+		if str:find(m..suffix) then
+			m = removeDelimiters(m)
+			table.insert(numbers, tonumber(m) * 1000000)
+		else
+			m = removeDelimiters(m) 
+			table.insert(numbers, tonumber(m))
+		end
+--		print(m)
+--		m = removeDelimiters(m)
+--		table.insert(numbers, tonumber(m))
 	end
 
 	for _,index in ipairs(indexes) do

@@ -30,12 +30,11 @@ function Paladin:init()
 	end
 
 	--Длань защитника:
-	local HandOfTheProtector = function(data)
+	local HandOfTheProtector = function(data, match)
 		if UnitExists("target") and UnitIsFriend("player", "target") then
-			data.type = SpellHeal
-			data.heal = (UnitHealthMax("target") - UnitHealth("target")) * 0.25
+			data.heal = math.floor((UnitHealthMax("target") - UnitHealth("target")) * (match / 100))
 		else
-			data.type = SpellEmpty
+			data.heal = math.floor((UnitHealthMax("player") - UnitHealth("player")) * (match / 100))
 		end
 	end
 
@@ -143,7 +142,7 @@ function Paladin:init()
 
 	self.spells[210220]	= Custom(HolyWrath) 																--Гнев небес
 	self.spells[114165]	= DamageAndHeal({ru={1,2,5,6}, cn={1,4,5,8}, kr={1,4,5,8}}, HolyPrism) 				--Божественная призма
-	self.spells[213652]	= Custom(HandOfTheProtector) 														--Длань защитника
+	self.spells[213652]	= Heal({ru=1}, HandOfTheProtector) 													--Длань защитника
 	self.spells[215661]	= Damage({ru=1}, JusticarsVengeance) 												--Отмщение вершителя правосудия
 	self.spells[210191]	= Heal({ru=1, en=3, de=3, it=3, cn=3, kr=3}) 										--Торжество
 	self.spells[198034]	= Damage({ru=2, de=4, pt=1}, DivineHammer) 											--Божественный молот
@@ -168,12 +167,14 @@ function Paladin:init()
 	self.spells[31935]	= Damage({ru=1}) 																	--Щит мстителя
 	self.spells[184662]	= Absorb({ru=1, de=2, kr=2}) 														--Щит мстителя
 	self.spells[53600]	= Damage({ru=1}) 																	--Щит праведника
-	self.spells[200652]	= TimeHeal({ru=2, en=3, de=4, fr=3, it=3, pt=3, cn=3, kr=4}, TyrDeliverance) 		--Избавление Тира
+	self.spells[200652]	= TimeHeal({ru=3, en=4, de=5, fr=5, it=4, pt=4, cn=4, kr=5}, TyrDeliverance) 		--Избавление Тира
 	self.spells[200654]	= self.spells[200652] 																--Избавление Тира
 	self.spells[205273]	= Damage({ru=2, de=3, cn=3, kr=3}) 													--Испепеляющий след
-	self.spells[209202]	= Damage({ru=1}) 																	--Око Тира
+	self.spells[218001]	= self.spells[205273] 																--Испепеляющий след
+	self.spells[209122]	= self.spells[205273]																--Испепеляющий след
+	self.spells[209202]	= Damage({ru=2}) 																	--Око Тира
 	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
 	self.spells[35395]	= Damage({ru=1}) 																	--Удар воина Света
 	self.spells[633]	= Custom(LayOnHands) 																--Возложение рук
-	self.spells[20066]	= Custom(Repentance) 																--Покаяние
+--	self.spells[20066]	= Custom(Repentance) 																--Покаяние
 end

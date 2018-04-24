@@ -149,6 +149,9 @@ function SD.DoubleSpell:getData(description)
 		elseif self.type == SpellAbsorbAndDamage then
 			data.absorb = matchs[1]
 			data.damage = matchs[2]
+		elseif self.type == SpellTimeHealAndTimeMana then
+			data.timeHeal = matchs[1]
+			data.timeMana = matchs[2]
 		else
 			data.type = SpellUnknown
 		end

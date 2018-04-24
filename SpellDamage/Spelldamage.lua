@@ -1,8 +1,9 @@
 local L, shortNumber, matchDigit, matchDigits, printTable, SPELL_COMBO_POINTS, comboMatch, comboHelper, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.SPELL_COMBO_POINTS, SD.comboMatch, SD.comboHelper, SD.strstarts
---local Items = SD.Items
+local Items = SD.Items
 
 local emptyClass = SD.Class:create(SD.ClassSpells)
 local currentClass = emptyClass
+local race = SD.classes["Race"]
 
 local debuging = false
 local eventDebuging = false
@@ -168,6 +169,8 @@ local function EventHandler(self, event, ...)
 		if currentClass then currentClass:init(); end
 		SD.classes = nil
 		SD.class = currentClass
+
+		race:init()
 	end
 
 	if event == "CVAR_UPDATE" then
@@ -268,6 +271,7 @@ local function EventHandler(self, event, ...)
 					end
 					
 					local used = currentClass:updateButton(button, id)
+					if used == false then used = race:updateButton(button, id); end
 					if used and needUpdateButtonsCache then table.insert(buttonsCache, button); end
 				elseif showItems == true and Items and actionType == "item" and id then
 					if Items:updateButton(button, id) == true and needUpdateButtonsCache then table.insert(buttonsCache, button); end

@@ -11,11 +11,27 @@ SD.Items = Items
 
 Items.spells[122664]	= Heal({ru=1}) 		--Вечное колье горизонта
 
+	--Камень здоровья:
+	local Healthstone = function(data, match)
+		data.type = SpellHeal
+		data.heal = UnitHealthMax("player") * match / 100
+	end
+
+	--Перерожденная ненависть Архимонда:
+	local ArchimondesHatredReborn = function(data, match)
+		data.type = SpellAbsorb
+		data.heal = UnitHealthMax("player") * match / 100
+	end
+
 -- Зелья:
 
+Items.spells[152615]	= Heal({ru=1}) 		--Астральное лечебное зелье
 Items.spells[127834]	= Heal({ru=1}) 		--Древнее лечебное зелье
 Items.spells[127835]	= Mana({ru=1}) 		--Древнее зелье маны
+Items.spells[127846]	= TimeMana({ru=1}) 		--Зелье силового потока
 Items.spells[127836]	= HealAndMana({ru={1,1}}) 		--Древнее зелье омоложения
+Items.spells[5512]		= Heal({ru=1}, Healthstone) 		--Камень здоровья
+Items.spells[144249]	= Heal({ru=2}, ArchimondesHatredReborn) 		--Перерожденная ненависть Архимонда
 Items.spells[136569]	= Heal({ru=1}) 		--Выдержанное зелье здоровья
 Items.spells[140347]	= Mana({ru=1}) 		--Ягоды духов
 Items.spells[140351]	= Heal({ru=1}) 		--Солнечный фрукт

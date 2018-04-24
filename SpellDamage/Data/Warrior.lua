@@ -155,7 +155,7 @@ function Warrior:init()
 	self.spells[6544]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 						--Героический прыжок
 	self.spells[209577]	= Damage({ru=1}) 													--Миротворец
 	self.spells[100]	= Mana({ru=5}, Charge)		 										--Рывок
-	self.spells[203524]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Ярость Нелтариона
+	self.spells[203524]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 								--Ярость Нелтариона
 	self.spells[203526]	= self.spells[203524] 												--Ярость Нелтариона
 	self.spells[205545]	= DamageAndTimeDamage({ru={2,3}, de={3,5}, cn={3,5}, kr={3,5}}) 	--Ярость Одина
 	self.spells[205546]	= self.spells[205545] 												--Ярость Одина

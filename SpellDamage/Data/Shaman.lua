@@ -122,4 +122,7 @@ function Shaman:init()
 	self.spells[73685]	= Heal({ru=1}) 																	--Высвободить чары жизни
 	self.spells[192106]	= Damage({ru=2})																--Щит молний
 	self.spells[114074]	= Damage({ru=1})																--Поток лавы
+	self.spells[115356]	= Damage({ru=1})																--Удар ветра
+	self.spells[198292]	= self.spells[115356]															--Удар ветра
+	self.spells[115360]	= self.spells[115356]															--Удар ветра
 end
