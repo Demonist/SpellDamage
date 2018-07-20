@@ -262,7 +262,7 @@ local function EventHandler(self, event, ...)
 				end
 
 				if actionType == "spell" and id then
-					button.centerText:SetText(id)
+					--button.centerText:SetText(id)
 					button.bottomText:SetText("")
 
 					if needCheckOnUpdate == true and updateSpells[id] then
