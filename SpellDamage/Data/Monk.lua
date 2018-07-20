@@ -70,13 +70,13 @@ function Monk:init()
 	self.spells[196743]	= TimeDamage({ru=2}) 															--Сгусток ци
 	self.spells[152175]	= Damage({ru=1}) 																--Удар крутящегося дракона
 	self.spells[196725]	= TimeHeal({ru=1, de=4, cn=4, kr=4}) 											--Освежающий нефритовый ветер
-	self.spells[116847]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
+	self.spells[116847]	= TimeDamage({ru=1, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
+	self.spells[261715]	= TimeDamage({ru=1, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
 	self.spells[123904]	= TimeDamage({ru=1}, InvokeXuenTheWhiteTiger) 									--Призыв Сюэня, Белого Тигра
 	self.spells[198664]	= TimeHeal({ru=2}) 																--Призыв Чи-Цзи, Красного Журавля
 	self.spells[115098]	= DamageAndHeal({ru={1,2}}) 													--Волна ци
 	self.spells[123986]	= DamageAndHeal({ru={2,3}}) 													--Выброс ци
 	self.spells[124081]	= DamageAndHeal({ru={1,3}, de={2,3}, cn={2,3}, kr={2,3}}) 						--Дзен-импульс
-	self.spells[197945]	= Heal({ru=1}) 																	--Странник туманов
 	self.spells[101546]	= TimeDamage({ru=1, de=2, cn=3, kr=3}) 											--Танцующий журавль
 	self.spells[115151]	= TimeHeal({ru=1, de=2, cn=2, kr=2}) 											--Заживляющий туман
 	self.spells[116849]	= Absorb({ru=2}) 																--Исцеляющий кокон
@@ -99,10 +99,13 @@ function Monk:init()
 	self.spells[205414]	= self.spells[205320] 															--Удар Владыки Ветра
 	self.spells[222029]	= self.spells[205320] 															--Удар Владыки Ветра
 	self.spells[209525]	= TimeHeal({ru=1, de=2, cn=2, kr=2}) 											--Успокаивающий туман
+	self.spells[115175]	= TimeHeal({ru=1, de=2, cn=2, kr=2}) 											--Успокаивающий туман
 	self.spells[115080]	= Custom(TouchOfDeath) 															--Смертельное касание
-	self.spells[116694]	= Heal({ru=1}) 																	--Излияние
 	self.spells[113656]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Неистовые кулаки
 	self.spells[122281]	= Custom(HealingElixir) 														--Целебный эликсир
 	self.spells[121253]	= Damage({ru=1, de=2, cn=2, kr=2}) 												--Удар бочонком
 	self.spells[115310]	= Heal({ru=2, es=1, fr=1, pt=1}) 												--Восстановление сил
+	self.spells[261947]	= Damage({ru=1}) 																--Кулак Белого Тигра
+	self.spells[115295]	= Absorb({ru=1}) 																--Защита
+	self.spells[115313]	= TimeHeal({ru=1}) 																--Призыв статуи Нефритовой Змеи
 end

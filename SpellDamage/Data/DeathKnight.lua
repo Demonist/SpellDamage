@@ -16,7 +16,7 @@ function DeathKnight:init()
 	--Буря костей:
 	local Bonestorm = function(data)
 		data.type = SpellTimeDamageAndTimeHeal
-		local power = UnitPower("player", SPELL_POWER_RUNIC_POWER)
+		local power = UnitPowerMax("player")
 		if power > 10 then
 			if power > 100 then power = 100; end
 			local ticks = math.floor(power / 10)
@@ -29,7 +29,7 @@ function DeathKnight:init()
 
 	--Дыхание Синдрагосы:
 	local BreathOfSindragosa = function(data)
-		data.timeDamage = data.timeDamage * (UnitPower("player", SPELL_POWER_RUNIC_POWER) / 13 + 1)
+		data.timeDamage = data.timeDamage * (UnitPowerMax("player") / 13 + 1)
 	end
 
 	--Кровопийца:
@@ -56,16 +56,20 @@ function DeathKnight:init()
 		data.heal = UnitHealthMax("player") * 0.1
 	end
 
+--Смертельный союз:
+	local DeathPact = function(data, match)		
+		data.heal = UnitHealthMax("player") * (match / 100)
+	end
 
-	self.spells[194844]	= TimeDamage({ru=2, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=2, kr=3}, Bonestorm) 		--Буря костей
+
+	self.spells[194844]	= TimeDamage({ru=1, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=2, kr=3}, Bonestorm) 		--Буря костей
 	self.spells[152279]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, BreathOfSindragosa) 								--Дыхание Синдрагосы
 	self.spells[130736]	= Damage({ru=1}) 																		--Жнец душ
 	self.spells[194913]	= Damage({ru=1}) 																		--Ледяной натиск
 	self.spells[152280]	= TimeDamage({ru=2, en=1, de=2, es=1, fr=1, it=1, pt=1, cn=2, kr=2}) 					--Осквернение
 	self.spells[207230]	= Damage({ru=1}) 																		--Ледяная коса
 	self.spells[207311]	= Damage({ru=1}) 																		--Стискивающие тени
-	self.spells[212744]	= Damage({ru=2}) 																		--Пожирание душ
-	self.spells[207317]	= Damage({ru=2}) 																		--Эпидемия
+	self.spells[207317]	= Damage({ru=1}) 																		--Эпидемия
 	self.spells[206931]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Blooddrinker) 									--Кровопийца
 	self.spells[43265]	= TimeDamage({ru=1, de=2, cn=2}) 														--Смерть и разложение
 	self.spells[196770]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 													--Беспощадность зимы
@@ -85,10 +89,15 @@ function DeathKnight:init()
 	self.spells[190780]	= Damage({ru=1}) 																		--Ледяное дыхание
 	self.spells[55095]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 													--Озноб
 	self.spells[205223]	= Damage({ru=1}, Consumption) 															--Увядание
-	self.spells[205224]	= self.spells[205223] 																	--Увядание
+	self.spells[274156]	= Damage({ru=1}, Consumption)															--Пожирание
+	self.spells[205224]	= self.spells[190778]																	--Пожирание
 	self.spells[49998]	= Damage({ru=1}, DeathStrike) 															--Удар смерти
 	self.spells[190778]	= Damage({ru=2, es=1}) 																	--Ярость Синдрагосы
+	self.spells[279302]	= self.spells[190778] 																	--Ярость ледяного змея
 	self.spells[57330]	= Mana({ru=2})		 																	--Зимний горн
 	self.spells[47568]	= Mana({ru=1})		 																	--Усиление рунического оружия
 	self.spells[207127]	= Mana({ru=2, en=2, de=4, es=2, fr=2, it=2, pt=2, cn=2, kr=4}, HungeringRuneWeapon)		--Алчущее руническое оружие
+	self.spells[210764]	= Damage({ru=1})		 																--Рунический удар 
+	self.spells[115989]	= Damage({ru=2, de=3, cn=3}) 															--Нечестивая порча
+	self.spells[48743]	= Heal({ru=1}, DeathPact) 																--Смертельный союз
 end

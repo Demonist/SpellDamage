@@ -20,16 +20,16 @@ function Race:init()
 			elseif currentSpecId == 268 then 	--Хмелевар/Brewmaster
 				data.mana = match
 			elseif currentSpecId == 270 then 	--Ткач Туманов/Mistweaver
-				data.mana = match * UnitManaMax("player") / 100
+				data.mana = match * UnitPowerMax("player") / 100
 			elseif currentSpecId == 256 then 	--Тьма/Shadow
 				data.mana = match
 			elseif currentSpecId == 70 then 	--Воздаяние/Retribution
 				data.mana = match
 			else 
-				data.mana = match * UnitManaMax("player") / 100
+				data.mana = match * UnitPowerMax("player") / 100
 			end
 		else 
-			data.mana = match * UnitManaMax("player") / 100
+			data.mana = match * UnitPowerMax("player") / 100
 		end
 	end
 
@@ -42,13 +42,13 @@ function Race:init()
 	local Cannibalize = function(data, matchs)
 		local times = matchs[3] / matchs[2]
 		data.timeHeal = math.floor(matchs[1] * times * (UnitHealthMax("player") / 100))
-		data.timeMana = math.floor(matchs[1] * times * (UnitManaMax("player") / 100))
+		data.timeMana = math.floor(matchs[1] * times * (UnitPowerMax("player") / 100))
 	end
 
 	self.spells[28730]	= Mana({ru=3}, ArcaneTorrent) 															--Эльф крови, Волшебный поток
 	self.spells[50613]	= Mana({ru=3}) 																			--Эльф крови, Волшебный поток, Рыцарь Смерти
 	self.spells[25046]	= Mana({ru=3})				 															--Эльф крови, Волшебный поток, Разбойник
-	self.spells[129597]	= Mana({ru=3}, ArcaneTorrent)															--Эльф крови, Волшебный поток, Монах
+	--self.spells[129597]	= Mana({ru=3}, ArcaneTorrent)															--Эльф крови, Волшебный поток, Монах
 	self.spells[80483]	= Mana({ru=3})				 															--Эльф крови, Волшебный поток, Охотник
 	self.spells[69179]	= Mana({ru=3}) 																			--Эльф крови, Волшебный поток, Воин
 	self.spells[232633]	= Mana({ru=3}, ArcaneTorrent)															--Эльф крови, Волшебный поток, Рыцарь Смерти
@@ -64,7 +64,7 @@ function Race:init()
 	self.spells[59547]	= self.spells[121093] 																	--Дреней, Дар наару
 	self.spells[20577] = TimeHealAndTimeMana({ru={1,2,3}}, Cannibalize)											--Нежить, Каннибализм
 	self.spells[69041] = Damage({ru=1})																			--Гоблин, Ракетный обстрел
-	self.spells[255647] = Damage({ru=2})																		--Озаренный дреней, Правосудие Света
+	self.spells[255647] = Damage({ru=1})																		--Озаренный дреней, Правосудие Света
 	self.spells[260364] = Damage({ru=1})																		--Ночнорожденные, Чародейский импульс
 
 	

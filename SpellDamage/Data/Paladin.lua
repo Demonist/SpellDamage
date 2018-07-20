@@ -148,13 +148,13 @@ function Paladin:init()
 	self.spells[198034]	= Damage({ru=2, de=4, pt=1}, DivineHammer) 											--Божественный молот
 	self.spells[204019]	= Damage({ru=1}) 																	--Благословенный молот
 	self.spells[217020]	= Damage({ru=1}) 																	--Фанатизм
-	self.spells[223306]	= TimeHeal({ru=2}) 																	--Дарование веры
-	self.spells[114158]	= TimeDamageAndTimeHeal({ru={4,6}, es={4,5}, fr={4,5}, pt={4,5}}, LightsHammer) 	--Молот Света
+	self.spells[223306]	= TimeHeal({ru=1}) 																	--Дарование веры
+	self.spells[114158]	= TimeDamageAndTimeHeal({ru={1,3}, es={4,5}, fr={4,5}, pt={4,5}}, LightsHammer) 	--Молот Света
 	self.spells[205228]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Consecration) 								--Освящение
-	self.spells[213757]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 												--Смертный приговор
+	self.spells[267798]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 												--Смертный приговор
 	self.spells[85222]	= Heal({ru=1, en=3, de=3, fr=3, pt=3, cn=3, kr=3}) 									--Свет зари
 	self.spells[53385]	= Damage({ru=1}, DivineStorm) 														--Божественная буря
-	self.spells[203538]	= Absorb({ru=1}) 																	--Великое благословение королей
+	self.spells[203538]	= Absorb({ru=1, en=3, de=3, es=2, it=2, pt=2, cn=2, kr=3}) 							--Великое благословение королей
 	self.spells[85256]	= Damage({ru=1}) 																	--Вердикт храмовника
 	self.spells[19750]	= Heal({ru=1}) 																		--Вспышка Света
 	self.spells[184575]	= Damage({ru=1}) 																	--Клинок Справедливости
@@ -172,9 +172,15 @@ function Paladin:init()
 	self.spells[205273]	= Damage({ru=2, de=3, cn=3, kr=3}) 													--Испепеляющий след
 	self.spells[218001]	= self.spells[205273] 																--Испепеляющий след
 	self.spells[209122]	= self.spells[205273]																--Испепеляющий след
+	self.spells[255937]	= Damage({ru=1})																	--Испепеляющий след
 	self.spells[209202]	= Damage({ru=2}) 																	--Око Тира
 	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
 	self.spells[35395]	= Damage({ru=1}) 																	--Удар воина Света
 	self.spells[633]	= Custom(LayOnHands) 																--Возложение рук
 --	self.spells[20066]	= Custom(Repentance) 																--Покаяние
+	self.spells[24275]	= Damage({ru=1}) 																	--Молот гнева
+	self.spells[275779]	= Damage({ru=1}) 																	--Правосудие
+	self.spells[20271]	= Damage({ru=1}) 																	--Правосудие
+	self.spells[275773]	= Damage({ru=1}) 																	--Правосудие
+	--self.spells[114158]	= self.spells[114158]															--Молот Света
 end

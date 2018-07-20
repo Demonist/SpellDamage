@@ -213,6 +213,7 @@ function SD.Combo:getData(description)
 		local value = matchs[SD.Combo.getComboPoints()]
 		if self.type == SpellDamage then data.damage = value;
 		elseif self.type == SpellTimeDamage then data.timeDamage = value;
+		elseif self.type == SpellDamageAndTimeDamage then data.timeDamage = value;
 		else data.type = SpellUnknown
 		end
 		if self.computeFunc then self.computeFunc(data, value, computeFunc); end
@@ -222,3 +223,4 @@ end
 
 function SD.ComboDamage(startsAndSteps, computeFunc) return SD.Combo:create(SpellDamage, startsAndSteps, computeFunc); end
 function SD.ComboTimeDamage(startsAndSteps, computeFunc) return SD.Combo:create(SpellTimeDamage, startsAndSteps, computeFunc); end
+function SD.ComboDamageAndTimeDamage(startsAndSteps, computeFunc) return SD.Combo:create(SpellTimeDamage, startsAndSteps, computeFunc); end

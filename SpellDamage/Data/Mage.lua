@@ -39,20 +39,27 @@ function Mage:init()
 	local Supernova = BlastWave
 
 	--Морозный луч:
-	local RayOfFrost = function(data)
-		data.timeDamage = data.timeDamage * 10 * 1.9
+	local RayOfFrost = function(data, matchs)
+		data.type = SpellTimeDamage
+		local fin_damage = matchs[1]
+		for i=matchs[2],matchs[3] do
+			fin_damage = (fin_damage * 1.1) + matchs[1]
+			--print(matchs[1])
+			--i = i + 0.9
+		end
+		data.timeDamage = fin_damage
 	end
 
 	--Прилив сил:
 	local Evocation = function(data)
 		data.type = SpellTimeMana
-		data.timeMana = UnitManaMax("player")
+		data.timeMana = UnitPowerMax("player")
 	end
 
 	--Знак Алунета:
 	local MarkOfAluneth = function(data, matchs)
 		data.damage = matchs[1]
-		data.timeDamage = math.floor((UnitManaMax("player") / 100) * matchs[2])
+		data.timeDamage = math.floor((UnitPowerMax("player") / 100) * matchs[2])
 	end
 
 	--Ледяное копье:
@@ -92,6 +99,11 @@ function Mage:init()
 		end
 	end
 
+			--Дыхание дракона:
+	local GreatPyroblast = function(data, match)
+			data.damage = UnitHealthMax("target") * (match / 100)
+	end
+
 	self.spells[153595]	= Damage({ru=2, de =3, cn=3, kr=3}, CometStorm) 					--Буря комет
 	self.spells[198929]	= Damage({ru=2}, Cinderstorm) 										--Вихрь углей
 	self.spells[199786]	= Damage({ru=1}) 													--Ледовый шип
@@ -99,11 +111,10 @@ function Mage:init()
 	self.spells[153626]	= Damage({ru=2}) 													--Чародейский шар
 	self.spells[114923]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Буря Пустоты
 	self.spells[44457]	= TimeDamageAndTimeDamage({ru={1,4}, en={1,3}, de={2.4}, es={1,3}, fr={1,3}, it={1,3}, pt={1,3}, cn={2,4}, kr={2,4}}) 	--Живая бомба
-	self.spells[112948]	= TimeDamage({ru=2, en=3, de=3, es=3, fr=3, pt=3}) 					--Ледяная бомба ?
 	self.spells[157981]	= Damage({ru=1, de=2, cn=2, kr=2}, BlastWave) 						--Взрывная волна
 	self.spells[157997]	= Damage({ru=1, de=2, cn=2, kr=2}, IceNova) 						--Кольцо обледенения
 	self.spells[157980]	= Damage({ru=1, de=2, cn=2, kr=2}, Supernova) 						--Сверхновая
-	self.spells[205021]	= TimeDamage({ru=3, de=4, cn=4, kr=4}, RayOfFrost) 					--Морозный луч 
+	self.spells[205021]	= DamageAndTimeDamage({ru={2,3,1}, de={4,3,2}, cn={4,2,3}, kr={4,2,3}}, RayOfFrost) 					--Морозный луч 
 	self.spells[116]	= Damage({ru=1}) 													--Ледяная стрела
 	self.spells[11366]	= Damage({ru=1}) 													--Огненная глыба
 	self.spells[133]	= Damage({ru=1}) 													--Огненный шар
@@ -112,11 +123,9 @@ function Mage:init()
 	self.spells[30451]	= Damage({ru=1}) 													--Чародейская вспышка
 	self.spells[44614]	= Damage({ru=2}) 													--Шквал
 --	self.spells[31661]	= Damage({ru=1}) 													--Дыхание дракона
-	self.spells[31661]	= Damage({ru=1}, DragonsBreath)													--Дыхание дракона
-	self.spells[224968] = DamageAndTimeDamage({ru={2,4}, de={3,4}, cn={3,4}, kr={3,4}}, MarkOfAluneth) 
-	--self.spells[224968]	= TimeDamage({ru={1,4}, de={3,4}, cn={3,4}, kr={3,4}}, MarkOfAluneth) 				--Знак Алунета
+	self.spells[31661]	= Damage({ru=1}, DragonsBreath)										--Дыхание дракона
 	self.spells[120]	= Damage({ru=1}) 													--Конус холода
-	self.spells[30455]	= Damage({ru=1}, IceLance) 											--Ледяное копье
+	self.spells[30455]	= Damage({ru=1}) 													--Ледяное копье
 	self.spells[84714]	= Damage({ru=2}) 													--Ледяной шар
 	self.spells[108853]	= CriticalDamage({ru=1}) 											--Огненный взрыв
 	self.spells[190356]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Снежная буря
@@ -127,12 +136,14 @@ function Mage:init()
 	self.spells[211076]	= Damage({ru=1, de=2, cn=2, kr=2}) 									--Знак Алунета
 	self.spells[211088]	= Damage({ru=1}) 													--Знак Алунета
 	self.spells[122]	= Damage({ru=2}) 													--Кольцо льда
-	self.spells[11426]	= Absorb({ru=2}) 													--Ледяная преграда
-	self.spells[235313]	= AbsorbAndDamage({ru={2,3}})										--Пылающая преграда
-	self.spells[235450]	= Absorb({ru=2}) 													--Призматичный барьер
+	self.spells[11426]	= Absorb({ru=2, en=1, es=1, fr=1, it=1, pt=1, cn=1}) 				--Ледяная преграда
+	self.spells[235313]	= AbsorbAndDamage({ru={2,3}, en={1,3}, es={1,3}, fr={1,3}, it={1,3}, pt={1,3}, cn={1,3}})	--Пылающая преграда
+	self.spells[235450]	= Absorb({ru=2, en=1, es=1, fr=1, it=1, pt=1, cn=1}) 				--Призматичный барьер
 	self.spells[194466]	= CriticalDamage({ru=1}) 											--Пламя феникса
+	self.spells[257541] = CriticalDamage({ru=1}) 											--Пламя феникса
 	self.spells[214634]	= Damage({ru=1}) 													--Полярная стрела
-	self.spells[135029]	= Damage({ru=1, en=2, kr=2}) 										--Сильная струя воды
+	self.spells[257537]	= Damage({ru=1}) 													--Полярная стрела
 	self.spells[2120]	= Damage({ru=1}, Flamestrike) 										--Огненный столб
 	self.spells[45438]	= Custom(IceBlock) 													--Ледяная глыба
+	self.spells[203286] = Damage({ru=1}, GreatPyroblast) 									--Пламя феникса
 end

@@ -3,7 +3,7 @@ local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTi
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
 local Damage, TimeDamage, Heal, TimeHeal, Mana, TimeMana, Absorb, CriticalDamage, DamageAndTimeDamage, HealAndTimeHeal, DamageAndHeal, DamageAndTimeHeal, HealAndMana, DamageAndDamage, DamageAndMana, TimeDamageAndTimeHeal, Custom, getLocaleIndex = SD.Damage, SD.TimeDamage, SD.Heal, SD.TimeHeal, SD.Mana, SD.TimeMana, SD.Absorb, SD.CriticalDamage, SD.DamageAndTimeDamage, SD.HealAndTimeHeal, SD.DamageAndHeal, SD.DamageAndTimeHeal, SD.HealAndMana, SD.DamageAndDamage, SD.DamageAndMana, SD.TimeDamageAndTimeHeal, SD.Custom, SD.SimpleSpell.getLocaleIndex
-local Combo, ComboDamage, ComboTimeDamage, getComboPoints = SD.Combo, SD.ComboDamage, SD.ComboTimeDamage, SD.Combo.getComboPoints
+local Combo, ComboDamage, ComboTimeDamage,ComboDamageAndTimeDamage, getComboPoints = SD.Combo, SD.ComboDamage, SD.ComboTimeDamage,SD.ComboDamageAndTimeDamage, SD.Combo.getComboPoints
 local Glyphs = SD.Glyphs
 
 --
@@ -80,10 +80,15 @@ function Rogue:init()
 		data.timeHeal = data.timeHeal * UnitHealthMax("player") / 100
 	end
 
+	--Кровавый вихрь:
+	local Test = function(data)
+		data.type = SpellDamageAndTimeDamage
+		data.damage = ComboDamage({ru={3,4}})
+		data.timeDamage = ComboTimeDamage({ru={3,5}})
+	end
 
 	self.spells[152150]	= Damage({ru=1, de=2, fr=2, cn=2, kr=3}, DeathFromAbove) 		--Смерть с небес
-	self.spells[185767]	= Damage({ru=1, cn=2, kr=2}) 									--Обстрел ядрами
-	self.spells[51690]	= DamageAndDamage({ru={3,4}, en={4,5}, de={4,5}, es={4,5}, fr={4,5}, it={4,5}, pt={4,5}, cn={4,5}, kr={4,5}}, KillingSpree) 	--Череда убийств
+	self.spells[51690]	= TimeDamage({ru=2, de=3, es=3, kr=3})				 			--Череда убийств
 	self.spells[200758]	= Damage({ru=1}) 												--Клинок мрака
 	self.spells[16511]	= Damage({ru=1}) 												--Кровоизлияние
 	self.spells[196937]	= Damage({ru=1}) 												--Призрачный удар
@@ -95,7 +100,7 @@ function Rogue:init()
 	self.spells[8676]	= Damage({ru=1}) 												--Внезапный удар
 	self.spells[185763]	= Damage({ru=1}) 												--Выстрел из пистоли
 	self.spells[2098]	= ComboDamage({ru={2,2}}) 										--Круговая атака
-	self.spells[195452]	= ComboTimeDamage({ru={4,3}, cn={5,3}, kr={5,3}}) 				--Ночной клинок
+	self.spells[195452]	= ComboTimeDamage({ru={3,2}, cn={5,3}, kr={5,3}}) 				--Ночной клинок
 	self.spells[185565]	= Damage({ru=1}) 												--Отравленный нож
 	self.spells[196819]	= ComboDamage({ru={2,2}}) 										--Потрошение
 	self.spells[199804]	= ComboDamage({ru={2,3}}) 										--Промеж глаз
@@ -110,4 +115,8 @@ function Rogue:init()
 	self.spells[408]	= Custom(KidneyShot) 											--Удар по почкам
 	self.spells[185311]	= TimeHeal({ru=1}, CrimsonVial) 								--Алый фиал
 	self.spells[245388]	= Damage({ru=1})												--Ядовитый клинок
+	self.spells[111240]	= Damage({ru=2})												--Слепая зона
+	self.spells[121411]	= ComboTimeDamage({ru={3,4}})									--Кровавый вихрь
+	self.spells[271877]	= Damage({ru=1})												--Натиск клинка
+	self.spells[280719]	= ComboDamage({ru={2,3}}) 										--Тайный прием
 end

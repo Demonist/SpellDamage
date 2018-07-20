@@ -82,14 +82,13 @@ function Shaman:init()
 
 	self.spells[188089]	= Damage({ru=1}) 																--Земляной шип
 	self.spells[197995]	= Heal({ru=1}) 																	--Родник
-	self.spells[192222]	= DamageAndDamage({ru={1,4}, de={1,3}, es={1,3}, fr={1,3}, it={1,3}, pt={1,3}}, LiquidMagmaTotem) 	--Тотем жидкой магмы
+	self.spells[192222]	= DamageAndDamage({ru={1,4}, en={1,3}, es={1,3}, fr={1,3}, it={1,3}, pt={1,3}}, LiquidMagmaTotem) 	--Тотем жидкой магмы
 	self.spells[197211]	= DamageAndDamage({ru={2,5}, de={3,4}, cn={3,5}, kr={3,4}}, FuryOfAir) 			--Гнев Воздуха
 	self.spells[197214]	= Damage({ru=1}) 																--Раскол
 	self.spells[192246]	= TimeDamage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 								--Сокрушающая буря
 	self.spells[210714]	= DamageAndMana({ru={1,4}}) 													--Ледяная ярость
 	self.spells[198838]	= Absorb({ru=1, it=2, kr=2}) 													--Тотем земного щита
 	self.spells[117014]	= Damage({ru=1}) 																--Удар духов стихии
-	self.spells[215864]	= TimeHeal({ru=1, de=3, cn=3, kr=3}) 											--Ливень 73920
 	self.spells[73920]	= TimeHeal({ru=1, de=3, cn=2, kr=3}) 											--Целительный Ливень
 	self.spells[196884]	= Damage({ru=1}) 																--Свирепый выпад
 	self.spells[201898]	= Damage({ru=1}) 																--Песнь ветра
@@ -103,7 +102,7 @@ function Shaman:init()
 	self.spells[77472]	= Heal({ru=1}) 																	--Волна исцеления
 	self.spells[60103]	= Damage({ru=1}) 																--Вскипание лавы
 	self.spells[51490]	= Damage({ru=1, de=2, cn=2, kr=2}) 												--Гром и молния
-	self.spells[8042]	= Damage({ru=1}, EarthShock) 													--Земной шок
+	self.spells[8042]	= Damage({ru=1}) 																--Земной шок
 	self.spells[188070]	= Heal({ru=1}) 																	--Исцеляющий всплеск
 	self.spells[193786]	= DamageAndMana({ru={1,2}}) 													--Камнедробитель
 	self.spells[196834]	= Damage({ru=1}) 																--Ледяное клеймо
@@ -125,4 +124,5 @@ function Shaman:init()
 	self.spells[115356]	= Damage({ru=1})																--Удар ветра
 	self.spells[198292]	= self.spells[115356]															--Удар ветра
 	self.spells[115360]	= self.spells[115356]															--Удар ветра
+	self.spells[974]	= Heal({ru=2})																	--Щит земли
 end

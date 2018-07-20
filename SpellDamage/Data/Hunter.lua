@@ -76,6 +76,7 @@ function Hunter:init()
 	self.spells[199483]	= Custom(Camouflage) 									--Камуфляж
 	self.spells[162488]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 					--Капкан
 	self.spells[212431]	= Damage({ru=1, de=2, cn=2, kr=2}) 						--Разрывной выстрел
+	self.spells[217200]	= Damage({ru=1, de=2, cn=2, kr=2}) 						--Разрывной выстрел
 	self.spells[194277]	= Damage({ru=2, de=3, cn=3, kr=4}, Caltrops) 			--Шипы
 	self.spells[53209]	= Damage({ru=1}) 										--Выстрел химеры
 	self.spells[199530]	= Damage({ru=1}) 										--Топот
@@ -83,24 +84,35 @@ function Hunter:init()
 	self.spells[200163]	= Damage({ru=2}, ThrowingAxes) 							--Метательные топоры
 	self.spells[193265]	= Damage({ru=1}) 										--Бросок топорика
 	self.spells[191433]	= DamageAndTimeDamage({ru={1,3}, de={1,4}, it={1,2}, cn={1,4}, kr={2,4}}) 	--Взрывная ловушка
-	self.spells[186387]	= Damage({ru=2, it=1}) 									--Взрывной выстрел
+	self.spells[186387]	= Damage({ru=3, it=1}) 									--Взрывной выстрел
 	self.spells[193455]	= Damage({ru=1}) 										--Выстрел кобры
 	self.spells[109304]	= Custom(Exhilaration1) 								--Живость
-	self.spells[2643]	= Damage({ru=2}) 										--Залп
+	self.spells[2643]	= Damage({ru=1, en=2, de=2, es=2, it=2, pt=2, cn=2, kr=2})	--Залп
+	self.spells[257620]	= self.spells[2643]											--Залп
 	self.spells[34026]	= Damage({ru=1}) 										--Команда "Взять!"
-	self.spells[202800]	= DamageAndDamage({ru={1,2}}, FlankingStrike) 			--Обходной удар
+	self.spells[259489]	= DamageAndMana({ru={1,2}})								--Команда "Взять!"
+	self.spells[269751]	= DamageAndMana({ru={1,2}}) 							--Обходной удар
 	self.spells[19434]	= Damage({ru=1}) 										--Прицельный выстрел
-	self.spells[185901]	= Damage({ru=1}) 										--Прицельный залп
 	self.spells[187708]	= Damage({ru=1}) 										--Разделка туши
 	self.spells[185855]	= TimeDamage({ru=1}) 									--Режущий удар
 	self.spells[186270]	= Damage({ru=1}) 										--Удар ящера
 	self.spells[190928]	= Damage({ru=1}) 										--Укус мангуста
-	self.spells[185358]	= DamageAndMana({ru={1,2}}) 							--Чародейский выстрел
+	self.spells[259387]	= Damage({ru=1}) 										--Укус мангуста
+	self.spells[185358]	= Damage({ru=1})			 							--Чародейский выстрел
 	self.spells[207068]	= TimeDamage({ru=1, de=3, cn=2, kr=3}, TitansThunder) 	--Гром титанов
 	self.spells[207097]	= TimeDamage({ru=1, de=3, cn=2, kr=3}, TitansThunder) 	--Гром титанов
-	self.spells[212621]	= Damage({ru=1}) 										--Прицельный залп
 	self.spells[204147]	= Damage({ru=1}) 										--Шквальный ветер
 	self.spells[203413]	= Damage({ru=1}) 										--Ярость орла
 	self.spells[203415]	= Damage({ru=1}) 										--Ярость орла
 	self.spells[194386]	= Damage({ru=2}) 										--Беглый огонь
+	self.spells[194407]	= Damage({ru=1, en=2, de=3, es=2, fr=2, it=2, pt=2, cn=3, kr=3}) --Плюющаяся кобра
+	self.spells[56641]	= DamageAndMana({ru={1,2}}) 							--Верный выстрел
+	self.spells[257044]	= Damage({ru=3}) 										--Быстрая стрельба
+	self.spells[271788]	= DamageAndTimeDamage({ru={1,2}}) 						--Укус змеи
+	self.spells[259491]	= DamageAndTimeDamage({ru={1,2}}) 						--Укус змеи
+	self.spells[259391]	= Damage({ru=1})				 						--Шакрамы
+	self.spells[259495]	= DamageAndTimeDamage({ru={1,2}}) 						--Огнебомба
+	self.spells[270335]	= DamageAndTimeDamage({ru={1,2}}) 						--Шрапнельная бомба
+	self.spells[271045]	= DamageAndTimeDamage({ru={1,2}}) 						--Нестабильная бомба
+	self.spells[270323]	= DamageAndTimeDamage({ru={1,2}}) 						--Феромоновая бомба
 end

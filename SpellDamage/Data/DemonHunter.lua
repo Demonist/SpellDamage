@@ -68,15 +68,15 @@ function DemonHunter:init()
 	self.spells[189110]	= Damage({ru=1, de=2, cn=2, kr=2}) 										--Инфернальный удар
 	self.spells[203782]	= Damage({ru=1}) 														--Иссечение
 	self.spells[204021]	= Damage({ru=1}) 														--Огненное клеймо
-	self.spells[228477]	= DamageAndHeal({ru={1,2}}, SoulCleave) 								--Раскалывание душ
+	--self.spells[228477]	= DamageAndHeal({ru={1,2}}, SoulCleave) 							--Раскалывание душ
 	self.spells[185123]	= Damage({ru=1}, ThrowGlaive) 											--Бросок боевого клинка
-	self.spells[179057]	= Damage({ru=2}) 														--Кольцо Хаоса
+	self.spells[179057]	= Damage({ru=2, en=1, de=1, fr=1, it=1, pt=1, cn=1, kr=1}) 				--Кольцо Хаоса
 	self.spells[191427]	= Damage({ru=1, de=2, cn=2, kr=2}) 										--Метаморфоза
 	self.spells[198013]	= CriticalDamage({ru=1}) 												--Пронзающий взгляд
 	self.spells[207407]	= DamageAndTimeDamage({ru={1,2}}) 										--Разрубатель душ
 	self.spells[214743]	= self.spells[207407] 													--Разрубатель душ
 	self.spells[195072]	= Damage({ru=1}) 														--Рывок Скверны
-	self.spells[188499]	= Damage({ru=1}) 														--Танец клинков
+	self.spells[188499]	= Damage({ru=1}) 														--Танец клинковpp
 	self.spells[162794]	= Damage({ru=1}) 														--Удар Хаоса
 	self.spells[197125]	= self.spells[162794] 													--Удар Хаоса
 	self.spells[162243]	= Damage({ru=1}) 														--Укус демона
@@ -88,5 +88,12 @@ function DemonHunter:init()
 	self.spells[210152]	= Damage({ru=1}) 														--Смертоносный взмах
 	self.spells[201427]	= Damage({ru=1}) 														--Аннигиляция
 	self.spells[232893]	= Damage({ru=1}) 														--Клинок Скверны
-	self.spells[247454]	= Damage({ru=3}, SpiritBomb)											--Взрывная душа
+	self.spells[247454]	= Damage({ru=4})														--Взрывная душа
+	self.spells[258920]	= DamageAndTimeDamage({ru={1,3}}) 										--Обжигающий жар
+	self.spells[258860]	= Damage({ru=1}) 														--Черная роза
+	self.spells[263642]	= DamageAndMana({ru={1,3}})												--Разлом
+	self.spells[228477]	= DamageAndHeal({ru={1,2}}) 											--Раскалывание душ
+	self.spells[203720]	= Damage({ru=1}) 														--Демонические шипы
+	self.spells[263648]	= self.spells[227225] 													--Призрачный барьер
+	self.spells[258925]	= Damage({ru=2, de=3, cn=3, kr=3})										--Обстрел Скверны
 end

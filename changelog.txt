@@ -1,7 +1,11 @@
+﻿2.2.0.1
+BoA version.
+
 2.1.0.11
 Add race abilities.
 Fixed Neltharion's Fury, Windstrike Off-Hand, Hand Of The Protector,
 Mark Of Aluneth.
+Return items
 
 2.1.0.10
 Fixed spell: Power Word: Radiance, Charge

@@ -16,6 +16,10 @@ function Warlock:init()
 		data.timeDamage = data.timeDamage * 15
 	end
 
+	local BilescourgeBombers = function(data)
+		data.timeDamage = data.timeDamage * 12
+	end
+
 	--Призрачная сингулярность:
 	local PhantomSingularity = function(data)
 		data.type = SpellTimeDamageAndTimeHeal
@@ -30,7 +34,7 @@ function Warlock:init()
 	--Жизнеотвод:
 	local LifeTap = function(data)
 		data.type = SpellMana
-		data.mana = UnitManaMax("player") * 0.3
+		data.mana = UnitPowerMax("player") * 0.3
 	end
 
 	--Похищение жизни:
@@ -47,6 +51,11 @@ function Warlock:init()
 	--Лик тлена:
 	local MortalCoil = function(data, match)
 		data.heal = match * UnitHealthMax("player") / 100
+	end
+
+--Темный пакт:
+	local DarkPact = function(data, match)
+		data.absorb = (UnitHealthMax("player") * (match / 100)) * 2.5
 	end
 
 
@@ -66,6 +75,7 @@ function Warlock:init()
 	self.spells[30108]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Нестабильное колдовство
 	self.spells[172]	= TimeDamage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 								--Порча
 	self.spells[686]	= Damage({ru=1}) 																--Стрела Тьмы
+	self.spells[232670]	= Damage({ru=1}) 																--Стрела Тьмы
 	self.spells[116858]	= CriticalDamage({ru=1}) 														--Стрела Хаоса
 	self.spells[193440]	= TimeDamage({ru=2, de=3, es=1, fr=1, it=1, pt=1, cn=3, kr=3}) 					--Демонический гнев
 	self.spells[193541]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Жертвенный огонь
@@ -79,7 +89,15 @@ function Warlock:init()
 	self.spells[196657]	= Damage({ru=1}) 																--Стрела Тьмы
 	self.spells[215279]	= CriticalDamage({ru=1}) 														--Стрела Хаоса
 	self.spells[63106]	= TimeDamageAndTimeHeal({ru={1,3}, de={2,3}, cn={2,3}, kr={2,3}}, SiphonLife) 	--Вытягивание жизни
-	self.spells[603]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Рок
-	self.spells[105174]	= Damage({ru=2, de=3, cn=3, kr=3}) 												--Рука Гул'дана
+	self.spells[265412]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 															--Рок
+	self.spells[105174]	= Damage({ru=1, de=3, cn=3, kr=3}) 												--Рука Гул'дана
 	self.spells[6789]	= Heal({ru=2}, MortalCoil) 														--Лик тлена
+	self.spells[6353]	= Damage({ru=1}) 																--Ожог души
+	self.spells[278350]	= Damage({ru=2, en=1, de=3, es=1, fr=1, it=1, pt=1, cn=3, kr=3}) 				--Пагуба
+	self.spells[264178]	= Damage({ru=1}) 																--Демонический заряд
+	self.spells[264057]	= Damage({ru=1}) 																--Удар души
+	self.spells[108416]	= Absorb({ru=1}, DarkPact) 														--Темный пакт
+	self.spells[267211]	= TimeDamage({ru=2}, BilescourgeBombers)										--Взрывные желчегнусы
+	--self.spells[264106]	= Damage({ru=1}) 															--Смертоносная молния
+
 end

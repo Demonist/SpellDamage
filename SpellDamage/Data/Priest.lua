@@ -15,7 +15,7 @@ function Priest:init()
 	--Слово силы: Утешение:
 	local PowerWordSolace = function(data)
 		data.type = SpellDamageAndMana
-		data.mana = UnitManaMax("player") * 0.0075
+		data.mana = UnitPowerMax("player") * 0.0075
 	end
 
 	--Тело и разум:
@@ -55,6 +55,12 @@ function Priest:init()
 		data.heal = UnitHealthMax("player") * 0.2
 	end
 
+		--Символ надежды:
+	local GlyphHope = function(data, match)
+		data.type = SpellMana
+		data.mana = (UnitPowerMax("player") * (match / 100))*6
+	end
+
 
 	self.spells[204883]	= Heal({ru=1, en=3, de=3, pt=3, cn=3, kr=3}) 						--Круг исцеления
 	self.spells[204197]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 	--Очищение зла
@@ -69,7 +75,7 @@ function Priest:init()
 	self.spells[214121]	= TimeHeal({ru=1, de=2, cn=2, kr=3}, BodyAndMind) 					--Тело и разум
 	self.spells[228260]	= Damage({ru=1}) 													--Извержение Бездны
 	--self.spells[48045]	= TimeDamage({ru=1, de=3, cn=2, kr=3}) 								--Иссушение разума
-	self.spells[132157]	= Damage({ru=1, de=2, cn=2, kr=2}) 									--Кольцо света
+	self.spells[132157]	= DamageAndHeal({ru={1,2}, de={2,3}, cn={2,3}, kr={2,3}}) 									--Кольцо света
 	self.spells[596]	= Heal({ru=1, en=3, de=3, fr=3, pt=3, cn=3, kr=3}) 					--Молитва исцеления
 	self.spells[34914]	= Damage({ru=1, de=2, cn=2, kr=2}, VampiricTouch) 					--Прикосновение вампира
 	self.spells[14914]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 	--Священный огонь
@@ -84,7 +90,6 @@ function Priest:init()
 	self.spells[207946]	= Damage({ru=2}) 													--Ярость Света
 	self.spells[207948]	= self.spells[207946] 												--Ярость Света
 	self.spells[47540]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Penance) 					--Исповедь
-	self.spells[200829]	= Heal({ru=1}) 														--Мольба
 	self.spells[17]	= Absorb({ru=1, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, kr=2}) 		--Слово силы: Щит
 	self.spells[589]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 	--Слово Тьмы: Боль
 	self.spells[214621]	= Damage({ru=1}) 													--Схизма
@@ -99,4 +104,11 @@ function Priest:init()
 	self.spells[8092]	= Damage({ru=1}) 													--Взрыв разума
 	self.spells[205351]	= Damage({ru=1}) 													--Слово Тьмы: Бездна
 	self.spells[15407]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Пытка разума
+	self.spells[265202]	= Heal({ru=1, en=2, de=2, it=2, cn=2, kr=2}) 						--Слово Света: Спасение
+	self.spells[64901]	= Mana({ru=2}, GlyphHope) 											--Символ надежды
+	self.spells[263346]	= Damage({ru=1})		 											--Темная бездна
+	self.spells[280711]	= Damage({ru=1})		 											--Темное вознесение
+	self.spells[271466]	= Absorb({ru=3, en=2, es=2, fr=2, it=2, pt=2, cn=2})				--Сияющая переграда
+	self.spells[48045]	= Damage({ru=1, de=3, cn=2, kr=3})									--Иссушение разума
+	self.spells[263165]	= Damage({ru=1, de=2, cn=2, kr=2})									--Поток Бездны
 end

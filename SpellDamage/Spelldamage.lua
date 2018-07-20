@@ -107,7 +107,7 @@ EventFrame:RegisterEvent("PLAYER_LOGOUT")
 EventFrame:RegisterEvent("CVAR_UPDATE")
 EventFrame:RegisterEvent("UNIT_STATS")
 EventFrame:RegisterEvent("UNIT_AURA")
-EventFrame:RegisterEvent("UNIT_POWER")
+--EventFrame:RegisterEvent("UNIT_POWER")
 EventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 EventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 EventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
@@ -139,7 +139,7 @@ local function EventHandler(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		--version check:
 		local version = tonumber(string.sub(GetBuildInfo(), 1, 1))
-		if version ~= 7 then
+		if version ~= 8 then
 			addonDisableReason = DisableReason_Version
 			DEFAULT_CHAT_FRAME:AddMessage(L["addon_off_version"], 1, 0, 0)
 			DisableAddOn("SpellDamage")
@@ -262,7 +262,7 @@ local function EventHandler(self, event, ...)
 				end
 
 				if actionType == "spell" and id then
-					button.centerText:SetText("")
+					button.centerText:SetText(id)
 					button.bottomText:SetText("")
 
 					if needCheckOnUpdate == true and updateSpells[id] then

@@ -16,9 +16,8 @@ SD.classes["DRUID"] = Druid
 
 function Druid:init()
 	--Ярость Элуны:
-	local FuryOfElune = function(data)
-		local times = math.floor((UnitPower("player")-60) / 120 + 1)
-		data.timeDamage = data.timeDamage * times
+	local FuryOfElune = function(data, match)
+		data.timeDamage = match * 8
 	end
 
 	--Обновление:
@@ -51,15 +50,19 @@ function Druid:init()
 		data.damage = data.damage + (data.damage * energy / 25)
 	end
 
+	--Неистовое восстановление:
+	local FrenziedRegeneration = function(data, match)
+		data.timeHeal = UnitHealthMax("player") * (match / 100)
+	end
 
 	self.spells[202028]	= Damage({ru=1}) 																--Жестокий удар когтями
 	self.spells[204066]	= DamageAndTimeHeal({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 					--Лунный луч
 	self.spells[80313]	= Damage({ru=2}) 																--Раздавить
-	self.spells[202770]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, FuryOfElune) 							--Ярость Элуны
+	self.spells[202770]	= TimeDamage({ru=2, en=1, es=1, fr=1, it=1, pt=1})				 				--Ярость Элуны
 	self.spells[202347]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Звездная вспышка
 	self.spells[108238]	= Custom(Renewal) 																--Обновление
 	self.spells[102351]	= TimeHeal({ru=2, de=3, cn=3, kr=3}) 											--Щит Кенария
-	self.spells[48438]	= TimeHeal({ru=3, en=4, es=1, pt=1, de=4, cn=4, kr=4}) 							--Буйный рост
+	self.spells[48438]	= TimeHeal({ru=3, de=4, es=1, pt=1, cn=4, kr=4}) 								--Буйный рост
 	self.spells[8936]	= HealAndTimeHeal({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 					--Восстановление
 	self.spells[1822]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Глубокая рана
 	self.spells[33763]	= HealAndTimeHeal({ru={1,2}}, Lifebloom) 										--Жизнецвет
@@ -70,6 +73,7 @@ function Druid:init()
 	self.spells[191034]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 											--Звездопад
 	self.spells[22570]	= ComboDamage({ru={2,3}}) 														--Калечение
 	self.spells[194153]	= Damage({ru=1}) 																--Лунный удар
+	self.spells[274281]	= Damage({ru=1}) 																--Новолуние
 	self.spells[5221]	= Damage({ru=1}) 																--Полоснуть
 	self.spells[1079]	= ComboTimeDamage({ru={3,2}}) 													--Разорвать
 	self.spells[22568]	= Custom(FerociousBite) 														--Свирепый укус
@@ -80,7 +84,6 @@ function Druid:init()
 	self.spells[740]	= TimeHeal({ru=1, en=2, de=3, cn=3, kr=3}) 										--Спокойствие
 	self.spells[6807]	= Damage({ru=1}) 																--Трепка
 	self.spells[33917]	= Damage({ru=1}) 																--Увечье
-	self.spells[5185]	= Heal({ru=1}) 																	--Целительное прикосновение
 	self.spells[210722]	= DamageAndTimeDamage({ru={3,4}, de={3,5}, cn={3,5}, kr={2,5}}) 				--Бешенство Пеплошкурой
 	self.spells[210723]	= self.spells[210722] 															--Бешенство Пеплошкурой
 	self.spells[77758]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 				--Взбучка
@@ -96,5 +99,7 @@ function Druid:init()
 	self.spells[197626]	= Damage({ru=1}) 																--Звездный поток
 	self.spells[106785]	= Damage({ru=1}) 																--Размах
 	self.spells[213771]	= Damage({ru=1}) 																--Размах
-	self.spells[145205]	= TimeHeal({ru=2, de=5, cn=4, kr=5}) 											--Период цветения
+	self.spells[145205]	= TimeHeal({ru=2, en=1, de=5, es=1, fr=1, it=1, pt=1, cn=4, kr=5}) 				--Период цветения
+	self.spells[22842]	= TimeHeal({ru=1, de=2, cn=2, kr=2}, FrenziedRegeneration)						--Неистовое восстановление
+	self.spells[274837]	= DamageAndTimeDamage({ru={2,3}, de={2,4}, cn={2,4}, kr={2,4}})					--Дикое бешенство
 end

@@ -105,3 +105,7 @@ function SD.comboMatch(list)
 	end
 	return nil
 end
+
+--function SD.Buffs(string, string)
+	-- body
+--end

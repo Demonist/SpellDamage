@@ -50,8 +50,8 @@ function Warrior:init()
 
 	--Казнь:
 	local Execute = function(data, match)
-		local power = UnitPower("player", SPELL_POWER_RAGE) 
-		if power > 30 then power = 30; end
+		local power = UnitPowerMax("player") 
+		if power > 40 then power = 40; end
 		data.damage = match[1] + match[2] * power / 30
 	end
 
@@ -62,9 +62,9 @@ function Warrior:init()
 		if IsPlayerSpell(200859) then 	--Кровавое безумие
 			factor = 0.05
 		end
-		if UnitBuff("player", L["enraged_regeneration"]) then
-			factor = factor + 0.2
-		end
+	--	if UnitBuff("player", L["enraged_regeneration"]) then
+	--		factor = factor + 0.2
+	--	end
 		data.heal = UnitHealthMax("player") * factor
 	end
 
@@ -125,22 +125,23 @@ function Warrior:init()
 	self.spells[46924]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 								--Вихрь клинков
 	self.spells[152277]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Опустошитель
 	self.spells[228920]	= self.spells[152277] 												--Опустошитель
-	self.spells[118000]	= CriticalDamage({ru=1, de=2, cn=2, kr=2}) 							--Рев дракона
+	self.spells[118000]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1})						--Рев дракона
 	self.spells[1160]	= Custom(DemoralizingShout) 										--Деморализующий крик
-	self.spells[772]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Кровопускание
+	self.spells[772]	= DamageAndTimeDamage({ru={1,2}}) 									--Кровопускание
 	self.spells[202168]	= Damage({ru=1}, ImpendingVictory) 									--Верная победа
 	self.spells[7384]	= Damage({ru=1}) 													--Превосходство
-	self.spells[107570]	= TimeDamage({ru=1}) 												--Удар громовержца
+	self.spells[107570]	= Damage({ru=1}) 												--Удар громовержца
 	self.spells[46968]	= Damage({ru=1, de=2, kr=2}) 										--Ударная волна
-	self.spells[184367]	= Damage({ru=3}) 													--Буйство
+	self.spells[184367]	= Damage({ru=2}) 													--Буйство
 	self.spells[1680]	= Damage({ru=2, it=1}, Whirlwind) 									--Вихрь
 	self.spells[190411]	= Damage({ru=2, it=1}, Whirlwind) 									--Вихрь
 	self.spells[227847]	= Damage({ru=2, de=3, cn=3, kr=3}) 									--Вихрь клинков
 	self.spells[5308]	= Damage({ru=1}) 													--Казнь
-	self.spells[163201]	= DamageAndDamage({ru={1,3}}, Execute) 								--Казнь
+	self.spells[280735]	= DamageAndMana({ru={1,3}}) 										--Казнь
+	self.spells[163201]	= Damage({ru=1})					 								--Казнь
 	self.spells[23881]	= Damage({ru=1}, Bloodthirst) 										--Кровожадность
 	self.spells[100130]	= Damage({ru=1}) 													--Неистовый удар сплеча
-	self.spells[198304]	= Mana({ru=6}, Intercept) 											--Перехват
+	self.spells[198304]	= Mana({ru=5}, Intercept) 											--Перехват
 	self.spells[34428]	= Damage({ru=1}, VictoryRush) 										--Победный раж
 	self.spells[1715]	= Damage({ru=1}) 													--Подрезать сухожилия
 	self.spells[845]	= Damage({ru=1}) 													--Рассекающий удар
@@ -154,7 +155,7 @@ function Warrior:init()
 	self.spells[57755]	= Damage({ru=1}) 													--Героический бросок
 	self.spells[6544]	= Damage({ru=2, en=1, es=1, fr=1, it=1, pt=1}) 						--Героический прыжок
 	self.spells[209577]	= Damage({ru=1}) 													--Миротворец
-	self.spells[100]	= Mana({ru=5}, Charge)		 										--Рывок
+	self.spells[100]	= DamageAndMana({ru={1,3}}, Charge)		 							--Рывок
 	self.spells[203524]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 								--Ярость Нелтариона
 	self.spells[203526]	= self.spells[203524] 												--Ярость Нелтариона
 	self.spells[205545]	= DamageAndTimeDamage({ru={2,3}, de={3,5}, cn={3,5}, kr={3,5}}) 	--Ярость Одина
@@ -163,4 +164,7 @@ function Warrior:init()
 	self.spells[23922]	= Damage({ru=1}) 													--Мощный удар щитом
 	self.spells[1464]	= Damage({ru=1}, Slam) 												--Мощный удар
 	self.spells[6343]	= DamageAndMana({ru={2,5}}) 										--Удар грома
+	self.spells[262161]	= Damage({ru=2}) 													--Миротворец
+	self.spells[260643]	= DamageAndMana({ru={1,2}}) 										--Рассекатель черепов
+	self.spells[280772]	= DamageAndMana({ru={1,4}}) 										--Прорыв блокады
 end
