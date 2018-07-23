@@ -39,12 +39,13 @@ function Mage:init()
 	local Supernova = BlastWave
 
 	--Морозный луч:
-	local RayOfFrost = function(data, matchs)
+	local RayOfFrost = function(data, description)
 		data.type = SpellTimeDamage
+		local matchs = matchDigits(description, getLocaleIndex({ru={2,4,1}, en={3,1,2}, de={2,1,3}, es={3,1,2}, fr={3,1,2}, it={3,1,2}, pt={3,1,2}, cn={3,1,4}, kr={2,1,3}}))
 		local fin_damage = matchs[1]
-		for i=matchs[2],matchs[3] do
-			fin_damage = (fin_damage * 1.1) + matchs[1]
-			--print(matchs[1])
+		for i = matchs[1],matchs[2] do
+			fin_damage = (fin_damage * 1.1) + matchs[3]
+			--print(matchs[2])
 			--i = i + 0.9
 		end
 		data.timeDamage = fin_damage
@@ -114,7 +115,7 @@ function Mage:init()
 	self.spells[157981]	= Damage({ru=1, de=2, cn=2, kr=2}, BlastWave) 						--Взрывная волна
 	self.spells[157997]	= Damage({ru=1, de=2, cn=2, kr=2}, IceNova) 						--Кольцо обледенения
 	self.spells[157980]	= Damage({ru=1, de=2, cn=2, kr=2}, Supernova) 						--Сверхновая
-	self.spells[205021]	= DamageAndTimeDamage({ru={2,3,1}, de={4,3,2}, cn={4,2,3}, kr={4,2,3}}, RayOfFrost) 					--Морозный луч 
+	self.spells[205021]	= Custom(RayOfFrost) 												--Морозный луч 
 	self.spells[116]	= Damage({ru=1}) 													--Ледяная стрела
 	self.spells[11366]	= Damage({ru=1}) 													--Огненная глыба
 	self.spells[133]	= Damage({ru=1}) 													--Огненный шар

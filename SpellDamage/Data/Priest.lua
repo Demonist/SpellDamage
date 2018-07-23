@@ -57,8 +57,7 @@ function Priest:init()
 
 		--Символ надежды:
 	local GlyphHope = function(data, match)
-		data.type = SpellMana
-		data.mana = (UnitPowerMax("player") * (match / 100))*6
+		data.timeMana = (UnitPowerMax("player") * (match / 100))*6
 	end
 
 
@@ -80,7 +79,7 @@ function Priest:init()
 	self.spells[34914]	= Damage({ru=1, de=2, cn=2, kr=2}, VampiricTouch) 					--Прикосновение вампира
 	self.spells[14914]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 	--Священный огонь
 	self.spells[88625]	= Damage({ru=1}) 													--Слово Света: Наказание
-	self.spells[194509]	= Heal({ru=3, fr=3, pt=1}) 											--Слово силы: Сияние
+	self.spells[194509]	= Heal({ru=1,en=3, de=3, fr=3, it=3, cn=3, kr=3}) 					--Слово силы: Сияние
 	self.spells[32379]	= Damage({ru=1}) 													--Слово Тьмы: Смерть
 	self.spells[205448]	= Damage({ru=1}) 													--Стрела Бездны
 	self.spells[186263]	= Heal({ru=1}) 														--Темное восстановление
@@ -105,7 +104,7 @@ function Priest:init()
 	self.spells[205351]	= Damage({ru=1}) 													--Слово Тьмы: Бездна
 	self.spells[15407]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Пытка разума
 	self.spells[265202]	= Heal({ru=1, en=2, de=2, it=2, cn=2, kr=2}) 						--Слово Света: Спасение
-	self.spells[64901]	= Mana({ru=2}, GlyphHope) 											--Символ надежды
+	self.spells[64901]	= TimeMana({ru=2}, GlyphHope) 										--Символ надежды
 	self.spells[263346]	= Damage({ru=1})		 											--Темная бездна
 	self.spells[280711]	= Damage({ru=1})		 											--Темное вознесение
 	self.spells[271466]	= Absorb({ru=3, en=2, es=2, fr=2, it=2, pt=2, cn=2})				--Сияющая переграда

@@ -153,7 +153,7 @@ function Paladin:init()
 	self.spells[205228]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Consecration) 								--Освящение
 	self.spells[267798]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 												--Смертный приговор
 	self.spells[85222]	= Heal({ru=1, en=3, de=3, fr=3, pt=3, cn=3, kr=3}) 									--Свет зари
-	self.spells[53385]	= Damage({ru=1}, DivineStorm) 														--Божественная буря
+	self.spells[53385]	= Damage({ru=1}) 																	--Божественная буря
 	self.spells[203538]	= Absorb({ru=1, en=3, de=3, es=2, it=2, pt=2, cn=2, kr=3}) 							--Великое благословение королей
 	self.spells[85256]	= Damage({ru=1}) 																	--Вердикт храмовника
 	self.spells[19750]	= Heal({ru=1}) 																		--Вспышка Света
@@ -174,7 +174,7 @@ function Paladin:init()
 	self.spells[209122]	= self.spells[205273]																--Испепеляющий след
 	self.spells[255937]	= Damage({ru=1})																	--Испепеляющий след
 	self.spells[209202]	= Damage({ru=2}) 																	--Око Тира
-	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
+--	self.spells[20271]	= Custom(Judgment) 																	--Правосудие
 	self.spells[35395]	= Damage({ru=1}) 																	--Удар воина Света
 	self.spells[633]	= Custom(LayOnHands) 																--Возложение рук
 --	self.spells[20066]	= Custom(Repentance) 																--Покаяние

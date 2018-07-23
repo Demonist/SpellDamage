@@ -48,7 +48,7 @@ function Race:init()
 	self.spells[28730]	= Mana({ru=3}, ArcaneTorrent) 															--Эльф крови, Волшебный поток
 	self.spells[50613]	= Mana({ru=3}) 																			--Эльф крови, Волшебный поток, Рыцарь Смерти
 	self.spells[25046]	= Mana({ru=3})				 															--Эльф крови, Волшебный поток, Разбойник
-	--self.spells[129597]	= Mana({ru=3}, ArcaneTorrent)															--Эльф крови, Волшебный поток, Монах
+	self.spells[129597]	= Mana({ru=3}, ArcaneTorrent)															--Эльф крови, Волшебный поток, Монах
 	self.spells[80483]	= Mana({ru=3})				 															--Эльф крови, Волшебный поток, Охотник
 	self.spells[69179]	= Mana({ru=3}) 																			--Эльф крови, Волшебный поток, Воин
 	self.spells[232633]	= Mana({ru=3}, ArcaneTorrent)															--Эльф крови, Волшебный поток, Рыцарь Смерти

@@ -130,6 +130,7 @@ function SD.Class:updateButton(button, spellId)
 		data = updateParser:getData(nil)
 	end
 
+	if (not data or data.type == SpellUnknown) and self.type == ClassSpells and GetTime() - tooltipInitTime < 120 then return false; end --Костыль от начальных ошибок скилов
 	if (not data or data.type == SpellUnknown) and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false; end	--Костыль от начальных ошибок предметов
 
 	if (not data or data.type == SpellUnknown) and SD.displayErrors == true then

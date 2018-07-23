@@ -45,6 +45,3 @@ It may useful only for developers and testers. This mode is activated by command
 In this mode after reloading the UI, this addon check all spells for all classes. If has a error - it will be showed like Lua error. So *dev mode* require *Show Lua errors* option is enable.
 
 Also strongly recommend to use the [BugSack](http://www.curse.com/addons/wow/bugsack) addon in *dev mode*.
-
-#Have a question?
-Write - **demonist616@gmail.com**
