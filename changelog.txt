@@ -1,5 +1,14 @@
-﻿2.2.0.1
-BoA version.
+﻿2.2.0.5
+And bugfixes again
+
+2.2.0.4
+Bugfixes again
+
+2.2.0.3
+Bugfixes
+
+2.2.0.1
+BfA version.
 
 2.1.0.11
 Add race abilities.
