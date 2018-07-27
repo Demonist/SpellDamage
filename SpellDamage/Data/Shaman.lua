@@ -1,4 +1,4 @@
-local L, shortNumber, matchDigit, matchDigits, printTable, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts
+local L, shortNumber, matchDigit, matchDigits, printTable, strstarts, Buff, Debuff = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts, SD.Buff, SD.Debuff
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
@@ -23,7 +23,7 @@ function Shaman:init()
 
 	--Выброс лавы:
 	local LavaBurst = function(data)
-		if UnitExists("target") and UnitDebuff("target", L["flame_shock"]) then
+		if UnitExists("target") and Debuff("target", L["flame_shock"]) then
 			if IsPlayerSpell(60188) then 	--Неистовство стихий
 				data.damage = data.damage * 2.5
 			else
@@ -68,7 +68,7 @@ function Shaman:init()
 
 	--Молния:
 	local LightningBolt = function(data)
-		if UnitExists("target") and UnitDebuff("target", L["lightning_rod"]) then
+		if UnitExists("target") and Debuff("target", L["lightning_rod"]) then
 			data.damage = data.damage * 1.4
 		end
 	end

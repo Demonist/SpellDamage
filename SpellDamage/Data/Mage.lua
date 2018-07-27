@@ -1,4 +1,4 @@
-local L, shortNumber, matchDigit, matchDigits, printTable, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts
+local L, shortNumber, matchDigit, matchDigits, printTable, strstarts, Buff, Debuff = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts, SD.Buff, SD.Debuff
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal, SpellAbsorbAndDamage = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal, SD.SpellAbsorbAndDamage
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
@@ -20,7 +20,7 @@ function Mage:init()
 	--Вихрь углей:
 	local Cinderstorm = function(data)
 		data.damage = data.damage * 6
-		if UnitExists("target") and UnitDebuff("target", L["conflagration"]) then
+		if UnitExists("target") and Debuff("target", L["conflagration"]) then
 			data.damage = data.damage * 1.3
 		end
 	end
@@ -65,7 +65,7 @@ function Mage:init()
 
 	--Ледяное копье:
 	local IceLance = function(data)
-		if UnitBuff("player", L["fingers_of_frost"]) then
+		if Buff("player", L["fingers_of_frost"]) then
 			data.damage = data.damage * 3
 		end
 	end
@@ -126,7 +126,7 @@ function Mage:init()
 --	self.spells[31661]	= Damage({ru=1}) 													--Дыхание дракона
 	self.spells[31661]	= Damage({ru=1}, DragonsBreath)										--Дыхание дракона
 	self.spells[120]	= Damage({ru=1}) 													--Конус холода
-	self.spells[30455]	= Damage({ru=1}) 													--Ледяное копье
+	self.spells[30455]	= Damage({ru=1}, IceLance) 											--Ледяное копье
 	self.spells[84714]	= Damage({ru=2}) 													--Ледяной шар
 	self.spells[108853]	= CriticalDamage({ru=1}) 											--Огненный взрыв
 	self.spells[190356]	= TimeDamage({ru=1, de=2, cn=2, kr=2}) 								--Снежная буря

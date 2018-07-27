@@ -106,6 +106,24 @@ function SD.comboMatch(list)
 	return nil
 end
 
---function SD.Buffs(string, string)
-	-- body
---end
+function SD.Buff(unit, buff)
+	local index = 1
+	local name, _, count = UnitBuff(unit, index)
+	while name do
+		if name == buff then return name, count; end
+		index = index + 1
+		name, _, count = UnitBuff(unit, index)
+	end
+	return nil
+end
+
+function SD.Debuff(unit, name)
+	local index = 1
+	local name, _, count = UnitDebuff(unit, index)
+	while name do
+		if name == buff then return name, count; end
+		index = index + 1
+		name, _, count = UnitDebuff(unit, index)
+	end
+	return nil
+end

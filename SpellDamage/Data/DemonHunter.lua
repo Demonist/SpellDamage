@@ -1,4 +1,4 @@
-local L, shortNumber, matchDigit, matchDigits, printTable, strstarts = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts
+local L, shortNumber, matchDigit, matchDigits, printTable, strstarts, Buff, Debuff = SD.L, SD.shortNumber, SD.matchDigit, SD.matchDigits, SD.printTable, SD.strstarts, SD.Buff, SD.Debuff
 local SpellUnknown, SpellEmpty, SpellDamage, SpellTimeDamage, SpellHeal, SpellTimeHeal, SpellMana, SpellTimeMana, SpellAbsorb = SD.SpellUnknown, SD.SpellEmpty, SD.SpellDamage, SD.SpellTimeDamage, SD.SpellHeal, SD.SpellTimeHeal, SD.SpellMana, SD.SpellTimeMana, SD.SpellAbsorb
 local SpellDamageAndTimeDamage, SpellDamageAndMana, SpellHealAndMana, SpellHealAndTimeHeal, SpellDamageAndHeal, SpellTimeDamageAndTimeHeal, SpellDamageAndTimeHeal, SpellManaAndTimeMana, SpellTimeHealAndTimeMana, SpellAbsorbAndHeal = SD.SpellDamageAndTimeDamage, SD.SpellDamageAndMana, SD.SpellHealAndMana, SD.SpellHealAndTimeHeal, SD.SpellDamageAndHeal, SD.SpellTimeDamageAndTimeHeal, SD.SpellDamageAndTimeHeal, SD.SpellManaAndTimeMana, SD.SpellTimeHealAndTimeMana, SD.SpellAbsorbAndHeal
 local SpellData, Class, ClassSpells, ClassItems = SD.SpellData, SD.Class, SD.ClassSpells, SD.ClassItems
@@ -19,7 +19,7 @@ function DemonHunter:init()
 		data.damage = data.damage * energy / 60
 		data.heal = data.heal * energy / 60
 
-		local name, _, _, count = UnitBuff("player", L["soul_fragments"])
+		local name, count = Buff("player", L["soul_fragments"])
 		if name and count and count > 0 then
 			local shearDescr = GetSpellDescription(203782)
 			if shearDescr then
@@ -33,7 +33,7 @@ function DemonHunter:init()
 	
 	--Взрывная душа
 	local SpiritBomb = function(data)
-		local name, _, _, count = UnitBuff("player", L["soul_fragments"])
+		local name, count = Buff("player", L["soul_fragments"])
 		if name and count and count > 0 then
 			data.type = SpellDamageAndHeal
 			data.damage = data.damage * count
@@ -58,7 +58,7 @@ function DemonHunter:init()
 
 	self.spells[211053]	= Damage({ru=1}) 														--Обстрел Скверны
 	self.spells[227225]	= Absorb({ru=1, en=2, de=2, es=2, fr=2, it=2, pt=2, kr=2}) 				--Призрачный барьер
-	self.spells[218679]	= Damage({ru=1}) 														--Взрывная душа
+	self.spells[218679]	= Damage({ru=1}, SpiritBomb) 											--Взрывная душа
 	self.spells[212084]	= TimeDamageAndTimeHeal({ru={1,3}, de={2,3}, cn={2,3}, kr={2,3}}) 		--Опустошение Скверны
 	self.spells[211881]	= Damage({ru=1}) 														--Извержение Скверны
 	self.spells[209795]	= Damage({ru=1}) 														--Трещина
@@ -68,7 +68,7 @@ function DemonHunter:init()
 	self.spells[189110]	= Damage({ru=1, de=2, cn=2, kr=2}) 										--Инфернальный удар
 	self.spells[203782]	= Damage({ru=1}) 														--Иссечение
 	self.spells[204021]	= Damage({ru=1}) 														--Огненное клеймо
-	--self.spells[228477]	= DamageAndHeal({ru={1,2}}, SoulCleave) 							--Раскалывание душ
+	self.spells[228477]	= DamageAndHeal({ru={1,2}}, SoulCleave) 								--Раскалывание душ
 	self.spells[185123]	= Damage({ru=1}, ThrowGlaive) 											--Бросок боевого клинка
 	self.spells[179057]	= Damage({ru=2, en=1, de=1, fr=1, it=1, pt=1, cn=1, kr=1}) 				--Кольцо Хаоса
 	self.spells[191427]	= Damage({ru=1, de=2, cn=2, kr=2}) 										--Метаморфоза
@@ -88,11 +88,10 @@ function DemonHunter:init()
 	self.spells[210152]	= Damage({ru=1}) 														--Смертоносный взмах
 	self.spells[201427]	= Damage({ru=1}) 														--Аннигиляция
 	self.spells[232893]	= Damage({ru=1}) 														--Клинок Скверны
-	self.spells[247454]	= Damage({ru=4})														--Взрывная душа
+	self.spells[247454]	= Damage({ru=4}, SpiritBomb)											--Взрывная душа
 	self.spells[258920]	= DamageAndTimeDamage({ru={1,3}}) 										--Обжигающий жар
 	self.spells[258860]	= Damage({ru=1}) 														--Черная роза
 	self.spells[263642]	= DamageAndMana({ru={1,3}})												--Разлом
-	self.spells[228477]	= DamageAndHeal({ru={1,2}}) 											--Раскалывание душ
 	self.spells[203720]	= Damage({ru=1}) 														--Демонические шипы
 	self.spells[263648]	= self.spells[227225] 													--Призрачный барьер
 	self.spells[258925]	= Damage({ru=2, de=3, cn=3, kr=3})										--Обстрел Скверны
