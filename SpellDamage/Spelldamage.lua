@@ -252,12 +252,34 @@ local function EventHandler(self, event, ...)
 			if slot == 0 then slot = button:GetAttribute("action"); end
 			if HasAction(slot) then
 				local actionType, id = GetActionInfo(slot)
+				local macroText = GetMacroBody(id)
+				if macroText then
+					macroText = string.gsub(macroText, "modifier", "mod")
 
-				if actionType == "macro" and id then
-					local match = string.match(GetMacroBody(id), "#%s*sd%s*%d+")
-					if match then
-						actionType = "spell"
-						id = tonumber(string.match(match, "%d+"))
+					if actionType == "macro" and id then
+						local match = string.match(macroText, "#%s*sd%s*%[mod%:shift%]%s*%d+")
+						if match and IsShiftKeyDown() then
+							actionType = "spell"
+							id = tonumber(string.match(match, "%d+"))	
+						else
+							match = string.match(macroText, "#%s*sd%s*%[mod%:alt%]%s*%d+")
+							if match and IsAltKeyDown() then
+								actionType = "spell"
+								id = tonumber(string.match(match, "%d+"))	
+							else
+								match = string.match(macroText, "#%s*sd%s*%[mod:ctrl%]%s*%d+")
+								if match and IsControlKeyDown() then
+									actionType = "spell"
+									id = tonumber(string.match(match, "%d+"))
+								else
+									match = string.match(macroText, "#%s*sd%s*%d+")
+									if match then
+										actionType = "spell"
+										id = tonumber(string.match(match, "%d+"))
+									end
+								end
+							end
+						end
 					end
 				end
 
