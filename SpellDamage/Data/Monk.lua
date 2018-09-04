@@ -14,7 +14,7 @@ SD.classes["MONK"] = Monk
 function Monk:init()
 	--Призыв Сюэня, Белого Тигра:
 	local InvokeXuenTheWhiteTiger = function(data)
-		data.timeDamage = data.timeDamage * 45
+		data.timeDamage = data.timeDamage * 20
 	end
 
 	--Пламенное дыхание:
@@ -72,7 +72,7 @@ function Monk:init()
 	self.spells[196725]	= TimeHeal({ru=1, de=4, cn=4, kr=4}) 											--Освежающий нефритовый ветер
 	self.spells[116847]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
 	self.spells[261715]	= TimeDamage({ru=1, de=3, cn=3, kr=3}) 											--Порыв нефритового ветра
-	self.spells[123904]	= TimeDamage({ru=1}, InvokeXuenTheWhiteTiger) 									--Призыв Сюэня, Белого Тигра
+	self.spells[123904]	= TimeDamage({ru=3, en=5}, InvokeXuenTheWhiteTiger) 							--Призыв Сюэня, Белого Тигра
 	self.spells[198664]	= TimeHeal({ru=2}) 																--Призыв Чи-Цзи, Красного Журавля
 	self.spells[115098]	= DamageAndHeal({ru={1,2}}) 													--Волна ци
 	self.spells[123986]	= DamageAndHeal({ru={2,3}}) 													--Выброс ци
@@ -84,7 +84,7 @@ function Monk:init()
 --	self.spells[191837]	= Heal({ru=5, de=5, cn=5, kr=5}) 												--Купель сущности фикс
 	self.spells[191837] = Custom(EssenceFont)
 	self.spells[205523]	= Damage({ru=1}) 																--Нокаутирующая атака
-	self.spells[116670]	= Heal({ru=1, en=2}) 															--Оживить
+	self.spells[116670]	= Heal({ru=1}) 																	--Оживить
 	self.spells[124682]	= TimeHeal({ru=1}) 																--Окутывающий туман
 	self.spells[115181]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}, BreathOfFire) 	--Пламенное дыхание
 	self.spells[220357]	= TimeDamage({ru=1, de=2, cn=3, kr=3}) 											--Порывы вихря

@@ -130,18 +130,22 @@ function SD.Class:updateButton(button, spellId)
 		data = updateParser:getData(nil)
 	end
 
-	if (not data or data.type == SpellUnknown) and self.type == ClassSpells and GetTime() - tooltipInitTime < 120 then return false; end --Костыль от начальных ошибок скилов
-	if (not data or data.type == SpellUnknown) and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false; end	--Костыль от начальных ошибок предметов
+		if (not data or data.type == SpellUnknown) and self.type == ClassSpells and GetTime() - tooltipInitTime < 120 then return false; end --Костыль от начальных ошибок скилов
+		if (not data or data.type == SpellUnknown) and self.type == ClassItems and GetTime() - tooltipInitTime < 120 then return false; end	--Костыль от начальных ошибок предметов
 
-	if (not data or data.type == SpellUnknown) and SD.displayErrors == true then
-		if self.type == ClassSpells then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
-		else
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
+
+		if (not data or data.type == SpellUnknown) and SD.displayErrors == true then
+			if SpellDamageStorage["dev"] then 
+				if self.type == ClassSpells then
+					DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_spell_error"].." id|r |cFFffffc0"..spellId.."|r.")
+				else
+					DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["parsing_item_error"].." id|r |cFFffffc0"..spellId.."|r.")
+				end
+				incErrorsCount()
+			else
+			return false 
+			end
 		end
-		incErrorsCount()
-		return false 
-	end
 
 	if data.type == SpellEmpty then return true; end
 
