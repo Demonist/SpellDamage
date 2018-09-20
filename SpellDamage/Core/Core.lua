@@ -63,7 +63,7 @@ function sdDebugItem(itemId)
 	DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r "..out)
 end
 
-SD.displayErrors = true
+SD.displayErrors = false
 SD.autoOffDisplayErrors = true
 SD.errorsCount = 0
 
@@ -120,10 +120,9 @@ function SD.Class:updateButton(button, spellId)
 
 	if spellParser then
 		local text = self.getSpellText(spellId)
-		if text then data = spellParser:getData(text);
-		elseif SD.displayErrors then
-			DEFAULT_CHAT_FRAME:AddMessage("|cFFffff00SpellDamage:|r |cFFffc0c0"..L["description_error"].." id|r |cFFffffc0"..spellId.."|r.")
-			incErrorsCount()
+		--if text then data = spellParser:getData(text);
+		if text and string.len(text) > 0 then data = spellParser:getData(text);
+		else
 			return false
 		end
 	elseif updateParser then

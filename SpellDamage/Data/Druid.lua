@@ -35,12 +35,14 @@ function Druid:init()
 	--Свирепый укус:
 	local FerociousBite = function(data, description)
 		data.type = SpellDamage
-
 		local match = matchDigits(description, {4,6,8,10,12})
 		if match and match[1] == 1 then
 			match = matchDigits(description, {5,7,9,11,13})
 		end
-
+		-- if not match then
+		-- 			data.type = SpellEmpty
+		-- 			return
+		--end
 		local combo = getComboPoints()
 		if combo == 0 then combo = 1; end
 		data.damage = match[combo]

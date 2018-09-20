@@ -100,12 +100,12 @@ function Mage:init()
 		end
 	end
 
-			--Дыхание дракона:
+			--Большая огненная глыба:
 	local GreatPyroblast = function(data, match)
 			data.damage = UnitHealthMax("target") * (match / 100)
 	end
 
-	self.spells[153595]	= Damage({ru=2, de =3, cn=3, kr=3}, CometStorm) 					--Буря комет
+	self.spells[153595]	= Damage({ru=2, de =3, cn=3, kr=3}) 								--Буря комет
 	self.spells[198929]	= Damage({ru=2}, Cinderstorm) 										--Вихрь углей
 	self.spells[199786]	= Damage({ru=1}) 													--Ледовый шип
 	self.spells[153561]	= DamageAndTimeDamage({ru={2,4}, de={2,5}, cn={2,5}, kr={3,5}}) 	--Метеор
@@ -123,7 +123,6 @@ function Mage:init()
 	self.spells[12051]	= Custom(Evocation) 												--Прилив сил
 	self.spells[30451]	= Damage({ru=1}) 													--Чародейская вспышка
 	self.spells[44614]	= Damage({ru=2}) 													--Шквал
---	self.spells[31661]	= Damage({ru=1}) 													--Дыхание дракона
 	self.spells[31661]	= Damage({ru=1}, DragonsBreath)										--Дыхание дракона
 	self.spells[120]	= Damage({ru=1}) 													--Конус холода
 	self.spells[30455]	= Damage({ru=1}, IceLance) 											--Ледяное копье
@@ -146,5 +145,5 @@ function Mage:init()
 	self.spells[257537]	= Damage({ru=1}) 													--Полярная стрела
 	self.spells[2120]	= Damage({ru=1}, Flamestrike) 										--Огненный столб
 	self.spells[45438]	= Custom(IceBlock) 													--Ледяная глыба
-	self.spells[203286] = Damage({ru=1}, GreatPyroblast) 									--Пламя феникса
+	self.spells[203286] = Damage({ru=1}, GreatPyroblast) 									--Большая огненная глыба
 end

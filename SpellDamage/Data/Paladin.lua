@@ -31,11 +31,7 @@ function Paladin:init()
 
 	--Длань защитника:
 	local HandOfTheProtector = function(data, match)
-		if UnitExists("target") and UnitIsFriend("player", "target") then
-			data.heal = math.floor((UnitHealthMax("target") - UnitHealth("target")) * (match / 100))
-		else
-			data.heal = math.floor((UnitHealthMax("player") - UnitHealth("player")) * (match / 100))
-		end
+		data.heal = math.floor(((UnitHealthMax("player") - UnitHealth("player")) / (UnitHealthMax("player") / 100)) * 0.02 * match + match)
 	end
 
 	--Отмщение вершителя правосудия:
@@ -85,21 +81,7 @@ function Paladin:init()
 	end
 
 	--Свет защитника:
-	local LightOfTheProtector = function(data)
-		data.type = SpellHeal
-		data.heal = (UnitHealthMax("player") - UnitHealth("player")) * 0.25
-
-		if IsPlayerSpell(209539) then 	--Свет титанов
-			local consecratedGroundDescr = GetSpellDescription(209539)
-			if consecratedGroundDescr then
-				local match = matchDigit(consecratedGroundDescr, getLocaleIndex({ru=1, de=2, cn=2, kr=2}))
-				if match then
-					data.type = SpellHealAndTimeHeal
-					data.timeHeal = match
-				end
-			end
-		end
-	end
+	local LightOfTheProtector = HandOfTheProtector
 
 	--Шок небес:
 	local HolyShock = function(data)
@@ -160,7 +142,7 @@ function Paladin:init()
 	self.spells[184575]	= Damage({ru=1}) 																	--Клинок Справедливости
 	self.spells[53595]	= Damage({ru=1}) 																	--Молот праведника
 	self.spells[26573]	= TimeDamage({ru=1}, Consecration) 													--Освящение
-	self.spells[184092]	= Custom(LightOfTheProtector) 														--Свет защитника
+	self.spells[184092]	= Heal({ru=1}, LightOfTheProtector) 												--Свет защитника
 	self.spells[183998]	= Heal({ru=1}) 																		--Свет мученика
 	self.spells[82326]	= Heal({ru=1}) 																		--Свет небес
 	self.spells[20473]	= DamageAndHeal({ru={1,2}}, HolyShock) 												--Шок небес
