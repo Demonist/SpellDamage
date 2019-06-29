@@ -141,7 +141,7 @@ function Paladin:init()
 	self.spells[19750]	= Heal({ru=1}) 																		--Вспышка Света
 	self.spells[184575]	= Damage({ru=1}) 																	--Клинок Справедливости
 	self.spells[53595]	= Damage({ru=1}) 																	--Молот праведника
-	self.spells[26573]	= TimeDamage({ru=1}, Consecration) 													--Освящение
+	self.spells[26573]	= TimeDamage({ru=1})			 													--Освящение
 	self.spells[184092]	= Heal({ru=1}, LightOfTheProtector) 												--Свет защитника
 	self.spells[183998]	= Heal({ru=1}) 																		--Свет мученика
 	self.spells[82326]	= Heal({ru=1}) 																		--Свет небес

@@ -89,7 +89,7 @@ function Priest:init()
 	self.spells[207946]	= Damage({ru=2}) 													--Ярость Света
 	self.spells[207948]	= self.spells[207946] 												--Ярость Света
 	self.spells[47540]	= TimeDamage({ru=1, de=2, cn=2, kr=2}, Penance) 					--Исповедь
-	self.spells[17]	= Absorb({ru=1, en=2, de=2, es=2, fr=2, it=2, pt=2, cn=2, kr=2}) 		--Слово силы: Щит
+	self.spells[17]		= Absorb({ru=2})													--Слово силы: Щит
 	self.spells[589]	= DamageAndTimeDamage({ru={1,2}, de={1,3}, cn={1,3}, kr={1,3}}) 	--Слово Тьмы: Боль
 	self.spells[214621]	= Damage({ru=1}) 													--Схизма
 	self.spells[64843]	= TimeHeal({ru=2, de=3, es=5, fr=5, pt=5, cn=3, kr=3}) 				--Божественный гимн

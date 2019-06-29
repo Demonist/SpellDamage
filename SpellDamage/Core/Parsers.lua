@@ -182,7 +182,8 @@ function SD.Combo:create(spellType, startsAndSteps, computeFunc)
 
 	local combo = {}
 	combo.type = spellType
-	combo.indexes = {}
+	combo.indexes5 = {}
+	combo.indexes6 = {}
 	combo.computeFunc = computeFunc
 
 	local startAndStep = SD.SimpleSpell.getLocaleIndex(startsAndSteps)
@@ -190,7 +191,11 @@ function SD.Combo:create(spellType, startsAndSteps, computeFunc)
 	local start, step = startAndStep[1], startAndStep[2]
 
 	for i = 0,4 do
-		table.insert(combo.indexes, start + i*step)
+		table.insert(combo.indexes5, start + i*step)
+	end
+
+	for i = 0,5 do
+		table.insert(combo.indexes6, start + i*step)
 	end
 
 	self.__index = self
@@ -200,14 +205,15 @@ end
 SD.SPELL_COMBO_POINTS = 4
 function SD.Combo.getComboPoints()
 	local combo = UnitPower("player", SD.SPELL_COMBO_POINTS)
-	if combo > 5 then return 5;
+	if combo > 6 then return 6;
 	elseif combo == 0 then return 1;
 	else return combo; end
 end
 
 function SD.Combo:getData(description)
 	local data = SD.SpellData:create(SpellUnknown)
-	local matchs = matchDigits(description, self.indexes)
+	local matchs = matchDigits(description, self.indexes6)
+	if matchs == nil then matchs = matchDigits(description, self.indexes5); end
 	if matchs then
 		data.type = self.type
 		local value = matchs[SD.Combo.getComboPoints()]

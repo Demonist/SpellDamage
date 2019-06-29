@@ -100,7 +100,7 @@ function Rogue:init()
 	self.spells[8676]	= Damage({ru=1}) 												--Внезапный удар
 	self.spells[185763]	= Damage({ru=1}) 												--Выстрел из пистоли
 	self.spells[2098]	= ComboDamage({ru={2,2}}) 										--Круговая атака
-	self.spells[195452]	= ComboTimeDamage({ru={3,2}, cn={5,3}, kr={5,3}}) 				--Ночной клинок
+	self.spells[195452]	= ComboTimeDamage({ru={3,3}, cn={5,3}, kr={5,3}}) 				--Ночной клинок
 	self.spells[185565]	= Damage({ru=1}) 												--Отравленный нож
 	self.spells[196819]	= ComboDamage({ru={2,2}}) 										--Потрошение
 	self.spells[199804]	= ComboDamage({ru={2,3}}) 										--Промеж глаз

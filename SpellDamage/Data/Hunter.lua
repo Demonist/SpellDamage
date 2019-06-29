@@ -75,7 +75,7 @@ function Hunter:init()
 	self.spells[120360]	= Damage({ru=2}) 										--Шквал
 	self.spells[199483]	= Custom(Camouflage) 									--Камуфляж
 	self.spells[162488]	= TimeDamage({ru=2, de=3, cn=3, kr=3}) 					--Капкан
-	self.spells[212431]	= Damage({ru=1, de=2, cn=2, kr=2}) 						--Разрывной выстрел
+	self.spells[212431]	= Damage({ru=2, de=2, cn=2, kr=2}) 						--Разрывной выстрел
 	self.spells[217200]	= Damage({ru=1, de=2, cn=2, kr=2}) 						--Разрывной выстрел
 	self.spells[194277]	= Damage({ru=2, de=3, cn=3, kr=4}, Caltrops) 			--Шипы
 	self.spells[53209]	= Damage({ru=1}) 										--Выстрел химеры
